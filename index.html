@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NuralPath - Navigate Knowledge Wisely</title>
+    <meta name="description" content="Master VLSI, DSA and modern tech skills with NuralPath. Expert-led courses, hands-on projects, and career acceleration." />
+    <link rel="stylesheet" href="output.css" />
+  </head>
+  <body>
+    <!-- Floating Background Blobs -->
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+      <div class="absolute -top-40 -right-40 h-[500px] w-[500px] rounded-full bg-accent/[0.12] blur-[140px] animate-glow-pulse"></div>
+      <div class="absolute -bottom-60 -left-40 h-[600px] w-[600px] rounded-full bg-lilac/[0.08] blur-[160px] animate-float"></div>
+      <div class="absolute top-1/3 left-1/2 h-[400px] w-[400px] rounded-full bg-accent/[0.06] blur-[120px] animate-float" style="animation-delay: -3s"></div>
+    </div>
+
+    <!-- ===== NAVBAR ===== -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="navbar">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="glass mx-auto mt-3 rounded-2xl px-6 py-3 transition-all duration-300 md:px-8" id="nav-container">
+          <nav class="flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2.5">
+              <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-accent/20 text-sm font-bold text-accent-deep shadow-sm shadow-accent/20 ring-1 ring-white/80">N</span>
+              <span class="text-lg font-bold tracking-tight text-ink-900">NuralPath</span>
+            </a>
+
+            <!-- Desktop Links -->
+            <div class="hidden items-center gap-8 md:flex">
+              <a href="#home" class="nav-link active">Home</a>
+              <a href="#courses" class="nav-link">Courses</a>
+              <a href="#categories" class="nav-link">Categories</a>
+              <a href="#about" class="nav-link">About</a>
+              <a href="#contact" class="nav-link">Contact</a>
+            </div>
+
+            <div class="hidden items-center gap-3 md:flex">
+              <a href="#" class="text-sm font-medium text-ink-500 transition-colors hover:text-ink-900">Log in</a>
+              <a href="#" class="btn-primary px-5 py-2 text-sm">Sign Up Free</a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="relative z-50 flex h-10 w-10 items-center justify-center md:hidden" id="menu-toggle" aria-label="Toggle menu">
+              <span class="block h-0.5 w-5 rounded-full bg-ink-700 transition-all duration-300" id="menu-line-1"></span>
+              <span class="block mt-1 h-0.5 w-5 rounded-full bg-ink-700 transition-all duration-300" id="menu-line-2"></span>
+              <span class="block mt-1 h-0.5 w-5 rounded-full bg-ink-700 transition-all duration-300" id="menu-line-3"></span>
+            </button>
+          </nav>
+
+          <!-- Mobile Menu -->
+          <div class="hidden overflow-hidden transition-all duration-300" id="mobile-menu">
+            <div class="mt-4 space-y-3 border-t border-surface-300/60 pt-4 pb-2">
+              <a href="#home" class="block rounded-lg px-3 py-2 text-sm text-ink-500 transition-colors hover:bg-surface-100 hover:text-ink-900">Home</a>
+              <a href="#courses" class="block rounded-lg px-3 py-2 text-sm text-ink-500 transition-colors hover:bg-surface-100 hover:text-ink-900">Courses</a>
+              <a href="#categories" class="block rounded-lg px-3 py-2 text-sm text-ink-500 transition-colors hover:bg-surface-100 hover:text-ink-900">Categories</a>
+              <a href="#about" class="block rounded-lg px-3 py-2 text-sm text-ink-500 transition-colors hover:bg-surface-100 hover:text-ink-900">About</a>
+              <a href="#contact" class="block rounded-lg px-3 py-2 text-sm text-ink-500 transition-colors hover:bg-surface-100 hover:text-ink-900">Contact</a>
+              <hr class="border-surface-300/60" />
+              <a href="#" class="block rounded-lg px-3 py-2 text-sm text-ink-500 transition-colors hover:bg-surface-100 hover:text-ink-900">Log in</a>
+              <a href="#" class="btn-primary mt-2 block text-center text-sm">Sign Up Free</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- ===== HERO ===== -->
+      <section id="home" class="relative flex min-h-screen items-center overflow-hidden pt-24 pb-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto max-w-4xl text-center">
+            <span class="inline-block animate-fade-in rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-medium tracking-wide text-accent-deep shadow-sm shadow-accent/10">
+              Launching Your Tech Career
+            </span>
+            <h1 class="mt-6 animate-fade-in text-4xl font-extrabold tracking-tight text-ink-900 sm:text-5xl md:text-6xl lg:text-7xl" style="animation-delay: 0.1s">
+              Navigate Knowledge
+              <span class="gradient-text">Wisely</span>
+            </h1>
+            <p class="mx-auto mt-6 max-w-2xl animate-fade-in text-base leading-relaxed text-ink-400 sm:text-lg md:text-xl" style="animation-delay: 0.2s">
+              Master VLSI, DSA, and modern engineering skills through expert-led courses,
+              hands-on projects, and a learning experience designed for the future.
+            </p>
+            <div class="mt-10 flex animate-fade-in flex-col items-center justify-center gap-4 sm:flex-row" style="animation-delay: 0.3s">
+              <a href="#courses" class="btn-primary px-8 py-4 text-base">Explore Courses</a>
+              <a href="#" class="btn-outline px-8 py-4 text-base">Get Started Free</a>
+            </div>
+          </div>
+
+          <!-- Stats Bar -->
+          <div class="glass stats-bar mx-auto mt-16 grid max-w-3xl animate-slide-up grid-cols-3 divide-x divide-surface-300/50 rounded-2xl" style="animation-delay: 0.5s">
+            <div class="p-5 text-center sm:p-6">
+              <p class="text-2xl font-bold text-accent-deep sm:text-3xl">50+</p>
+              <p class="mt-1 text-xs text-ink-300 sm:text-sm">Expert Courses</p>
+            </div>
+            <div class="p-5 text-center sm:p-6">
+              <p class="text-2xl font-bold text-accent-deep sm:text-3xl">10K+</p>
+              <p class="mt-1 text-xs text-ink-300 sm:text-sm">Active Learners</p>
+            </div>
+            <div class="p-5 text-center sm:p-6">
+              <p class="text-2xl font-bold text-accent-deep sm:text-3xl">95%</p>
+              <p class="mt-1 text-xs text-ink-300 sm:text-sm">Success Rate</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== FEATURED COURSES ===== -->
+      <section id="courses" class="py-20 sm:py-28">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="text-center reveal">
+            <h2 class="section-heading">Featured Courses</h2>
+            <p class="section-subheading mx-auto max-w-2xl">
+              Hand-picked courses designed to take you from fundamentals to mastery.
+            </p>
+          </div>
+
+          <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <!-- Course 1 -->
+            <div class="glass group card-hover rounded-2xl p-6 reveal sm:p-8">
+              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl icon-container text-accent-deep">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
+                </svg>
+              </div>
+              <h3 class="text-lg font-semibold text-ink-900 sm:text-xl">VLSI Design Fundamentals</h3>
+              <p class="mt-2 text-sm leading-relaxed text-ink-400">
+                Master RTL design, verification, and synthesis with industry-standard tools and real-world chip design workflows.
+              </p>
+              <div class="mt-6 flex items-center justify-between border-t border-surface-300/50 pt-4">
+                <div class="flex items-center gap-3 text-xs text-ink-300">
+                  <span class="badge-skeuo rounded-md px-2.5 py-1">Beginner</span>
+                  <span>8 weeks</span>
+                </div>
+                <span class="text-sm font-semibold text-accent-deep">Enroll Now</span>
+              </div>
+            </div>
+
+            <!-- Course 2 -->
+            <div class="glass group card-hover rounded-2xl p-6 reveal sm:p-8">
+              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl icon-container text-accent-deep">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959v0a.64.64 0 01-.657.643 48.39 48.39 0 01-4.163-.3c.186 1.613.293 3.25.315 4.907a.656.656 0 01-.658.663v0c-.355 0-.676-.186-.959-.401a1.647 1.647 0 00-1.003-.349c-1.036 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401v0c.31 0 .555.26.532.57a48.039 48.039 0 01-.642 5.056c1.518.19 3.058.309 4.616.354a.64.64 0 00.657-.643v0c0-.355-.186-.676-.401-.959a1.647 1.647 0 01-.349-1.003c0-1.035 1.007-1.875 2.25-1.875s2.25.84 2.25 1.875c0 .369-.128.713-.349 1.003-.215.283-.401.604-.401.959v0c0 .333.277.599.61.58a48.1 48.1 0 005.427-.63 48.05 48.05 0 00.582-4.717.532.532 0 00-.533-.57v0c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.035 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.37 0 .713.128 1.003.349.283.215.604.401.959.401v0a.656.656 0 00.658-.663 48.422 48.422 0 00-.37-5.36c-1.886.342-3.81.574-5.766.689a.578.578 0 01-.61-.58v0z" />
+                </svg>
+              </div>
+              <h3 class="text-lg font-semibold text-ink-900 sm:text-xl">Data Structures &amp; Algorithms</h3>
+              <p class="mt-2 text-sm leading-relaxed text-ink-400">
+                Ace technical interviews with a deep understanding of DSA, problem-solving patterns, and competitive programming.
+              </p>
+              <div class="mt-6 flex items-center justify-between border-t border-surface-300/50 pt-4">
+                <div class="flex items-center gap-3 text-xs text-ink-300">
+                  <span class="badge-skeuo rounded-md px-2.5 py-1">Intermediate</span>
+                  <span>12 weeks</span>
+                </div>
+                <span class="text-sm font-semibold text-accent-deep">Enroll Now</span>
+              </div>
+            </div>
+
+            <!-- Course 3 -->
+            <div class="glass group card-hover rounded-2xl p-6 reveal sm:p-8 sm:col-span-2 lg:col-span-1">
+              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl icon-container text-accent-deep">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                </svg>
+              </div>
+              <h3 class="text-lg font-semibold text-ink-900 sm:text-xl">System Design &amp; Architecture</h3>
+              <p class="mt-2 text-sm leading-relaxed text-ink-400">
+                Learn to design scalable distributed systems, microservices, and high-availability architectures from scratch.
+              </p>
+              <div class="mt-6 flex items-center justify-between border-t border-surface-300/50 pt-4">
+                <div class="flex items-center gap-3 text-xs text-ink-300">
+                  <span class="badge-skeuo rounded-md px-2.5 py-1">Advanced</span>
+                  <span>14 weeks</span>
+                </div>
+                <span class="text-sm font-semibold text-accent-deep">Enroll Now</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-10 text-center reveal">
+            <a href="#" class="btn-outline px-7 py-3 text-sm">View All Courses</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== CATEGORIES ===== -->
+      <section id="categories" class="py-20 sm:py-28">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="text-center reveal">
+            <h2 class="section-heading">Explore Categories</h2>
+            <p class="section-subheading mx-auto max-w-2xl">
+              Specialized domains crafted by industry experts for real-world impact.
+            </p>
+          </div>
+
+          <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <!-- Category 1 -->
+            <div class="glass group card-hover rounded-2xl p-6 text-center reveal">
+              <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl icon-container text-accent-deep">
+                <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" />
+                </svg>
+              </div>
+              <h3 class="text-base font-semibold text-ink-900">DSA</h3>
+              <p class="mt-2 text-xs leading-relaxed text-ink-400">
+                Data Structures &amp; Algorithms with hands-on problem solving
+              </p>
+              <span class="mt-3 inline-block text-xs font-medium text-accent-deep">12 Courses</span>
+            </div>
+
+            <!-- Category 2 -->
+            <div class="glass group card-hover rounded-2xl p-6 text-center reveal">
+              <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl icon-container text-accent-deep">
+                <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
+                </svg>
+              </div>
+              <h3 class="text-base font-semibold text-ink-900">VLSI Design</h3>
+              <p class="mt-2 text-xs leading-relaxed text-ink-400">
+                Chip design, RTL, verification &amp; tape-out workflows
+              </p>
+              <span class="mt-3 inline-block text-xs font-medium text-accent-deep">8 Courses</span>
+            </div>
+
+            <!-- Category 3 -->
+            <div class="glass group card-hover rounded-2xl p-6 text-center reveal">
+              <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl icon-container text-accent-deep">
+                <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25z" />
+                </svg>
+              </div>
+              <h3 class="text-base font-semibold text-ink-900">Embedded Systems</h3>
+              <p class="mt-2 text-xs leading-relaxed text-ink-400">
+                Firmware, RTOS, and hardware-software integration
+              </p>
+              <span class="mt-3 inline-block text-xs font-medium text-accent-deep">6 Courses</span>
+            </div>
+
+            <!-- Category 4 -->
+            <div class="glass group card-hover rounded-2xl p-6 text-center reveal">
+              <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl icon-container text-accent-deep">
+                <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
+                </svg>
+              </div>
+              <h3 class="text-base font-semibold text-ink-900">AI &amp; ML</h3>
+              <p class="mt-2 text-xs leading-relaxed text-ink-400">
+                Neural networks, deep learning &amp; practical AI applications
+              </p>
+              <span class="mt-3 inline-block text-xs font-medium text-accent-deep">10 Courses</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== WHY CHOOSE US ===== -->
+      <section id="about" class="py-20 sm:py-28">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="text-center reveal">
+            <h2 class="section-heading">Why Choose NuralPath</h2>
+            <p class="section-subheading mx-auto max-w-2xl">
+              We design learning experiences that actually transform careers.
+            </p>
+          </div>
+
+          <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <!-- Feature 1 -->
+            <div class="glass group card-hover rounded-2xl p-6 reveal sm:p-8">
+              <span class="flex h-10 w-10 items-center justify-center rounded-lg icon-container text-xs font-bold text-accent-deep">01</span>
+              <h3 class="mt-5 text-base font-semibold text-ink-900 sm:text-lg">Expert-Led Curriculum</h3>
+              <p class="mt-2 text-sm leading-relaxed text-ink-400">
+                Courses designed and taught by seasoned engineers from top semiconductor and tech companies.
+              </p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="glass group card-hover rounded-2xl p-6 reveal sm:p-8">
+              <span class="flex h-10 w-10 items-center justify-center rounded-lg icon-container text-xs font-bold text-accent-deep">02</span>
+              <h3 class="mt-5 text-base font-semibold text-ink-900 sm:text-lg">Hands-On Projects</h3>
+              <p class="mt-2 text-sm leading-relaxed text-ink-400">
+                Build a portfolio of real-world projects that demonstrate mastery to employers.
+              </p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="glass group card-hover rounded-2xl p-6 reveal sm:p-8">
+              <span class="flex h-10 w-10 items-center justify-center rounded-lg icon-container text-xs font-bold text-accent-deep">03</span>
+              <h3 class="mt-5 text-base font-semibold text-ink-900 sm:text-lg">Career Acceleration</h3>
+              <p class="mt-2 text-sm leading-relaxed text-ink-400">
+                Resume reviews, mock interviews, and direct referrals to hiring partners.
+              </p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="glass group card-hover rounded-2xl p-6 reveal sm:p-8">
+              <span class="flex h-10 w-10 items-center justify-center rounded-lg icon-container text-xs font-bold text-accent-deep">04</span>
+              <h3 class="mt-5 text-base font-semibold text-ink-900 sm:text-lg">Flexible Schedule</h3>
+              <p class="mt-2 text-sm leading-relaxed text-ink-400">
+                Learn at your own pace with on-demand content, live sessions, and 24/7 support.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== TESTIMONIALS ===== -->
+      <section class="py-20 sm:py-28">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="text-center reveal">
+            <h2 class="section-heading">What Our Learners Say</h2>
+            <p class="section-subheading mx-auto max-w-2xl">
+              Real stories from real professionals who transformed their careers.
+            </p>
+          </div>
+
+          <div class="relative mt-14">
+            <!-- Testimonials Slider -->
+            <div class="overflow-hidden rounded-2xl" id="testimonial-slider">
+              <div class="flex transition-transform duration-500 ease-out" id="testimonial-track">
+                <!-- Testimonial 1 -->
+                <div class="min-w-full px-4 sm:px-12 lg:px-20">
+                  <div class="glass-strong mx-auto max-w-3xl rounded-2xl p-8 text-center sm:p-12">
+                    <div class="flex justify-center gap-1 text-accent">
+                      <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                      <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                      <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                      <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                      <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                    </div>
+                    <blockquote class="mt-6 text-base leading-relaxed text-ink-500 sm:text-lg">
+                      "The VLSI Design Fundamentals course completely transformed my understanding of chip design. The hands-on projects with industry-standard tools gave me the confidence to transition into a design engineering role."
+                    </blockquote>
+                    <div class="mt-6">
+                      <p class="text-sm font-semibold text-ink-900">Rahul Sharma</p>
+                      <p class="text-xs text-ink-300">Design Engineer at Texas Instruments</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="min-w-full px-4 sm:px-12 lg:px-20">
+                  <div class="glass-strong mx-auto max-w-3xl rounded-2xl p-8 text-center sm:p-12">
+                    <div class="flex justify-center gap-1 text-accent">
+                      <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                      <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                      <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                      <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                      <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                    </div>
+                    <blockquote class="mt-6 text-base leading-relaxed text-ink-500 sm:text-lg">
+                      "NuralPath's DSA course was a game-changer for my interview preparation. The structured curriculum and problem-solving patterns helped me crack Amazon's SDE interview on my first attempt."
+                    </blockquote>
+                    <div class="mt-6">
+                      <p class="text-sm font-semibold text-ink-900">Priya Mehta</p>
+                      <p class="text-xs text-ink-300">SDE at Amazon</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="min-w-full px-4 sm:px-12 lg:px-20">
+                  <div class="glass-strong mx-auto max-w-3xl rounded-2xl p-8 text-center sm:p-12">
+                    <div class="flex justify-center gap-1 text-accent">
+                      <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                      <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                      <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                      <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                      <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                    </div>
+                    <blockquote class="mt-6 text-base leading-relaxed text-ink-500 sm:text-lg">
+                      "The Embedded Systems track at NuralPath is unparalleled. The real-world firmware projects and RTOS deep-dives prepared me for challenges I face daily in my role."
+                    </blockquote>
+                    <div class="mt-6">
+                      <p class="text-sm font-semibold text-ink-900">Arjun Kapoor</p>
+                      <p class="text-xs text-ink-300">Firmware Engineer at ARM</p>
+                    </div> <p class="text-sm font-semibold text-ink-900">Arjun Kapoor</p>
+                      <p class="text-xs text-ink-300">Firmware Engineer at ARM</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Navigation Dots -->
+            <div class="mt-8 flex justify-center gap-2" id="testimonial-dots">
+              <button class="h-2 w-8 rounded-full bg-accent transition-all duration-300" data-index="0" aria-label="Testimonial 1"></button>
+              <button class="h-2 w-2 rounded-full bg-surface-300 transition-all duration-300 hover:bg-surface-400" data-index="1" aria-label="Testimonial 2"></button>
+              <button class="h-2 w-2 rounded-full bg-surface-300 transition-all duration-300 hover:bg-surface-400" data-index="2" aria-label="Testimonial 3"></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== CTA ===== -->
+      <section class="relative overflow-hidden py-20 sm:py-28">
+        <div class="absolute inset-0 -z-10">
+          <div class="absolute inset-0 bg-gradient-to-br from-accent/[0.07] via-surface-100 to-surface-200"></div>
+          <div class="absolute top-1/2 left-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.08] blur-[100px]"></div>
+        </div>
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="glass-strong mx-auto max-w-3xl rounded-3xl p-8 text-center sm:p-12 lg:p-16 reveal">
+            <h2 class="text-3xl font-bold tracking-tight text-ink-900 sm:text-4xl lg:text-5xl">
+              Ready to Navigate Your Future?
+            </h2>
+            <p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-ink-400 sm:text-lg">
+              Join thousands of learners who have transformed their careers with NuralPath. Start your journey today.
+            </p>
+            <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <a href="#" class="btn-primary px-10 py-4 text-base">Get Started Free</a>
+              <a href="#" class="btn-outline px-10 py-4 text-base">Talk to an Advisor</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer id="contact" class="border-t border-surface-300/60">
+      <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <!-- Brand -->
+          <div class="sm:col-span-2 lg:col-span-1">
+            <a href="#" class="flex items-center gap-2.5">
+              <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-accent/20 text-sm font-bold text-accent-deep shadow-sm shadow-accent/20 ring-1 ring-white/80">N</span>
+              <span class="text-lg font-bold tracking-tight text-ink-900">NuralPath</span>
+            </a>
+            <p class="mt-4 text-sm leading-relaxed text-ink-400">
+              Navigate Knowledge Wisely. Master modern engineering skills with expert-led courses designed for the future.
+            </p>
+          </div>
+
+          <!-- Links -->
+          <div>
+            <h4 class="text-sm font-semibold text-ink-700">Platform</h4>
+            <ul class="mt-4 space-y-3">
+              <li><a href="#" class="text-sm text-ink-400 transition-colors hover:text-ink-900">Courses</a></li>
+              <li><a href="#" class="text-sm text-ink-400 transition-colors hover:text-ink-900">Categories</a></li>
+              <li><a href="#" class="text-sm text-ink-400 transition-colors hover:text-ink-900">Pricing</a></li>
+              <li><a href="#" class="text-sm text-ink-400 transition-colors hover:text-ink-900">FAQ</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-sm font-semibold text-ink-700">Company</h4>
+            <ul class="mt-4 space-y-3">
+              <li><a href="#" class="text-sm text-ink-400 transition-colors hover:text-ink-900">About</a></li>
+              <li><a href="#" class="text-sm text-ink-400 transition-colors hover:text-ink-900">Careers</a></li>
+              <li><a href="#" class="text-sm text-ink-400 transition-colors hover:text-ink-900">Blog</a></li>
+              <li><a href="#" class="text-sm text-ink-400 transition-colors hover:text-ink-900">Contact</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="text-sm font-semibold text-ink-700">Support</h4>
+            <ul class="mt-4 space-y-3">
+              <li><a href="#" class="text-sm text-ink-400 transition-colors hover:text-ink-900">Help Center</a></li>
+              <li><a href="#" class="text-sm text-ink-400 transition-colors hover:text-ink-900">Community</a></li>
+              <li><a href="#" class="text-sm text-ink-400 transition-colors hover:text-ink-900">Privacy Policy</a></li>
+              <li><a href="#" class="text-sm text-ink-400 transition-colors hover:text-ink-900">Terms of Service</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-14 border-t border-surface-300/60 pt-8">
+          <p class="text-center text-xs text-ink-300">
+            &copy; 2026 NuralPath. All rights reserved. Built with purpose.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
