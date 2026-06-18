@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: ["./*.html", "./script.js"],
   safelist: [
     // navbar scroll-state classes applied by script.js
@@ -69,6 +70,17 @@ module.exports = {
           400: "#5A6B8A",
           300: "#8A9BBC",
           200: "#B8C8DF",
+        },
+        // Dark mode palette
+        dark: {
+          bg: "#0B0F1A",
+          card: "#12162A",
+          cardHover: "#1A1F3A",
+          accent: "#00D9FF",
+          secondary: "#C9B6E4",
+          text: "#EAEAF0",
+          textMuted: "#A0A8B8",
+          border: "rgba(201, 182, 228, 0.15)",
         },
       },
       fontFamily: {

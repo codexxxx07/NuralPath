@@ -1,6 +1,51 @@
 (function () {
   "use strict";
 
+  // ===== THEME TOGGLE =====
+  var themeToggle = document.getElementById("theme-toggle");
+  var sunIcon = document.getElementById("sun-icon");
+  var moonIcon = document.getElementById("moon-icon");
+  var htmlElement = document.documentElement;
+
+  // Check for saved theme preference or default to light
+  var savedTheme = localStorage.getItem("theme");
+  var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  var isDark = savedTheme === "dark" || (!savedTheme && prefersDark);
+
+  function updateThemeUI() {
+    if (isDark) {
+      htmlElement.classList.add("dark");
+      sunIcon.classList.add("hidden");
+      moonIcon.classList.remove("hidden");
+    } else {
+      htmlElement.classList.remove("dark");
+      sunIcon.classList.remove("hidden");
+      moonIcon.classList.add("hidden");
+    }
+  }
+
+  function toggleTheme() {
+    isDark = !isDark;
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+    updateThemeUI();
+  }
+
+  // Initialize theme on page load
+  updateThemeUI();
+
+  // Theme toggle click handler
+  if (themeToggle) {
+    themeToggle.addEventListener("click", toggleTheme);
+  }
+
+  // Listen for system theme changes
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function (e) {
+    if (!localStorage.getItem("theme")) {
+      isDark = e.matches;
+      updateThemeUI();
+    }
+  });
+
   // ===== NAVBAR =====
   var navbar = document.getElementById("navbar");
   var navContainer = document.getElementById("nav-container");
