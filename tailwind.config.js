@@ -71,16 +71,16 @@ module.exports = {
           300: "#8A9BBC",
           200: "#B8C8DF",
         },
-        // Dark mode palette
+        // Dark mode palette (skeuomorphic)
         dark: {
-          bg: "#0B0F1A",
-          card: "#12162A",
-          cardHover: "#1A1F3A",
-          accent: "#4DA3FF",
-          secondary: "#A78BFA",
-          text: "#EAEAF0",
-          textMuted: "#A0A8B8",
-          border: "rgba(167, 139, 250, 0.12)",
+          bg: "#0A0F1C",
+          card: "#12182B",
+          cardHover: "#151C32",
+          accent: "#7C5CFF",
+          secondary: "#9AA4B2",
+          text: "#E6EAF2",
+          textMuted: "#9AA4B2",
+          border: "rgba(255, 255, 255, 0.2)",
         },
       },
       fontFamily: {
