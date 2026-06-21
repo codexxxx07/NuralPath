@@ -62,25 +62,45 @@
     --shadow-inner-pressed: inset 0 2px 4px rgba(140, 170, 210, 0.25);
   }
 
-  /* ===== DARK MODE SHADOW SYSTEM (Glow-based) ===== */
+  /* ===== DARK MODE SHADOW SYSTEM (Skeuomorphic) ===== */
   .dark {
-    --shadow-primary: 0 0 20px rgba(0, 217, 255, 0.15), 0 0 40px rgba(201, 182, 228, 0.08);
-    --shadow-primary-hover: 0 0 30px rgba(0, 217, 255, 0.25), 0 0 60px rgba(201, 182, 228, 0.12);
-    --shadow-primary-pressed: 0 0 15px rgba(0, 217, 255, 0.12), 0 0 30px rgba(201, 182, 228, 0.06);
+    --shadow-primary: 
+      6px 6px 12px rgba(0, 0, 0, 0.6),
+      -4px -4px 10px rgba(255, 255, 255, 0.05),
+      0 0 10px rgba(0, 217, 255, 0.15);
+    --shadow-primary-hover: 
+      8px 8px 16px rgba(0, 0, 0, 0.7),
+      -5px -5px 12px rgba(255, 255, 255, 0.06),
+      0 0 15px rgba(0, 217, 255, 0.20);
+    --shadow-primary-pressed: 
+      inset 4px 4px 8px rgba(0, 0, 0, 0.7),
+      inset -2px -2px 6px rgba(255, 255, 255, 0.04),
+      0 0 8px rgba(0, 217, 255, 0.10);
 
-    --shadow-secondary: 0 0 15px rgba(0, 217, 255, 0.10), 0 0 30px rgba(201, 182, 228, 0.05);
-    --shadow-secondary-hover: 0 0 20px rgba(0, 217, 255, 0.15), 0 0 40px rgba(201, 182, 228, 0.08);
-    --shadow-secondary-pressed: 0 0 10px rgba(0, 217, 255, 0.08), 0 0 20px rgba(201, 182, 228, 0.04);
+    --shadow-secondary: 
+      4px 4px 10px rgba(0, 0, 0, 0.5),
+      -3px -3px 8px rgba(255, 255, 255, 0.04),
+      0 0 8px rgba(0, 217, 255, 0.10);
+    --shadow-secondary-hover: 
+      6px 6px 12px rgba(0, 0, 0, 0.6),
+      -4px -4px 10px rgba(255, 255, 255, 0.05),
+      0 0 12px rgba(0, 217, 255, 0.15);
+    --shadow-secondary-pressed: 
+      inset 3px 3px 6px rgba(0, 0, 0, 0.6),
+      inset -1px -1px 5px rgba(255, 255, 255, 0.03),
+      0 0 6px rgba(0, 217, 255, 0.08);
 
-    --shadow-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    --shadow-highlight-hover: inset 0 2px 0 rgba(255, 255, 255, 0.20);
-    --shadow-highlight-pressed: inset 0 1px 0 rgba(255, 255, 255, 0.10);
+    --shadow-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    --shadow-highlight-hover: inset 0 2px 0 rgba(255, 255, 255, 0.18);
+    --shadow-highlight-pressed: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 
-    --shadow-bottom: inset 0 -1px 0 rgba(201, 182, 228, 0.20);
-    --shadow-bottom-hover: inset 0 -1px 0 rgba(201, 182, 228, 0.25);
-    --shadow-bottom-pressed: inset 0 -1px 0 rgba(201, 182, 228, 0.15);
+    --shadow-bottom: inset 0 -1px 0 rgba(201, 182, 228, 0.15);
+    --shadow-bottom-hover: inset 0 -1px 0 rgba(201, 182, 228, 0.20);
+    --shadow-bottom-pressed: inset 0 -1px 0 rgba(201, 182, 228, 0.10);
 
-    --shadow-inner-pressed: inset 0 2px 4px rgba(0, 0, 0, 0.30);
+    --shadow-inner-pressed: 
+      inset 4px 4px 8px rgba(0, 0, 0, 0.7),
+      inset -2px -2px 6px rgba(255, 255, 255, 0.04);
   }
 
   /* ===== LIGHT SKEUOMORPHIC GLASS BASE ===== */
@@ -102,12 +122,10 @@
   }
 
   .dark .glass {
-    background: linear-gradient(
-      145deg,
-      rgba(18, 22, 42, 0.85) 0%,
-      rgba(26, 31, 58, 0.75) 100%
-    );
-    border: 1px solid rgba(201, 182, 228, 0.15);
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(201, 182, 228, 0.12);
   }
 
   .glass:hover {
@@ -120,11 +138,7 @@
   }
 
   .dark .glass:hover {
-    background: linear-gradient(
-      145deg,
-      rgba(26, 31, 58, 0.90) 0%,
-      rgba(18, 22, 42, 0.80) 100%
-    );
+    background: rgba(255, 255, 255, 0.03);
   }
 
   .glass:active {
@@ -155,15 +169,14 @@
   }
 
   .dark .glass-strong {
-    background: linear-gradient(
-      145deg,
-      rgba(26, 31, 58, 0.92) 0%,
-      rgba(18, 22, 42, 0.85) 100%
-    );
-    border: 1px solid rgba(201, 182, 228, 0.20);
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(201, 182, 228, 0.15);
     box-shadow:
-      0 0 40px rgba(0, 217, 255, 0.12),
-      0 0 80px rgba(201, 182, 228, 0.06),
+      6px 6px 12px rgba(0, 0, 0, 0.6),
+      -4px -4px 10px rgba(255, 255, 255, 0.05),
+      0 0 10px rgba(0, 217, 255, 0.15),
       inset 0 2px 0 rgba(255, 255, 255, 0.10),
       inset 0 -2px 0 rgba(201, 182, 228, 0.25);
   }
@@ -179,8 +192,9 @@
 
   .dark .glass-strong:hover {
     box-shadow:
-      0 0 50px rgba(0, 217, 255, 0.18),
-      0 0 100px rgba(201, 182, 228, 0.10),
+      8px 8px 16px rgba(0, 0, 0, 0.7),
+      -5px -5px 12px rgba(255, 255, 255, 0.06),
+      0 0 15px rgba(0, 217, 255, 0.20),
       inset 0 2px 0 rgba(255, 255, 255, 0.15),
       inset 0 -2px 0 rgba(201, 182, 228, 0.30);
   }
@@ -196,10 +210,11 @@
 
   .dark .glass-strong:active {
     box-shadow:
-      0 0 30px rgba(0, 217, 255, 0.10),
-      0 0 60px rgba(201, 182, 228, 0.05),
-      inset 0 3px 6px rgba(0, 0, 0, 0.40),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+      inset 4px 4px 8px rgba(0, 0, 0, 0.7),
+      inset -2px -2px 6px rgba(255, 255, 255, 0.04),
+      0 0 8px rgba(0, 217, 255, 0.10),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 -1px 0 rgba(201, 182, 228, 0.10);
   }
 
   /* ===== GLASS ICON STYLE (Frosted glass, floating) ===== */
@@ -221,17 +236,16 @@
   }
 
   .dark .glass-icon {
-    background: linear-gradient(
-      145deg,
-      rgba(0, 217, 255, 0.20) 0%,
-      rgba(201, 182, 228, 0.15) 100%
-    );
-    border: 1px solid rgba(201, 182, 228, 0.25);
+    background: rgba(0, 217, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(201, 182, 228, 0.20);
     box-shadow:
-      0 0 20px rgba(0, 217, 255, 0.15),
-      0 0 40px rgba(201, 182, 228, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15),
-      inset 0 -1px 0 rgba(201, 182, 228, 0.20);
+      4px 4px 10px rgba(0, 0, 0, 0.5),
+      -3px -3px 8px rgba(255, 255, 255, 0.04),
+      0 0 8px rgba(0, 217, 255, 0.10),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      inset 0 -1px 0 rgba(201, 182, 228, 0.15);
   }
 
   .glass-icon:hover {
@@ -249,16 +263,13 @@
   }
 
   .dark .glass-icon:hover {
-    background: linear-gradient(
-      145deg,
-      rgba(0, 217, 255, 0.30) 0%,
-      rgba(201, 182, 228, 0.25) 100%
-    );
+    background: rgba(0, 217, 255, 0.18);
     box-shadow:
-      0 0 30px rgba(0, 217, 255, 0.25),
-      0 0 60px rgba(201, 182, 228, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.20),
-      inset 0 -1px 0 rgba(201, 182, 228, 0.25);
+      6px 6px 12px rgba(0, 0, 0, 0.6),
+      -4px -4px 10px rgba(255, 255, 255, 0.05),
+      0 0 12px rgba(0, 217, 255, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      inset 0 -1px 0 rgba(201, 182, 228, 0.20);
   }
 
   .glass-icon:active {
@@ -271,9 +282,11 @@
 
   .dark .glass-icon:active {
     box-shadow:
-      0 0 15px rgba(0, 217, 255, 0.12),
-      inset 0 2px 4px rgba(0, 0, 0, 0.30),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.10);
+      inset 3px 3px 6px rgba(0, 0, 0, 0.6),
+      inset -1px -1px 5px rgba(255, 255, 255, 0.03),
+      0 0 6px rgba(0, 217, 255, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 -1px 0 rgba(201, 182, 228, 0.10);
   }
 
   /* ===== GLOW HELPERS ===== */
@@ -329,8 +342,9 @@
   .dark .btn-primary {
     background: linear-gradient(145deg, #00D9FF 0%, #00B4FF 100%);
     box-shadow:
-      0 0 25px rgba(0, 217, 255, 0.35),
-      0 0 50px rgba(0, 217, 255, 0.18),
+      6px 6px 12px rgba(0, 0, 0, 0.6),
+      -4px -4px 10px rgba(255, 255, 255, 0.05),
+      0 0 10px rgba(0, 217, 255, 0.30),
       inset 0 1px 0 rgba(255, 255, 255, 0.30),
       inset 0 -1px 0 rgba(0, 80, 140, 0.20);
   }
@@ -348,8 +362,9 @@
   .dark .btn-primary:hover {
     background: linear-gradient(145deg, #33E5FF 0%, #00D9FF 100%);
     box-shadow:
-      0 0 35px rgba(0, 217, 255, 0.45),
-      0 0 70px rgba(0, 217, 255, 0.25),
+      8px 8px 16px rgba(0, 0, 0, 0.7),
+      -5px -5px 12px rgba(255, 255, 255, 0.06),
+      0 0 15px rgba(0, 217, 255, 0.40),
       inset 0 1px 0 rgba(255, 255, 255, 0.40),
       inset 0 -1px 0 rgba(0, 80, 140, 0.15);
   }
@@ -367,9 +382,11 @@
   .dark .btn-primary:active {
     background: linear-gradient(145deg, #00B4FF 0%, #0090CC 100%);
     box-shadow:
-      0 0 20px rgba(0, 217, 255, 0.25),
-      inset 0 3px 6px rgba(0, 0, 0, 0.30),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.15);
+      inset 4px 4px 8px rgba(0, 0, 0, 0.7),
+      inset -2px -2px 6px rgba(255, 255, 255, 0.04),
+      0 0 8px rgba(0, 217, 255, 0.20),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15),
+      inset 0 -1px 0 rgba(0, 80, 140, 0.20);
   }
 
   .btn-outline {
@@ -386,13 +403,16 @@
 
   .dark .btn-outline {
     color: #EAEAF0;
-    background: linear-gradient(145deg, rgba(18, 22, 42, 0.85) 0%, rgba(26, 31, 58, 0.70) 100%);
-    border: 1px solid rgba(201, 182, 228, 0.25);
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(201, 182, 228, 0.20);
     box-shadow:
-      0 0 20px rgba(0, 217, 255, 0.10),
-      0 0 40px rgba(201, 182, 228, 0.05),
+      6px 6px 12px rgba(0, 0, 0, 0.6),
+      -4px -4px 10px rgba(255, 255, 255, 0.05),
+      0 0 10px rgba(0, 217, 255, 0.10),
       inset 0 1px 0 rgba(255, 255, 255, 0.10),
-      inset 0 -1px 0 rgba(201, 182, 228, 0.20);
+      inset 0 -1px 0 rgba(201, 182, 228, 0.15);
   }
 
   .btn-outline:hover {
@@ -408,14 +428,15 @@
   }
 
   .dark .btn-outline:hover {
-    background: linear-gradient(145deg, rgba(0, 217, 255, 0.15) 0%, rgba(201, 182, 228, 0.10) 100%);
+    background: rgba(0, 217, 255, 0.08);
     border-color: rgba(0, 217, 255, 0.40);
     color: #00D9FF;
     box-shadow:
-      0 0 30px rgba(0, 217, 255, 0.18),
-      0 0 60px rgba(201, 182, 228, 0.10),
+      8px 8px 16px rgba(0, 0, 0, 0.7),
+      -5px -5px 12px rgba(255, 255, 255, 0.06),
+      0 0 15px rgba(0, 217, 255, 0.15),
       inset 0 1px 0 rgba(255, 255, 255, 0.15),
-      inset 0 -1px 0 rgba(201, 182, 228, 0.25);
+      inset 0 -1px 0 rgba(201, 182, 228, 0.20);
   }
 
   .btn-outline:active {
@@ -428,11 +449,13 @@
   }
 
   .dark .btn-outline:active {
-    background: linear-gradient(145deg, rgba(0, 217, 255, 0.20) 0%, rgba(201, 182, 228, 0.15) 100%);
+    background: rgba(0, 217, 255, 0.10);
     box-shadow:
-      0 0 15px rgba(0, 217, 255, 0.12),
-      inset 0 3px 6px rgba(0, 0, 0, 0.30),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+      inset 4px 4px 8px rgba(0, 0, 0, 0.7),
+      inset -2px -2px 6px rgba(255, 255, 255, 0.04),
+      0 0 8px rgba(0, 217, 255, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 -1px 0 rgba(201, 182, 228, 0.10);
   }
 
   /* ===== SKEUOMORPHIC CARDS ===== */
@@ -447,10 +470,11 @@
 
   .dark .card-hover {
     box-shadow:
-      0 0 25px rgba(0, 217, 255, 0.12),
-      0 0 50px rgba(201, 182, 228, 0.06),
+      6px 6px 12px rgba(0, 0, 0, 0.6),
+      -4px -4px 10px rgba(255, 255, 255, 0.05),
+      0 0 10px rgba(0, 217, 255, 0.12),
       inset 0 1px 0 rgba(255, 255, 255, 0.10),
-      inset 0 -1px 0 rgba(201, 182, 228, 0.20);
+      inset 0 -1px 0 rgba(201, 182, 228, 0.15);
   }
 
   .card-hover:hover {
@@ -465,10 +489,11 @@
 
   .dark .card-hover:hover {
     box-shadow:
-      0 0 40px rgba(0, 217, 255, 0.20),
-      0 0 80px rgba(201, 182, 228, 0.12),
+      8px 8px 16px rgba(0, 0, 0, 0.7),
+      -5px -5px 12px rgba(255, 255, 255, 0.06),
+      0 0 15px rgba(0, 217, 255, 0.18),
       inset 0 1px 0 rgba(255, 255, 255, 0.15),
-      inset 0 -1px 0 rgba(201, 182, 228, 0.25);
+      inset 0 -1px 0 rgba(201, 182, 228, 0.20);
   }
 
   .card-hover:active {
@@ -482,9 +507,11 @@
 
   .dark .card-hover:active {
     box-shadow:
-      0 0 20px rgba(0, 217, 255, 0.10),
-      inset 0 2px 5px rgba(0, 0, 0, 0.30),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+      inset 4px 4px 8px rgba(0, 0, 0, 0.7),
+      inset -2px -2px 6px rgba(255, 255, 255, 0.04),
+      0 0 8px rgba(0, 217, 255, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 -1px 0 rgba(201, 182, 228, 0.10);
   }
 
   /* ===== NAVIGATION ===== */
@@ -554,13 +581,15 @@
   }
 
   .dark .input-skeuo {
-    background: linear-gradient(145deg, rgba(18, 22, 42, 0.85) 0%, rgba(26, 31, 58, 0.70) 100%);
-    border: 1px solid rgba(201, 182, 228, 0.25);
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(201, 182, 228, 0.15);
     color: #EAEAF0;
     box-shadow:
-      inset 0 3px 8px rgba(0, 0, 0, 0.30),
-      inset 0 1px 2px rgba(0, 0, 0, 0.20),
-      0 1px 0 rgba(255, 255, 255, 0.10);
+      inset 4px 4px 8px rgba(0, 0, 0, 0.7),
+      inset -2px -2px 6px rgba(255, 255, 255, 0.04),
+      0 0 8px rgba(0, 217, 255, 0.05);
   }
 
   .input-skeuo::placeholder {
@@ -584,10 +613,10 @@
   .dark .input-skeuo:focus {
     border-color: rgba(0, 217, 255, 0.40);
     box-shadow:
-      inset 0 3px 8px rgba(0, 0, 0, 0.35),
-      inset 0 1px 2px rgba(0, 0, 0, 0.25),
+      inset 4px 4px 8px rgba(0, 0, 0, 0.7),
+      inset -2px -2px 6px rgba(255, 255, 255, 0.04),
       0 0 0 3px rgba(0, 217, 255, 0.15),
-      0 0 25px rgba(0, 217, 255, 0.15);
+      0 0 15px rgba(0, 217, 255, 0.20);
   }
 
   /* ===== GLASS ICON CONTAINERS ===== */
@@ -609,17 +638,16 @@
   }
 
   .dark .icon-container {
-    background: linear-gradient(
-      145deg,
-      rgba(0, 217, 255, 0.18) 0%,
-      rgba(201, 182, 228, 0.12) 100%
-    );
-    border: 1px solid rgba(201, 182, 228, 0.25);
+    background: rgba(0, 217, 255, 0.10);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(201, 182, 228, 0.20);
     box-shadow:
-      0 0 20px rgba(0, 217, 255, 0.12),
-      0 0 40px rgba(201, 182, 228, 0.06),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15),
-      inset 0 -1px 0 rgba(201, 182, 228, 0.20);
+      4px 4px 10px rgba(0, 0, 0, 0.5),
+      -3px -3px 8px rgba(255, 255, 255, 0.04),
+      0 0 8px rgba(0, 217, 255, 0.10),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      inset 0 -1px 0 rgba(201, 182, 228, 0.15);
   }
 
   .icon-container:hover {
@@ -637,16 +665,13 @@
   }
 
   .dark .icon-container:hover {
-    background: linear-gradient(
-      145deg,
-      rgba(0, 217, 255, 0.28) 0%,
-      rgba(201, 182, 228, 0.20) 100%
-    );
+    background: rgba(0, 217, 255, 0.15);
     box-shadow:
-      0 0 30px rgba(0, 217, 255, 0.20),
-      0 0 60px rgba(201, 182, 228, 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.20),
-      inset 0 -1px 0 rgba(201, 182, 228, 0.25);
+      6px 6px 12px rgba(0, 0, 0, 0.6),
+      -4px -4px 10px rgba(255, 255, 255, 0.05),
+      0 0 12px rgba(0, 217, 255, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      inset 0 -1px 0 rgba(201, 182, 228, 0.20);
   }
 
   .icon-container:active {
@@ -659,9 +684,11 @@
 
   .dark .icon-container:active {
     box-shadow:
-      0 0 15px rgba(0, 217, 255, 0.10),
-      inset 0 2px 4px rgba(0, 0, 0, 0.30),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+      inset 3px 3px 6px rgba(0, 0, 0, 0.6),
+      inset -1px -1px 5px rgba(255, 255, 255, 0.03),
+      0 0 6px rgba(0, 217, 255, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 -1px 0 rgba(201, 182, 228, 0.10);
   }
 
   /* ===== SECTION TYPOGRAPHY ===== */
@@ -713,17 +740,16 @@
   }
 
   .dark .stats-bar {
-    background: linear-gradient(
-      145deg,
-      rgba(26, 31, 58, 0.88) 0%,
-      rgba(18, 22, 42, 0.80) 100%
-    );
-    border: 1px solid rgba(201, 182, 228, 0.20);
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(201, 182, 228, 0.15);
     box-shadow:
-      0 0 35px rgba(0, 217, 255, 0.12),
-      0 0 70px rgba(201, 182, 228, 0.06),
+      6px 6px 12px rgba(0, 0, 0, 0.6),
+      -4px -4px 10px rgba(255, 255, 255, 0.05),
+      0 0 10px rgba(0, 217, 255, 0.12),
       inset 0 2px 0 rgba(255, 255, 255, 0.10),
-      inset 0 -2px 0 rgba(201, 182, 228, 0.25);
+      inset 0 -2px 0 rgba(201, 182, 228, 0.20);
   }
 
   .stats-bar:hover {
@@ -737,10 +763,11 @@
 
   .dark .stats-bar:hover {
     box-shadow:
-      0 0 45px rgba(0, 217, 255, 0.18),
-      0 0 90px rgba(201, 182, 228, 0.10),
+      8px 8px 16px rgba(0, 0, 0, 0.7),
+      -5px -5px 12px rgba(255, 255, 255, 0.06),
+      0 0 15px rgba(0, 217, 255, 0.18),
       inset 0 2px 0 rgba(255, 255, 255, 0.15),
-      inset 0 -2px 0 rgba(201, 182, 228, 0.30);
+      inset 0 -2px 0 rgba(201, 182, 228, 0.25);
   }
 
   /* ===== BADGE ===== */
@@ -760,17 +787,16 @@
   }
 
   .dark .badge-skeuo {
-    background: linear-gradient(
-      145deg,
-      rgba(0, 217, 255, 0.16) 0%,
-      rgba(201, 182, 228, 0.12) 100%
-    );
-    border: 1px solid rgba(201, 182, 228, 0.25);
+    background: rgba(0, 217, 255, 0.10);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(201, 182, 228, 0.20);
     color: #00D9FF;
     box-shadow:
-      0 0 15px rgba(0, 217, 255, 0.10),
-      0 0 30px rgba(201, 182, 228, 0.05),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      4px 4px 10px rgba(0, 0, 0, 0.5),
+      -3px -3px 8px rgba(255, 255, 255, 0.04),
+      0 0 8px rgba(0, 217, 255, 0.10),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
   }
 
   .badge-skeuo:hover {
@@ -783,9 +809,10 @@
 
   .dark .badge-skeuo:hover {
     box-shadow:
-      0 0 20px rgba(0, 217, 255, 0.15),
-      0 0 40px rgba(201, 182, 228, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.20);
+      6px 6px 12px rgba(0, 0, 0, 0.6),
+      -4px -4px 10px rgba(255, 255, 255, 0.05),
+      0 0 12px rgba(0, 217, 255, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
   }
 
   /* ===== WARM TAG ===== */
@@ -801,12 +828,16 @@
   }
 
   .dark .tag-warm {
-    background: linear-gradient(145deg, rgba(245, 158, 11, 0.18) 0%, rgba(245, 158, 11, 0.12) 100%);
+    background: rgba(245, 158, 11, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     color: #FBBF24;
-    border: 1px solid rgba(245, 158, 11, 0.35);
+    border: 1px solid rgba(245, 158, 11, 0.30);
     box-shadow:
-      0 0 15px rgba(245, 158, 11, 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      4px 4px 10px rgba(0, 0, 0, 0.5),
+      -3px -3px 8px rgba(255, 255, 255, 0.04),
+      0 0 8px rgba(245, 158, 11, 0.10),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
   }
 
   .tag-warm:hover {
@@ -820,11 +851,13 @@
   }
 
   .dark .tag-warm:hover {
-    background: linear-gradient(145deg, rgba(245, 158, 11, 0.28) 0%, rgba(245, 158, 11, 0.20) 100%);
-    border-color: rgba(245, 158, 11, 0.50);
+    background: rgba(245, 158, 11, 0.18);
+    border-color: rgba(245, 158, 11, 0.40);
     box-shadow:
-      0 0 25px rgba(245, 158, 11, 0.20),
-      inset 0 1px 0 rgba(255, 255, 255, 0.20);
+      6px 6px 12px rgba(0, 0, 0, 0.6),
+      -4px -4px 10px rgba(255, 255, 255, 0.05),
+      0 0 12px rgba(245, 158, 11, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
   }
 
   .tag-warm:active {
@@ -837,9 +870,11 @@
 
   .dark .tag-warm:active {
     box-shadow:
-      0 0 12px rgba(245, 158, 11, 0.10),
-      inset 0 2px 4px rgba(0, 0, 0, 0.30),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+      inset 3px 3px 6px rgba(0, 0, 0, 0.6),
+      inset -1px -1px 5px rgba(255, 255, 255, 0.03),
+      0 0 6px rgba(245, 158, 11, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 -1px 0 rgba(245, 158, 11, 0.15);
   }
 
   /* ===== LILAC TAG ===== */
@@ -855,12 +890,16 @@
   }
 
   .dark .tag-lilac {
-    background: linear-gradient(145deg, rgba(201, 182, 228, 0.18) 0%, rgba(201, 182, 228, 0.12) 100%);
+    background: rgba(201, 182, 228, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     color: #C9B6E4;
-    border: 1px solid rgba(201, 182, 228, 0.35);
+    border: 1px solid rgba(201, 182, 228, 0.25);
     box-shadow:
-      0 0 15px rgba(201, 182, 228, 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      4px 4px 10px rgba(0, 0, 0, 0.5),
+      -3px -3px 8px rgba(255, 255, 255, 0.04),
+      0 0 8px rgba(201, 182, 228, 0.10),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
   }
 
   .tag-lilac:hover {
@@ -874,11 +913,13 @@
   }
 
   .dark .tag-lilac:hover {
-    background: linear-gradient(145deg, rgba(201, 182, 228, 0.28) 0%, rgba(201, 182, 228, 0.20) 100%);
-    border-color: rgba(201, 182, 228, 0.50);
+    background: rgba(201, 182, 228, 0.18);
+    border-color: rgba(201, 182, 228, 0.40);
     box-shadow:
-      0 0 25px rgba(201, 182, 228, 0.20),
-      inset 0 1px 0 rgba(255, 255, 255, 0.20);
+      6px 6px 12px rgba(0, 0, 0, 0.6),
+      -4px -4px 10px rgba(255, 255, 255, 0.05),
+      0 0 12px rgba(201, 182, 228, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
   }
 
   .tag-lilac:active {
@@ -891,9 +932,11 @@
 
   .dark .tag-lilac:active {
     box-shadow:
-      0 0 12px rgba(201, 182, 228, 0.10),
-      inset 0 2px 4px rgba(0, 0, 0, 0.30),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+      inset 3px 3px 6px rgba(0, 0, 0, 0.6),
+      inset -1px -1px 5px rgba(255, 255, 255, 0.03),
+      0 0 6px rgba(201, 182, 228, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 -1px 0 rgba(201, 182, 228, 0.15);
   }
 
   /* ===== THEME TOGGLE BUTTON ===== */
@@ -913,17 +956,16 @@
   }
 
   .dark #theme-toggle {
-    background: linear-gradient(
-      145deg,
-      rgba(18, 22, 42, 0.85) 0%,
-      rgba(26, 31, 58, 0.70) 100%
-    );
-    border: 1px solid rgba(201, 182, 228, 0.25);
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(201, 182, 228, 0.20);
     box-shadow:
-      0 0 20px rgba(0, 217, 255, 0.10),
-      0 0 40px rgba(201, 182, 228, 0.05),
+      6px 6px 12px rgba(0, 0, 0, 0.6),
+      -4px -4px 10px rgba(255, 255, 255, 0.05),
+      0 0 10px rgba(0, 217, 255, 0.10),
       inset 0 1px 0 rgba(255, 255, 255, 0.10),
-      inset 0 -1px 0 rgba(201, 182, 228, 0.20);
+      inset 0 -1px 0 rgba(201, 182, 228, 0.15);
   }
 
   #theme-toggle:hover {
@@ -941,17 +983,14 @@
   }
 
   .dark #theme-toggle:hover {
-    background: linear-gradient(
-      145deg,
-      rgba(0, 217, 255, 0.15) 0%,
-      rgba(201, 182, 228, 0.10) 100%
-    );
+    background: rgba(0, 217, 255, 0.08);
     border-color: rgba(0, 217, 255, 0.40);
     box-shadow:
-      0 0 30px rgba(0, 217, 255, 0.18),
-      0 0 60px rgba(201, 182, 228, 0.10),
+      8px 8px 16px rgba(0, 0, 0, 0.7),
+      -5px -5px 12px rgba(255, 255, 255, 0.06),
+      0 0 15px rgba(0, 217, 255, 0.15),
       inset 0 1px 0 rgba(255, 255, 255, 0.15),
-      inset 0 -1px 0 rgba(201, 182, 228, 0.25);
+      inset 0 -1px 0 rgba(201, 182, 228, 0.20);
   }
 
   #theme-toggle:active {
@@ -967,15 +1006,13 @@
   }
 
   .dark #theme-toggle:active {
-    background: linear-gradient(
-      145deg,
-      rgba(0, 217, 255, 0.20) 0%,
-      rgba(201, 182, 228, 0.15) 100%
-    );
+    background: rgba(0, 217, 255, 0.10);
     box-shadow:
-      0 0 15px rgba(0, 217, 255, 0.12),
-      inset 0 3px 6px rgba(0, 0, 0, 0.30),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+      inset 4px 4px 8px rgba(0, 0, 0, 0.7),
+      inset -2px -2px 6px rgba(255, 255, 255, 0.04),
+      0 0 8px rgba(0, 217, 255, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 -1px 0 rgba(201, 182, 228, 0.10);
   }
 }
 
