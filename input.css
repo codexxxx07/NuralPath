@@ -979,3 +979,74 @@
     @apply border-slate-200/60;
   }
 }
+
+/* ===== MODAL / OVERLAY ===== */
+body.modal-open {
+  overflow: hidden;
+}
+
+#modal-box,
+#confirm-box {
+  animation: modalIn 0.3s ease-out;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.92) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+#modal-backdrop,
+#confirm-backdrop {
+  transition: opacity 0.3s ease;
+}
+
+/* ===== TOAST ===== */
+.toast {
+  pointer-events: auto;
+  animation: toastIn 0.4s ease-out;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.toast.removing {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(100%); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ===== SPINNER ===== */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  display: inline-block;
+}
+
+.dark .spinner {
+  border-color: rgba(255,255,255,0.12);
+  border-top-color: #7C5CFF;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== DISABLED BUTTONS ===== */
+.btn-primary:disabled,
+.btn-outline:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btn-primary:disabled:hover,
+.btn-outline:disabled:hover {
+  transform: none !important;
+}

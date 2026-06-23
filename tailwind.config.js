@@ -18,6 +18,13 @@ module.exports = {
     "shadow-lilac/10",
     "border-accent/20",
     "border-lilac/10",
+    // toast classes
+    "border-l-green-500",
+    "border-l-red-500",
+    "border-l-accent",
+    "border-l-warm",
+    "dark:bg-dark-card",
+    "dark:border-dark-border/20",
   ],
   theme: {
     extend: {

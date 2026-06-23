@@ -194,4 +194,174 @@
       }
     });
   }
+
+  // ===== MODAL SYSTEM =====
+  var modalBackdrop = document.getElementById("modal-backdrop");
+  var modalTitleEl = document.getElementById("modal-title");
+  var modalMessageEl = document.getElementById("modal-message");
+  var modalIconEl = document.getElementById("modal-icon");
+  var modalCloseBtn = document.getElementById("modal-close-btn");
+  var modalOverlayClose = document.getElementById("modal-overlay-close");
+
+  function showModal(title, message, icon) {
+    modalTitleEl.textContent = title;
+    modalMessageEl.textContent = message;
+    modalIconEl.textContent = icon || "✅";
+    modalBackdrop.classList.remove("hidden");
+    modalBackdrop.style.display = "flex";
+    document.body.classList.add("modal-open");
+  }
+
+  function hideModal() {
+    modalBackdrop.classList.add("hidden");
+    modalBackdrop.style.display = "";
+    document.body.classList.remove("modal-open");
+  }
+
+  if (modalCloseBtn) {
+    modalCloseBtn.addEventListener("click", hideModal);
+  }
+
+  if (modalOverlayClose) {
+    modalOverlayClose.addEventListener("click", hideModal);
+  }
+
+  // ===== CONFIRMATION MODAL =====
+  var confirmBackdrop = document.getElementById("confirm-backdrop");
+  var confirmMessageEl = document.getElementById("confirm-message");
+  var confirmCancelBtn = document.getElementById("confirm-cancel");
+  var confirmOkBtn = document.getElementById("confirm-ok");
+  var confirmOverlayClose = document.getElementById("confirm-overlay-close");
+  var confirmCallback = null;
+
+  function showConfirm(message, callback) {
+    if (confirmMessageEl) {
+      confirmMessageEl.textContent = message || "This action cannot be undone.";
+    }
+    confirmBackdrop.classList.remove("hidden");
+    confirmBackdrop.style.display = "flex";
+    document.body.classList.add("modal-open");
+    confirmCallback = callback;
+  }
+
+  function hideConfirm() {
+    confirmBackdrop.classList.add("hidden");
+    confirmBackdrop.style.display = "";
+    document.body.classList.remove("modal-open");
+    confirmCallback = null;
+  }
+
+  if (confirmCancelBtn) {
+    confirmCancelBtn.addEventListener("click", hideConfirm);
+  }
+
+  if (confirmOkBtn) {
+    confirmOkBtn.addEventListener("click", function () {
+      if (confirmCallback) confirmCallback();
+      hideConfirm();
+    });
+  }
+
+  if (confirmOverlayClose) {
+    confirmOverlayClose.addEventListener("click", hideConfirm);
+  }
+
+  // ===== TOAST SYSTEM =====
+  var toastContainer = document.getElementById("toast-container");
+
+  function showToast(message, type) {
+    if (!toastContainer) return;
+    type = type || "info";
+    var iconMap = { success: "✅", error: "❌", info: "💡", warning: "⚠️" };
+    var icon = iconMap[type] || "💡";
+
+    var toast = document.createElement("div");
+    toast.className =
+      "toast flex items-center gap-3 rounded-xl border border-surface-300/60 bg-white px-5 py-3 shadow-lg shadow-slate-200/50 pointer-events-auto " +
+      "dark:bg-dark-card dark:border-dark-border/20 " +
+      "border-l-4 max-w-sm";
+
+    var borderMap = { success: "border-l-green-500", error: "border-l-red-500", info: "border-l-accent", warning: "border-l-warm" };
+    toast.classList.add(borderMap[type] || borderMap.info);
+
+    toast.innerHTML =
+      '<span class="text-lg flex-shrink-0">' + icon + '</span>' +
+      '<span class="text-sm text-ink-700 dark:text-dark-textMuted">' + message + '</span>';
+
+    toastContainer.appendChild(toast);
+
+    setTimeout(function () {
+      toast.classList.add("removing");
+      setTimeout(function () {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 300);
+    }, 3500);
+  }
+
+  // ===== BUTTON ACTION HANDLER =====
+  document.addEventListener("click", function (e) {
+    var el = e.target.closest("[data-action]");
+    if (!el) return;
+    var action = el.getAttribute("data-action");
+
+    if (el.tagName === "A") e.preventDefault();
+
+    switch (action) {
+      case "signup":
+        showModal("Signed Up Successfully! 🎉", "Welcome to NuralPath! Start your learning journey today.");
+        break;
+
+      case "login":
+        showToast("Login feature coming soon! 🔐", "info");
+        break;
+
+      case "get-started":
+        var context = el.getAttribute("data-context") || "";
+        if (context === "cta") {
+          showModal("You're In! 🚀", "Welcome aboard! Start exploring our expert-led courses today.");
+        } else {
+          showModal("Welcome to NuralPath! 🚀", "Your learning journey begins now. Explore our courses and start building your future.");
+        }
+        break;
+
+      case "enroll":
+        var course = el.getAttribute("data-course") || "this course";
+        showModal("Enrolled Successfully! ✅", "You are now part of " + course + ". Get ready to learn and grow!");
+        break;
+
+      case "view-all":
+        showToast("Opening full course catalog... 📚", "info");
+        break;
+
+      case "category":
+        var category = el.getAttribute("data-category") || "this category";
+        showToast("Showing " + category + " courses... 📂", "info");
+        break;
+
+      case "talk-advisor":
+        showModal("Connecting... ⏳", "Please wait while we connect you with an advisor.");
+        setTimeout(function () {
+          modalTitleEl.textContent = "Connected! ✅";
+          modalMessageEl.textContent = "An advisor will reach out to you within 24 hours. Check your email for details.";
+          modalIconEl.textContent = "✅";
+        }, 2000);
+        break;
+
+      case "footer-link":
+        var section = el.getAttribute("data-section") || "This section";
+        showToast(section + " coming soon! 📍", "info");
+        break;
+
+      default:
+        showToast("Feature coming soon! 🚧", "info");
+    }
+  });
+
+  // ===== KEYBOARD SUPPORT =====
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      if (modalBackdrop && !modalBackdrop.classList.contains("hidden")) hideModal();
+      if (confirmBackdrop && !confirmBackdrop.classList.contains("hidden")) hideConfirm();
+    }
+  });
 })();
