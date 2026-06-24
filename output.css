@@ -1801,6 +1801,10 @@ body {
   max-width: 36rem;
 }
 
+.flex-1 {
+  flex: 1 1 0%;
+}
+
 .flex-shrink-0 {
   flex-shrink: 0;
 }
@@ -1947,6 +1951,12 @@ body {
   gap: 2rem;
 }
 
+.space-y-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+}
+
 .space-y-3 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
@@ -1957,6 +1967,10 @@ body {
   --tw-divide-x-reverse: 0;
   border-right-width: calc(1px * var(--tw-divide-x-reverse));
   border-left-width: calc(1px * calc(1 - var(--tw-divide-x-reverse)));
+}
+
+.divide-gray-200\/50 > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgb(229 231 235 / 0.5);
 }
 
 .divide-surface-300\/50 > :not([hidden]) ~ :not([hidden]) {
@@ -2560,6 +2574,62 @@ body.modal-open {
 .btn-primary:disabled:hover,
 .btn-outline:disabled:hover {
   transform: none !important;
+}
+
+/* ===== SKELETON LOADING ===== */
+
+.skeleton-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow-y: auto;
+  background: linear-gradient(145deg, #EEF1F5 0%, #F5F7FA 50%, #E8ECF2 100%);
+  transition: opacity 0.5s ease-out;
+}
+
+.dark .skeleton-loader {
+  background: linear-gradient(180deg, #0A0F1C 0%, #0D1324 100%);
+}
+
+.skeleton-loader.hide-skeleton {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(90deg, #d1d5e0 25%, #e4e8f0 50%, #d1d5e0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.dark .skeleton-shimmer {
+  background: linear-gradient(90deg, #2a2f45 25%, #3a3f5a 50%, #2a2f45 75%);
+  background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-circle {
+  border-radius: 50%;
+}
+
+.skeleton-card {
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.dark .skeleton-card {
+  background: rgba(18, 24, 43, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .hover\:scale-110:hover {

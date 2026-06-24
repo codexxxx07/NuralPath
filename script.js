@@ -364,4 +364,34 @@
       if (confirmBackdrop && !confirmBackdrop.classList.contains("hidden")) hideConfirm();
     }
   });
+
+  // ===== SKELETON LOADER =====
+  (function () {
+    var skeleton = document.getElementById("skeleton-loader");
+    if (!skeleton) return;
+
+    var minLoadTime = 1500;
+    var startTime = Date.now();
+
+    document.body.style.overflow = "hidden";
+
+    function removeSkeleton() {
+      var elapsed = Date.now() - startTime;
+      var remaining = Math.max(0, minLoadTime - elapsed);
+
+      setTimeout(function () {
+        skeleton.classList.add("hide-skeleton");
+        document.body.style.overflow = "";
+        setTimeout(function () {
+          skeleton.style.display = "none";
+        }, 500);
+      }, remaining);
+    }
+
+    if (document.readyState === "complete") {
+      removeSkeleton();
+    } else {
+      window.addEventListener("load", removeSkeleton);
+    }
+  })();
 })();
