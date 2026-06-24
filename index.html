@@ -9,6 +9,13 @@
       document.documentElement.classList.remove("dark");
     </script>
     <link rel="stylesheet" href="output.css" />
+    <style>
+      @media (max-width: 768px) {
+        footer#contact .grid > div { text-align: center; }
+        footer#contact .grid > div .flex { justify-content: center; }
+        footer#contact .grid > div ul { display: flex; flex-direction: column; align-items: center; }
+      }
+    </style>
   </head>
   <body>
     <!-- ===== SKELETON LOADING OVERLAY ===== -->
