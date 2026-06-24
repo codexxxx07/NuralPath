@@ -7,10 +7,8 @@
   var moonIcon = document.getElementById("moon-icon");
   var htmlElement = document.documentElement;
 
-  // Check for saved theme preference or default to light
-  var savedTheme = localStorage.getItem("theme");
-  var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  var isDark = savedTheme === "dark" || (!savedTheme && prefersDark);
+  // Always start in light mode — no preference is persisted.
+  var isDark = false;
 
   function updateThemeUI() {
     if (isDark) {
@@ -26,7 +24,6 @@
 
   function toggleTheme() {
     isDark = !isDark;
-    localStorage.setItem("theme", isDark ? "dark" : "light");
     updateThemeUI();
   }
 
@@ -38,13 +35,7 @@
     themeToggle.addEventListener("click", toggleTheme);
   }
 
-  // Listen for system theme changes
-  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function (e) {
-    if (!localStorage.getItem("theme")) {
-      isDark = e.matches;
-      updateThemeUI();
-    }
-  });
+  // Light mode is always the default — no persistence, system preference ignored
 
   // ===== NAVBAR =====
   var navbar = document.getElementById("navbar");
