@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
-  content: ["./*.html", "./script.js"],
+  content: ["./*.html", "./script.js", "./pages/*.html"],
   safelist: [
     // navbar scroll-state classes applied by script.js
     "bg-surface-50/90",

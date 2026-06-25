@@ -1,14 +1,13 @@
 (function () {
   "use strict";
 
-  // ===== THEME TOGGLE =====
+  // ===== THEME TOGGLE (persisted via localStorage) =====
   var themeToggle = document.getElementById("theme-toggle");
   var sunIcon = document.getElementById("sun-icon");
   var moonIcon = document.getElementById("moon-icon");
   var htmlElement = document.documentElement;
 
-  // Always start in light mode — no preference is persisted.
-  var isDark = false;
+  var isDark = localStorage.getItem("nuralpath_theme") === "dark";
 
   function updateThemeUI() {
     if (isDark) {
@@ -24,6 +23,7 @@
 
   function toggleTheme() {
     isDark = !isDark;
+    localStorage.setItem("nuralpath_theme", isDark ? "dark" : "light");
     updateThemeUI();
   }
 
@@ -34,8 +34,6 @@
   if (themeToggle) {
     themeToggle.addEventListener("click", toggleTheme);
   }
-
-  // Light mode is always the default — no persistence, system preference ignored
 
   // ===== NAVBAR =====
   var navbar = document.getElementById("navbar");
