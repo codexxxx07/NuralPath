@@ -16,37 +16,58 @@
         <div class="mt-10">
           <h2 class="text-2xl font-semibold text-ink-900 dark:text-dark-text">Common Questions</h2>
           <div class="mt-6 space-y-3">
-            <div class="flex items-start gap-4 rounded-xl bg-surface-100/50 p-4 dark:bg-dark-card/50">
-              <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg icon-container text-accent-deep">
-                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <div class="faq-item rounded-xl bg-surface-100/50 p-4 dark:bg-dark-card/50 shadow-[0_2px_8px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,0.6)] backdrop-blur-sm transition-all duration-300 hover:shadow-[0_4px_12px_rgba(0,0,0,0.12),0_2px_4px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,0.6)]">
+              <button class="faq-header flex w-full items-center justify-between gap-4 text-left" onclick="toggleFaq(this)">
+                <div class="flex items-center gap-4">
+                  <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg icon-container text-accent-deep">
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <p class="text-ink-700 dark:text-dark-textMuted font-medium">Q: How do I access my courses after enrollment?</p>
+                </div>
+                <svg class="faq-icon h-5 w-5 shrink-0 text-accent-deep transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
-              </div>
-              <div>
-                <p class="text-ink-700 dark:text-dark-textMuted">Q: How do I access my courses after enrollment?</p>
-                <p class="mt-1 text-sm text-ink-400 dark:text-dark-textMuted">A: Once enrolled, you can access all your courses from your dashboard anytime.</p>
+              </button>
+              <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                <p class="mt-4 text-sm text-ink-400 dark:text-dark-textMuted pl-14">A: Once enrolled, you can access all your courses from your dashboard anytime.</p>
               </div>
             </div>
-            <div class="flex items-start gap-4 rounded-xl bg-surface-100/50 p-4 dark:bg-dark-card/50">
-              <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg icon-container text-accent-deep">
-                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <div class="faq-item rounded-xl bg-surface-100/50 p-4 dark:bg-dark-card/50 shadow-[0_2px_8px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,0.6)] backdrop-blur-sm transition-all duration-300 hover:shadow-[0_4px_12px_rgba(0,0,0,0.12),0_2px_4px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,0.6)]">
+              <button class="faq-header flex w-full items-center justify-between gap-4 text-left" onclick="toggleFaq(this)">
+                <div class="flex items-center gap-4">
+                  <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg icon-container text-accent-deep">
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <p class="text-ink-700 dark:text-dark-textMuted font-medium">Q: Can I get a refund if I'm not satisfied?</p>
+                </div>
+                <svg class="faq-icon h-5 w-5 shrink-0 text-accent-deep transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
-              </div>
-              <div>
-                <p class="text-ink-700 dark:text-dark-textMuted">Q: Can I get a refund if I'm not satisfied?</p>
-                <p class="mt-1 text-sm text-ink-400 dark:text-dark-textMuted">A: Yes, we offer a 30-day money-back guarantee on all courses.</p>
+              </button>
+              <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                <p class="mt-4 text-sm text-ink-400 dark:text-dark-textMuted pl-14">A: Yes, we offer a 30-day money-back guarantee on all courses.</p>
               </div>
             </div>
-            <div class="flex items-start gap-4 rounded-xl bg-surface-100/50 p-4 dark:bg-dark-card/50">
-              <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg icon-container text-accent-deep">
-                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <div class="faq-item rounded-xl bg-surface-100/50 p-4 dark:bg-dark-card/50 shadow-[0_2px_8px_rgba(0,0,0,0.08),0_1px_2px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,0.6)] backdrop-blur-sm transition-all duration-300 hover:shadow-[0_4px_12px_rgba(0,0,0,0.12),0_2px_4px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,0.6)]">
+              <button class="faq-header flex w-full items-center justify-between gap-4 text-left" onclick="toggleFaq(this)">
+                <div class="flex items-center gap-4">
+                  <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg icon-container text-accent-deep">
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <p class="text-ink-700 dark:text-dark-textMuted font-medium">Q: Are certificates provided upon completion?</p>
+                </div>
+                <svg class="faq-icon h-5 w-5 shrink-0 text-accent-deep transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
-              </div>
-              <div>
-                <p class="text-ink-700 dark:text-dark-textMuted">Q: Are certificates provided upon completion?</p>
-                <p class="mt-1 text-sm text-ink-400 dark:text-dark-textMuted">A: Yes, you receive a verified certificate after completing each course.</p>
+              </button>
+              <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                <p class="mt-4 text-sm text-ink-400 dark:text-dark-textMuted pl-14">A: Yes, you receive a verified certificate after completing each course.</p>
               </div>
             </div>
           </div>
@@ -62,5 +83,32 @@
         </div>
       </div>
     </div>
+    <script>
+      function toggleFaq(button) {
+        const faqItem = button.closest('.faq-item');
+        const content = faqItem.querySelector('.faq-content');
+        const icon = faqItem.querySelector('.faq-icon');
+        const isOpen = content.style.maxHeight !== '' && content.style.maxHeight !== '0px';
+
+        // Close all other FAQ items
+        document.querySelectorAll('.faq-item').forEach(item => {
+          if (item !== faqItem) {
+            const otherContent = item.querySelector('.faq-content');
+            const otherIcon = item.querySelector('.faq-icon');
+            otherContent.style.maxHeight = '0px';
+            otherIcon.style.transform = 'rotate(0deg)';
+          }
+        });
+
+        // Toggle current item
+        if (isOpen) {
+          content.style.maxHeight = '0px';
+          icon.style.transform = 'rotate(0deg)';
+        } else {
+          content.style.maxHeight = content.scrollHeight + 'px';
+          icon.style.transform = 'rotate(45deg)';
+        }
+      }
+    </script>
   </body>
 </html>
