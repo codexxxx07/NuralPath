@@ -1002,6 +1002,27 @@ body.modal-open {
   transition: opacity 0.3s ease;
 }
 
+/* ===== LOGIN MODAL CLOSE BUTTON ===== */
+#login-modal-close-btn {
+  color: #334155;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 9999px;
+  opacity: 1;
+  visibility: visible;
+}
+#login-modal-close-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #0f172a;
+}
+.dark #login-modal-close-btn {
+  color: #e2e8f0;
+  background: rgba(255, 255, 255, 0.1);
+}
+.dark #login-modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
 /* ===== LOGIN MODAL ===== */
 .login-view {
   transition: opacity 0.3s ease, transform 0.3s ease;
