@@ -986,7 +986,8 @@ body.modal-open {
 }
 
 #modal-box,
-#confirm-box {
+#confirm-box,
+#login-modal-box {
   animation: modalIn 0.3s ease-out;
 }
 
@@ -996,8 +997,40 @@ body.modal-open {
 }
 
 #modal-backdrop,
-#confirm-backdrop {
+#confirm-backdrop,
+#login-modal-backdrop {
   transition: opacity 0.3s ease;
+}
+
+/* ===== LOGIN MODAL ===== */
+.login-view {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.login-view.hidden {
+  display: none;
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.login-view:not(.hidden) {
+  display: block;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+#login-modal-backdrop {
+  transition: opacity 0.3s ease;
+}
+
+#login-modal-backdrop.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#login-modal-backdrop:not(.hidden) {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* ===== TOAST ===== */

@@ -299,11 +299,11 @@
 
     switch (action) {
       case "signup":
-        showModal("Signed Up Successfully! 🎉", "Welcome to NuralPath! Start your learning journey today.");
+        showLoginModal("signup");
         break;
 
       case "login":
-        showToast("Login feature coming soon! 🔐", "info");
+        showLoginModal("login");
         break;
 
       case "get-started":
@@ -353,8 +353,232 @@
     if (e.key === "Escape") {
       if (modalBackdrop && !modalBackdrop.classList.contains("hidden")) hideModal();
       if (confirmBackdrop && !confirmBackdrop.classList.contains("hidden")) hideConfirm();
+      if (loginModalBackdrop && !loginModalBackdrop.classList.contains("hidden")) hideLoginModal();
     }
   });
+
+  // ===== LOGIN MODAL SYSTEM =====
+  var loginModalBackdrop = document.getElementById("login-modal-backdrop");
+  var loginModalCloseBtn = document.getElementById("login-modal-close-btn");
+  var loginModalOverlayClose = document.getElementById("login-modal-overlay-close");
+
+  // Login Modal Views
+  var loginView = document.getElementById("login-view");
+  var signupView = document.getElementById("signup-view");
+  var forgotPasswordView = document.getElementById("forgot-password-view");
+  var forgotSuccessView = document.getElementById("forgot-success-view");
+
+  // View switching links
+  var signupLink = document.getElementById("signup-link");
+  var loginLink = document.getElementById("login-link");
+  var forgotPasswordLink = document.getElementById("forgot-password-link");
+  var backToLoginLink = document.getElementById("back-to-login-link");
+  var forgotSuccessClose = document.getElementById("forgot-success-close");
+
+  // Forms
+  var loginForm = document.getElementById("login-form");
+  var signupForm = document.getElementById("signup-form");
+  var forgotPasswordForm = document.getElementById("forgot-password-form");
+
+  function showLoginModal(view) {
+    loginModalBackdrop.classList.remove("hidden");
+    loginModalBackdrop.style.display = "flex";
+    document.body.classList.add("modal-open");
+    switchLoginView(view || "login");
+  }
+
+  function hideLoginModal() {
+    loginModalBackdrop.classList.add("hidden");
+    loginModalBackdrop.style.display = "";
+    document.body.classList.remove("modal-open");
+    // Reset forms
+    if (loginForm) loginForm.reset();
+    if (signupForm) signupForm.reset();
+    if (forgotPasswordForm) forgotPasswordForm.reset();
+    // Reset to login view
+    switchLoginView("login");
+  }
+
+  function switchLoginView(viewName) {
+    // Hide all views
+    loginView.classList.add("hidden");
+    signupView.classList.add("hidden");
+    forgotPasswordView.classList.add("hidden");
+    forgotSuccessView.classList.add("hidden");
+
+    // Show selected view
+    switch (viewName) {
+      case "login":
+        loginView.classList.remove("hidden");
+        break;
+      case "signup":
+        signupView.classList.remove("hidden");
+        break;
+      case "forgot":
+        forgotPasswordView.classList.remove("hidden");
+        break;
+      case "forgot-success":
+        forgotSuccessView.classList.remove("hidden");
+        break;
+    }
+  }
+
+  // Event listeners for modal close
+  if (loginModalCloseBtn) {
+    loginModalCloseBtn.addEventListener("click", hideLoginModal);
+  }
+
+  if (loginModalOverlayClose) {
+    loginModalOverlayClose.addEventListener("click", hideLoginModal);
+  }
+
+  // View switching event listeners
+  if (signupLink) {
+    signupLink.addEventListener("click", function () {
+      switchLoginView("signup");
+    });
+  }
+
+  if (loginLink) {
+    loginLink.addEventListener("click", function () {
+      switchLoginView("login");
+    });
+  }
+
+  if (forgotPasswordLink) {
+    forgotPasswordLink.addEventListener("click", function () {
+      switchLoginView("forgot");
+    });
+  }
+
+  if (backToLoginLink) {
+    backToLoginLink.addEventListener("click", function () {
+      switchLoginView("login");
+    });
+  }
+
+  if (forgotSuccessClose) {
+    forgotSuccessClose.addEventListener("click", hideLoginModal);
+  }
+
+  // ===== AUTHENTICATION WITH LOCALSTORAGE =====
+  function getUsers() {
+    var users = localStorage.getItem("nuralpath_users");
+    return users ? JSON.parse(users) : [];
+  }
+
+  function saveUser(user) {
+    var users = getUsers();
+    users.push(user);
+    localStorage.setItem("nuralpath_users", JSON.stringify(users));
+  }
+
+  function findUserByEmail(email) {
+    var users = getUsers();
+    return users.find(function (u) { return u.email === email; });
+  }
+
+  function setCurrentUser(user) {
+    localStorage.setItem("nuralpath_current_user", JSON.stringify(user));
+  }
+
+  function getCurrentUser() {
+    var user = localStorage.getItem("nuralpath_current_user");
+    return user ? JSON.parse(user) : null;
+  }
+
+  function logout() {
+    localStorage.removeItem("nuralpath_current_user");
+    showToast("Logged out successfully", "info");
+  }
+
+  // Login form handler
+  if (loginForm) {
+    loginForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var email = document.getElementById("login-email").value.trim();
+      var password = document.getElementById("login-password").value;
+
+      if (!email || !password) {
+        showToast("Please fill in all fields", "error");
+        return;
+      }
+
+      var user = findUserByEmail(email);
+      if (user && user.password === password) {
+        setCurrentUser(user);
+        showToast("Welcome back, " + user.name + "!", "success");
+        hideLoginModal();
+      } else {
+        showToast("Invalid email or password", "error");
+      }
+    });
+  }
+
+  // Signup form handler
+  if (signupForm) {
+    signupForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var name = document.getElementById("signup-name").value.trim();
+      var email = document.getElementById("signup-email").value.trim();
+      var password = document.getElementById("signup-password").value;
+      var confirmPassword = document.getElementById("signup-confirm-password").value;
+
+      if (!name || !email || !password || !confirmPassword) {
+        showToast("Please fill in all fields", "error");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showToast("Passwords do not match", "error");
+        return;
+      }
+
+      if (password.length < 6) {
+        showToast("Password must be at least 6 characters", "error");
+        return;
+      }
+
+      if (findUserByEmail(email)) {
+        showToast("An account with this email already exists", "error");
+        return;
+      }
+
+      var newUser = {
+        name: name,
+        email: email,
+        password: password,
+        createdAt: new Date().toISOString()
+      };
+
+      saveUser(newUser);
+      setCurrentUser(newUser);
+      showToast("Account created successfully! Welcome, " + name + "!", "success");
+      hideLoginModal();
+    });
+  }
+
+  // Forgot password form handler
+  if (forgotPasswordForm) {
+    forgotPasswordForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var email = document.getElementById("forgot-email").value.trim();
+
+      if (!email) {
+        showToast("Please enter your email", "error");
+        return;
+      }
+
+      // Simulate sending reset link
+      var user = findUserByEmail(email);
+      if (user) {
+        switchLoginView("forgot-success");
+      } else {
+        // Don't reveal if email exists, just show success
+        switchLoginView("forgot-success");
+      }
+    });
+  }
 
   // ===== SKELETON LOADER =====
   (function () {
