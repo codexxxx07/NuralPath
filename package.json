@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "tailwindcss -i input.css -o output.css",
-    "watch": "tailwindcss -i input.css -o output.css --watch",
+    "watch:css": "tailwindcss -i input.css -o output.css --watch",
+    "start": "live-server",
+    "dev": "npm-run-all --parallel watch:css start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -13,6 +15,8 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "live-server": "^1.2.2",
+    "npm-run-all": "^4.1.5",
     "tailwindcss": "^3.4.19"
   }
 }

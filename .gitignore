@@ -1,0 +1,13 @@
+# Node / JS
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Editor / local files
+.vscode/
+.venv/
+
+# Python Backend
+backend/__pycache__/
+backend/*.pyc
+backend/.env
