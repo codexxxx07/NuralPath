@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" class="light">
   <head>
     <meta charset="UTF-8" />
@@ -8,139 +8,243 @@
     <script>
       (function() {
         var theme = localStorage.getItem("nuralpath_theme");
-        if (theme === "dark") {
-          document.documentElement.classList.add("dark");
-        } else {
-          document.documentElement.classList.remove("dark");
-        }
+        if (theme === "dark") { document.documentElement.classList.add("dark"); }
+        else { document.documentElement.classList.remove("dark"); }
       })();
     </script>
   </head>
-  <body class="min-h-screen bg-surface-50 dark:bg-dark-bg">
-    <div class="mx-auto max-w-4xl px-4 py-24 sm:px-6 lg:px-8">
-      <div class="glass rounded-2xl p-8 sm:p-12">
-        <h1
-          class="text-4xl font-bold text-ink-900 dark:text-dark-text sm:text-5xl"
-        >
-          Pricing Plans
-        </h1>
-        <p
-          class="mt-8 text-lg leading-relaxed text-ink-400 dark:text-dark-textMuted"
-        >
-          Choose the plan that fits your learning goals. We offer flexible
-          pricing options designed to accommodate students, professionals, and
-          teams. All plans include access to our expert-led courses, hands-on
-          projects, and community support.
-        </p>
-        <p
-          class="mt-4 text-lg leading-relaxed text-ink-400 dark:text-dark-textMuted"
-        >
-          Upgrade or downgrade at any time based on your needs.
-        </p>
+  <body class="min-h-screen transition-colors duration-400">
+    <!-- Subtle Background -->
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+      <div class="absolute -top-32 -right-32 h-[400px] w-[400px] rounded-full bg-accent/[0.05] blur-[120px] dark:bg-dark-accent/10"></div>
+      <div class="absolute -bottom-48 -left-32 h-[450px] w-[450px] rounded-full bg-lilac/[0.04] blur-[140px] dark:bg-dark-secondary/08"></div>
+    </div>
 
-        <div class="mt-10">
-          <h2 class="text-2xl font-semibold text-ink-900 dark:text-dark-text">
-            Available Plans
-          </h2>
-          <div class="mt-6 space-y-4">
-            <div class="rounded-xl bg-surface-100/50 p-6 dark:bg-dark-card/50">
-              <div class="flex items-center justify-between">
-                <div>
-                  <h3
-                    class="text-xl font-semibold text-ink-900 dark:text-dark-text"
-                  >
-                    Basic
-                  </h3>
-                  <p class="mt-1 text-sm text-ink-400 dark:text-dark-textMuted">
-                    Access to 5 courses
-                  </p>
-                </div>
-                <div class="text-right">
-                  <p
-                    class="text-2xl font-bold text-accent-deep dark:text-dark-accent"
-                  >
-                    $29
-                  </p>
-                  <p class="text-xs text-ink-400 dark:text-dark-textMuted">
-                    /month
-                  </p>
-                </div>
-              </div>
+    <!-- Navbar -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="navbar">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="glass mx-auto mt-3 rounded-2xl px-6 py-3 transition-all duration-300 md:px-8" id="nav-container">
+          <nav class="flex items-center justify-between">
+            <a href="../index.html" class="flex items-center gap-2.5">
+              <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-accent/20 text-sm font-bold text-accent-deep shadow-sm shadow-accent/15 dark:bg-dark-accent/25 dark:text-dark-accent">N</span>
+              <span class="text-lg font-bold tracking-tight text-ink-900 dark:text-dark-text">NuralPath</span>
+            </a>
+            <div class="hidden items-center gap-8 md:flex">
+              <a href="../index.html#courses" class="nav-link">Courses</a>
+              <a href="../index.html#categories" class="nav-link">Categories</a>
+              <a href="../index.html#about" class="nav-link">About</a>
+              <a href="../index.html#contact" class="nav-link">Contact</a>
             </div>
-            <div class="rounded-xl bg-surface-100/50 p-6 dark:bg-dark-card/50">
-              <div class="flex items-center justify-between">
-                <div>
-                  <h3
-                    class="text-xl font-semibold text-ink-900 dark:text-dark-text"
-                  >
-                    Pro
-                  </h3>
-                  <p class="mt-1 text-sm text-ink-400 dark:text-dark-textMuted">
-                    Access to all courses + mentorship
-                  </p>
-                </div>
-                <div class="text-right">
-                  <p
-                    class="text-2xl font-bold text-accent-deep dark:text-dark-accent"
-                  >
-                    $59
-                  </p>
-                  <p class="text-xs text-ink-400 dark:text-dark-textMuted">
-                    /month
-                  </p>
-                </div>
-              </div>
+            <div class="flex items-center gap-2">
+              <button id="theme-toggle" class="relative flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-200 hover:scale-105 min-w-[44px] min-h-[44px]" aria-label="Toggle theme">
+                <svg id="sun-icon" class="h-5 w-5 text-ink-500 transition-all duration-200 dark:text-dark-textMuted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <svg id="moon-icon" class="hidden h-5 w-5 text-ink-500 transition-all duration-200 dark:text-dark-textMuted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              </button>
+              <a href="login.html" class="text-sm font-medium text-ink-500 transition-colors hover:text-ink-900 dark:text-dark-textMuted dark:hover:text-dark-accent">Log in</a>
+              <a href="signup.html" class="btn-primary px-5 py-2 text-sm">Sign Up Free</a>
             </div>
-            <div class="rounded-xl bg-surface-100/50 p-6 dark:bg-dark-card/50">
-              <div class="flex items-center justify-between">
-                <div>
-                  <h3
-                    class="text-xl font-semibold text-ink-900 dark:text-dark-text"
-                  >
-                    Enterprise
-                  </h3>
-                  <p class="mt-1 text-sm text-ink-400 dark:text-dark-textMuted">
-                    Team solutions for organizations
-                  </p>
-                </div>
-                <div class="text-right">
-                  <p
-                    class="text-2xl font-bold text-accent-deep dark:text-dark-accent"
-                  >
-                    Custom
-                  </p>
-                  <p class="text-xs text-ink-400 dark:text-dark-textMuted">
-                    pricing
-                  </p>
-                </div>
-              </div>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="pt-32 pb-20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto">
+          <h1 class="section-heading text-4xl sm:text-5xl">Pricing Plans</h1>
+          <p class="section-subheading mt-6 text-lg">
+            Choose the plan that fits your learning goals. All plans include access to expert-led courses, hands-on projects, and community support.
+          </p>
+        </div>
+
+        <!-- Pricing Cards -->
+        <div class="mt-16 grid gap-8 lg:grid-cols-3 max-w-5xl mx-auto">
+          <!-- Basic -->
+          <div class="pricing-card glass-strong rounded-2xl p-8 card-hover flex flex-col">
+            <div class="mb-6">
+              <span class="badge-skeuo inline-block rounded-full px-3 py-1 text-xs font-semibold text-accent-deep dark:text-dark-accent">Basic</span>
+              <p class="mt-1 text-sm text-ink-400 dark:text-dark-textMuted">For getting started</p>
             </div>
+            <div class="mb-8">
+              <span class="text-4xl font-bold text-ink-900 dark:text-dark-text">$29</span>
+              <span class="text-sm text-ink-400 dark:text-dark-textMuted">/month</span>
+            </div>
+            <ul class="mb-8 flex-1 space-y-3">
+              <li class="flex items-start gap-3 text-sm text-ink-600 dark:text-dark-textMuted">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-accent-deep dark:text-dark-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                Access to 5 courses
+              </li>
+              <li class="flex items-start gap-3 text-sm text-ink-600 dark:text-dark-textMuted">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-accent-deep dark:text-dark-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                Community forum access
+              </li>
+              <li class="flex items-start gap-3 text-sm text-ink-600 dark:text-dark-textMuted">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-accent-deep dark:text-dark-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                Course completion certificates
+              </li>
+              <li class="flex items-start gap-3 text-sm text-ink-600 dark:text-dark-textMuted">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-accent-deep dark:text-dark-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                Email support
+              </li>
+            </ul>
+            <a href="signup.html" class="btn-outline w-full py-3 text-center text-sm font-semibold">Get Started</a>
+          </div>
+
+          <!-- Pro (Featured) -->
+          <div class="pricing-card featured glass-strong rounded-2xl p-8 card-hover flex flex-col relative ring-2 ring-accent/30 dark:ring-dark-accent/30">
+            <div class="absolute -top-3.5 left-1/2 -translate-x-1/2">
+              <span class="tag-warm rounded-full px-4 py-1 text-xs font-bold">Most Popular</span>
+            </div>
+            <div class="mb-6">
+              <span class="badge-skeuo inline-block rounded-full px-3 py-1 text-xs font-semibold text-lilac dark:text-lilac">Pro</span>
+              <p class="mt-1 text-sm text-ink-400 dark:text-dark-textMuted">For serious learners</p>
+            </div>
+            <div class="mb-8">
+              <span class="text-4xl font-bold text-ink-900 dark:text-dark-text">$59</span>
+              <span class="text-sm text-ink-400 dark:text-dark-textMuted">/month</span>
+            </div>
+            <ul class="mb-8 flex-1 space-y-3">
+              <li class="flex items-start gap-3 text-sm text-ink-600 dark:text-dark-textMuted">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-accent-deep dark:text-dark-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                Access to all courses
+              </li>
+              <li class="flex items-start gap-3 text-sm text-ink-600 dark:text-dark-textMuted">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-accent-deep dark:text-dark-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                1-on-1 mentorship sessions
+              </li>
+              <li class="flex items-start gap-3 text-sm text-ink-600 dark:text-dark-textMuted">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-accent-deep dark:text-dark-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                Priority project reviews
+              </li>
+              <li class="flex items-start gap-3 text-sm text-ink-600 dark:text-dark-textMuted">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-accent-deep dark:text-dark-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                Career guidance & resume reviews
+              </li>
+              <li class="flex items-start gap-3 text-sm text-ink-600 dark:text-dark-textMuted">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-accent-deep dark:text-dark-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                Verified completion certificates
+              </li>
+            </ul>
+            <a href="signup.html" class="btn-primary w-full py-3 text-center text-sm font-semibold">Get Started</a>
+          </div>
+
+          <!-- Enterprise -->
+          <div class="pricing-card glass-strong rounded-2xl p-8 card-hover flex flex-col">
+            <div class="mb-6">
+              <span class="badge-skeuo inline-block rounded-full px-3 py-1 text-xs font-semibold text-warm dark:text-warm">Enterprise</span>
+              <p class="mt-1 text-sm text-ink-400 dark:text-dark-textMuted">For teams &amp; orgs</p>
+            </div>
+            <div class="mb-8">
+              <span class="text-4xl font-bold text-ink-900 dark:text-dark-text">Custom</span>
+              <span class="text-sm text-ink-400 dark:text-dark-textMuted">pricing</span>
+            </div>
+            <ul class="mb-8 flex-1 space-y-3">
+              <li class="flex items-start gap-3 text-sm text-ink-600 dark:text-dark-textMuted">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-accent-deep dark:text-dark-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                Everything in Pro
+              </li>
+              <li class="flex items-start gap-3 text-sm text-ink-600 dark:text-dark-textMuted">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-accent-deep dark:text-dark-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                Unlimited team members
+              </li>
+              <li class="flex items-start gap-3 text-sm text-ink-600 dark:text-dark-textMuted">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-accent-deep dark:text-dark-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                Custom learning paths
+              </li>
+              <li class="flex items-start gap-3 text-sm text-ink-600 dark:text-dark-textMuted">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-accent-deep dark:text-dark-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                Dedicated account manager
+              </li>
+              <li class="flex items-start gap-3 text-sm text-ink-600 dark:text-dark-textMuted">
+                <svg class="mt-0.5 h-4 w-4 shrink-0 text-accent-deep dark:text-dark-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                SSO &amp; advanced analytics
+              </li>
+            </ul>
+            <a href="contact.html" class="btn-outline w-full py-3 text-center text-sm font-semibold">Contact Sales</a>
           </div>
         </div>
 
-        <div class="mt-10 flex items-center justify-center sm:justify-start">
-          <a
-            href="../index.html"
-            class="inline-flex items-center gap-2 whitespace-nowrap text-accent-deep dark:text-dark-accent hover:underline"
-          >
-            <svg
-              class="h-5 w-5 inline-block align-middle"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M10 19l-7-7m0 0l7-7m-7 7h18"
-              />
-            </svg>
+        <!-- FAQ Preview -->
+        <div class="mt-20 text-center">
+          <h2 class="text-2xl font-bold text-ink-900 dark:text-dark-text">Have questions?</h2>
+          <p class="mt-3 text-ink-400 dark:text-dark-textMuted">Find answers to common questions in our FAQ.</p>
+          <div class="mt-6">
+            <a href="faq.html" class="btn-outline inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold">
+              Visit FAQ
+              <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
 
-            <span>Back to Home</span>
+        <!-- Back to Home -->
+        <div class="mt-16 flex justify-center">
+          <a href="../index.html" class="inline-flex items-center gap-2 text-sm font-medium text-accent-deep transition-colors hover:text-accent dark:text-dark-accent dark:hover:text-dark-accent">
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Home
           </a>
         </div>
       </div>
-    </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-ink-100 py-12 dark:border-dark-card">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col items-center justify-between gap-6 sm:flex-row">
+          <div class="flex items-center gap-2.5">
+            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-accent/20 text-sm font-bold text-accent-deep shadow-sm shadow-accent/15 dark:bg-dark-accent/25 dark:text-dark-accent">N</span>
+            <span class="text-lg font-bold tracking-tight text-ink-900 dark:text-dark-text">NuralPath</span>
+          </div>
+          <div class="flex items-center gap-6 text-sm text-ink-400 dark:text-dark-textMuted">
+            <a href="privacy-policy.html" class="transition-colors hover:text-ink-700 dark:hover:text-dark-text">Privacy</a>
+            <a href="terms-of-service.html" class="transition-colors hover:text-ink-700 dark:hover:text-dark-text">Terms</a>
+            <a href="contact.html" class="transition-colors hover:text-ink-700 dark:hover:text-dark-text">Contact</a>
+          </div>
+          <p class="text-sm text-ink-300 dark:text-dark-textMuted">&copy; 2026 NuralPath</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      (function() {
+        var themeToggle = document.getElementById("theme-toggle");
+        var sunIcon = document.getElementById("sun-icon");
+        var moonIcon = document.getElementById("moon-icon");
+        var htmlEl = document.documentElement;
+        var isDark = localStorage.getItem("nuralpath_theme") === "dark";
+        function applyTheme() {
+          if (isDark) { htmlEl.classList.add("dark"); if (sunIcon) sunIcon.classList.add("hidden"); if (moonIcon) moonIcon.classList.remove("hidden"); }
+          else { htmlEl.classList.remove("dark"); if (sunIcon) sunIcon.classList.remove("hidden"); if (moonIcon) moonIcon.classList.add("hidden"); }
+        }
+        if (themeToggle) { themeToggle.addEventListener("click", function() { isDark = !isDark; localStorage.setItem("nuralpath_theme", isDark ? "dark" : "light"); applyTheme(); }); }
+        applyTheme();
+      })();
+      (function() {
+        var navbar = document.getElementById("navbar");
+        var navContainer = document.getElementById("nav-container");
+        function updateNavbar() {
+          if (!navbar || !navContainer) return;
+          if (window.scrollY > 50) {
+            navbar.classList.add("bg-white/90", "dark:bg-dark-bg/90", "backdrop-blur-xl", "shadow-lg", "shadow-slate-200/50", "dark:shadow-black/20");
+            navContainer.classList.remove("mt-3", "glass");
+            navContainer.classList.add("rounded-none");
+          } else {
+            navbar.classList.remove("bg-white/90", "dark:bg-dark-bg/90", "backdrop-blur-xl", "shadow-lg", "shadow-slate-200/50", "dark:shadow-black/20");
+            navContainer.classList.add("mt-3", "glass");
+            navContainer.classList.remove("rounded-none");
+          }
+        }
+        window.addEventListener("scroll", updateNavbar, { passive: true });
+        updateNavbar();
+      })();
+    </script>
   </body>
 </html>
