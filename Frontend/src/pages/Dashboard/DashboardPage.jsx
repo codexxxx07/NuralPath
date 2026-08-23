@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   BookOpen,
   Clock,
   Flame,
   Award,
   Calendar,
+  ArrowLeft,
   ArrowRight,
   Play,
   HelpCircle,
@@ -60,6 +61,7 @@ const item = {
 };
 
 export default function DashboardPage() {
+  const navigate = useNavigate();
   const today = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     year: "numeric",
@@ -67,9 +69,21 @@ export default function DashboardPage() {
     day: "numeric",
   });
 
+  const handleBack = () => {
+    if (window.history.state && window.history.state.idx > 0) {
+      navigate(-1);
+    } else {
+      navigate("/", { replace: true });
+    }
+  };
+
   return (
     <motion.div className="space-y-8" variants={container} initial="hidden" animate="show">
       <motion.div variants={item}>
+        <Button variant="outline" size="sm" onClick={handleBack} className="mb-4">
+          <ArrowLeft className="h-4 w-4" />
+          Back
+        </Button>
         <h1 className="text-3xl font-bold text-foreground">Welcome back, Arjun</h1>
         <p className="text-muted-foreground mt-1">{today}</p>
       </motion.div>
