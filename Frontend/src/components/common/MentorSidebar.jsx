@@ -56,7 +56,7 @@ export default function MentorSidebar({ isOpen, onClose }) {
           </button>
         </div>
 
-        <nav className="p-4 space-y-1 overflow-y-auto h-[calc(100%-4rem)]">
+        <nav className="p-4 space-y-1 overflow-y-auto h-[calc(100%-4rem)]" data-lenis-prevent>
           {navItems.map((item) => (
             <NavLink
               key={item.to}

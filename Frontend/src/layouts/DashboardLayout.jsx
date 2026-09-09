@@ -10,7 +10,7 @@ export default function DashboardLayout() {
     <div className="flex h-screen bg-background overflow-hidden">
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      <div className="flex-1 flex flex-col min-h-screen overflow-hidden lg:ml-0">
+      <div className="flex-1 flex flex-col h-full overflow-hidden lg:ml-0">
         <header className="h-16 border-b border-border bg-background/80 backdrop-blur-sm flex items-center px-4 lg:px-6 shrink-0">
           <button
             onClick={() => setSidebarOpen(true)}
@@ -23,7 +23,7 @@ export default function DashboardLayout() {
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-4 lg:p-6">
+        <main className="flex-1 overflow-y-auto p-4 lg:p-6" data-lenis-prevent>
           <Outlet />
         </main>
       </div>

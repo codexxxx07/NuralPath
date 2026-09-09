@@ -70,7 +70,7 @@ export default function DashboardPage() {
   });
 
   const handleBack = () => {
-    if (window.history.state && window.history.state.idx > 0) {
+    if (window.history.length > 1) {
       navigate(-1);
     } else {
       navigate("/", { replace: true });
