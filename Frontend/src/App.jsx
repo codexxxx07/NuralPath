@@ -13,6 +13,8 @@ const ForgotPasswordPage = lazy(() => import("./pages/Auth/ForgotPasswordPage"))
 const ResetPasswordPage = lazy(() => import("./pages/Auth/ResetPasswordPage"));
 const CoursesPage = lazy(() => import("./pages/Courses/CoursesPage"));
 const CourseDetailPage = lazy(() => import("./pages/Courses/CourseDetailPage"));
+const AboutPage = lazy(() => import("./pages/About/AboutPage"));
+const CommunityPage = lazy(() => import("./pages/Community/CommunityPage"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
 const StudentDashboardPage = lazy(() => import("./pages/Dashboard/DashboardPage"));
@@ -117,6 +119,8 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="/courses/:id" element={<CourseDetailPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/community" element={<CommunityPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />

@@ -1,22 +1,43 @@
 import { Link } from "react-router-dom";
+import { Cpu, Mail, MapPin, Phone } from "lucide-react";
+import { Button } from "../ui/button";
 
-const productLinks = [
-  { label: "Courses", to: "/courses" },
-  { label: "Live Classes", to: "/courses/live" },
-  { label: "Practice Lab", to: "/lab" },
-  { label: "Certificates", to: "/certificates" },
+const courseLinks = [
+  { label: "VLSI Design", to: "/courses?domain=vlsi" },
+  { label: "Embedded Systems", to: "/courses?domain=embedded" },
+  { label: "FPGA Development", to: "/courses?domain=fpga" },
+  { label: "Linux & Systems", to: "/courses?domain=linux" },
+  { label: "All Courses", to: "/courses" },
 ];
 
 const resourceLinks = [
   { label: "Blog", to: "/blog" },
   { label: "Documentation", to: "/docs" },
-  { label: "Community", to: "/community" },
-  { label: "Support", to: "/support" },
+  { label: "Interview Prep", to: "/interview-prep" },
+  { label: "Cheat Sheets", to: "/cheat-sheets" },
+  { label: "Practice Problems", to: "/problems" },
+];
+
+const communityLinks = [
+  { label: "Community Forum", to: "/community" },
+  { label: "Discord Server", to: "/discord" },
+  { label: "Events & Webinars", to: "/events" },
+  { label: "Open Source Projects", to: "/open-source" },
+  { label: "Student Stories", to: "/stories" },
+];
+
+const companyLinks = [
+  { label: "About Us", to: "/about" },
+  { label: "Careers", to: "/careers" },
+  { label: "Partners", to: "/partners" },
+  { label: "Contact", to: "/contact" },
+  { label: "Press Kit", to: "/press" },
 ];
 
 const legalLinks = [
   { label: "Privacy Policy", to: "/privacy" },
   { label: "Terms of Service", to: "/terms" },
+  { label: "Refund Policy", to: "/refunds" },
 ];
 
 function GithubIcon({ className }) {
@@ -43,38 +64,91 @@ function LinkedinIcon({ className }) {
   );
 }
 
+function YoutubeIcon({ className }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+    </svg>
+  );
+}
+
 const socialLinks = [
   { label: "GitHub", href: "https://github.com/nuralpath", Icon: GithubIcon },
   { label: "Twitter", href: "https://x.com/nuralpath", Icon: TwitterIcon },
   { label: "LinkedIn", href: "https://linkedin.com/company/nuralpath", Icon: LinkedinIcon },
+  { label: "YouTube", href: "https://youtube.com/@nuralpath", Icon: YoutubeIcon },
 ];
 
 export default function Footer() {
   return (
     <footer className="border-t border-border bg-card">
+      {/* Newsletter Section */}
+      <div className="border-b border-border">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-center gap-6 md:flex-row md:justify-between">
+            <div>
+              <h3 className="text-lg font-semibold text-foreground font-display">
+                Stay updated with the latest in VLSI & Embedded Systems
+              </h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Weekly insights, tutorials, and industry updates. No spam.
+              </p>
+            </div>
+            <div className="flex w-full max-w-md gap-2">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-1 rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+              />
+              <Button className="bg-primary hover:bg-primary/90 shrink-0">
+                Subscribe
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Footer */}
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-6">
           {/* Brand */}
-          <div className="sm:col-span-2 lg:col-span-1">
-            <Link to="/" className="inline-flex items-center gap-1.5">
-              <span className="inline-block h-2.5 w-2.5 rounded-full bg-primary" />
-              <span className="font-sans text-lg font-bold tracking-tight text-foreground">
+          <div className="lg:col-span-2">
+            <Link to="/" className="inline-flex items-center gap-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                <Cpu className="h-4 w-4" />
+              </div>
+              <span className="font-display text-lg font-bold tracking-tight text-foreground">
                 NuralPath
               </span>
             </Link>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
-              Master Linux, C programming, and Shell scripting through
-              hands-on courses, live sessions, and real-world projects.
+              India's premier EdTech platform for VLSI Design, Embedded Systems,
+              FPGA Development, and Linux Kernel Programming. Building the
+              semiconductor workforce of tomorrow.
             </p>
+            <div className="mt-4 space-y-2">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Mail className="h-4 w-4" />
+                <span>hello@nuralpath.com</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Phone className="h-4 w-4" />
+                <span>+91 98765 43210</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <MapPin className="h-4 w-4" />
+                <span>Bangalore, India</span>
+              </div>
+            </div>
           </div>
 
-          {/* Product */}
+          {/* Courses */}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">
-              Product
+              Courses
             </h3>
             <ul className="mt-4 space-y-2.5">
-              {productLinks.map((link) => (
+              {courseLinks.map((link) => (
                 <li key={link.to}>
                   <Link
                     to={link.to}
@@ -106,13 +180,32 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Legal */}
+          {/* Community */}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">
-              Legal
+              Community
             </h3>
             <ul className="mt-4 space-y-2.5">
-              {legalLinks.map((link) => (
+              {communityLinks.map((link) => (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Company */}
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">
+              Company
+            </h3>
+            <ul className="mt-4 space-y-2.5">
+              {companyLinks.map((link) => (
                 <li key={link.to}>
                   <Link
                     to={link.to}
@@ -130,9 +223,18 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-border">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-6 sm:flex-row sm:px-6 lg:px-8">
-          <p className="text-sm text-muted-foreground">
-            &copy; 2026 NuralPath. All rights reserved.
-          </p>
+          <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+            <span>&copy; 2026 NuralPath. All rights reserved.</span>
+            {legalLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
           <div className="flex items-center gap-3">
             {socialLinks.map((social) => (
               <a
