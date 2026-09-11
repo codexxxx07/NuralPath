@@ -2,14 +2,19 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
-  MessagesSquare,
   Users,
-  Bot,
   Code2,
+  BookOpen,
+  Network,
+  FolderGit2,
+  Trophy,
+  Briefcase,
   ArrowRight,
   MessageCircle,
-  Rocket,
-  CalendarDays,
+  Sparkles,
+  Target,
+  Lightbulb,
+  Handshake,
 } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Card, CardContent } from "../../components/ui/card";
@@ -31,73 +36,82 @@ function AnimateOnScroll({ children, className, delay = 0 }) {
   );
 }
 
-const channels = [
+const pillars = [
   {
-    icon: MessageCircle,
-    title: "Discord Community",
-    description: "20,000+ members discussing RTL bugs, kernel patches, and FPGA projects — 24/7 real-time chat.",
-    members: "20,000+",
-    bgColor: "bg-indigo-500/10",
-    textColor: "text-indigo-500",
+    icon: BookOpen,
+    title: "Learning & Skill Building",
+    description:
+      "Follow structured tracks in Linux, Shell, C, and Data Structures. Study together in small groups, work through the curriculum, and practice in the built-in terminal lab.",
+    color: "text-indigo-500",
+    bg: "bg-indigo-500/10",
   },
   {
     icon: Code2,
-    title: "Open Source Projects",
-    description: "Contribute to real hardware projects — from RISC-V soft cores to Linux kernel drivers.",
-    members: "45+ repos",
-    bgColor: "bg-cyan-500/10",
-    textColor: "text-cyan-500",
+    title: "Hands-on Practice",
+    description:
+      "The practice lab gives every student an interactive terminal for day-to-day practice — no setup required. Get stuck less and build muscle memory faster.",
+    color: "text-emerald-500",
+    bg: "bg-emerald-500/10",
   },
   {
-    icon: Users,
-    title: "Study Groups",
-    description: "Join focused study groups for VLSI, Embedded, FPGA, and Systems — learn together, grow together.",
-    members: "120+ groups",
-    bgColor: "bg-purple-500/10",
-    textColor: "text-purple-500",
+    icon: Network,
+    title: "Networking",
+    description:
+      "Meet fellow students working toward the same goals, share progress, and build the kind of connections that help you grow as an engineer.",
+    color: "text-cyan-500",
+    bg: "bg-cyan-500/10",
   },
   {
-    icon: Bot,
-    title: "AI Study Assistant",
-    description: "24/7 AI assistant that helps with Verilog, SystemVerilog, C, kernel code — whenever you're stuck.",
-    members: "Always on",
-    bgColor: "bg-emerald-500/10",
-    textColor: "text-emerald-500",
+    icon: FolderGit2,
+    title: "Projects & Collaboration",
+    description:
+      "Team up on projects — from data structure libraries to shell tooling. Collaborating on real code is the fastest way to learn.",
+    color: "text-purple-500",
+    bg: "bg-purple-500/10",
+  },
+  {
+    icon: Trophy,
+    title: "Hackathons & Competitions",
+    description:
+      "Community-run coding challenges and mini-hackathons are organized around the learning tracks. Participation is the goal — not just winning.",
+    color: "text-amber-500",
+    bg: "bg-amber-500/10",
+  },
+  {
+    icon: Briefcase,
+    title: "Internship & Job Opportunities",
+    description:
+      "As the community grows, opportunities get shared with students first — internships, referrals, and openings posted by members and mentors.",
+    color: "text-rose-500",
+    bg: "bg-rose-500/10",
   },
 ];
 
-const events = [
+const howToJoin = [
   {
-    title: "Webinar: Getting Into Physical Design",
-    excerpt: "Industry expert walks through the PD flow — from synthesis to GDSII — and what recruiters look for.",
-    date: "Mar 15, 2026",
-    tag: "Webinar",
+    step: "01",
+    title: "Create a free account",
+    description: "Sign up to get your student dashboard, course progress, and practice lab access.",
+    to: "/register",
   },
   {
-    title: "RISC-V Hackathon",
-    excerpt: "Build a custom instruction, add a peripheral, stretch your RISC-V soft core. Top 3 win prizes + mentorship.",
-    date: "Apr 02, 2026",
-    tag: "Hackathon",
+    step: "02",
+    title: "Pick a learning track",
+    description: "Start with Linux Fundamentals or jump into Data Structures in C.",
+    to: "/courses",
   },
   {
-    title: "Mock Technical Interviews",
-    excerpt: "Practice VLSI and embedded interviews with engineers from Intel, Qualcomm, and NVIDIA. Limited seats.",
-    date: "Apr 20, 2026",
-    tag: "Interview",
+    step: "03",
+    title: "Practice every day",
+    description: "Use the practice lab to drill commands and concepts until they stick.",
+    to: "/dashboard/practice-lab",
   },
   {
-    title: "Open Source Saturday",
-    excerpt: "Monthly hands-on session. Contributors pair up on real kernel and FPGA repos with mentor review.",
-    date: "May 08, 2026",
-    tag: "Workshop",
+    step: "04",
+    title: "Contribute back",
+    description: "Help others with doubts, review peers' code, and share what you build.",
+    to: "/community",
   },
-];
-
-const popularThreads = [
-  { title: "What's the difference between latch and flip-flop synthesis behavior?", replies: 34, views: 1200 },
-  { title: "My FPGA design hits timing at 50MHz but fails at 100MHz — help!", replies: 21, views: 890 },
-  { title: "Roadmap to Physical Design role in 6 months?", replies: 58, views: 2300 },
-  { title: "Verilog 'if' vs 'case' — synthesis gotchas?", replies: 17, views: 674 },
 ];
 
 export default function CommunityPage() {
@@ -114,147 +128,160 @@ export default function CommunityPage() {
           >
             <Badge variant="secondary" className="mb-4">
               <Users className="mr-1 h-3 w-3" />
-              15,000+ Engineers
+              Student Community
             </Badge>
             <h1 className="font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-              The Community That Teaches You <span className="gradient-text">Beyond Courses</span>
+              Learn, Build, and Grow <span className="gradient-text">Together</span>
             </h1>
             <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-              Ask doubts, share projects, contribute to open-source hardware, join
-              hackathons, and grow with peers who are as obsessed with silicon as you.
+              NuralPath is a student-driven community for anyone serious about Linux,
+              C, and Data Structures. Whether you're just starting or already building
+              systems-level projects, there's a place for you here.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button size="lg" asChild className="bg-primary hover:bg-primary/90 gap-2">
-                <a href="#">
-                  Join the Discord
+                <Link to="/register">
+                  Join the Community
                   <ArrowRight className="h-4 w-4" />
-                </a>
+                </Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <Link to="/dashboard">
-                  Open Forum
-                </Link>
+                <Link to="/courses">Explore Learning Tracks</Link>
               </Button>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* ─── Community Stats ─── */}
-      <section className="border-y border-border bg-surface/40 py-12">
+      {/* ─── About the community ─── */}
+      <section className="border-y border-border bg-surface/40 py-20 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 gap-6 text-center md:grid-cols-4">
-            {[
-              { value: "15K+", label: "Members" },
-              { value: "120+", label: "Study Groups" },
-              { value: "45+", label: "Open Source Repos" },
-              { value: "50+", label: "Mentors" },
-            ].map((s, i) => (
-              <AnimateOnScroll key={s.label} delay={i * 0.1}>
-                <div>
-                  <p className="text-3xl font-bold text-foreground font-display">{s.value}</p>
-                  <p className="mt-1 text-sm text-muted-foreground">{s.label}</p>
-                </div>
-              </AnimateOnScroll>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Channels ─── */}
-      <section className="py-20 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll className="text-center">
-            <Badge variant="secondary" className="mb-4">Ways to Connect</Badge>
-            <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Find Your Community
-            </h2>
-          </AnimateOnScroll>
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {channels.map((c, i) => (
-              <AnimateOnScroll key={c.title} delay={i * 0.1}>
-                <Card className="h-full border-border/50">
+          <div className="grid items-center gap-10 lg:grid-cols-2">
+            <AnimateOnScroll>
+              <div>
+                <Badge variant="secondary" className="mb-4">About This Community</Badge>
+                <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                  Built by students, for students
+                </h2>
+                <p className="mt-4 leading-relaxed text-muted-foreground">
+                  The community exists so that no student has to figure out systems
+                  programming, C, or data structures alone. It's a place where you can
+                  ask questions without hesitation, practice without embarrassment, and
+                  find people at the same stage as you.
+                </p>
+                <p className="mt-3 leading-relaxed text-muted-foreground">
+                  We keep things focused: real learning, real practice, and real
+                  collaboration — not hype. If you're willing to put in consistent
+                  effort, you'll find everyone here willing to help you along.
+                </p>
+              </div>
+            </AnimateOnScroll>
+            <AnimateOnScroll delay={0.1}>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Card className="border-border/50">
                   <CardContent className="p-6">
-                    <div className={`mb-4 flex h-11 w-11 items-center justify-center rounded-lg ${c.bgColor} ${c.textColor}`}>
-                      <c.icon className="h-5 w-5" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-foreground font-display">{c.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{c.description}</p>
-                    <p className="mt-3 text-xs font-medium text-primary">{c.members}</p>
+                    <Target className="mb-3 h-6 w-6 text-primary" />
+                    <h3 className="font-semibold text-foreground">Focused</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      We concentrate on the fundamentals that matter: Linux, C, algorithms, and systems thinking.
+                    </p>
                   </CardContent>
                 </Card>
-              </AnimateOnScroll>
-            ))}
+                <Card className="border-border/50">
+                  <CardContent className="p-6">
+                    <Handshake className="mb-3 h-6 w-6 text-emerald-500" />
+                    <h3 className="font-semibold text-foreground">Supportive</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      No question is too basic. Beginners and advanced learners help each other daily.
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card className="border-border/50">
+                  <CardContent className="p-6">
+                    <Lightbulb className="mb-3 h-6 w-6 text-amber-500" />
+                    <h3 className="font-semibold text-foreground">Hands-on</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      Everything is tied to practice — you learn by typing, running, and debugging.
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card className="border-border/50">
+                  <CardContent className="p-6">
+                    <Sparkles className="mb-3 h-6 w-6 text-cyan-500" />
+                    <h3 className="font-semibold text-foreground">Growing</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      New tracks and resources are added as students actually build them.
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            </AnimateOnScroll>
           </div>
         </div>
       </section>
 
-      {/* ─── Popular Threads ─── */}
-      <section className="border-y border-border bg-surface/40 py-20 sm:py-24">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll className="text-center">
-            <Badge variant="secondary" className="mb-4">
-              <MessagesSquare className="mr-1 h-3 w-3" />
-              Trending Discussions
-            </Badge>
-            <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              What the Community Is Asking
-            </h2>
-          </AnimateOnScroll>
-          <div className="mt-12 space-y-3">
-            {popularThreads.map((t, i) => (
-              <AnimateOnScroll key={t.title} delay={i * 0.08}>
-                <div className="flex flex-col gap-2 rounded-xl border border-border/50 bg-card p-5 transition-colors hover:border-primary/40 sm:flex-row sm:items-center sm:justify-between">
-                  <p className="text-sm font-medium text-foreground">{t.title}</p>
-                  <div className="flex shrink-0 items-center gap-4 text-xs text-muted-foreground">
-                    <span>{t.replies} replies</span>
-                    <span>{t.views} views</span>
-                  </div>
-                </div>
-              </AnimateOnScroll>
-            ))}
-          </div>
-          <div className="mt-8 text-center">
-            <Button variant="outline" asChild>
-              <Link to="/dashboard">
-                See All Discussions
-                <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Events ─── */}
+      {/* ─── What the community offers ─── */}
       <section className="py-20 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll className="text-center">
-            <Badge variant="secondary" className="mb-4">
-              <CalendarDays className="mr-1 h-3 w-3" />
-              Upcoming Events
-            </Badge>
+            <Badge variant="secondary" className="mb-4">What the Community Offers</Badge>
             <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Never Miss a Hackathon or Webinar
+              More Than a Course Catalog
             </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+              Everything below is something students can actually participate in right now.
+            </p>
           </AnimateOnScroll>
-          <div className="mt-12 grid gap-5 sm:grid-cols-2">
-            {events.map((e, i) => (
-              <AnimateOnScroll key={e.title} delay={i * 0.1}>
+
+          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {pillars.map((p, i) => (
+              <AnimateOnScroll key={p.title} delay={i * 0.08}>
                 <Card className="h-full border-border/50 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
                   <CardContent className="p-6">
-                    <div className="mb-3 flex items-center justify-between">
-                      <Badge variant="secondary" className="text-xs">{e.tag}</Badge>
-                      <span className="text-xs text-muted-foreground">{e.date}</span>
+                    <div className={`mb-4 flex h-11 w-11 items-center justify-center rounded-lg ${p.bg} ${p.color}`}>
+                      <p.icon className="h-5 w-5" />
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground font-display">{e.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{e.excerpt}</p>
-                    <div className="mt-4">
-                      <Button variant="outline" size="sm" asChild>
-                        <Link to="/register">Register Now</Link>
-                      </Button>
-                    </div>
+                    <h3 className="text-lg font-semibold text-foreground font-display">{p.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.description}</p>
                   </CardContent>
                 </Card>
+              </AnimateOnScroll>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── How to get involved ─── */}
+      <section className="border-y border-border bg-surface/40 py-20 sm:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <AnimateOnScroll className="text-center">
+            <Badge variant="secondary" className="mb-4">
+              <MessageCircle className="mr-1 h-3 w-3" />
+              Get Started
+            </Badge>
+            <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              How Students Can Get Involved
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+              Joining is simple, and you can start learning in the next five minutes.
+            </p>
+          </AnimateOnScroll>
+
+          <div className="relative mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            {howToJoin.map((step, i) => (
+              <AnimateOnScroll key={step.step} delay={i * 0.1}>
+                <div className="relative text-center">
+                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                    <span className="text-xl font-bold font-mono">{step.step}</span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground font-display">{step.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.description}</p>
+                  <Button variant="ghost" size="sm" asChild className="mt-3">
+                    <Link to={step.to}>
+                      Go <ArrowRight className="ml-1 h-3.5 w-3.5" />
+                    </Link>
+                  </Button>
+                </div>
               </AnimateOnScroll>
             ))}
           </div>
@@ -262,21 +289,29 @@ export default function CommunityPage() {
       </section>
 
       {/* ─── CTA ─── */}
-      <section className="border-t border-border bg-primary/5 py-20">
-        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden py-20 sm:py-28">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-cyan-500/5" />
+        <div className="relative mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
           <AnimateOnScroll>
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+              <Users className="h-8 w-8" />
+            </div>
             <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Your Next Doubt Is the Start of Learning
+              Your First Doubt Is the Best Place to Start
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-              Join a community where nobody gets stuck for more than a few minutes.
+              Join the community, ask your first question, and start your learning journey
+              with people who'll help you through it.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button size="lg" asChild className="bg-primary hover:bg-primary/90 gap-2">
-                <a href="#">
-                  <Rocket className="h-4 w-4" />
-                  Join Now
-                </a>
+                <Link to="/register">
+                  Join for Free
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+              <Button size="lg" variant="outline" asChild>
+                <Link to="/about">Learn About Us</Link>
               </Button>
             </div>
           </AnimateOnScroll>

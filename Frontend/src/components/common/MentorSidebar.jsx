@@ -8,7 +8,6 @@ import {
   Users,
   BarChart3,
   FileQuestion,
-  Settings,
   X,
 } from "lucide-react";
 
@@ -20,7 +19,6 @@ const navItems = [
   { to: "/mentor/students", label: "Students", icon: Users },
   { to: "/mentor/analytics", label: "Analytics", icon: BarChart3 },
   { to: "/mentor/pyq-management", label: "PYQ Management", icon: FileQuestion },
-  { to: "/mentor/settings", label: "Settings", icon: Settings },
 ];
 
 export default function MentorSidebar({ isOpen, onClose }) {

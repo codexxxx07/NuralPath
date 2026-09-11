@@ -7,9 +7,7 @@ import {
   GraduationCap,
   BookOpen,
   CreditCard,
-  Tag,
   BarChart3,
-  Settings,
   X,
 } from "lucide-react";
 
@@ -20,9 +18,7 @@ const navItems = [
   { to: "/admin/mentors", label: "Mentors", icon: GraduationCap },
   { to: "/admin/courses", label: "Courses", icon: BookOpen },
   { to: "/admin/payments", label: "Payments", icon: CreditCard },
-  { to: "/admin/coupons", label: "Coupons", icon: Tag },
   { to: "/admin/analytics", label: "Analytics", icon: BarChart3 },
-  { to: "/admin/settings", label: "Settings", icon: Settings },
 ];
 
 export default function AdminSidebar({ isOpen, onClose }) {

@@ -110,7 +110,7 @@ export default function DashboardPage() {
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold text-foreground">Active Courses</h2>
           <Button variant="ghost" size="sm" asChild>
-            <Link to="/dashboard/my-courses">
+            <Link to="/dashboard/courses">
               View All <ArrowRight className="h-4 w-4 ml-1" />
             </Link>
           </Button>
@@ -214,7 +214,7 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
           </Link>
-          <Link to="/dashboard/doubt-solving">
+          <Link to="/dashboard/doubts">
             <Card className="hover:border-primary/50 transition-colors cursor-pointer h-full">
               <CardContent className="p-5 flex items-center gap-4">
                 <div className="p-3 rounded-lg bg-orange-500/10">

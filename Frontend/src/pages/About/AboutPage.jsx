@@ -8,6 +8,10 @@ import {
   Zap,
   ArrowRight,
   Building2,
+  FileCode2,
+  Users,
+  Sparkles,
+  GraduationCap,
 } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Card, CardContent } from "../../components/ui/card";
@@ -33,40 +37,62 @@ const values = [
   {
     icon: Target,
     title: "Practical Over Theory",
-    description: "We believe engineers are built in the lab, not the lecture hall. Every concept is reinforced with hands-on practice.",
+    description: "We believe engineers are built by doing. Every concept is reinforced with real practice — commands typed, code compiled, projects built.",
   },
   {
-    icon: Eye,
-    title: "Industry Alignment",
-    description: "Curricula designed with semiconductor companies — so what you learn is exactly what gets you hired.",
+    icon: Users,
+    title: "Community-First",
+    description: "Students learn faster together. Doubts get answered, code gets reviewed, and progress gets shared.",
   },
   {
     icon: Heart,
     title: "Student-First",
-    description: "Small cohorts, real mentorship, and support at every step. We win when you get placed.",
+    description: "We build for students at every level. No gatekeeping, no 'too basic' questions, and no pressure to move faster than you're ready.",
   },
   {
     icon: Zap,
-    title: "Excellence Always",
-    description: "We obsess over the quality of every lecture, lab, and project — because your career depends on it.",
+    title: "Honest by Default",
+    description: "If a feature or course isn't ready, we say so and label it clearly as in development — no overpromising.",
   },
 ];
 
-const milestones = [
-  { year: "2022", title: "Founded in Bangalore", description: "Started as a community of 5 engineers teaching Linux to CS students." },
-  { year: "2023", title: "First VLSI Cohort", description: "Launched our flagship VLSI Design course with 40 students. 100% placement in the first cohort." },
-  { year: "2024", title: "10,000 Students", description: "Expanded to Embedded Systems, FPGA, and Kernel Programming. Crossed 10K enrollments." },
-  { year: "2025", title: "Industry Partnerships", description: "Partnered with 25+ semiconductor companies for hiring pipelines and curriculum development." },
-  { year: "2026", title: "15,000+ Strong Community", description: "15,000+ students and 50+ mentors. One of India's largest hardware education communities." },
+const currentState = [
+  {
+    icon: GraduationCap,
+    title: "Live Tracks",
+    description:
+      "Linux & Systems, Shell Scripting, C Programming, and Data Structures in C are available now with structured curricula.",
+  },
+  {
+    icon: Sparkles,
+    title: "In Development",
+    description:
+      "VLSI Design, Embedded Systems, and FPGA tracks are being built in the open. When they're ready, you'll know exactly when we announce them.",
+  },
+  {
+    icon: FileCode2,
+    title: "Built in the Open",
+    description:
+      "The platform itself is a work in progress we share openly. Roadmaps, libraries, and resources reflect the real state of things.",
+  },
 ];
 
-const mentors = [
-  { name: "Dr. Raghav Malik", role: "Former Staff Engineer, Intel", domain: "CPU Architecture" },
-  { name: "Ananya Iyer", role: "Verification Lead, Qualcomm", domain: "Functional Verification" },
-  { name: "Suresh Kumar", role: "SDE, NVIDIA", domain: "GPU / RTL Design" },
-  { name: "Divya Nair", role: "Principal Engineer, AMD", domain: "Physical Design" },
-  { name: "Rohit Sharma", role: "Ex-ARM, Kernel Maintainer", domain: "Embedded Linux" },
-  { name: "Fatima Zaidi", role: "FPGA Consultant, Xilinx/AMD", domain: "FPGA / HLS" },
+const principles = [
+  {
+    question: "Why focus on Linux, Shell, C, and Data Structures?",
+    answer:
+      "These are the fundamentals almost every systems engineer relies on daily. Mastering them early pays off across every specialization — including the hardware domains on our roadmap.",
+  },
+  {
+    question: "What does 'in development' mean here?",
+    answer:
+      "It means the content genuinely isn't available yet — and we won't pretend it is. Full courses for tracks like VLSI or Embedded will be announced when we've built them properly.",
+  },
+  {
+    question: "Is anyone making a living from this?",
+    answer:
+      "Right now the platform is a community effort. There are no instructors with fake titles or fabricated track records — just people who care about good systems education, learning in public.",
+  },
 ];
 
 export default function AboutPage() {
@@ -86,13 +112,14 @@ export default function AboutPage() {
               About NuralPath
             </Badge>
             <h1 className="font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-              Building India's{" "}
-              <span className="gradient-text">Hardware Workforce</span>
+              A Community for People Serious About{" "}
+              <span className="gradient-text">Systems Fundamentals</span>
             </h1>
             <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-              We're a mission-driven EdTech platform on a mission to close the
-              massive skill gap in VLSI, embedded systems, and hardware
-              engineering — one student at a time.
+              NuralPath is a student-focused learning community built around
+              hands-on skills in Linux, shell scripting, C, and data structures.
+              We're building the platform in the open — and everything we claim
+              here reflects what actually exists today.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button size="lg" asChild className="bg-primary hover:bg-primary/90 gap-2">
@@ -100,6 +127,9 @@ export default function AboutPage() {
                   Explore Courses
                   <ArrowRight className="h-4 w-4" />
                 </Link>
+              </Button>
+              <Button size="lg" variant="outline" asChild>
+                <Link to="/community">Join the Community</Link>
               </Button>
             </div>
           </motion.div>
@@ -118,10 +148,10 @@ export default function AboutPage() {
                   </div>
                   <h2 className="text-2xl font-bold text-foreground font-display">Our Mission</h2>
                   <p className="mt-3 leading-relaxed text-muted-foreground">
-                    To make world-class VLSI and hardware engineering education
-                    accessible to every talented student in India. The world needs
-                    a million new chip designers by 2030 — we're building the
-                    talent pipeline that will deliver them.
+                    To make solid, hands-on systems education genuinely accessible —
+                    so any student who wants to really understand Linux, C, and
+                    data structures can learn by doing, without expensive setups
+                    or gatekeeping.
                   </p>
                 </CardContent>
               </Card>
@@ -134,10 +164,10 @@ export default function AboutPage() {
                   </div>
                   <h2 className="text-2xl font-bold text-foreground font-display">Our Vision</h2>
                   <p className="mt-3 leading-relaxed text-muted-foreground">
-                    A future where India designs the chips powering every device
-                    on Earth. We envision a self-sufficient semiconductor
-                    ecosystem, powered by engineers who got their start at
-                    NuralPath.
+                    A future where the systems and hardware talent pipeline
+                    grows out of deliberate practice — where track after track
+                    (including VLSI, Embedded, and FPGA) is opened to students
+                    who built the fundamentals first, here.
                   </p>
                 </CardContent>
               </Card>
@@ -146,8 +176,39 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ─── Values ─── */}
+      {/* ─── Where we are now ─── */}
       <section className="py-20 sm:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <AnimateOnScroll className="text-center">
+            <Badge variant="secondary" className="mb-4">Where We Are Now</Badge>
+            <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              Honest About the Present
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+              No inflated numbers, no fabricated placements — just what's built,
+              what's being built, and how we work.
+            </p>
+          </AnimateOnScroll>
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {currentState.map((s, i) => (
+              <AnimateOnScroll key={s.title} delay={i * 0.1}>
+                <Card className="h-full border-border/50">
+                  <CardContent className="p-6">
+                    <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                      <s.icon className="h-5 w-5" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground font-display">{s.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.description}</p>
+                  </CardContent>
+                </Card>
+              </AnimateOnScroll>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Values ─── */}
+      <section className="border-y border-border bg-surface/40 py-20 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll className="text-center">
             <Badge variant="secondary" className="mb-4">Our Values</Badge>
@@ -173,67 +234,22 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ─── Journey Timeline ─── */}
-      <section className="border-y border-border bg-surface/40 py-20 sm:py-24">
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll className="text-center">
-            <Badge variant="secondary" className="mb-4">Our Journey</Badge>
-            <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Milestones Along the Way
-            </h2>
-          </AnimateOnScroll>
-          <div className="mt-12 space-y-8">
-            {milestones.map((m, i) => (
-              <AnimateOnScroll key={m.year} delay={i * 0.08}>
-                <div className="relative flex gap-6 rounded-xl border border-border/50 bg-card p-6">
-                  <div className="flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded-xl bg-primary/10">
-                    <span className="text-sm font-bold text-primary font-mono">{m.year}</span>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground font-display">{m.title}</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{m.description}</p>
-                  </div>
-                </div>
-              </AnimateOnScroll>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Mentors ─── */}
+      {/* ─── How we work ─── */}
       <section className="py-20 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll className="text-center">
-            <Badge variant="secondary" className="mb-4">Our Mentors</Badge>
+            <Badge variant="secondary" className="mb-4">How We Work</Badge>
             <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Learn From Industry Veterans
+              A Few Things Worth Knowing
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-              50+ engineers from Intel, Qualcomm, NVIDIA, AMD, ARM, and more —
-              teaching because they believe in giving back.
-            </p>
           </AnimateOnScroll>
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {mentors.map((m, i) => (
-              <AnimateOnScroll key={m.name} delay={i * 0.1}>
-                <Card className="h-full border-border/50">
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-11 w-11 items-center justify-center rounded-full bg-primary/10 text-primary font-bold">
-                        {m.name.split(" ").map((w) => w[0]).join("")}
-                      </div>
-                      <div>
-                        <p className="font-semibold text-foreground">{m.name}</p>
-                        <p className="text-xs text-muted-foreground">{m.role}</p>
-                      </div>
-                    </div>
-                    <div className="mt-4 flex items-center gap-2">
-                      <Badge variant="secondary" className="text-xs">
-                        {m.domain}
-                      </Badge>
-                    </div>
-                  </CardContent>
-                </Card>
+          <div className="mt-12 space-y-6">
+            {principles.map((p, i) => (
+              <AnimateOnScroll key={p.question} delay={i * 0.08}>
+                <div className="rounded-xl border border-border/50 bg-card p-6">
+                  <h3 className="text-lg font-semibold text-foreground font-display">{p.question}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.answer}</p>
+                </div>
               </AnimateOnScroll>
             ))}
           </div>
@@ -245,11 +261,10 @@ export default function AboutPage() {
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
           <AnimateOnScroll>
             <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              Ready to Be Part of Our Story?
+              Learn the Way We Build — by Doing
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-              Join thousands of engineers who started their semiconductor career
-              with NuralPath.
+              Create a free account, pick a track, and start practicing today.
             </p>
             <div className="mt-8">
               <Button size="lg" asChild className="bg-primary hover:bg-primary/90 gap-2">

@@ -2,13 +2,11 @@ import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Clock,
-  Users,
-  Star,
-  CheckCircle,
   ArrowLeft,
   ArrowRight,
   Calendar,
   Award,
+  BookOpen,
 } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Card, CardContent } from "../../components/ui/card";
@@ -27,11 +25,7 @@ const courseData = {
     description:
       "Master the Linux command line, file systems, permissions, and basic system administration. This course takes you from zero to confidently navigating and managing a Linux environment.",
     level: "Beginner",
-    instructor: "Ravi Kumar",
-    instructorBio: "Senior Linux Administrator with 10+ years of experience managing production systems at scale.",
     duration: "6 weeks",
-    rating: 4.8,
-    students: 1240,
     gradient: "from-emerald-500/20 to-teal-600/20",
     whatYouWillLearn: [
       "Navigate the Linux file system using the command line",
@@ -79,15 +73,75 @@ const courseData = {
       },
     ],
   },
+  6: {
+    title: "Data Structures in C",
+    isDsa: true,
+    description:
+      "Implement linked lists, stacks, queues, trees, and graphs in C. Build problem-solving skills with real coding challenges — the foundation of every serious software engineer.",
+    level: "Intermediate",
+    duration: "8 weeks",
+    gradient: "from-rose-500/20 to-pink-600/20",
+    whatYouWillLearn: [
+      "Implement linked lists, stacks, and queues in C",
+      "Understand complexity analysis and when to choose each structure",
+      "Build binary trees, heaps, and balanced structures",
+      "Traverse and search graphs using BFS and DFS",
+      "Solve expression conversion, parsing, and evaluation problems",
+      "Apply recursion and backtracking to real problems",
+    ],
+    prerequisites: [
+      "Solid C programming basics — pointers, structs, memory management",
+      "A Linux environment with gcc installed",
+      "Comfort with a text editor and the command line",
+    ],
+    syllabus: [
+      {
+        title: "Week 1 — Complexity & Recursion",
+        content:
+          "Big-O analysis, growth rates, recurrence relations, and writing clean recursive functions in C.",
+      },
+      {
+        title: "Week 2 — Linked Lists",
+        content:
+          "Singly and doubly linked lists, insertion, deletion, reversal, cycle detection, and real usage patterns.",
+      },
+      {
+        title: "Week 3 — Stacks & Queues",
+        content:
+          "Array and linked implementations, applications of stacks — expression conversion (infix/postfix/prefix), evaluation, and balanced parentheses.",
+      },
+      {
+        title: "Week 4 — Trees",
+        content:
+          "Binary trees, binary search trees, tree traversals (pre/in/post/level order), height and balancing fundamentals.",
+      },
+      {
+        title: "Week 5 — Heaps & Priority Queues",
+        content:
+          "Binary heaps, heapify, heap sort, and priority queue applications.",
+      },
+      {
+        title: "Week 6 — Graphs & Traversals",
+        content:
+          "Adjacency list and matrix representations, BFS and DFS, connected components, and shortest-path foundations.",
+      },
+      {
+        title: "Week 7 — Searching & Sorting",
+        content:
+          "Binary search, merge sort, quicksort, and analyzing real-world sorting behavior in C.",
+      },
+      {
+        title: "Week 8 — Capstone Project",
+        content:
+          "Build a small compiler/expression evaluator or a mini-search engine that ties together the data structures learned in the course.",
+      },
+    ],
+  },
   default: {
     title: "Course",
-    description: "Course details coming soon.",
+    description: "Course details are being finalized.",
     level: "Intermediate",
-    instructor: "TBA",
-    instructorBio: "Instructor details will be available soon.",
     duration: "8 weeks",
-    rating: 4.5,
-    students: 0,
     gradient: "from-primary/20 to-primary/10",
     whatYouWillLearn: [
       "Understand core concepts and fundamentals",
@@ -146,14 +200,12 @@ export default function CourseDetailPage() {
                   <Badge variant={course.level === "Beginner" ? "success" : course.level === "Advanced" ? "outline" : "secondary"}>
                     {course.level}
                   </Badge>
-                  <span className="flex items-center gap-1 text-sm text-muted-foreground">
-                    <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
-                    {course.rating}
-                  </span>
-                  <span className="flex items-center gap-1 text-sm text-muted-foreground">
-                    <Users className="h-3.5 w-3.5" />
-                    {course.students.toLocaleString()} students
-                  </span>
+                  {course.isDsa && (
+                    <Badge variant="secondary" className="gap-1">
+                      <BookOpen className="h-3 w-3" />
+                      DSA Track
+                    </Badge>
+                  )}
                 </div>
 
                 <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
@@ -187,12 +239,14 @@ export default function CourseDetailPage() {
                       {course.title.charAt(0)}
                     </span>
                   </div>
-                  <Button className="w-full" size="lg">
-                    Enroll Now
-                    <ArrowRight className="ml-1 h-4 w-4" />
+                  <Button className="w-full" size="lg" asChild>
+                    <Link to="/register">
+                      Enroll Now
+                      <ArrowRight className="ml-1 h-4 w-4" />
+                    </Link>
                   </Button>
                   <p className="mt-3 text-center text-xs text-muted-foreground">
-                    Free preview available · No credit card required
+                    Create a free account to get started
                   </p>
                   <Separator className="my-4" />
                   <div className="space-y-2.5 text-sm">
@@ -205,13 +259,17 @@ export default function CourseDetailPage() {
                       <span className="font-medium text-foreground">{course.level}</span>
                     </div>
                     <div className="flex items-center justify-between text-muted-foreground">
-                      <span>Instructor</span>
-                      <span className="font-medium text-foreground">{course.instructor}</span>
+                      <span>Learning Path</span>
+                      <span className="font-medium text-foreground">
+                        {course.isDsa ? "Data Structures" : "Systems Track"}
+                      </span>
                     </div>
-                    <div className="flex items-center justify-between text-muted-foreground">
-                      <span>Certificate</span>
-                      <span className="font-medium text-foreground">Yes</span>
-                    </div>
+                    {course.isDsa && (
+                      <div className="flex items-center justify-between text-muted-foreground">
+                        <span>Certificate</span>
+                        <span className="font-medium text-foreground">Yes</span>
+                      </div>
+                    )}
                   </div>
                 </CardContent>
               </Card>
@@ -231,7 +289,7 @@ export default function CourseDetailPage() {
                 <div className="mt-6 grid gap-3 sm:grid-cols-2">
                   {course.whatYouWillLearn.map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
-                      <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-green-500" />
+                      <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
                       <span className="text-sm text-muted-foreground">{item}</span>
                     </div>
                   ))}
@@ -272,23 +330,25 @@ export default function CourseDetailPage() {
               </motion.div>
             </div>
 
-            {/* Instructor Sidebar */}
+            {/* Sidebar note */}
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
               <Card className="border-border sticky top-24">
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-bold text-foreground">Instructor</h3>
-                  <div className="mt-4 flex items-center gap-4">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary font-bold text-lg">
-                      {course.instructor.split(" ").map(n => n[0]).join("")}
-                    </div>
-                    <div>
-                      <p className="font-semibold text-foreground">{course.instructor}</p>
-                      <p className="text-sm text-muted-foreground">Instructor</p>
-                    </div>
-                  </div>
-                  <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
-                    {course.instructorBio}
+                  <h3 className="text-lg font-bold text-foreground">About This Course</h3>
+                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                    This course is part of the {course.isDsa ? "Data Structures & Algorithms" : "Linux & Systems"} learning track.
+                    Content is created and reviewed by community mentors. Instructor details will be
+                    announced on the community.
                   </p>
+                  <Separator className="my-4" />
+                  <div className="space-y-3">
+                    <Button variant="outline" className="w-full" asChild>
+                      <Link to="/libraries">Browse related resources</Link>
+                    </Button>
+                    <Button variant="ghost" className="w-full" asChild>
+                      <Link to="/community">Ask in the community</Link>
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             </motion.div>

@@ -1,6 +1,6 @@
 import { lazy, Suspense, useState } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
-import { Menu } from "lucide-react";
+import { Menu, Info } from "lucide-react";
 import MainLayout from "./layouts/MainLayout";
 import DashboardLayout from "./layouts/DashboardLayout";
 import MentorSidebar from "./components/common/MentorSidebar";
@@ -15,6 +15,10 @@ const CoursesPage = lazy(() => import("./pages/Courses/CoursesPage"));
 const CourseDetailPage = lazy(() => import("./pages/Courses/CourseDetailPage"));
 const AboutPage = lazy(() => import("./pages/About/AboutPage"));
 const CommunityPage = lazy(() => import("./pages/Community/CommunityPage"));
+const ContactPage = lazy(() => import("./pages/Contact/ContactPage"));
+const LibrariesPage = lazy(() => import("./pages/Libraries/LibrariesPage"));
+const PrivacyPage = lazy(() => import("./pages/Legal/PrivacyPage"));
+const TermsPage = lazy(() => import("./pages/Legal/TermsPage"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
 const StudentDashboardPage = lazy(() => import("./pages/Dashboard/DashboardPage"));
@@ -73,6 +77,13 @@ function MentorDashboardLayout() {
           </div>
         </header>
         <main className="flex-1 overflow-y-auto p-4 lg:p-6" data-lenis-prevent>
+          <div className="mb-4 flex items-start gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2.5 text-xs text-amber-700 dark:text-amber-300">
+            <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+            <span>
+              This dashboard is a frontend demo — no backend is connected yet, so all
+              students, courses, and analytics shown here are sample data.
+            </span>
+          </div>
           <Suspense fallback={<PageLoader />}>
             <Outlet />
           </Suspense>
@@ -101,6 +112,13 @@ function AdminDashboardLayout() {
           </div>
         </header>
         <main className="flex-1 overflow-y-auto p-4 lg:p-6" data-lenis-prevent>
+          <div className="mb-4 flex items-start gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2.5 text-xs text-amber-700 dark:text-amber-300">
+            <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+            <span>
+              This dashboard is a frontend demo — no backend is connected yet, so all
+              users, revenue, and analytics shown here are sample data.
+            </span>
+          </div>
           <Suspense fallback={<PageLoader />}>
             <Outlet />
           </Suspense>
@@ -121,6 +139,10 @@ export default function App() {
           <Route path="/courses/:id" element={<CourseDetailPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/community" element={<CommunityPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/libraries" element={<LibrariesPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/terms" element={<TermsPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />

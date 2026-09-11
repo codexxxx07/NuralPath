@@ -168,7 +168,7 @@ export default function MyCoursesPage() {
                       Next: {course.nextLesson}
                     </div>
                     <Button variant="ghost" size="sm" asChild>
-                      <Link to={`/dashboard/my-courses/${course.id}`}>
+                      <Link to="/dashboard/courses">
                         Continue <ArrowRight className="h-4 w-4 ml-1" />
                       </Link>
                     </Button>

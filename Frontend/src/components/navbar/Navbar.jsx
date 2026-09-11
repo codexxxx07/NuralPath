@@ -27,8 +27,8 @@ const navLinks = [
       { to: "/courses?domain=linux", label: "Linux & Systems", icon: BookOpen, desc: "Kernel, Drivers" },
     ],
   },
-  { to: "/dashboard", label: "Dashboard" },
   { to: "/community", label: "Community" },
+  { to: "/about", label: "About" },
 ];
 
 export default function Navbar() {
