@@ -1,22 +1,8 @@
-import { motion } from "framer-motion";
-import {
-  TrendingUp,
-  Users,
-  BookOpen,
-  DollarSign,
-  BarChart3,
-  Award,
-  Clock,
-  Target,
-} from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
-import { Badge } from "../../components/ui/badge";
-
 const stats = [
-  { label: "Avg Completion Rate", value: "64%", icon: Target, change: "+5%" },
-  { label: "Avg Quiz Score", value: "79%", icon: Award, change: "+3%" },
-  { label: "Active Students", value: "128", icon: Users, change: "+12" },
-  { label: "Total Revenue", value: "₹4.2L", icon: DollarSign, change: "+18%" },
+  { label: "Avg Completion Rate", value: "64%", change: "+5%" },
+  { label: "Avg Quiz Score", value: "79%", change: "+3%" },
+  { label: "Active Students", value: "128", change: "+12" },
+  { label: "Total Revenue", value: "₹4.2L", change: "+18%" },
 ];
 
 const coursePerformance = [
@@ -33,161 +19,117 @@ const progressDistribution = [
 ];
 
 const engagementMetrics = [
-  { label: "Avg Daily Active", value: "42", icon: Users },
-  { label: "Avg Session Time", value: "48 min", icon: Clock },
-  { label: "Assignment Submit Rate", value: "87%", icon: BookOpen },
-  { label: "Live Class Attendance", value: "91%", icon: TrendingUp },
+  { label: "Avg Daily Active", value: "42" },
+  { label: "Avg Session Time", value: "48 min" },
+  { label: "Assignment Submit Rate", value: "87%" },
+  { label: "Live Class Attendance", value: "91%" },
 ];
-
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
 
 export default function MentorAnalyticsPage() {
   const maxStudents = Math.max(...progressDistribution.map((d) => d.count));
 
   return (
-    <motion.div className="space-y-8" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item}>
+    <div className="max-w-6xl space-y-12">
+      <div>
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">Analytics</h1>
-        <p className="text-sm text-muted-foreground mt-1">Insights across all your courses</p>
-      </motion.div>
-
-      <motion.div className="grid grid-cols-2 lg:grid-cols-4 gap-4" variants={item}>
-        {stats.map((stat) => (
-          <Card key={stat.label}>
-            <CardContent className="p-5">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground">
-                  <stat.icon className="h-4 w-4" />
-                </div>
-                <Badge variant="secondary" className="text-xs">{stat.change}</Badge>
-              </div>
-              <p className="text-2xl font-semibold text-foreground">{stat.value}</p>
-              <p className="text-sm text-muted-foreground">{stat.label}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </motion.div>
-
-      <div className="grid lg:grid-cols-2 gap-6">
-        <motion.div variants={item}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-base font-semibold tracking-tight">
-                <BarChart3 className="h-4 w-4 text-muted-foreground" />
-                Course Performance
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-5">
-              {coursePerformance.map((course) => (
-                <div key={course.name} className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-medium text-foreground text-sm">{course.name}</h3>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="text-xs">{course.students} students</Badge>
-                      <span className="text-xs text-muted-foreground">★ {course.rating}</span>
-                    </div>
-                  </div>
-                  <div className="space-y-1.5">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs text-muted-foreground w-20">Completion</span>
-                      <div className="flex-1 h-4 bg-muted rounded-full overflow-hidden">
-                        <motion.div
-                          className="h-full bg-primary rounded-full"
-                          initial={{ width: 0 }}
-                          animate={{ width: `${course.completion}%` }}
-                          transition={{ duration: 1, delay: 0.2 }}
-                        />
-                      </div>
-                      <span className="text-xs font-medium text-foreground w-10 text-right">{course.completion}%</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs text-muted-foreground w-20">Avg Score</span>
-                      <div className="flex-1 h-4 bg-muted rounded-full overflow-hidden">
-                        <motion.div
-                          className="h-full bg-muted-foreground/40 rounded-full"
-                          initial={{ width: 0 }}
-                          animate={{ width: `${course.avgScore}%` }}
-                          transition={{ duration: 1, delay: 0.3 }}
-                        />
-                      </div>
-                      <span className="text-xs font-medium text-foreground w-10 text-right">{course.avgScore}%</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        <motion.div variants={item}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-base font-semibold tracking-tight">
-                <Users className="h-4 w-4 text-muted-foreground" />
-                Student Progress Distribution
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {progressDistribution.map((dist) => (
-                  <div key={dist.range} className="flex items-center gap-4">
-                    <span className="text-sm text-muted-foreground w-16">{dist.range}</span>
-                    <div className="flex-1 h-8 bg-muted rounded-full overflow-hidden relative">
-                      <motion.div
-                        className="h-full rounded-full bg-muted-foreground/40"
-                        initial={{ width: 0 }}
-                        animate={{ width: `${(dist.count / maxStudents) * 100}%` }}
-                        transition={{ duration: 1, delay: 0.2 }}
-                      />
-                      <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-foreground">
-                        {dist.count} students
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-6 pt-4 border-t border-border">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Total Students</span>
-                  <span className="font-semibold text-foreground">148</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+        <p className="mt-1 text-sm text-muted-foreground">Insights across all your courses</p>
       </div>
 
-      <motion.div variants={item}>
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base font-semibold tracking-tight">
-              <TrendingUp className="h-4 w-4 text-muted-foreground" />
-              Engagement Metrics
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {engagementMetrics.map((metric) => (
-                <div key={metric.label} className="p-4 rounded-md border border-border text-center">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground mx-auto mb-3">
-                    <metric.icon className="h-4 w-4" />
-                  </div>
-                  <p className="text-2xl font-semibold text-foreground">{metric.value}</p>
-                  <p className="text-sm text-muted-foreground">{metric.label}</p>
+      {/* Stats */}
+      <div className="grid grid-cols-2 border-t border-border sm:grid-cols-4">
+        {stats.map((stat) => (
+          <div key={stat.label} className="border-b border-border py-5 pr-6 sm:border-b-0">
+            <p className="text-2xl font-semibold tracking-tight text-foreground">{stat.value}</p>
+            <p className="mt-1 text-sm text-muted-foreground">{stat.label}</p>
+            <p className="mt-0.5 text-xs text-muted-foreground">{stat.change}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="grid gap-12 lg:grid-cols-2">
+        {/* Course Performance */}
+        <section>
+          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+            Course Performance
+          </h2>
+          <div>
+            {coursePerformance.map((course) => (
+              <div key={course.name} className="border-b border-border py-5">
+                <div className="flex items-baseline justify-between gap-4">
+                  <p className="text-sm font-medium text-foreground">{course.name}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {course.students} students · ★ {course.rating}
+                  </p>
                 </div>
-              ))}
+                <div className="mt-3 space-y-2">
+                  <div className="flex items-center gap-3">
+                    <span className="w-20 shrink-0 text-xs text-muted-foreground">Completion</span>
+                    <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
+                      <div
+                        className="h-full rounded-full bg-foreground transition-all duration-500"
+                        style={{ width: `${course.completion}%` }}
+                      />
+                    </div>
+                    <span className="w-10 shrink-0 text-right font-mono text-xs text-foreground">{course.completion}%</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="w-20 shrink-0 text-xs text-muted-foreground">Avg Score</span>
+                    <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
+                      <div
+                        className="h-full rounded-full bg-muted-foreground/40 transition-all duration-500"
+                        style={{ width: `${course.avgScore}%` }}
+                      />
+                    </div>
+                    <span className="w-10 shrink-0 text-right font-mono text-xs text-foreground">{course.avgScore}%</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Student Progress Distribution */}
+        <section>
+          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+            Student Progress Distribution
+          </h2>
+          <div>
+            {progressDistribution.map((dist) => (
+              <div key={dist.range} className="flex items-center gap-4 border-b border-border py-4">
+                <span className="w-16 shrink-0 text-xs text-muted-foreground">{dist.range}</span>
+                <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
+                  <div
+                    className="h-full rounded-full bg-foreground transition-all duration-500"
+                    style={{ width: `${(dist.count / maxStudents) * 100}%` }}
+                  />
+                </div>
+                <span className="w-24 shrink-0 text-right font-mono text-xs text-muted-foreground">
+                  {dist.count} students
+                </span>
+              </div>
+            ))}
+            <div className="flex items-center justify-between py-4">
+              <span className="text-sm text-muted-foreground">Total Students</span>
+              <span className="text-base font-semibold text-foreground">148</span>
             </div>
-          </CardContent>
-        </Card>
-      </motion.div>
-    </motion.div>
+          </div>
+        </section>
+      </div>
+
+      {/* Engagement Metrics */}
+      <section>
+        <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          Engagement Metrics
+        </h2>
+        <div className="grid grid-cols-2 sm:grid-cols-4">
+          {engagementMetrics.map((metric) => (
+            <div key={metric.label} className="border-b border-border py-5 pr-6 sm:border-b-0">
+              <p className="text-2xl font-semibold tracking-tight text-foreground">{metric.value}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{metric.label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }

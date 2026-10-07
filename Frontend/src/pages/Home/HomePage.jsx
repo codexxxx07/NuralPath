@@ -1,65 +1,15 @@
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
-  Cpu,
-  Zap,
-  Layers,
-  Terminal,
-  FileTerminal,
-  Braces,
-  Network,
-  BookOpen,
-  LayoutDashboard,
-  SquareTerminal,
-  MessageSquare,
-  Library,
-  Users,
-  GitBranch,
-  Lock,
-  Target,
-  Monitor,
   ArrowRight,
   ArrowUpRight,
-  CheckCircle2,
-  ListChecks,
-  GraduationCap,
-  TrendingUp,
-  ChevronRight,
-  ShieldCheck,
 } from "lucide-react";
 import { Button } from "../../components/ui/button";
-import { Card, CardContent } from "../../components/ui/card";
-import { Badge } from "../../components/ui/badge";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "../../components/ui/accordion";
-
-function AnimateOnScroll({ children, className, delay = 0 }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  return (
-    <motion.div
-      ref={ref}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-      variants={{
-        hidden: { opacity: 0, y: 16 },
-        visible: {
-          opacity: 1,
-          y: 0,
-          transition: { duration: 0.45, delay, ease: "easeOut" },
-        },
-      }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
 
 function Eyebrow({ children }) {
   return (
@@ -71,7 +21,6 @@ function Eyebrow({ children }) {
 
 const liveTracks = [
   {
-    icon: Terminal,
     title: "Linux & Systems",
     description:
       "Ground-up Linux fundamentals: filesystem, permissions, processes, and the tools every systems engineer depends on daily.",
@@ -79,7 +28,6 @@ const liveTracks = [
     link: "/courses?domain=linux",
   },
   {
-    icon: FileTerminal,
     title: "Shell Scripting",
     description:
       "Write real shell scripts — automation, parsing, and everyday productivity using Bash and POSIX tools.",
@@ -87,7 +35,6 @@ const liveTracks = [
     link: "/courses?domain=shell",
   },
   {
-    icon: Braces,
     title: "C Programming",
     description:
       "The language at the heart of systems software: pointers, memory, structs, and building programs that run close to the metal.",
@@ -95,7 +42,6 @@ const liveTracks = [
     link: "/courses?domain=c",
   },
   {
-    icon: Network,
     title: "Data Structures in C",
     description:
       "An 8-week track implementing real data structures from scratch: linked lists, trees, heaps, graphs, and sorting.",
@@ -105,56 +51,38 @@ const liveTracks = [
 ];
 
 const upcomingDomains = [
-  {
-    icon: Cpu,
-    title: "VLSI Design",
-    description: "RTL, verification, physical design, timing analysis.",
-  },
-  {
-    icon: Zap,
-    title: "Embedded Systems",
-    description: "ARM, RTOS, firmware, device drivers.",
-  },
-  {
-    icon: Layers,
-    title: "FPGA Development",
-    description: "Verilog/VHDL, SoC design, DSP on FPGA.",
-  },
+  { title: "VLSI Design", description: "RTL, verification, physical design, timing analysis." },
+  { title: "Embedded Systems", description: "ARM, RTOS, firmware, device drivers." },
+  { title: "FPGA Development", description: "Verilog/VHDL, SoC design, DSP on FPGA." },
 ];
 
 const features = [
   {
-    icon: GraduationCap,
     title: "Structured Learning Tracks",
     description:
       "Curated paths in Linux, Shell, C, and Data Structures that take you from basics to building real programs.",
   },
   {
-    icon: SquareTerminal,
     title: "Built-in Practice Lab",
     description:
       "An interactive terminal right in the platform. Practice commands and compile C code without any setup.",
   },
   {
-    icon: LayoutDashboard,
     title: "Progress Dashboards",
     description:
-      "Course progress, streaks, skill reports, and certificates all in one clean dashboard per role — student, mentor, or admin.",
+      "Course progress, streaks, skill reports, and certificates in one dashboard per role — student, mentor, or admin.",
   },
   {
-    icon: MessageSquare,
     title: "Doubt Solving",
     description:
       "Ask questions when you're stuck. Other students and mentors help out — no question is too basic.",
   },
   {
-    icon: Library,
     title: "Curated Resources",
     description:
-      "Cheat sheets, references, and a roadmap section collecting the best learning material in one place.",
+      "Cheat sheets, references, and a roadmap collecting the best learning material in one place.",
   },
   {
-    icon: GitBranch,
     title: "Git & Open Source",
     description:
       "Learn version control and practice contribution workflows that prepare you for real open-source projects.",
@@ -166,25 +94,21 @@ const howItWorks = [
     step: "01",
     title: "Pick a Track",
     description: "Start with Linux Fundamentals, Shell, C, or the Data Structures track based on your goals.",
-    icon: Target,
   },
   {
     step: "02",
     title: "Follow the Curriculum",
     description: "Structured modules with hands-on exercises — each step builds on the last.",
-    icon: TrendingUp,
   },
   {
     step: "03",
     title: "Practice Daily",
     description: "Use the practice lab to drill commands and compile code until concepts stick.",
-    icon: Monitor,
   },
   {
     step: "04",
     title: "Build & Share",
     description: "Apply what you learn in projects and share them with the community for feedback.",
-    icon: Users,
   },
 ];
 
@@ -197,6 +121,21 @@ const dsaWeeks = [
   "Graphs",
   "Sorting & Searching",
   "Capstone Project",
+];
+
+const dashboards = [
+  {
+    role: "Student",
+    items: ["Courses & progress", "Practice lab", "Doubts & assignments", "Certificates"],
+  },
+  {
+    role: "Mentor",
+    items: ["Students & submissions", "Live classes", "Course management", "Analytics"],
+  },
+  {
+    role: "Admin",
+    items: ["Users & batches", "Courses & mentors", "Payments", "Platform analytics"],
+  },
 ];
 
 const faqs = [
@@ -232,115 +171,28 @@ const faqs = [
   },
 ];
 
-function DashboardPreview({ role, title, stats, menu }) {
-  return (
-    <div className="flex flex-col overflow-hidden rounded-lg border border-border bg-card">
-      <div className="flex items-center gap-2 border-b border-border bg-surface px-4 py-2.5">
-        <span className="ml-1 font-mono text-xs text-muted-foreground">{title}</span>
-        <Badge variant="secondary" className="ml-auto gap-1 text-[10px]">
-          <Lock className="h-2.5 w-2.5" />
-          Preview
-        </Badge>
-      </div>
-      <div className="flex flex-1">
-        <div className="hidden w-28 shrink-0 flex-col gap-1 border-r border-border bg-surface/60 p-3 sm:flex">
-          {menu.map((item, i) => (
-            <span
-              key={item}
-              className={`truncate rounded px-2 py-1 text-[10px] font-medium ${
-                i === 0 ? "bg-accent text-foreground" : "text-muted-foreground"
-              }`}
-            >
-              {item}
-            </span>
-          ))}
-        </div>
-        <div className="flex-1 p-4">
-          <p className="text-xs font-semibold text-foreground">{role}</p>
-          <p className="mb-3 text-[10px] text-muted-foreground">Multiline placeholder</p>
-          <div className="grid grid-cols-2 gap-2">
-            {stats.map((s) => (
-              <div key={s.label} className="rounded-md border border-border/60 p-2">
-                <p className="text-sm font-semibold text-foreground">{s.value}</p>
-                <p className="text-[10px] text-muted-foreground">{s.label}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-2 space-y-1.5">
-            <div className="h-1.5 w-full rounded bg-muted" />
-            <div className="h-1.5 w-4/5 rounded bg-muted" />
-            <div className="h-1.5 w-3/5 rounded bg-muted" />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-const dashboards = [
-  {
-    role: "Student",
-    title: "student-dashboard",
-    stats: [
-      { label: "Courses", value: "4" },
-      { label: "Streak", value: "12 days" },
-      { label: "Skill score", value: "68%" },
-      { label: "Certificates", value: "2" },
-    ],
-    menu: ["Overview", "My Courses", "Practice Lab", "Doubts"],
-  },
-  {
-    role: "Mentor",
-    title: "mentor-dashboard",
-    stats: [
-      { label: "Students", value: "18" },
-      { label: "Open doubts", value: "5" },
-      { label: "Assignments", value: "3" },
-      { label: "Sessions", value: "2" },
-    ],
-    menu: ["Overview", "Courses", "Doubts", "Assignments"],
-  },
-  {
-    role: "Admin",
-    title: "admin-dashboard",
-    stats: [
-      { label: "Courses", value: "8" },
-      { label: "Users", value: "320" },
-      { label: "Events", value: "6" },
-      { label: "Reviews", value: "9" },
-    ],
-    menu: ["Overview", "Courses", "Users", "Events"],
-  },
-];
-
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero */}
-      <section className="border-b border-border">
-        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
-          <div className="grid items-center gap-14 lg:grid-cols-2">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="max-w-xl"
-            >
-              <Eyebrow>NuralPath</Eyebrow>
-              <h1 className="mt-4 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-                Build the{" "}
-                <span className="text-primary">C &amp; Linux</span>{" "}
-                foundations engineers actually use
+      <section>
+        <div className="mx-auto max-w-6xl px-4 pt-24 pb-20 sm:px-6 sm:pt-32 sm:pb-24">
+          <div className="grid items-start gap-16 lg:grid-cols-2">
+            <div className="max-w-xl">
+              <h1 className="text-4xl font-semibold leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+                Learn better.
+                <br />
+                Build consistently.
               </h1>
-              <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-                Hands-on learning paths in Linux, shell scripting, C, and data
-                structures — with a built-in practice lab, progress dashboards,
-                and a community of students learning right alongside you.
+              <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground">
+                A focused learning platform for students, mentors and communities
+                — hands-on paths in Linux, shell scripting, C, and data
+                structures, with a built-in practice lab.
               </p>
-              <div className="mt-8 flex flex-wrap gap-3">
+              <div className="mt-9 flex flex-wrap gap-3">
                 <Button size="lg" asChild>
                   <Link to="/register">
-                    Start Learning Free
+                    Start Learning
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
@@ -348,87 +200,66 @@ export default function HomePage() {
                   <Link to="/courses">Explore Courses</Link>
                 </Button>
               </div>
-              <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                  <span>Free tier available</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                  <span>Practice lab included</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                  <span>No experience required</span>
-                </div>
-              </div>
-            </motion.div>
+              <p className="mt-8 text-sm text-muted-foreground">
+                Free tier available &nbsp;·&nbsp; Practice lab included &nbsp;·&nbsp; No experience required
+              </p>
+            </div>
 
-            {/* C / Data Structures terminal preview */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
-              className="relative hidden lg:block"
-            >
+            {/* Code preview */}
+            <div className="hidden lg:block">
               <div className="overflow-hidden rounded-lg border border-border bg-card">
-                <div className="flex items-center gap-2 border-b border-border bg-surface px-4 py-3">
+                <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
                   <span className="font-mono text-xs text-muted-foreground">list.c</span>
+                  <span className="font-mono text-xs text-muted-foreground">C</span>
                 </div>
-                <div className="p-6 font-mono text-sm leading-6 text-foreground/80">
+                <div className="p-6 font-mono text-sm leading-7 text-muted-foreground">
                   <p>
-                    <span className="text-primary">#include</span>{" "}
-                    <span className="text-emerald-500">&lt;stdlib.h&gt;</span>
+                    <span className="font-medium text-foreground">#include</span> &lt;stdlib.h&gt;
                   </p>
                   <p className="mt-2">
-                    <span className="text-primary">typedef</span>{" "}
-                    <span className="text-primary">struct</span> node {"{"}
+                    <span className="font-medium text-foreground">typedef</span> struct node {"{"}
                   </p>
                   <p className="pl-4">
-                    <span className="text-primary">int</span> data;
+                    <span className="font-medium text-foreground">int</span> data;
                   </p>
-                  <p className="pl-4 text-muted-foreground">struct node *next;</p>
+                  <p className="pl-4">struct node *next;</p>
                   <p>{"} node_t;"}</p>
                   <p className="mt-2">
-                    <span className="text-primary">node_t</span> *push(
-                    <span className="text-primary">node_t</span> *head,{" "}
-                    <span className="text-primary">int</span> value){" "}
-                    {"{"}
+                    <span className="font-medium text-foreground">node_t</span> *push(
+                    <span className="font-medium text-foreground">node_t</span> *head,{" "}
+                    <span className="font-medium text-foreground">int</span> value) {"{"}
                   </p>
                   <p className="pl-4">
-                    <span className="text-primary">node_t</span> *n ={" "}
-                    <span className="text-cyan-500">malloc</span>(
-                    <span className="text-primary">sizeof</span>(
-                    <span className="text-primary">*</span>n));
+                    <span className="font-medium text-foreground">node_t</span> *n = malloc(
+                    <span className="font-medium text-foreground">sizeof</span>(*n));
                   </p>
                   <p className="pl-4">n-&gt;data = value;</p>
                   <p className="pl-4">n-&gt;next = head;</p>
                   <p className="pl-4">
-                    <span className="text-primary">return</span> n;
+                    <span className="font-medium text-foreground">return</span> n;
                   </p>
                   <p>{"}"}</p>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Learning Focus Strip */}
-      <section className="border-b border-border">
-        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center gap-5 text-center">
-            <p className="text-sm font-medium text-muted-foreground">
+      {/* Learning focus strip */}
+      <section className="border-y border-border">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="flex flex-col gap-3 py-5 sm:flex-row sm:items-center sm:gap-8">
+            <span className="shrink-0 text-sm text-muted-foreground">
               What you&apos;ll actually learn here
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-2">
+            </span>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
               {liveTracks.map((t) => (
                 <Link
                   key={t.title}
                   to={t.link}
-                  className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm text-foreground transition-colors hover:border-muted-foreground/40"
+                  className="text-sm text-foreground transition-colors hover:text-primary"
                 >
-                  <t.icon className="h-4 w-4 text-muted-foreground" />
                   {t.title}
                 </Link>
               ))}
@@ -438,337 +269,294 @@ export default function HomePage() {
       </section>
 
       {/* Live Learning Tracks */}
-      <section className="py-20 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll className="max-w-2xl">
+      <section className="py-24 sm:py-28">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="max-w-2xl">
             <Eyebrow>Live Learning Tracks</Eyebrow>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-              Start Learning Today
+              Start learning today
             </h2>
             <p className="mt-3 text-muted-foreground">
               Four tracks are live right now, built for real skill development —
               not just video-watching.
             </p>
-          </AnimateOnScroll>
+          </div>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {liveTracks.map((domain, i) => (
-              <AnimateOnScroll key={domain.title} delay={i * 0.06}>
-                <Link to={domain.link}>
-                  <Card className="group h-full transition-colors hover:border-muted-foreground/40">
-                    <CardContent className="p-5">
-                      <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-muted text-muted-foreground">
-                        <domain.icon className="h-5 w-5" />
-                      </div>
-                      <h3 className="text-base font-semibold tracking-tight text-foreground">
-                        {domain.title}
-                      </h3>
-                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                        {domain.description}
-                      </p>
-                      <div className="mt-4 flex flex-wrap gap-1.5">
-                        {domain.topics.map((topic) => (
-                          <span
-                            key={topic}
-                            className="rounded-full bg-muted px-2.5 py-1 text-xs text-muted-foreground"
-                          >
-                            {topic}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="mt-4 flex items-center gap-1 text-sm text-muted-foreground transition-colors group-hover:text-foreground">
-                        Explore
-                        <ArrowUpRight className="h-3.5 w-3.5" />
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </AnimateOnScroll>
+          <div className="mt-10 grid gap-x-12 sm:grid-cols-2">
+            {liveTracks.map((track) => (
+              <Link
+                key={track.title}
+                to={track.link}
+                className="group flex items-start justify-between gap-6 border-t border-border py-6 transition-colors hover:bg-muted/40"
+              >
+                <div>
+                  <h3 className="text-base font-medium text-foreground">
+                    {track.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {track.description}
+                  </p>
+                  <p className="mt-3 text-xs text-muted-foreground">
+                    {track.topics.join(" · ")}
+                  </p>
+                </div>
+                <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
+              </Link>
             ))}
           </div>
 
-          {/* In development banner */}
-          <AnimateOnScroll className="mt-12">
-            <div className="grid gap-6 rounded-lg border border-border bg-surface p-6 sm:grid-cols-3">
-              {upcomingDomains.map((d) => (
-                <div key={d.title}>
-                  <div className="flex items-center gap-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-md bg-muted text-muted-foreground">
-                      <d.icon className="h-4 w-4" />
-                    </div>
-                    <h3 className="text-sm font-semibold text-foreground">{d.title}</h3>
-                    <Badge variant="secondary" className="ml-auto text-[10px]">
-                      In Development
-                    </Badge>
+          {/* In development */}
+          <div className="mt-12 border-t border-border pt-6">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <div className="grid gap-4 sm:grid-cols-3 sm:gap-10">
+                {upcomingDomains.map((d) => (
+                  <div key={d.title}>
+                    <p className="text-sm font-medium text-foreground">{d.title}</p>
+                    <p className="mt-1 text-sm text-muted-foreground">{d.description}</p>
                   </div>
-                  <p className="mt-2 text-sm text-muted-foreground">{d.description}</p>
-                </div>
-              ))}
+                ))}
+              </div>
+              <span className="shrink-0 rounded-full border border-border px-2.5 py-0.5 text-xs text-muted-foreground">
+                In development
+              </span>
             </div>
-            <p className="mt-4 text-center text-sm text-muted-foreground">
-              VLSI, Embedded, and FPGA tracks are being built in the open.
-              Follow the{" "}
+            <p className="mt-6 max-w-2xl text-sm text-muted-foreground">
+              VLSI, Embedded, and FPGA tracks are being built in the open. Follow
+              the{" "}
               <Link to="/libraries" className="font-medium text-primary hover:underline">
                 roadmap in Libraries
               </Link>{" "}
               and we&apos;ll announce when they&apos;re ready.
             </p>
-          </AnimateOnScroll>
+          </div>
         </div>
       </section>
 
       {/* Platform Features */}
-      <section className="border-y border-border bg-surface py-20 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll className="max-w-2xl">
+      <section className="border-y border-border bg-surface py-24 sm:py-28">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="max-w-2xl">
             <Eyebrow>Platform Features</Eyebrow>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-              Tools Focused on Helping You Learn
+              Tools focused on helping you learn
             </h2>
             <p className="mt-3 text-muted-foreground">
               Everything here exists to move you from watching to doing — as
               quickly as possible.
             </p>
-          </AnimateOnScroll>
+          </div>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {features.map((f, i) => (
-              <AnimateOnScroll key={f.title} delay={i * 0.05}>
-                <Card className="h-full">
-                  <CardContent className="p-5">
-                    <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-muted text-muted-foreground">
-                      <f.icon className="h-5 w-5" />
-                    </div>
-                    <h3 className="text-base font-semibold tracking-tight text-foreground">
-                      {f.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                      {f.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              </AnimateOnScroll>
+          <div className="mt-10 grid gap-x-12 sm:grid-cols-2 lg:grid-cols-3">
+            {features.map((f) => (
+              <div key={f.title} className="border-t border-border py-6">
+                <h3 className="text-base font-medium text-foreground">{f.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {f.description}
+                </p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Dashboard Preview */}
-      <section className="py-20 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll className="max-w-2xl">
+      {/* Dashboards */}
+      <section className="py-24 sm:py-28">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="max-w-2xl">
             <Eyebrow>Dashboards</Eyebrow>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-              Your Learning, in One Place
+              Your learning, in one place
             </h2>
             <p className="mt-3 text-muted-foreground">
               Separate dashboards for students, mentors, and admins — with
               courses, practice, doubt solving, and progress tracking.
             </p>
-          </AnimateOnScroll>
+          </div>
 
-          <div className="mt-10 grid gap-4 lg:grid-cols-3">
-            {dashboards.map((d, i) => (
-              <AnimateOnScroll key={d.role} delay={i * 0.06}>
-                <DashboardPreview {...d} />
-              </AnimateOnScroll>
+          <div className="mt-10 grid gap-8 sm:grid-cols-3">
+            {dashboards.map((d) => (
+              <div key={d.role} className="border-t border-border pt-5">
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">
+                  {d.role}
+                </h3>
+                <ul className="mt-3 space-y-2">
+                  {d.items.map((item) => (
+                    <li key={item} className="text-sm text-muted-foreground">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
 
-          <AnimateOnScroll className="mt-10 text-center">
-            <p className="mx-auto flex max-w-2xl items-center justify-center gap-2 text-sm text-muted-foreground">
-              <Lock className="h-4 w-4 shrink-0" />
-              This shows sample layout only. Sign in to open your real, live dashboard.
+          <div className="mt-10 border-t border-border pt-6">
+            <p className="text-sm text-muted-foreground">
+              Sign in to open your real, live dashboard with your own courses and
+              progress.
             </p>
-            <Button size="lg" asChild className="mt-6">
+            <Button asChild className="mt-4">
               <Link to="/dashboard">
                 Open Dashboard
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
-          </AnimateOnScroll>
+          </div>
         </div>
       </section>
 
       {/* DSA Track */}
-      <section className="border-y border-border bg-surface py-20 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
-            <AnimateOnScroll>
-              <div className="max-w-xl">
-                <Eyebrow>Featured Track</Eyebrow>
-                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-                  Data Structures in C — 8 Weeks to Real Skill
-                </h2>
-                <p className="mt-4 leading-relaxed text-muted-foreground">
-                  This track takes you from recursion and complexity analysis to
-                  building full data structure implementations in C. Every
-                  structure is written by you, from scratch — not just watched.
-                </p>
-                <ul className="mt-6 space-y-3">
-                  {[
-                    "Implement linked lists, stacks, and queues by hand",
-                    "Understand trees, heaps, and graphs through code",
-                    "Finish with a capstone project you can show off",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
-                      <span className="text-muted-foreground">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <Button size="lg" asChild>
-                    <Link to="/courses/6">
-                      View the DSA Track
-                      <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
+      <section className="border-y border-border bg-surface py-24 sm:py-28">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="grid items-start gap-12 lg:grid-cols-2">
+            <div className="max-w-xl">
+              <Eyebrow>Featured Track</Eyebrow>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+                Data Structures in C — 8 weeks to real skill
+              </h2>
+              <p className="mt-4 leading-relaxed text-muted-foreground">
+                This track takes you from recursion and complexity analysis to
+                building full data structure implementations in C. Every
+                structure is written by you, from scratch — not just watched.
+              </p>
+              <ul className="mt-6 space-y-3">
+                {[
+                  "Implement linked lists, stacks, and queues by hand",
+                  "Understand trees, heaps, and graphs through code",
+                  "Finish with a capstone project you can show off",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-sm">
+                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-foreground" />
+                    <span className="text-muted-foreground">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8">
+                <Button size="lg" asChild>
+                  <Link to="/courses/6">
+                    View the DSA Track
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
               </div>
-            </AnimateOnScroll>
-            <AnimateOnScroll delay={0.08}>
-              <Card>
-                <CardContent className="p-5">
-                  <div className="mb-4 flex items-center gap-2">
-                    <ListChecks className="h-4 w-4 text-muted-foreground" />
-                    <h3 className="text-base font-semibold tracking-tight text-foreground">
-                      8-Week Curriculum
-                    </h3>
-                  </div>
-                  <div className="grid gap-2 sm:grid-cols-2">
-                    {dsaWeeks.map((week, i) => (
-                      <div
-                        key={week}
-                        className="flex items-center gap-3 rounded-md border border-border bg-surface px-3 py-2"
-                      >
-                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded bg-muted font-mono text-xs text-muted-foreground">
-                          {i + 1}
-                        </span>
-                        <span className="text-sm text-muted-foreground">{week}</span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </AnimateOnScroll>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">
+                8-Week Curriculum
+              </h3>
+              <ul className="mt-4">
+                {dsaWeeks.map((week, i) => (
+                  <li
+                    key={week}
+                    className="flex items-center gap-4 border-t border-border py-3 text-sm"
+                  >
+                    <span className="w-6 shrink-0 font-mono text-xs text-muted-foreground">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-foreground">{week}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
       {/* How It Works */}
-      <section className="py-20 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll className="max-w-2xl">
+      <section className="py-24 sm:py-28">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="max-w-2xl">
             <Eyebrow>How It Works</Eyebrow>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-              From Your First Command to Your First Project
+              From your first command to your first project
             </h2>
-          </AnimateOnScroll>
+          </div>
 
-          <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {howItWorks.map((step, i) => (
-              <AnimateOnScroll key={step.step} delay={i * 0.06}>
-                <div className="text-center">
-                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-md bg-muted text-muted-foreground">
-                    <step.icon className="h-6 w-6" />
-                  </div>
-                  <span className="font-mono text-xs font-medium text-muted-foreground">
-                    STEP {step.step}
-                  </span>
-                  <h3 className="mt-2 text-base font-semibold tracking-tight text-foreground">
-                    {step.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {step.description}
-                  </p>
-                </div>
-              </AnimateOnScroll>
+          <div className="mt-10 grid gap-x-12 sm:grid-cols-2 lg:grid-cols-4">
+            {howItWorks.map((step) => (
+              <div key={step.step} className="border-t border-border py-6">
+                <span className="font-mono text-xs text-muted-foreground">
+                  {step.step}
+                </span>
+                <h3 className="mt-2 text-base font-medium text-foreground">
+                  {step.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  {step.description}
+                </p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Community teaser */}
-      <section className="border-y border-border bg-surface py-20 sm:py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-10 lg:grid-cols-2">
-            <AnimateOnScroll>
-              <div className="max-w-xl">
-                <Eyebrow>Student Community</Eyebrow>
-                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-                  You&apos;re Not Learning Alone
-                </h2>
-                <p className="mt-4 leading-relaxed text-muted-foreground">
-                  Ask doubts, review each other&apos;s code, and collaborate on
-                  projects. The community is where the real learning sticks.
-                </p>
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <Button asChild>
-                    <Link to="/community">
-                      Join the Community
-                      <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                  <Button variant="outline" asChild>
-                    <Link to="/about">Learn About Us</Link>
-                  </Button>
+      <section className="border-y border-border bg-surface py-24 sm:py-28">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="grid items-start gap-12 lg:grid-cols-2">
+            <div className="max-w-xl">
+              <Eyebrow>Student Community</Eyebrow>
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+                You&apos;re not learning alone
+              </h2>
+              <p className="mt-4 leading-relaxed text-muted-foreground">
+                Ask doubts, review each other&apos;s code, and collaborate on
+                projects. The community is where the real learning sticks.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button asChild>
+                  <Link to="/community">
+                    Join the Community
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button variant="outline" asChild>
+                  <Link to="/about">Learn About Us</Link>
+                </Button>
+              </div>
+            </div>
+
+            <div className="grid gap-x-10 sm:grid-cols-2">
+              {[
+                {
+                  title: "Doubt solving",
+                  description: "Get unstuck fast with help from peers and mentors.",
+                },
+                {
+                  title: "Study groups",
+                  description: "Learn in small groups moving through tracks together.",
+                },
+                {
+                  title: "Project collabs",
+                  description: "Team up on C and shell projects for real experience.",
+                },
+                {
+                  title: "Safe space",
+                  description: "Questions at every level are welcome, always.",
+                },
+              ].map((c) => (
+                <div key={c.title} className="border-t border-border py-5">
+                  <h3 className="text-sm font-medium text-foreground">{c.title}</h3>
+                  <p className="mt-1.5 text-sm text-muted-foreground">{c.description}</p>
                 </div>
-              </div>
-            </AnimateOnScroll>
-            <AnimateOnScroll delay={0.08}>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {[
-                  {
-                    icon: MessageSquare,
-                    title: "Doubt solving",
-                    description: "Get unstuck fast with help from peers and mentors.",
-                  },
-                  {
-                    icon: Network,
-                    title: "Study groups",
-                    description: "Learn in small groups moving through tracks together.",
-                  },
-                  {
-                    icon: GitBranch,
-                    title: "Project collabs",
-                    description: "Team up on C and shell projects for real experience.",
-                  },
-                  {
-                    icon: ShieldCheck,
-                    title: "Safe space",
-                    description: "Questions at every level are welcome, always.",
-                  },
-                ].map((c) => (
-                  <Card key={c.title}>
-                    <CardContent className="p-5">
-                      <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground">
-                        <c.icon className="h-4 w-4" />
-                      </div>
-                      <h3 className="text-sm font-semibold tracking-tight text-foreground">
-                        {c.title}
-                      </h3>
-                      <p className="mt-1 text-sm text-muted-foreground">{c.description}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </AnimateOnScroll>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="py-20 sm:py-24">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll className="text-center">
+      <section className="py-24 sm:py-28">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6">
+          <div className="text-center">
             <Eyebrow>FAQ</Eyebrow>
             <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-              Frequently Asked Questions
+              Frequently asked questions
             </h2>
-          </AnimateOnScroll>
+          </div>
 
-          <AnimateOnScroll className="mt-10" delay={0.05}>
+          <div className="mt-10">
             <Accordion type="single" collapsible className="w-full">
               {faqs.map((faq, i) => (
                 <AccordionItem key={i} value={`faq-${i}`}>
@@ -781,39 +569,31 @@ export default function HomePage() {
                 </AccordionItem>
               ))}
             </Accordion>
-          </AnimateOnScroll>
+          </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="border-t border-border py-20 sm:py-24">
-        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-          <AnimateOnScroll>
-            <div className="mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-md bg-muted text-muted-foreground">
-              <BookOpen className="h-6 w-6" />
-            </div>
-            <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-              Ready to Start Learning?
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-              Create a free account, pick a track, and write your first command
-              today. The community will be right there with you.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Button size="lg" asChild>
-                <Link to="/register">
-                  Get Started Free
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link to="/courses">
-                  Browse Courses
-                  <ChevronRight className="h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-          </AnimateOnScroll>
+      <section className="border-t border-border py-24 sm:py-28">
+        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
+          <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+            Ready to start learning?
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
+            Create a free account, pick a track, and write your first command
+            today. The community will be right there with you.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Button size="lg" asChild>
+              <Link to="/register">
+                Get Started Free
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild>
+              <Link to="/courses">Browse Courses</Link>
+            </Button>
+          </div>
         </div>
       </section>
     </div>

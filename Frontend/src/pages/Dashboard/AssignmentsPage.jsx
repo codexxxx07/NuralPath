@@ -1,11 +1,7 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { FileText, Clock, CheckCircle2, Send, Calendar } from "lucide-react";
-import { Card, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
-import { cn } from "../../lib/utils";
 
 const assignments = [
   {
@@ -90,16 +86,6 @@ const assignments = [
   },
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
-
 export default function AssignmentsPage() {
   const [activeTab, setActiveTab] = useState("pending");
 
@@ -111,102 +97,97 @@ export default function AssignmentsPage() {
   });
 
   const statusConfig = {
-    pending: { color: "bg-muted text-muted-foreground", icon: Clock, label: "Pending" },
-    submitted: { color: "bg-muted text-muted-foreground", icon: Send, label: "Submitted" },
-    graded: { color: "bg-emerald-500/10 text-emerald-500", icon: CheckCircle2, label: "Graded" },
+    pending: { label: "Pending" },
+    submitted: { label: "Submitted" },
+    graded: { label: "Graded" },
   };
 
   return (
-    <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item}>
+    <div className="space-y-10">
+      <div>
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">Assignments</h1>
-        <p className="text-sm text-muted-foreground mt-1">Complete assignments and track your submissions</p>
-      </motion.div>
+        <p className="mt-1 text-sm text-muted-foreground">Complete assignments and track your submissions</p>
+      </div>
 
-      <motion.div variants={item}>
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList>
-            <TabsTrigger value="pending">
-              <Clock className="h-4 w-4 mr-2" />
-              Pending ({assignments.filter((a) => a.status === "pending").length})
-            </TabsTrigger>
-            <TabsTrigger value="submitted">
-              <Send className="h-4 w-4 mr-2" />
-              Submitted ({assignments.filter((a) => a.status === "submitted").length})
-            </TabsTrigger>
-            <TabsTrigger value="graded">
-              <CheckCircle2 className="h-4 w-4 mr-2" />
-              Graded ({assignments.filter((a) => a.status === "graded").length})
-            </TabsTrigger>
-          </TabsList>
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
+        <TabsList className="flex-wrap gap-x-6 gap-y-2">
+          <TabsTrigger value="pending">
+            Pending ({assignments.filter((a) => a.status === "pending").length})
+          </TabsTrigger>
+          <TabsTrigger value="submitted">
+            Submitted ({assignments.filter((a) => a.status === "submitted").length})
+          </TabsTrigger>
+          <TabsTrigger value="graded">
+            Graded ({assignments.filter((a) => a.status === "graded").length})
+          </TabsTrigger>
+        </TabsList>
 
-          <TabsContent value={activeTab} className="mt-4">
-            <div className="space-y-4">
-              {filteredAssignments.map((assignment) => {
-                const config = statusConfig[assignment.status];
-                const Icon = config.icon;
-                return (
-                  <Card key={assignment.id}>
-                    <CardContent className="p-5">
-                      <div className="flex flex-col md:flex-row md:items-start gap-4">
-                        <div className={cn("flex h-9 w-9 items-center justify-center rounded-md flex-shrink-0", config.color)}>
-                          <Icon className="h-4 w-4" />
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-start justify-between gap-2">
-                            <div>
-                              <h3 className="text-sm font-semibold tracking-tight text-foreground">{assignment.title}</h3>
-                              <p className="text-sm text-muted-foreground mt-1">{assignment.course}</p>
-                            </div>
-                            <Badge variant={assignment.status === "graded" ? "success" : assignment.status === "submitted" ? "secondary" : "outline"}>
-                              {config.label}
-                            </Badge>
-                          </div>
-                          <p className="text-sm text-muted-foreground mt-2">{assignment.description}</p>
-                          <div className="mt-3 flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-                            <div className="flex items-center gap-1">
-                              <Calendar className="h-4 w-4" />
-                              Due: {assignment.dueDate}
-                            </div>
-                            {assignment.submittedDate && (
-                              <span>Submitted: {assignment.submittedDate}</span>
-                            )}
-                            <span>{assignment.xp} XP</span>
-                            {assignment.grade && (
-                              <span className="font-medium text-foreground">
-                                Grade: {assignment.grade}%
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <div className="flex-shrink-0">
-                          {assignment.status === "pending" && (
-                            <Button size="sm">
-                              <Send className="h-4 w-4 mr-2" />
-                              Submit
-                            </Button>
-                          )}
-                          {assignment.status === "graded" && (
-                            <Button variant="outline" size="sm">
-                              View Feedback
-                            </Button>
-                          )}
-                        </div>
+        <TabsContent value={activeTab} className="mt-4">
+          <div>
+            {filteredAssignments.map((assignment) => {
+              const config = statusConfig[assignment.status];
+              return (
+                <div
+                  key={assignment.id}
+                  className="flex flex-col gap-3 border-b border-border py-5 sm:flex-row sm:items-start sm:gap-8"
+                >
+                  <div className="w-28 shrink-0">
+                    <p className="text-xs text-muted-foreground">Due</p>
+                    <p className="mt-0.5 text-xs font-medium text-foreground">{assignment.dueDate}</p>
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="min-w-0">
+                        <p className="text-sm font-medium text-foreground">{assignment.title}</p>
+                        <p className="mt-0.5 text-xs text-muted-foreground">{assignment.course}</p>
                       </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-              {filteredAssignments.length === 0 && (
-                <div className="py-12 text-center">
-                  <FileText className="h-10 w-10 mx-auto mb-3 text-muted-foreground opacity-50" />
-                  <p className="text-sm font-medium text-foreground">No assignments to display</p>
+                      <Badge
+                        variant={
+                          assignment.status === "graded"
+                            ? "success"
+                            : assignment.status === "submitted"
+                            ? "secondary"
+                            : "outline"
+                        }
+                        className="shrink-0"
+                      >
+                        {config.label}
+                      </Badge>
+                    </div>
+                    <p className="mt-2 text-sm text-muted-foreground">{assignment.description}</p>
+                    <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-xs text-muted-foreground">
+                      {assignment.submittedDate && (
+                        <span>Submitted {assignment.submittedDate}</span>
+                      )}
+                      <span>{assignment.xp} XP</span>
+                      {assignment.grade && (
+                        <span className="font-medium text-foreground">
+                          Grade {assignment.grade}%
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="shrink-0">
+                    {assignment.status === "pending" && (
+                      <Button size="sm">Submit</Button>
+                    )}
+                    {assignment.status === "graded" && (
+                      <Button variant="outline" size="sm">
+                        View Feedback
+                      </Button>
+                    )}
+                  </div>
                 </div>
-              )}
-            </div>
-          </TabsContent>
-        </Tabs>
-      </motion.div>
-    </motion.div>
+              );
+            })}
+            {filteredAssignments.length === 0 && (
+              <p className="py-12 text-center text-sm text-muted-foreground">
+                No assignments to display
+              </p>
+            )}
+          </div>
+        </TabsContent>
+      </Tabs>
+    </div>
   );
 }

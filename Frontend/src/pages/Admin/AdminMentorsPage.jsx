@@ -1,15 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import {
-  Plus,
-  Star,
-  BookOpen,
-  Mail,
-  Phone,
-  Calendar,
-  X,
-} from "lucide-react";
-import { Card, CardContent } from "../../components/ui/card";
+import { Plus, X } from "lucide-react";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Avatar, AvatarFallback } from "../../components/ui/avatar";
@@ -121,22 +111,12 @@ const mentors = [
   },
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
-
 export default function AdminMentorsPage() {
   const [selectedMentor, setSelectedMentor] = useState(null);
 
   return (
-    <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item} className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div className="mx-auto max-w-6xl space-y-10">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">Mentor Management</h1>
           <p className="mt-1 text-sm text-muted-foreground">{mentors.length} mentors on platform</p>
@@ -145,67 +125,69 @@ export default function AdminMentorsPage() {
           <Plus className="h-4 w-4 mr-2" />
           Add Mentor
         </Button>
-      </motion.div>
+      </div>
 
-      <motion.div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" variants={item}>
-        {mentors.map((mentor) => (
-          <Card key={mentor.id} className="cursor-pointer transition-colors hover:border-muted-foreground/40" onClick={() => setSelectedMentor(mentor)}>
-            <CardContent className="p-5">
-              <div className="mb-4 flex items-start gap-4">
-                <Avatar className="h-12 w-12">
-                  <AvatarFallback className="text-sm font-medium">{mentor.initials}</AvatarFallback>
-                </Avatar>
-                <div className="min-w-0 flex-1">
-                  <h3 className="font-semibold text-foreground">{mentor.name}</h3>
-                  <p className="truncate text-xs text-muted-foreground">{mentor.email}</p>
-                  <Badge variant={mentor.status === "Active" ? "success" : mentor.status === "On Leave" ? "secondary" : "destructive"} className="mt-1">
-                    {mentor.status}
-                  </Badge>
-                </div>
-              </div>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Rating</span>
-                  <div className="flex items-center gap-1">
-                    <Star className="h-3.5 w-3.5 fill-foreground text-foreground" />
-                    <span className="font-medium text-foreground">{mentor.rating}</span>
-                    <span className="text-muted-foreground">({mentor.totalReviews})</span>
+      <section>
+        <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          All Mentors
+        </h2>
+        <div>
+          {mentors.map((mentor) => (
+            <div
+              key={mentor.id}
+              className="cursor-pointer border-b border-border py-5 transition-colors hover:bg-muted/40"
+              onClick={() => setSelectedMentor(mentor)}
+            >
+              <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-8">
+                <div className="flex min-w-0 flex-1 items-start gap-3">
+                  <Avatar className="h-10 w-10">
+                    <AvatarFallback className="text-xs font-medium">{mentor.initials}</AvatarFallback>
+                  </Avatar>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <p className="text-sm font-medium text-foreground">{mentor.name}</p>
+                      <Badge variant={mentor.status === "Active" ? "success" : mentor.status === "On Leave" ? "secondary" : "destructive"}>
+                        {mentor.status}
+                      </Badge>
+                    </div>
+                    <p className="mt-0.5 truncate text-xs text-muted-foreground">{mentor.email}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">{mentor.expertise.join(" · ")}</p>
                   </div>
                 </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Students</span>
-                  <span className="font-medium text-foreground">{mentor.studentsCount}</span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Courses</span>
-                  <span className="font-medium text-foreground">{mentor.coursesAssigned.length}</span>
-                </div>
-                <div>
-                  <div className="mb-1 flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Completion Rate</span>
-                    <span className="font-medium text-foreground">{mentor.completionRate}%</span>
+
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+                  <div>
+                    <p className="text-xs text-muted-foreground">Rating</p>
+                    <p className="mt-0.5 text-sm font-medium text-foreground">
+                      ★ {mentor.rating} <span className="font-normal text-muted-foreground">({mentor.totalReviews})</span>
+                    </p>
                   </div>
-                  <Progress value={mentor.completionRate} className="h-1.5" />
+                  <div>
+                    <p className="text-xs text-muted-foreground">Students</p>
+                    <p className="mt-0.5 text-sm font-medium text-foreground">{mentor.studentsCount}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Courses</p>
+                    <p className="mt-0.5 text-sm font-medium text-foreground">{mentor.coursesAssigned.length}</p>
+                  </div>
+                  <div className="w-40">
+                    <div className="flex items-baseline justify-between">
+                      <p className="text-xs text-muted-foreground">Completion</p>
+                      <p className="text-xs font-medium text-foreground">{mentor.completionRate}%</p>
+                    </div>
+                    <Progress value={mentor.completionRate} className="mt-2 h-1.5" />
+                  </div>
                 </div>
               </div>
-              <div className="mt-3 flex flex-wrap gap-1">
-                {mentor.expertise.map((skill) => (
-                  <Badge key={skill} variant="outline" className="text-[10px]">
-                    {skill}
-                  </Badge>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </motion.div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {selectedMentor && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={() => setSelectedMentor(null)}>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg border border-border bg-card p-6 shadow-lg"
+          <div
+            className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg border border-border bg-background p-6 shadow-lg"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="mb-4 flex items-center justify-between">
@@ -219,70 +201,64 @@ export default function AdminMentorsPage() {
               <Avatar className="h-16 w-16">
                 <AvatarFallback className="text-lg font-medium">{selectedMentor.initials}</AvatarFallback>
               </Avatar>
-              <div>
+              <div className="min-w-0">
                 <h3 className="text-lg font-semibold text-foreground">{selectedMentor.name}</h3>
-                <p className="text-sm text-muted-foreground">{selectedMentor.bio}</p>
+                <p className="mt-0.5 text-sm text-muted-foreground">{selectedMentor.bio}</p>
               </div>
             </div>
 
-            <Separator className="mb-4" />
-
-            <div className="mb-4 grid grid-cols-2 gap-3">
-              <div className="rounded-md bg-muted p-3 text-center">
-                <p className="text-2xl font-semibold text-foreground">{selectedMentor.studentsCount}</p>
-                <p className="text-xs text-muted-foreground">Students</p>
+            <div className="grid grid-cols-2 border-t border-border">
+              <div className="border-b border-border py-4 pr-4">
+                <p className="text-2xl font-semibold tracking-tight text-foreground">{selectedMentor.studentsCount}</p>
+                <p className="mt-1 text-xs text-muted-foreground">Students</p>
               </div>
-              <div className="rounded-md bg-muted p-3 text-center">
-                <p className="text-2xl font-semibold text-foreground">{selectedMentor.rating}</p>
-                <p className="text-xs text-muted-foreground">Avg Rating</p>
+              <div className="border-b border-border py-4 pl-4">
+                <p className="text-2xl font-semibold tracking-tight text-foreground">{selectedMentor.rating}</p>
+                <p className="mt-1 text-xs text-muted-foreground">Avg Rating</p>
               </div>
-              <div className="rounded-md bg-muted p-3 text-center">
-                <p className="text-2xl font-semibold text-foreground">{selectedMentor.completionRate}%</p>
-                <p className="text-xs text-muted-foreground">Completion</p>
+              <div className="border-b border-border py-4 pr-4">
+                <p className="text-2xl font-semibold tracking-tight text-foreground">{selectedMentor.completionRate}%</p>
+                <p className="mt-1 text-xs text-muted-foreground">Completion</p>
               </div>
-              <div className="rounded-md bg-muted p-3 text-center">
-                <p className="text-2xl font-semibold text-foreground">{selectedMentor.avgResponseTime}</p>
-                <p className="text-xs text-muted-foreground">Avg Response</p>
+              <div className="border-b border-border py-4 pl-4">
+                <p className="text-2xl font-semibold tracking-tight text-foreground">{selectedMentor.avgResponseTime}</p>
+                <p className="mt-1 text-xs text-muted-foreground">Avg Response</p>
               </div>
             </div>
 
-            <Separator className="mb-4" />
-
-            <div className="mb-4 space-y-3">
-              <h4 className="text-sm font-semibold tracking-tight text-foreground">Assigned Courses</h4>
-              {selectedMentor.coursesAssigned.map((course) => (
-                <div key={course} className="flex items-center gap-2 rounded-md bg-muted p-2">
-                  <BookOpen className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-sm text-foreground">{course}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="mb-4 space-y-2">
-              <h4 className="text-sm font-semibold tracking-tight text-foreground">Contact</h4>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Mail className="h-4 w-4" />
-                <span>{selectedMentor.email}</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Phone className="h-4 w-4" />
-                <span>{selectedMentor.phone}</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Calendar className="h-4 w-4" />
-                <span>Joined {selectedMentor.joinDate}</span>
+            <div className="mt-6">
+              <h4 className="border-b border-border pb-3 text-sm font-semibold tracking-tight text-foreground">
+                Assigned Courses
+              </h4>
+              <div>
+                {selectedMentor.coursesAssigned.map((course) => (
+                  <p key={course} className="border-b border-border py-3 text-sm text-foreground">
+                    {course}
+                  </p>
+                ))}
               </div>
             </div>
 
-            <Separator className="mb-4" />
+            <div className="mt-6">
+              <h4 className="border-b border-border pb-3 text-sm font-semibold tracking-tight text-foreground">
+                Contact
+              </h4>
+              <div>
+                <p className="border-b border-border py-3 text-sm text-muted-foreground">{selectedMentor.email}</p>
+                <p className="border-b border-border py-3 text-sm text-muted-foreground">{selectedMentor.phone}</p>
+                <p className="border-b border-border py-3 text-sm text-muted-foreground">Joined {selectedMentor.joinDate}</p>
+              </div>
+            </div>
+
+            <Separator className="my-6" />
 
             <div className="flex gap-2">
               <Button className="flex-1">Edit Mentor</Button>
               <Button variant="outline" className="flex-1">Remove</Button>
             </div>
-          </motion.div>
+          </div>
         </div>
       )}
-    </motion.div>
+    </div>
   );
 }

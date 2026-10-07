@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Plus, Eye, Trash2, List } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../../components/ui/card";
+import { Trash2 } from "lucide-react";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -39,16 +37,6 @@ const initialQuestionSets = [
     status: "Published",
   },
 ];
-
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
 
 export default function MentorPYQPage() {
   const [questionSets, setQuestionSets] = useState(initialQuestionSets);
@@ -89,265 +77,240 @@ export default function MentorPYQPage() {
 
   if (showAddQuestion && selectedSet) {
     return (
-      <motion.div className="space-y-8" variants={container} initial="hidden" animate="show">
-        <motion.div variants={item} className="flex items-center justify-between">
+      <div className="max-w-6xl space-y-10">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight text-foreground">{selectedSet.title}</h1>
-            <p className="text-sm text-muted-foreground mt-1">{questions.length} questions added · {selectedSet.duration}</p>
+            <p className="mt-1 text-sm text-muted-foreground">{questions.length} questions added · {selectedSet.duration}</p>
           </div>
           <div className="flex gap-2">
             <Button variant="outline" onClick={() => { setShowAddQuestion(false); setSelectedSet(null); setQuestions([]); }}>
               Done
             </Button>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div variants={item}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base font-semibold tracking-tight">Add MCQ Question</CardTitle>
-              <CardDescription>Question {questions.length + 1}</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
+        <section>
+          <div className="flex items-baseline justify-between gap-4 border-b border-border pb-3">
+            <h2 className="text-base font-semibold tracking-tight text-foreground">Add MCQ Question</h2>
+            <p className="text-xs text-muted-foreground">Question {questions.length + 1}</p>
+          </div>
+          <div className="space-y-4 pt-5">
+            <div className="space-y-2">
+              <Label>Question Text</Label>
+              <Textarea
+                placeholder="e.g., Which command is used to change file permissions in Linux?"
+                rows={2}
+                value={newQuestion.text}
+                onChange={(e) => setNewQuestion({ ...newQuestion, text: e.target.value })}
+              />
+            </div>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label>Question Text</Label>
-                <Textarea
-                  placeholder="e.g., Which command is used to change file permissions in Linux?"
-                  rows={2}
-                  value={newQuestion.text}
-                  onChange={(e) => setNewQuestion({ ...newQuestion, text: e.target.value })}
+                <Label>Option A</Label>
+                <Input
+                  placeholder="Option A"
+                  value={newQuestion.optionA}
+                  onChange={(e) => setNewQuestion({ ...newQuestion, optionA: e.target.value })}
                 />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="flex items-center gap-1">
-                    <span className="text-primary">A</span> Option
-                  </Label>
-                  <Input
-                    placeholder="Option A"
-                    value={newQuestion.optionA}
-                    onChange={(e) => setNewQuestion({ ...newQuestion, optionA: e.target.value })}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label className="flex items-center gap-1">
-                    <span className="text-primary">B</span> Option
-                  </Label>
-                  <Input
-                    placeholder="Option B"
-                    value={newQuestion.optionB}
-                    onChange={(e) => setNewQuestion({ ...newQuestion, optionB: e.target.value })}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label className="flex items-center gap-1">
-                    <span className="text-primary">C</span> Option
-                  </Label>
-                  <Input
-                    placeholder="Option C"
-                    value={newQuestion.optionC}
-                    onChange={(e) => setNewQuestion({ ...newQuestion, optionC: e.target.value })}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label className="flex items-center gap-1">
-                    <span className="text-primary">D</span> Option
-                  </Label>
-                  <Input
-                    placeholder="Option D"
-                    value={newQuestion.optionD}
-                    onChange={(e) => setNewQuestion({ ...newQuestion, optionD: e.target.value })}
-                  />
-                </div>
+              <div className="space-y-2">
+                <Label>Option B</Label>
+                <Input
+                  placeholder="Option B"
+                  value={newQuestion.optionB}
+                  onChange={(e) => setNewQuestion({ ...newQuestion, optionB: e.target.value })}
+                />
               </div>
               <div className="space-y-2">
-                <Label>Correct Answer</Label>
-                <Select value={newQuestion.correctAnswer} onValueChange={(val) => setNewQuestion({ ...newQuestion, correctAnswer: val })}>
-                  <SelectTrigger className="w-[200px]">
-                    <SelectValue placeholder="Select answer" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="A">A</SelectItem>
-                    <SelectItem value="B">B</SelectItem>
-                    <SelectItem value="C">C</SelectItem>
-                    <SelectItem value="D">D</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label>Option C</Label>
+                <Input
+                  placeholder="Option C"
+                  value={newQuestion.optionC}
+                  onChange={(e) => setNewQuestion({ ...newQuestion, optionC: e.target.value })}
+                />
               </div>
-              <div className="flex justify-end">
-                <Button onClick={handleAddQuestion}>
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Question
-                </Button>
+              <div className="space-y-2">
+                <Label>Option D</Label>
+                <Input
+                  placeholder="Option D"
+                  value={newQuestion.optionD}
+                  onChange={(e) => setNewQuestion({ ...newQuestion, optionD: e.target.value })}
+                />
               </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+            </div>
+            <div className="space-y-2">
+              <Label>Correct Answer</Label>
+              <Select value={newQuestion.correctAnswer} onValueChange={(val) => setNewQuestion({ ...newQuestion, correctAnswer: val })}>
+                <SelectTrigger className="w-[200px]">
+                  <SelectValue placeholder="Select answer" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="A">A</SelectItem>
+                  <SelectItem value="B">B</SelectItem>
+                  <SelectItem value="C">C</SelectItem>
+                  <SelectItem value="D">D</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex justify-end">
+              <Button onClick={handleAddQuestion}>Add Question</Button>
+            </div>
+          </div>
+        </section>
 
         {questions.length > 0 && (
-          <motion.div variants={item}>
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base font-semibold tracking-tight">Questions Preview</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {questions.map((q) => (
-                  <div key={q.id} className="p-4 rounded-md border border-border">
-                    <div className="flex items-start justify-between mb-2">
-                      <p className="font-medium text-foreground text-sm">
-                        <span className="text-primary mr-1">Q{q.id}.</span>
-                        {q.text}
-                      </p>
-                      <Button variant="ghost" size="icon" className="h-7 w-7">
-                        <Trash2 className="h-3.5 w-3.5 text-destructive" />
-                      </Button>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2 ml-5">
-                      {["A", "B", "C", "D"].map((opt) => (
-                        <div
-                          key={opt}
-                          className={cn(
-                            "text-xs px-3 py-1.5 rounded-md",
-                            q.correctAnswer === opt
-                              ? "bg-emerald-500/10 text-emerald-600 border border-emerald-500/20"
-                              : "bg-muted text-muted-foreground"
-                          )}
-                        >
-                          {opt}. {q[`option${opt}`]}
-                        </div>
-                      ))}
-                    </div>
+          <section>
+            <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+              Questions Preview
+            </h2>
+            <div>
+              {questions.map((q) => (
+                <div key={q.id} className="border-b border-border py-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="text-sm font-medium text-foreground">
+                      <span className="mr-1 text-muted-foreground">Q{q.id}.</span>
+                      {q.text}
+                    </p>
+                    <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0">
+                      <Trash2 className="h-3.5 w-3.5 text-destructive" />
+                    </Button>
                   </div>
-                ))}
-              </CardContent>
-            </Card>
-          </motion.div>
+                  <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                    {["A", "B", "C", "D"].map((opt) => (
+                      <div
+                        key={opt}
+                        className={cn(
+                          "rounded-md px-3 py-1.5 text-xs",
+                          q.correctAnswer === opt
+                            ? "bg-foreground text-background"
+                            : "bg-muted text-muted-foreground"
+                        )}
+                      >
+                        {opt}. {q[`option${opt}`]}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
         )}
-      </motion.div>
+      </div>
     );
   }
 
   return (
-    <motion.div className="space-y-8" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item} className="flex items-center justify-between">
+    <div className="max-w-6xl space-y-10">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">PYQ Management</h1>
-          <p className="text-sm text-muted-foreground mt-1">{questionSets.length} question sets created</p>
+          <p className="mt-1 text-sm text-muted-foreground">{questionSets.length} question sets created</p>
         </div>
-        <Button onClick={() => setShowCreateSet(!showCreateSet)}>
-          <Plus className="h-4 w-4 mr-2" />
-          Create Question Set
-        </Button>
-      </motion.div>
+        <Button onClick={() => setShowCreateSet(!showCreateSet)}>Create Question Set</Button>
+      </div>
 
       {showCreateSet && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-        >
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base font-semibold tracking-tight">Create New Question Set</CardTitle>
-              <CardDescription>Define the question set details</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>Title</Label>
-                  <Input
-                    placeholder="e.g., Linux Midterm Exam"
-                    value={newSet.title}
-                    onChange={(e) => setNewSet({ ...newSet, title: e.target.value })}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Course</Label>
-                  <Select value={newSet.course} onValueChange={(val) => setNewSet({ ...newSet, course: val })}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select course" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Linux Fundamentals">Linux Fundamentals</SelectItem>
-                      <SelectItem value="Shell Scripting Mastery">Shell Scripting Mastery</SelectItem>
-                      <SelectItem value="C Programming Deep Dive">C Programming Deep Dive</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label>Duration</Label>
-                  <Input
-                    placeholder="e.g., 60 min"
-                    value={newSet.duration}
-                    onChange={(e) => setNewSet({ ...newSet, duration: e.target.value })}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Difficulty</Label>
-                  <Select value={newSet.difficulty} onValueChange={(val) => setNewSet({ ...newSet, difficulty: val })}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select difficulty" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Beginner">Beginner</SelectItem>
-                      <SelectItem value="Intermediate">Intermediate</SelectItem>
-                      <SelectItem value="Advanced">Advanced</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+        <section>
+          <div className="border-b border-border pb-3">
+            <h2 className="text-base font-semibold tracking-tight text-foreground">Create New Question Set</h2>
+            <p className="mt-1 text-xs text-muted-foreground">Define the question set details</p>
+          </div>
+          <div className="space-y-4 pt-5">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="space-y-2">
+                <Label>Title</Label>
+                <Input
+                  placeholder="e.g., Linux Midterm Exam"
+                  value={newSet.title}
+                  onChange={(e) => setNewSet({ ...newSet, title: e.target.value })}
+                />
               </div>
-              <div className="flex justify-end gap-3">
-                <Button variant="outline" onClick={() => setShowCreateSet(false)}>Cancel</Button>
-                <Button onClick={handleCreateSet}>Create & Add Questions</Button>
+              <div className="space-y-2">
+                <Label>Course</Label>
+                <Select value={newSet.course} onValueChange={(val) => setNewSet({ ...newSet, course: val })}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select course" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Linux Fundamentals">Linux Fundamentals</SelectItem>
+                    <SelectItem value="Shell Scripting Mastery">Shell Scripting Mastery</SelectItem>
+                    <SelectItem value="C Programming Deep Dive">C Programming Deep Dive</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+              <div className="space-y-2">
+                <Label>Duration</Label>
+                <Input
+                  placeholder="e.g., 60 min"
+                  value={newSet.duration}
+                  onChange={(e) => setNewSet({ ...newSet, duration: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Difficulty</Label>
+                <Select value={newSet.difficulty} onValueChange={(val) => setNewSet({ ...newSet, difficulty: val })}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select difficulty" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Beginner">Beginner</SelectItem>
+                    <SelectItem value="Intermediate">Intermediate</SelectItem>
+                    <SelectItem value="Advanced">Advanced</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="flex justify-end gap-3">
+              <Button variant="outline" onClick={() => setShowCreateSet(false)}>Cancel</Button>
+              <Button onClick={handleCreateSet}>Create &amp; Add Questions</Button>
+            </div>
+          </div>
+        </section>
       )}
 
-      <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" variants={item}>
-        {questionSets.map((set) => (
-          <Card key={set.id} className="transition-colors hover:border-muted-foreground/40">
-            <CardContent className="p-5">
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-base font-semibold tracking-tight text-foreground truncate">{set.title}</h3>
-                  <p className="text-sm text-muted-foreground mt-1">{set.course}</p>
+      <section>
+        <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          Question Sets
+        </h2>
+        <div>
+          {questionSets.map((set) => (
+            <div
+              key={set.id}
+              className="flex flex-col gap-3 border-b border-border py-5 sm:flex-row sm:items-start sm:gap-8"
+            >
+              <div className="min-w-0 flex-1">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-foreground">{set.title}</p>
+                    <p className="mt-0.5 text-xs text-muted-foreground">{set.course}</p>
+                  </div>
+                  <Badge variant={set.status === "Published" ? "success" : "secondary"} className="shrink-0">
+                    {set.status}
+                  </Badge>
                 </div>
-                <Badge variant={set.status === "Published" ? "success" : "secondary"}>
-                  {set.status}
-                </Badge>
+                <p className="mt-2 text-xs text-muted-foreground">
+                  {set.questions} questions · {set.duration} · {set.difficulty}
+                </p>
               </div>
-              <div className="flex items-center gap-3 text-sm text-muted-foreground mb-4">
-                <span className="flex items-center gap-1">
-                  <List className="h-3.5 w-3.5" />
-                  {set.questions} questions
-                </span>
-                <span>{set.duration}</span>
-                <Badge variant="outline" className="text-xs">{set.difficulty}</Badge>
-              </div>
-              <div className="flex gap-2">
-                <Button size="sm" variant="outline" className="flex-1">
-                  <Eye className="h-3.5 w-3.5 mr-1" />
-                  Preview
-                </Button>
+              <div className="flex shrink-0 gap-2">
+                <Button size="sm" variant="outline">Preview</Button>
                 <Button
                   size="sm"
                   variant="outline"
-                  className="flex-1"
                   onClick={() => {
                     setSelectedSet(set);
                     setShowAddQuestion(true);
                     setQuestions([]);
                   }}
                 >
-                  <Plus className="h-3.5 w-3.5 mr-1" />
                   Add Qs
                 </Button>
               </div>
-            </CardContent>
-          </Card>
-        ))}
-      </motion.div>
-    </motion.div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }

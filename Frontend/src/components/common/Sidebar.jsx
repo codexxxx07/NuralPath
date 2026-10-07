@@ -1,64 +1,49 @@
 import { NavLink } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  LayoutDashboard,
-  BookOpen,
-  Video,
-  Terminal,
-  FileText,
-  BarChart3,
-  MessageCircle,
-  Award,
-  PieChart,
-  X,
-} from "lucide-react";
+import { X } from "lucide-react";
 
 const navItems = [
-  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard, end: true },
-  { to: "/dashboard/courses", label: "My Courses", icon: BookOpen },
-  { to: "/dashboard/live-classes", label: "Live Classes", icon: Video },
-  { to: "/dashboard/practice-lab", label: "Practice Lab", icon: Terminal },
-  { to: "/dashboard/assignments", label: "Assignments", icon: FileText },
-  { to: "/dashboard/progress", label: "Progress", icon: BarChart3 },
-  { to: "/dashboard/doubts", label: "Doubt Solving", icon: MessageCircle },
-  { to: "/dashboard/certificates", label: "Certificates", icon: Award },
-  { to: "/dashboard/skill-report", label: "Skill Report", icon: PieChart },
+  { to: "/dashboard", label: "Dashboard", end: true },
+  { to: "/dashboard/courses", label: "My Courses" },
+  { to: "/dashboard/live-classes", label: "Live Classes" },
+  { to: "/dashboard/practice-lab", label: "Practice Lab" },
+  { to: "/dashboard/assignments", label: "Assignments" },
+  { to: "/dashboard/progress", label: "Progress" },
+  { to: "/dashboard/doubts", label: "Doubt Solving" },
+  { to: "/dashboard/certificates", label: "Certificates" },
+  { to: "/dashboard/skill-report", label: "Skill Report" },
 ];
 
 export default function Sidebar({ isOpen, onClose }) {
   return (
     <>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-            className="fixed inset-0 z-40 bg-black/50 lg:hidden"
-          />
-        )}
-      </AnimatePresence>
+      {isOpen && (
+        <div
+          onClick={onClose}
+          className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+        />
+      )}
 
       <aside
         className={`
-          fixed inset-y-0 left-0 z-50 w-64 bg-card border-r border-border
+          fixed inset-y-0 left-0 z-50 w-60 bg-background border-r border-border
           transform transition-transform duration-200 ease-in-out
           lg:translate-x-0 lg:static lg:z-auto
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
         `}
       >
-        <div className="flex items-center justify-between h-16 px-6 border-b border-border">
-          <span className="text-base font-semibold tracking-tight text-foreground">NuralPath</span>
+        <div className="flex items-center justify-between h-14 px-5 border-b border-border">
+          <span className="text-xs font-semibold uppercase tracking-widest text-foreground">
+            NuralPath
+          </span>
           <button
             onClick={onClose}
             className="lg:hidden p-1 text-muted-foreground hover:text-foreground"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
-        <nav className="p-4 space-y-1 overflow-y-auto h-[calc(100%-4rem)]" data-lenis-prevent>
+        <nav className="p-3 space-y-0.5 overflow-y-auto h-[calc(100%-3.5rem)]" data-lenis-prevent>
           {navItems.map((item) => (
             <NavLink
               key={item.to}
@@ -66,15 +51,14 @@ export default function Sidebar({ isOpen, onClose }) {
               end={item.end}
               onClick={onClose}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
+                `block rounded px-3 py-2 text-sm transition-colors ${
                   isActive
-                    ? "bg-accent text-foreground"
-                    : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                    ? "bg-accent font-medium text-primary"
+                    : "text-muted-foreground hover:bg-accent hover:text-foreground"
                 }`
               }
             >
-              <item.icon className="w-5 h-5 shrink-0" />
-              <span>{item.label}</span>
+              {item.label}
             </NavLink>
           ))}
         </nav>

@@ -1,18 +1,9 @@
-import { motion } from "framer-motion";
 import {
   Users,
   GraduationCap,
   IndianRupee,
   TrendingUp,
-  AlertTriangle,
-  CheckCircle2,
-  Clock,
-  BookOpen,
-  ArrowUpRight,
-  ArrowDownRight,
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
-import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Progress } from "../../components/ui/progress";
 import { Avatar, AvatarFallback } from "../../components/ui/avatar";
@@ -56,168 +47,127 @@ const systemAlerts = [
   { id: 3, type: "error", message: "Payment gateway timeout spike detected (3 occurrences)", time: "8 hours ago" },
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
-
 export default function AdminDashboardPage() {
   return (
-    <motion.div className="space-y-8" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item}>
+    <div className="mx-auto max-w-6xl space-y-10">
+      <div>
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">Admin Dashboard</h1>
         <p className="mt-1 text-sm text-muted-foreground">Platform overview and key metrics</p>
-      </motion.div>
+      </div>
 
-      <motion.div className="grid grid-cols-2 gap-4 lg:grid-cols-4" variants={item}>
+      {/* Stats */}
+      <div className="grid grid-cols-2 border-t border-border sm:grid-cols-4">
         {stats.map((stat) => (
-          <Card key={stat.label}>
-            <CardContent className="p-5">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="text-2xl font-semibold text-foreground">{stat.value}</p>
-                  <p className="text-sm text-muted-foreground">{stat.label}</p>
-                </div>
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground">
-                  <stat.icon className="h-4 w-4" />
-                </div>
-              </div>
-              <div className="mt-3 flex items-center gap-1">
-                {stat.up ? (
-                  <ArrowUpRight className="h-3 w-3 text-muted-foreground" />
-                ) : (
-                  <ArrowDownRight className="h-3 w-3 text-muted-foreground" />
-                )}
-                <span className="text-xs font-medium text-foreground">{stat.change}</span>
-                <span className="text-xs text-muted-foreground">vs last month</span>
-              </div>
-            </CardContent>
-          </Card>
+          <div key={stat.label} className="border-b border-border py-5 pr-6 sm:border-b-0">
+            <p className="text-2xl font-semibold tracking-tight text-foreground">{stat.value}</p>
+            <p className="mt-1 text-sm text-muted-foreground">{stat.label}</p>
+            <p className="mt-2 text-xs text-muted-foreground">
+              {stat.change} vs last month
+            </p>
+          </div>
         ))}
-      </motion.div>
+      </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <motion.div variants={item}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-base font-semibold tracking-tight">
-                <IndianRupee className="h-4 w-4 text-muted-foreground" />
-                Revenue — Last 6 Months
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex h-48 items-end gap-3">
-                {revenueData.map((d) => (
-                  <div key={d.month} className="flex flex-1 flex-col items-center gap-2">
-                    <span className="text-xs font-medium text-muted-foreground">
-                      ₹{(d.value / 100000).toFixed(1)}L
-                    </span>
-                    <motion.div
-                      className="w-full rounded-t-md bg-primary"
-                      initial={{ height: 0 }}
-                      animate={{ height: `${(d.value / maxRevenue) * 100}%` }}
-                      transition={{ duration: 0.6, delay: 0.1 }}
-                    />
-                    <span className="text-xs text-muted-foreground">{d.month}</span>
-                  </div>
-                ))}
+      {/* Revenue + Recent Registrations */}
+      <div className="grid gap-10 lg:grid-cols-2">
+        <section>
+          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+            Revenue — Last 6 Months
+          </h2>
+          <div className="flex h-48 items-stretch gap-3 pt-5">
+            {revenueData.map((d) => (
+              <div key={d.month} className="flex h-full flex-1 flex-col items-center gap-2">
+                <span className="text-xs font-medium text-muted-foreground">
+                  ₹{(d.value / 100000).toFixed(1)}L
+                </span>
+                <div className="flex w-full flex-1 items-end">
+                  <div
+                    className="w-full rounded-t-md bg-foreground transition-all duration-500"
+                    style={{ height: `${(d.value / maxRevenue) * 100}%` }}
+                  />
+                </div>
+                <span className="text-xs text-muted-foreground">{d.month}</span>
               </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+            ))}
+          </div>
+        </section>
 
-        <motion.div variants={item}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-base font-semibold tracking-tight">
-                <Users className="h-4 w-4 text-muted-foreground" />
-                Recent Registrations
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              {recentRegistrations.map((user) => (
-                <div key={user.id} className="flex items-center gap-3 rounded-md bg-muted p-3">
-                  <Avatar className="h-9 w-9">
-                    <AvatarFallback className="text-xs">{user.initials}</AvatarFallback>
-                  </Avatar>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-foreground">{user.name}</p>
-                    <p className="truncate text-xs text-muted-foreground">{user.course}</p>
-                  </div>
-                  <span className="whitespace-nowrap text-xs text-muted-foreground">{user.date}</span>
+        <section>
+          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+            Recent Registrations
+          </h2>
+          <div>
+            {recentRegistrations.map((user) => (
+              <div key={user.id} className="flex items-center gap-3 border-b border-border py-4">
+                <Avatar className="h-8 w-8">
+                  <AvatarFallback className="text-[10px]">{user.initials}</AvatarFallback>
+                </Avatar>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-medium text-foreground">{user.name}</p>
+                  <p className="truncate text-xs text-muted-foreground">{user.course}</p>
                 </div>
-              ))}
-            </CardContent>
-          </Card>
-        </motion.div>
+                <span className="shrink-0 text-xs text-muted-foreground">{user.date}</span>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <motion.div variants={item}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-base font-semibold tracking-tight">
-                <BookOpen className="h-4 w-4 text-muted-foreground" />
-                Active Courses
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {activeCourses.map((course) => (
-                <div key={course.id} className="rounded-md bg-muted p-3">
-                  <div className="mb-2 flex items-center justify-between">
-                    <h3 className="text-sm font-medium text-foreground">{course.title}</h3>
-                    <Badge variant="secondary">{course.students} students</Badge>
-                  </div>
-                  <div className="mb-1 flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Completion</span>
-                    <span className="font-medium text-foreground">{course.completion}%</span>
-                  </div>
-                  <Progress value={course.completion} className="h-2" />
+      {/* Active Courses + System Alerts */}
+      <div className="grid gap-10 lg:grid-cols-2">
+        <section>
+          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+            Active Courses
+          </h2>
+          <div>
+            {activeCourses.map((course) => (
+              <div key={course.id} className="border-b border-border py-4">
+                <div className="flex items-baseline justify-between gap-4">
+                  <p className="min-w-0 truncate text-sm font-medium text-foreground">
+                    {course.title}
+                  </p>
+                  <span className="shrink-0 text-xs text-muted-foreground">
+                    {course.students} students
+                  </span>
                 </div>
-              ))}
-            </CardContent>
-          </Card>
-        </motion.div>
+                <div className="mt-2.5 flex items-center gap-4">
+                  <Progress value={course.completion} className="flex-1" />
+                  <span className="w-10 shrink-0 text-right font-mono text-xs text-muted-foreground">
+                    {course.completion}%
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
 
-        <motion.div variants={item}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-base font-semibold tracking-tight">
-                <AlertTriangle className="h-4 w-4 text-muted-foreground" />
-                System Alerts
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              {systemAlerts.map((alert) => (
-                <div key={alert.id} className="flex items-start gap-3 rounded-md bg-muted p-3">
-                  <div className={`mt-0.5 ${alert.type === "error" ? "text-destructive" : "text-muted-foreground"}`}>
-                    {alert.type === "info" ? (
-                      <CheckCircle2 className="h-4 w-4" />
-                    ) : (
-                      <AlertTriangle className="h-4 w-4" />
-                    )}
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm text-foreground">{alert.message}</p>
-                    <p className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
-                      <Clock className="h-3 w-3" />
-                      {alert.time}
-                    </p>
-                  </div>
-                </div>
-              ))}
-              <Button variant="outline" className="mt-2 w-full">
-                View All Alerts
-              </Button>
-            </CardContent>
-          </Card>
-        </motion.div>
+        <section>
+          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+            System Alerts
+          </h2>
+          <div>
+            {systemAlerts.map((alert) => (
+              <div key={alert.id} className="border-b border-border py-4">
+                <p className="text-sm text-foreground">{alert.message}</p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  <span className={alert.type === "error" ? "text-destructive" : undefined}>
+                    {alert.type === "error"
+                      ? "Error"
+                      : alert.type === "warning"
+                      ? "Warning"
+                      : "Info"}
+                  </span>
+                  {" · "}
+                  {alert.time}
+                </p>
+              </div>
+            ))}
+          </div>
+          <Button variant="outline" className="mt-4">
+            View All Alerts
+          </Button>
+        </section>
       </div>
-    </motion.div>
+    </div>
   );
 }

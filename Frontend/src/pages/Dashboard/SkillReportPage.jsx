@@ -1,9 +1,5 @@
-import { motion } from "framer-motion";
-import { Clock, Award } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Progress } from "../../components/ui/progress";
-import { cn } from "../../lib/utils";
 
 const skills = [
   { name: "Linux", progress: 75, hours: 42, assessments: 8, level: "Intermediate" },
@@ -40,16 +36,6 @@ function getRadarPoint(index, total, value) {
   };
 }
 
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
-
 export default function SkillReportPage() {
   const total = skills.length;
   const polygonPoints = skills
@@ -58,162 +44,154 @@ export default function SkillReportPage() {
     .join(" ");
 
   return (
-    <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item}>
+    <div className="space-y-12">
+      <div>
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">Skill Report</h1>
-        <p className="text-sm text-muted-foreground mt-1">Comprehensive analysis of your technical skills</p>
-      </motion.div>
+        <p className="mt-1 text-sm text-muted-foreground">Comprehensive analysis of your technical skills</p>
+      </div>
 
-      <div className="grid lg:grid-cols-[1fr_1fr] gap-6">
-        <motion.div variants={item}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Skill Overview</CardTitle>
-            </CardHeader>
-            <CardContent className="flex justify-center py-4">
-              <div className="relative">
-                <svg width={radarSize} height={radarSize} viewBox={`0 0 ${radarSize} ${radarSize}`}>
-                  {[20, 40, 60, 80, 100].map((level) => {
-                    const points = Array.from({ length: total }, (_, i) => {
-                      const p = getRadarPoint(i, total, level);
-                      return `${p.x},${p.y}`;
-                    }).join(" ");
-                    return (
-                      <polygon
-                        key={level}
-                        points={points}
-                        fill="none"
-                        stroke="var(--color-border)"
-                        strokeWidth="1"
-                        opacity={0.5}
-                      />
-                    );
-                  })}
-                  {skills.map((_, i) => {
-                    const p = getRadarPoint(i, total, 100);
-                    return (
-                      <line
-                        key={i}
-                        x1={radarCenter}
-                        y1={radarCenter}
-                        x2={p.x}
-                        y2={p.y}
-                        stroke="var(--color-border)"
-                        strokeWidth="1"
-                        opacity={0.3}
-                      />
-                    );
-                  })}
-                  <polygon
-                    points={polygonPoints}
-                    fill="var(--color-primary)"
-                    fillOpacity={0.2}
-                    stroke="var(--color-primary)"
-                    strokeWidth={2}
-                  />
-                  {skills.map((skill, i) => {
-                    const p = getRadarPoint(i, total, skill.progress);
-                    return (
-                      <circle key={i} cx={p.x} cy={p.y} r={4} fill="var(--color-primary)" />
-                    );
-                  })}
-                  {skills.map((skill, i) => {
-                    const labelPoint = getRadarPoint(i, total, 120);
-                    return (
-                      <text
-                        key={i}
-                        x={labelPoint.x}
-                        y={labelPoint.y}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                        className="fill-foreground text-xs font-medium"
-                      >
-                        {skill.name}
-                      </text>
-                    );
-                  })}
-                </svg>
+      <div className="grid gap-10 lg:grid-cols-2">
+        <section>
+          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+            Skill Overview
+          </h2>
+          <div className="flex justify-center py-5">
+            <div className="relative">
+              <svg width={radarSize} height={radarSize} viewBox={`0 0 ${radarSize} ${radarSize}`}>
+                {[20, 40, 60, 80, 100].map((level) => {
+                  const points = Array.from({ length: total }, (_, i) => {
+                    const p = getRadarPoint(i, total, level);
+                    return `${p.x},${p.y}`;
+                  }).join(" ");
+                  return (
+                    <polygon
+                      key={level}
+                      points={points}
+                      fill="none"
+                      stroke="var(--color-border)"
+                      strokeWidth="1"
+                      opacity={0.5}
+                    />
+                  );
+                })}
+                {skills.map((_, i) => {
+                  const p = getRadarPoint(i, total, 100);
+                  return (
+                    <line
+                      key={i}
+                      x1={radarCenter}
+                      y1={radarCenter}
+                      x2={p.x}
+                      y2={p.y}
+                      stroke="var(--color-border)"
+                      strokeWidth="1"
+                      opacity={0.3}
+                    />
+                  );
+                })}
+                <polygon
+                  points={polygonPoints}
+                  fill="var(--color-foreground)"
+                  fillOpacity={0.08}
+                  stroke="var(--color-foreground)"
+                  strokeWidth={1.5}
+                />
+                {skills.map((skill, i) => {
+                  const p = getRadarPoint(i, total, skill.progress);
+                  return <circle key={i} cx={p.x} cy={p.y} r={3} fill="var(--color-foreground)" />;
+                })}
+                {skills.map((skill, i) => {
+                  const labelPoint = getRadarPoint(i, total, 120);
+                  return (
+                    <text
+                      key={i}
+                      x={labelPoint.x}
+                      y={labelPoint.y}
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                      className="fill-foreground text-xs font-medium"
+                    >
+                      {skill.name}
+                    </text>
+                  );
+                })}
+              </svg>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+            Detailed Breakdown
+          </h2>
+          <div>
+            {skills.map((skill) => (
+              <div key={skill.name} className="border-b border-border py-4">
+                <div className="flex items-baseline justify-between gap-4">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-sm font-medium text-foreground">{skill.name}</span>
+                    <Badge variant="secondary" className="text-xs">{skill.level}</Badge>
+                  </div>
+                  <span className="font-mono text-xs text-muted-foreground">{skill.progress}%</span>
+                </div>
+                <Progress value={skill.progress} className="mt-2 h-1.5" />
+                <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-xs text-muted-foreground">
+                  <span>{skill.hours} hours</span>
+                  <span>{skill.assessments} assessments</span>
+                </div>
               </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        <motion.div variants={item}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Detailed Breakdown</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {skills.map((skill) => (
-                <div key={skill.name} className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-primary" />
-                      <span className="font-medium text-foreground">{skill.name}</span>
-                      <Badge variant="secondary" className="text-xs">{skill.level}</Badge>
-                    </div>
-                    <span className="text-sm font-semibold text-foreground">{skill.progress}%</span>
-                  </div>
-                  <Progress value={skill.progress} className="h-2" />
-                  <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                    <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> {skill.hours} hours</span>
-                    <span className="flex items-center gap-1"><Award className="h-3 w-3" /> {skill.assessments} assessments</span>
-                  </div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-        </motion.div>
+            ))}
+          </div>
+        </section>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-6">
-        <motion.div variants={item}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Weak Topics</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {weakTopics.map((topic, i) => (
-                <div key={i} className="flex items-start gap-3 rounded-lg border border-border p-3">
-                  <div className={cn(
-                    "w-2 h-2 rounded-full mt-1.5 flex-shrink-0",
-                    topic.severity === "high" && "bg-destructive",
-                    topic.severity === "medium" && "bg-muted-foreground",
-                    topic.severity === "low" && "bg-border"
-                  )} />
-                  <div className="flex-1">
-                    <p className="font-medium text-foreground text-sm">{topic.topic}</p>
-                    <p className="text-xs text-muted-foreground">{topic.skill} · {topic.severity} priority</p>
-                  </div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-        </motion.div>
+      <div className="grid gap-10 lg:grid-cols-2">
+        <section>
+          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+            Weak Topics
+          </h2>
+          <div>
+            {weakTopics.map((topic, i) => (
+              <div key={i} className="border-b border-border py-4">
+                <p className="text-sm font-medium text-foreground">{topic.topic}</p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  {topic.skill} · {topic.severity} priority
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
 
-        <motion.div variants={item}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Recommendations</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {recommendations.map((rec, i) => (
-                <div key={i} className="p-3 rounded-lg border border-border">
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <p className="font-medium text-foreground text-sm">{rec.title}</p>
-                      <p className="text-xs text-muted-foreground mt-1">{rec.description}</p>
-                    </div>
-                    <Badge variant={rec.priority === "High" ? "destructive" : rec.priority === "Medium" ? "default" : "secondary"} className="text-xs flex-shrink-0">
-                      {rec.priority}
-                    </Badge>
+        <section>
+          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+            Recommendations
+          </h2>
+          <div>
+            {recommendations.map((rec, i) => (
+              <div key={i} className="border-b border-border py-4">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-foreground">{rec.title}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">{rec.description}</p>
                   </div>
+                  <Badge
+                    variant={
+                      rec.priority === "High"
+                        ? "success"
+                        : rec.priority === "Medium"
+                        ? "secondary"
+                        : "outline"
+                    }
+                    className="shrink-0"
+                  >
+                    {rec.priority}
+                  </Badge>
                 </div>
-              ))}
-            </CardContent>
-          </Card>
-        </motion.div>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
-    </motion.div>
+    </div>
   );
 }

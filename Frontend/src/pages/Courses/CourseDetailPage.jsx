@@ -1,17 +1,7 @@
 import { useParams, Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import {
-  Clock,
-  ArrowLeft,
-  ArrowRight,
-  Calendar,
-  Award,
-  BookOpen,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "../../components/ui/button";
-import { Card, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
-import { Separator } from "../../components/ui/separator";
 import {
   Accordion,
   AccordionContent,
@@ -164,192 +154,170 @@ const courseData = {
   },
 };
 
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (i = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, delay: i * 0.1, ease: "easeOut" },
-  }),
-};
-
 export default function CourseDetailPage() {
   const { id } = useParams();
   const course = courseData[id] || courseData.default;
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero */}
-      <section className="border-b border-border bg-surface py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div initial="hidden" animate="visible" variants={fadeIn}>
-            <Link
-              to="/courses"
-              className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              All Courses
-            </Link>
+      {/* Header */}
+      <section className="border-b border-border py-20 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <Link
+            to="/courses"
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            All Courses
+          </Link>
 
-            <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-              <div>
-                <div className="mb-4 flex items-center gap-3">
-                  <Badge variant="outline">{course.level}</Badge>
-                  {course.isDsa && (
-                    <Badge variant="secondary" className="gap-1">
-                      <BookOpen className="h-3 w-3" />
-                      DSA Track
-                    </Badge>
-                  )}
-                </div>
-
-                <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
-                  {course.title}
-                </h1>
-                <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
-                  {course.description}
-                </p>
-
-                <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
-                  <span className="flex items-center gap-1.5">
-                    <Clock className="h-3.5 w-3.5" />
-                    {course.duration}
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <Calendar className="h-3.5 w-3.5" />
-                    Flexible Schedule
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <Award className="h-3.5 w-3.5" />
-                    Certificate Included
-                  </span>
-                </div>
+          <div className="mt-8 grid items-start gap-12 lg:grid-cols-[1fr_320px]">
+            <div>
+              <div className="flex flex-wrap items-center gap-2">
+                <Badge variant="outline">{course.level}</Badge>
+                {course.isDsa && <Badge variant="outline">DSA Track</Badge>}
               </div>
 
-              {/* Enroll Card */}
-              <Card className="self-start">
-                <CardContent className="p-6">
-                  <Button className="w-full" size="lg" asChild>
-                    <Link to="/register">
-                      Enroll Now
-                      <ArrowRight className="ml-1 h-4 w-4" />
-                    </Link>
-                  </Button>
-                  <p className="mt-3 text-center text-xs text-muted-foreground">
-                    Create a free account to get started
-                  </p>
-                  <Separator className="my-4" />
-                  <div className="space-y-2.5 text-sm">
-                    <div className="flex items-center justify-between text-muted-foreground">
-                      <span>Duration</span>
-                      <span className="font-medium text-foreground">{course.duration}</span>
-                    </div>
-                    <div className="flex items-center justify-between text-muted-foreground">
-                      <span>Level</span>
-                      <span className="font-medium text-foreground">{course.level}</span>
-                    </div>
-                    <div className="flex items-center justify-between text-muted-foreground">
-                      <span>Learning Path</span>
-                      <span className="font-medium text-foreground">
-                        {course.isDsa ? "Data Structures" : "Systems Track"}
-                      </span>
-                    </div>
-                    {course.isDsa && (
-                      <div className="flex items-center justify-between text-muted-foreground">
-                        <span>Certificate</span>
-                        <span className="font-medium text-foreground">Yes</span>
-                      </div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
+              <h1 className="mt-4 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+                {course.title}
+              </h1>
+              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                {course.description}
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-xs text-muted-foreground">
+                <span>{course.duration}</span>
+                <span>Flexible Schedule</span>
+                <span>Certificate Included</span>
+              </div>
             </div>
-          </motion.div>
+
+            {/* Enroll + facts */}
+            <aside className="self-start">
+              <Button className="w-full" size="lg" asChild>
+                <Link to="/register">
+                  Enroll Now
+                  <ArrowRight className="ml-1 h-4 w-4" />
+                </Link>
+              </Button>
+              <p className="mt-3 text-center text-xs text-muted-foreground">
+                Create a free account to get started
+              </p>
+
+              <dl className="mt-6 border-t border-border">
+                <div className="flex items-center justify-between border-b border-border py-3 text-sm">
+                  <dt className="text-muted-foreground">Duration</dt>
+                  <dd className="font-medium text-foreground">{course.duration}</dd>
+                </div>
+                <div className="flex items-center justify-between border-b border-border py-3 text-sm">
+                  <dt className="text-muted-foreground">Level</dt>
+                  <dd className="font-medium text-foreground">{course.level}</dd>
+                </div>
+                <div className="flex items-center justify-between border-b border-border py-3 text-sm">
+                  <dt className="text-muted-foreground">Learning Path</dt>
+                  <dd className="font-medium text-foreground">
+                    {course.isDsa ? "Data Structures" : "Systems Track"}
+                  </dd>
+                </div>
+                {course.isDsa && (
+                  <div className="flex items-center justify-between border-b border-border py-3 text-sm">
+                    <dt className="text-muted-foreground">Certificate</dt>
+                    <dd className="font-medium text-foreground">Yes</dd>
+                  </div>
+                )}
+              </dl>
+            </aside>
+          </div>
         </div>
       </section>
 
       {/* Content Sections */}
-      <section className="py-12 sm:py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section className="py-20 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-12 lg:grid-cols-[1fr_320px]">
             <div className="space-y-12">
               {/* What You'll Learn */}
-              <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
-                <h2 className="text-xl font-semibold tracking-tight text-foreground">
+              <div>
+                <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
                   What You&apos;ll Learn
                 </h2>
-                <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                <div className="grid gap-x-12 sm:grid-cols-2">
                   {course.whatYouWillLearn.map((item, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground" />
-                      <span className="text-sm text-muted-foreground leading-relaxed">{item}</span>
+                    <div key={i} className="border-b border-border py-3">
+                      <p className="text-sm text-muted-foreground">{item}</p>
                     </div>
                   ))}
                 </div>
-              </motion.div>
+              </div>
 
               {/* Prerequisites */}
-              <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
-                <h2 className="text-xl font-semibold tracking-tight text-foreground">
+              <div>
+                <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
                   Prerequisites
                 </h2>
-                <ul className="mt-6 space-y-3">
+                <ul>
                   {course.prerequisites.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground leading-relaxed">
-                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground" />
+                    <li
+                      key={i}
+                      className="border-b border-border py-3 text-sm text-muted-foreground"
+                    >
                       {item}
                     </li>
                   ))}
                 </ul>
-              </motion.div>
+              </div>
 
               {/* Curriculum */}
-              <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
-                <h2 className="text-xl font-semibold tracking-tight text-foreground">
-                  Curriculum
-                </h2>
-                <p className="mt-2 text-xs text-muted-foreground">
-                  {course.syllabus.length} modules · {course.duration}
-                </p>
-                <Accordion type="single" collapsible className="mt-6 w-full">
+              <div>
+                <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-border pb-3">
+                  <h2 className="text-base font-semibold tracking-tight text-foreground">
+                    Curriculum
+                  </h2>
+                  <span className="text-xs text-muted-foreground">
+                    {course.syllabus.length} modules · {course.duration}
+                  </span>
+                </div>
+                <Accordion type="single" collapsible className="w-full">
                   {course.syllabus.map((module, i) => (
                     <AccordionItem key={i} value={`module-${i}`}>
-                      <AccordionTrigger className="text-left text-sm text-foreground">
-                        {module.title}
+                      <AccordionTrigger className="py-4 text-left text-sm font-medium text-foreground">
+                        <span className="flex items-baseline gap-4">
+                          <span className="w-6 shrink-0 font-mono text-xs font-normal text-muted-foreground">
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                          <span>{module.title}</span>
+                        </span>
                       </AccordionTrigger>
-                      <AccordionContent className="text-muted-foreground leading-relaxed">
+                      <AccordionContent className="pb-4 pl-10 text-sm leading-relaxed text-muted-foreground">
                         {module.content}
                       </AccordionContent>
                     </AccordionItem>
                   ))}
                 </Accordion>
-              </motion.div>
+              </div>
             </div>
 
             {/* Sidebar note */}
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
-              <Card className="sticky top-24">
-                <CardContent className="p-6">
-                  <h3 className="text-base font-semibold tracking-tight text-foreground">
-                    About This Course
-                  </h3>
-                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-                    This course is part of the {course.isDsa ? "Data Structures & Algorithms" : "Linux & Systems"} learning track.
-                    Content is created and reviewed by community mentors. Instructor details will be
-                    announced on the community.
-                  </p>
-                  <Separator className="my-4" />
-                  <div className="space-y-3">
-                    <Button variant="outline" className="w-full" asChild>
-                      <Link to="/libraries">Browse related resources</Link>
-                    </Button>
-                    <Button variant="ghost" className="w-full" asChild>
-                      <Link to="/community">Ask in the community</Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+            <aside className="self-start lg:sticky lg:top-24">
+              <div className="border-t border-border pt-5">
+                <h3 className="text-sm font-medium text-foreground">
+                  About This Course
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  This course is part of the {course.isDsa ? "Data Structures & Algorithms" : "Linux & Systems"} learning track.
+                  Content is created and reviewed by community mentors. Instructor details will be
+                  announced on the community.
+                </p>
+              </div>
+              <div className="mt-5 flex flex-col gap-2 border-t border-border pt-5">
+                <Button variant="outline" className="w-full" asChild>
+                  <Link to="/libraries">Browse related resources</Link>
+                </Button>
+                <Button variant="ghost" className="w-full" asChild>
+                  <Link to="/community">Ask in the community</Link>
+                </Button>
+              </div>
+            </aside>
           </div>
         </div>
       </section>

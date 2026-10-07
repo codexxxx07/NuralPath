@@ -1,7 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
-import { ChevronRight, CheckCircle2, Lock, Play } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { cn } from "../../lib/utils";
@@ -46,16 +43,6 @@ const commandOutputs = {
   df: "Filesystem     1K-blocks    Used Available Use% Mounted on\n/dev/sda1      51200000 18200000  30500000  38% /\ntmpfs            4096000        0   4096000   0% /dev/shm",
   free: "              total        used        free      shared  buff/cache   available\nMem:        8167424     3245632     2456192      456780     2465600     4256788\nSwap:       2097152       65536     2031616",
   "cat /etc/os-release": 'NAME="Ubuntu"\nVERSION="22.04.3 LTS (Jammy Jellyfish)"\nID=ubuntu\nPRETTY_NAME="Ubuntu 22.04.3 LTS"',
-};
-
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
 };
 
 export default function PracticeLabPage() {
@@ -115,117 +102,116 @@ export default function PracticeLabPage() {
   };
 
   return (
-    <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item}>
+    <div className="space-y-10">
+      <div>
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">Practice Lab</h1>
-        <p className="text-sm text-muted-foreground mt-1">Hands-on terminal practice to sharpen your skills</p>
-      </motion.div>
+        <p className="mt-1 text-sm text-muted-foreground">Hands-on terminal practice to sharpen your skills</p>
+      </div>
 
-      <div className="grid lg:grid-cols-[1fr_320px] gap-6">
-        <motion.div variants={item}>
-          <Card className="overflow-hidden">
-            <CardHeader className="bg-zinc-900 border-b border-zinc-800 py-3 px-4">
-              <span className="font-mono text-xs text-zinc-400">arjun@nuralpath:~</span>
-            </CardHeader>
-            <div
-              ref={terminalRef}
-              className="bg-zinc-950 p-4 h-[480px] overflow-y-auto font-mono text-sm cursor-text"
-              onClick={() => inputRef.current?.focus()}
-            >
-              {history.map((entry, i) => (
-                <div key={i} className={cn(
+      <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
+        <div className="overflow-hidden rounded-lg border border-border">
+          <div className="border-b border-zinc-800 bg-zinc-900 px-4 py-3">
+            <span className="font-mono text-xs text-zinc-400">arjun@nuralpath:~</span>
+          </div>
+          <div
+            ref={terminalRef}
+            onClick={() => inputRef.current?.focus()}
+            className="h-[480px] cursor-text overflow-y-auto bg-zinc-950 p-4 font-mono text-sm"
+          >
+            {history.map((entry, i) => (
+              <div
+                key={i}
+                className={cn(
                   "whitespace-pre-wrap",
-                  entry.type === "command" ? "text-emerald-400" : "text-zinc-300"
-                )}>
-                  {entry.type === "command" ? (
-                    <span>
-                      <span className="text-primary">$ </span>
-                      {entry.text}
-                    </span>
-                  ) : (
-                    <span>{entry.text}</span>
-                  )}
-                </div>
-              ))}
-              <div className="flex items-center mt-1">
-                <span className="text-primary">$ </span>
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  className="flex-1 bg-transparent text-zinc-100 font-mono text-sm outline-none ml-1 caret-emerald-400"
-                  autoFocus
-                  spellCheck={false}
-                />
+                  entry.type === "command" ? "text-zinc-100" : "text-zinc-400"
+                )}
+              >
+                {entry.type === "command" ? (
+                  <span>
+                    <span className="text-zinc-500">$ </span>
+                    {entry.text}
+                  </span>
+                ) : (
+                  <span>{entry.text}</span>
+                )}
               </div>
+            ))}
+            <div className="mt-1 flex items-center">
+              <span className="text-zinc-500">$ </span>
+              <input
+                ref={inputRef}
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                className="ml-1 flex-1 bg-transparent font-mono text-sm text-zinc-100 caret-zinc-100 outline-none"
+                autoFocus
+                spellCheck={false}
+              />
             </div>
-          </Card>
-        </motion.div>
+          </div>
+        </div>
 
-        <motion.div variants={item} className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Exercises</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
+        <div className="space-y-10">
+          <section>
+            <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+              Exercises
+            </h2>
+            <div>
               {exercises.map((ex) => (
                 <div
                   key={ex.id}
                   className={cn(
-                    "p-3 rounded-lg border transition-colors",
-                    ex.status === "completed" && "bg-emerald-500/5 border-emerald-500/20",
-                    ex.status === "in-progress" && "bg-primary/5 border-primary/20",
-                    ex.status === "locked" && "bg-muted opacity-60"
+                    "border-b border-border py-4",
+                    ex.status === "locked" && "opacity-60"
                   )}
                 >
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        {ex.status === "completed" && <CheckCircle2 className="h-4 w-4 text-emerald-500 flex-shrink-0" />}
-                        {ex.status === "locked" && <Lock className="h-4 w-4 text-muted-foreground flex-shrink-0" />}
-                        {ex.status === "in-progress" && <Play className="h-4 w-4 text-primary flex-shrink-0" />}
-                        <p className="font-semibold text-foreground text-sm truncate">{ex.title}</p>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <p className="truncate text-sm font-medium text-foreground">{ex.title}</p>
+                        {ex.status === "completed" && <Badge variant="success">Completed</Badge>}
+                        {ex.status === "in-progress" && (
+                          <span className="text-xs font-medium text-foreground">In progress</span>
+                        )}
+                        {ex.status === "locked" && (
+                          <span className="text-xs text-muted-foreground">Locked</span>
+                        )}
                       </div>
-                      <p className="text-xs text-muted-foreground mt-1">{ex.description}</p>
+                      <p className="mt-1 text-xs text-muted-foreground">{ex.description}</p>
                     </div>
-                    <Badge variant="outline" className="text-xs text-muted-foreground flex-shrink-0">
-                      {ex.difficulty}
-                    </Badge>
+                    <span className="shrink-0 text-xs text-muted-foreground">{ex.difficulty}</span>
                   </div>
-                  <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
-                    <span>{ex.xp} XP</span>
+                  <div className="mt-2 flex items-center justify-between">
+                    <span className="text-xs text-muted-foreground">{ex.xp} XP</span>
                     {ex.status === "in-progress" && (
-                      <Button variant="ghost" size="sm" className="h-6 text-xs">
-                        Continue <ChevronRight className="h-3 w-3 ml-1" />
+                      <Button variant="ghost" size="sm" className="h-7 px-2 text-xs">
+                        Continue
                       </Button>
                     )}
                   </div>
                 </div>
               ))}
-            </CardContent>
-          </Card>
+            </div>
+          </section>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Quick Reference</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-1 text-xs font-mono text-muted-foreground">
-                <p><span className="text-foreground">ls -la</span> — List all files</p>
-                <p><span className="text-foreground">cd &lt;dir&gt;</span> — Change directory</p>
-                <p><span className="text-foreground">cat &lt;file&gt;</span> — View file contents</p>
-                <p><span className="text-foreground">chmod 755</span> — Change permissions</p>
-                <p><span className="text-foreground">grep "str" file</span> — Search in file</p>
-                <p><span className="text-foreground">ps aux</span> — List processes</p>
-                <p><span className="text-foreground">gcc file.c</span> — Compile C code</p>
-                <p><span className="text-foreground">clear</span> — Clear terminal</p>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+          <section>
+            <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+              Quick Reference
+            </h2>
+            <div className="space-y-1.5 pt-3 text-xs font-mono text-muted-foreground">
+              <p><span className="text-foreground">ls -la</span> — List all files</p>
+              <p><span className="text-foreground">cd &lt;dir&gt;</span> — Change directory</p>
+              <p><span className="text-foreground">cat &lt;file&gt;</span> — View file contents</p>
+              <p><span className="text-foreground">chmod 755</span> — Change permissions</p>
+              <p><span className="text-foreground">grep "str" file</span> — Search in file</p>
+              <p><span className="text-foreground">ps aux</span> — List processes</p>
+              <p><span className="text-foreground">gcc file.c</span> — Compile C code</p>
+              <p><span className="text-foreground">clear</span> — Clear terminal</p>
+            </div>
+          </section>
+        </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

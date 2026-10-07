@@ -1,14 +1,11 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Search, Clock, ArrowLeft, BookOpen } from "lucide-react";
-import { Card, CardContent } from "../../components/ui/card";
+import { ArrowLeft } from "lucide-react";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Avatar, AvatarFallback } from "../../components/ui/avatar";
 import { Progress } from "../../components/ui/progress";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../../components/ui/select";
-import { Separator } from "../../components/ui/separator";
 
 const students = [
   { id: 1, name: "Priya Sharma", initials: "PS", email: "priya.sharma@email.com", course: "Linux Fundamentals", progress: 82, lastActive: "2 hours ago", status: "Active", enrolled: "Jun 15, 2026", quizzes: 8, avgScore: 88 },
@@ -22,16 +19,6 @@ const students = [
   { id: 9, name: "Meera Joshi", initials: "MJ", email: "meera.joshi@email.com", course: "C Programming Deep Dive", progress: 60, lastActive: "3 days ago", status: "Idle", enrolled: "Jul 8, 2026", quizzes: 5, avgScore: 74 },
   { id: 10, name: "Ravi Shankar", initials: "RS", email: "ravi.shankar@email.com", course: "Linux Fundamentals", progress: 85, lastActive: "1 hour ago", status: "Active", enrolled: "May 20, 2026", quizzes: 8, avgScore: 90 },
 ];
-
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
 
 export default function MentorStudentsPage() {
   const [search, setSearch] = useState("");
@@ -52,93 +39,84 @@ export default function MentorStudentsPage() {
 
   if (selectedStudent) {
     return (
-      <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
-        <motion.div variants={item}>
-          <Button variant="ghost" onClick={() => setSelectedStudent(null)} className="mb-4">
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Students
-          </Button>
-        </motion.div>
+      <div className="max-w-6xl space-y-10">
+        <Button variant="ghost" onClick={() => setSelectedStudent(null)} className="-ml-2">
+          <ArrowLeft className="h-4 w-4" />
+          Back to Students
+        </Button>
 
-        <motion.div variants={item}>
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center gap-4 mb-6">
-                <Avatar className="h-16 w-16">
-                  <AvatarFallback className="text-lg">{selectedStudent.initials}</AvatarFallback>
-                </Avatar>
-                <div>
-                  <h1 className="text-2xl font-semibold tracking-tight text-foreground">{selectedStudent.name}</h1>
-                  <p className="text-sm text-muted-foreground">{selectedStudent.email}</p>
-                  <Badge variant={statusColor(selectedStudent.status)} className="mt-1">{selectedStudent.status}</Badge>
-                </div>
+        <div className="flex items-center gap-4">
+          <Avatar className="h-14 w-14">
+            <AvatarFallback className="text-base">{selectedStudent.initials}</AvatarFallback>
+          </Avatar>
+          <div className="min-w-0 flex-1">
+            <h1 className="text-2xl font-semibold tracking-tight text-foreground">{selectedStudent.name}</h1>
+            <p className="mt-0.5 text-sm text-muted-foreground">{selectedStudent.email}</p>
+          </div>
+          <Badge variant={statusColor(selectedStudent.status)}>{selectedStudent.status}</Badge>
+        </div>
+
+        <div className="grid grid-cols-2 border-t border-border sm:grid-cols-4">
+          <div className="border-b border-border py-5 pr-6">
+            <p className="text-2xl font-semibold tracking-tight text-foreground">{selectedStudent.progress}%</p>
+            <p className="mt-1 text-sm text-muted-foreground">Progress</p>
+          </div>
+          <div className="border-b border-border py-5 pr-6">
+            <p className="text-2xl font-semibold tracking-tight text-foreground">{selectedStudent.quizzes}</p>
+            <p className="mt-1 text-sm text-muted-foreground">Quizzes Taken</p>
+          </div>
+          <div className="border-b border-border py-5 pr-6">
+            <p className="text-2xl font-semibold tracking-tight text-foreground">{selectedStudent.avgScore}%</p>
+            <p className="mt-1 text-sm text-muted-foreground">Avg Score</p>
+          </div>
+          <div className="border-b border-border py-5 pr-6">
+            <p className="text-2xl font-semibold tracking-tight text-foreground">{selectedStudent.lastActive}</p>
+            <p className="mt-1 text-sm text-muted-foreground">Last Active</p>
+          </div>
+        </div>
+
+        <section>
+          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+            Details
+          </h2>
+          <div>
+            <div className="flex items-baseline justify-between gap-4 border-b border-border py-4">
+              <span className="text-sm font-medium text-foreground">Course</span>
+              <span className="text-sm text-muted-foreground">{selectedStudent.course}</span>
+            </div>
+            <div className="flex items-baseline justify-between gap-4 border-b border-border py-4">
+              <span className="text-sm font-medium text-foreground">Enrolled On</span>
+              <span className="text-sm text-muted-foreground">{selectedStudent.enrolled}</span>
+            </div>
+            <div className="flex items-center justify-between gap-4 border-b border-border py-4">
+              <span className="text-sm font-medium text-foreground">Course Progress</span>
+              <div className="flex w-full max-w-xs items-center gap-3">
+                <Progress value={selectedStudent.progress} className="flex-1" />
+                <span className="w-10 shrink-0 text-right font-mono text-xs text-muted-foreground">
+                  {selectedStudent.progress}%
+                </span>
               </div>
-
-              <Separator className="mb-6" />
-
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                <div className="text-center p-4 rounded-md border border-border">
-                  <p className="text-2xl font-semibold text-foreground">{selectedStudent.progress}%</p>
-                  <p className="text-sm text-muted-foreground">Progress</p>
-                </div>
-                <div className="text-center p-4 rounded-md border border-border">
-                  <p className="text-2xl font-semibold text-foreground">{selectedStudent.quizzes}</p>
-                  <p className="text-sm text-muted-foreground">Quizzes Taken</p>
-                </div>
-                <div className="text-center p-4 rounded-md border border-border">
-                  <p className="text-2xl font-semibold text-foreground">{selectedStudent.avgScore}%</p>
-                  <p className="text-sm text-muted-foreground">Avg Score</p>
-                </div>
-                <div className="text-center p-4 rounded-md border border-border">
-                  <p className="text-2xl font-semibold text-foreground">{selectedStudent.lastActive}</p>
-                  <p className="text-sm text-muted-foreground">Last Active</p>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <h3 className="font-medium text-foreground mb-2">Course</h3>
-                  <div className="flex items-center gap-2">
-                    <BookOpen className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-foreground">{selectedStudent.course}</span>
-                  </div>
-                </div>
-                <div>
-                  <h3 className="font-medium text-foreground mb-2">Enrolled On</h3>
-                  <span className="text-muted-foreground">{selectedStudent.enrolled}</span>
-                </div>
-                <div>
-                  <h3 className="font-medium text-foreground mb-2">Course Progress</h3>
-                  <div className="flex items-center gap-3">
-                    <Progress value={selectedStudent.progress} className="h-3 flex-1" />
-                    <span className="text-sm font-medium text-foreground">{selectedStudent.progress}%</span>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-      </motion.div>
+            </div>
+          </div>
+        </section>
+      </div>
     );
   }
 
   return (
-    <motion.div className="space-y-8" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item}>
+    <div className="max-w-6xl space-y-10">
+      <div>
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">My Students</h1>
-        <p className="text-sm text-muted-foreground mt-1">{students.length} students across all courses</p>
-      </motion.div>
+        <p className="mt-1 text-sm text-muted-foreground">{students.length} students across all courses</p>
+      </div>
 
-      <motion.div variants={item} className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search by name or email..."
-            className="pl-9"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <Input
+          placeholder="Search by name or email..."
+          className="sm:max-w-xs"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
         <Select value={courseFilter} onValueChange={setCourseFilter}>
           <SelectTrigger className="w-[200px]">
             <SelectValue placeholder="All Courses" />
@@ -150,43 +128,40 @@ export default function MentorStudentsPage() {
             <SelectItem value="c">C Programming Deep Dive</SelectItem>
           </SelectContent>
         </Select>
-      </motion.div>
+      </div>
 
-      <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-4" variants={item}>
+      <div>
         {filteredStudents.map((student) => (
-          <Card key={student.id} className="cursor-pointer transition-colors hover:border-muted-foreground/40" onClick={() => setSelectedStudent(student)}>
-            <CardContent className="p-5">
-              <div className="flex items-start gap-4">
-                <Avatar className="h-12 w-12">
-                  <AvatarFallback>{student.initials}</AvatarFallback>
-                </Avatar>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-semibold text-foreground">{student.name}</h3>
-                    <Badge variant={statusColor(student.status)} className="text-xs">{student.status}</Badge>
-                  </div>
-                  <p className="text-sm text-muted-foreground truncate">{student.email}</p>
-                  <p className="text-sm text-muted-foreground mt-1">{student.course}</p>
-                </div>
+          <div
+            key={student.id}
+            onClick={() => setSelectedStudent(student)}
+            className="flex cursor-pointer flex-col gap-3 border-b border-border py-4 transition-colors hover:bg-muted/40 sm:flex-row sm:items-center sm:gap-6 sm:py-5"
+          >
+            <Avatar className="h-10 w-10">
+              <AvatarFallback>{student.initials}</AvatarFallback>
+            </Avatar>
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-2">
+                <p className="text-sm font-medium text-foreground">{student.name}</p>
+                <Badge variant={statusColor(student.status)} className="text-xs">{student.status}</Badge>
               </div>
-              <div className="mt-4 space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Progress</span>
-                  <span className="font-medium text-foreground">{student.progress}%</span>
-                </div>
-                <Progress value={student.progress} className="h-2" />
+              <p className="mt-0.5 truncate text-xs text-muted-foreground">{student.email}</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">{student.course}</p>
+            </div>
+            <div className="w-full shrink-0 sm:w-40">
+              <div className="mb-1.5 flex items-center justify-between text-xs text-muted-foreground">
+                <span>Progress</span>
+                <span className="font-mono">{student.progress}%</span>
               </div>
-              <div className="flex items-center justify-between mt-3 text-xs text-muted-foreground">
-                <span className="flex items-center gap-1">
-                  <Clock className="h-3 w-3" />
-                  {student.lastActive}
-                </span>
-                <span>Avg: {student.avgScore}%</span>
-              </div>
-            </CardContent>
-          </Card>
+              <Progress value={student.progress} />
+            </div>
+            <div className="flex shrink-0 items-center justify-between gap-4 text-xs text-muted-foreground sm:block sm:text-right">
+              <span>{student.lastActive}</span>
+              <span className="sm:mt-0.5 sm:block">Avg: {student.avgScore}%</span>
+            </div>
+          </div>
         ))}
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }

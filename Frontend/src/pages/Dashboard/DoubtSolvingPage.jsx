@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Send, Clock, Plus, X } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
+import { Send } from "lucide-react";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -115,16 +113,6 @@ const pastDoubts = [
 
 const topicTags = ["Linux", "Shell", "C", "Open Source", "Git"];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
-
 export default function DoubtSolvingPage() {
   const [selectedDoubt, setSelectedDoubt] = useState(pastDoubts[0]);
   const [newMessage, setNewMessage] = useState("");
@@ -145,136 +133,131 @@ export default function DoubtSolvingPage() {
   };
 
   return (
-    <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
-      <motion.div className="flex items-center justify-between" variants={item}>
+    <div className="space-y-10">
+      <div className="flex items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">Doubt Solving</h1>
-          <p className="text-sm text-muted-foreground mt-1">Get help from mentors and resolve your doubts</p>
+          <p className="mt-1 text-sm text-muted-foreground">Get help from mentors and resolve your doubts</p>
         </div>
-        <Button onClick={() => setShowAskForm(!showAskForm)}>
-          {showAskForm ? <X className="h-4 w-4 mr-2" /> : <Plus className="h-4 w-4 mr-2" />}
+        <Button onClick={() => setShowAskForm(!showAskForm)} className="shrink-0">
           {showAskForm ? "Cancel" : "Ask a Doubt"}
         </Button>
-      </motion.div>
+      </div>
 
       {showAskForm && (
-        <motion.div variants={item}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Ask a New Doubt</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <Input
-                placeholder="Brief title for your doubt"
-                value={newQuestion.title}
-                onChange={(e) => setNewQuestion({ ...newQuestion, title: e.target.value })}
-              />
-              <Textarea
-                placeholder="Describe your doubt in detail. Include what you've tried so far..."
-                rows={4}
-                value={newQuestion.description}
-                onChange={(e) => setNewQuestion({ ...newQuestion, description: e.target.value })}
-              />
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">Topic:</span>
-                {topicTags.map((tag) => (
-                  <Badge
-                    key={tag}
-                    variant={newQuestion.topic === tag ? "default" : "outline"}
-                    className="cursor-pointer"
-                    onClick={() => setNewQuestion({ ...newQuestion, topic: tag })}
-                  >
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-              <Button onClick={() => { setShowAskForm(false); setNewQuestion({ title: "", description: "", topic: "Linux" }); }}>
-                Submit Doubt
-              </Button>
-            </CardContent>
-          </Card>
-        </motion.div>
+        <section className="rounded-lg border border-border p-5">
+          <h2 className="text-base font-semibold tracking-tight text-foreground">Ask a New Doubt</h2>
+          <div className="mt-4 space-y-4">
+            <Input
+              placeholder="Brief title for your doubt"
+              value={newQuestion.title}
+              onChange={(e) => setNewQuestion({ ...newQuestion, title: e.target.value })}
+            />
+            <Textarea
+              placeholder="Describe your doubt in detail. Include what you've tried so far..."
+              rows={4}
+              value={newQuestion.description}
+              onChange={(e) => setNewQuestion({ ...newQuestion, description: e.target.value })}
+            />
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-sm text-muted-foreground">Topic:</span>
+              {topicTags.map((tag) => (
+                <Badge
+                  key={tag}
+                  variant={newQuestion.topic === tag ? "success" : "outline"}
+                  className="cursor-pointer"
+                  onClick={() => setNewQuestion({ ...newQuestion, topic: tag })}
+                >
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+            <Button onClick={() => { setShowAskForm(false); setNewQuestion({ title: "", description: "", topic: "Linux" }); }}>
+              Submit Doubt
+            </Button>
+          </div>
+        </section>
       )}
 
-      <motion.div className="grid lg:grid-cols-[320px_1fr] gap-6" variants={item}>
-        <Card className="h-fit">
-          <CardHeader>
-            <CardTitle className="text-base">Past Doubts</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
+      <div className="grid gap-8 lg:grid-cols-[300px_1fr]">
+        <section className="h-fit">
+          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+            Past Doubts
+          </h2>
+          <div>
             {pastDoubts.map((doubt) => (
               <div
                 key={doubt.id}
-                className={cn(
-                  "p-3 rounded-lg cursor-pointer transition-colors border",
-                  selectedDoubt?.id === doubt.id
-                    ? "bg-primary/10 border-primary/20"
-                    : "hover:bg-muted border-transparent"
-                )}
                 onClick={() => setSelectedDoubt(doubt)}
+                className={cn(
+                  "cursor-pointer border-b border-border px-3 py-4 transition-colors",
+                  selectedDoubt?.id === doubt.id ? "bg-muted" : "hover:bg-muted/60"
+                )}
               >
-                <p className="font-medium text-foreground text-sm line-clamp-1">{doubt.question}</p>
-                <div className="flex items-center gap-2 mt-1.5">
-                  <Badge variant="secondary" className="text-xs">{doubt.topic}</Badge>
-                  <span className="text-xs text-muted-foreground flex items-center gap-1">
-                    <Clock className="h-3 w-3" /> {doubt.timestamp}
-                  </span>
+                <p className="line-clamp-1 text-sm font-medium text-foreground">{doubt.question}</p>
+                <div className="mt-1.5 flex items-center gap-2 text-xs text-muted-foreground">
+                  <span>{doubt.topic}</span>
+                  <span aria-hidden="true">·</span>
+                  <span>{doubt.timestamp}</span>
                 </div>
               </div>
             ))}
-          </CardContent>
-        </Card>
+          </div>
+        </section>
 
-        <Card className="flex flex-col">
-          <CardHeader className="border-b">
-            <CardTitle className="text-base">{selectedDoubt?.question}</CardTitle>
-            <div className="flex items-center gap-2 mt-1">
-              <Badge variant="secondary">{selectedDoubt?.topic}</Badge>
+        <div className="flex flex-col rounded-lg border border-border">
+          <div className="border-b border-border px-5 py-4">
+            <p className="text-sm font-medium text-foreground">{selectedDoubt?.question}</p>
+            <div className="mt-2 flex flex-wrap items-center gap-2">
+              <Badge variant="outline">{selectedDoubt?.topic}</Badge>
               <Badge variant="success">Resolved</Badge>
             </div>
-          </CardHeader>
-          <CardContent className="flex-1 flex flex-col p-0">
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 max-h-[400px]">
-              {selectedDoubt?.replies.map((reply) => (
+          </div>
+          <div className="max-h-[400px] flex-1 space-y-4 overflow-y-auto p-5">
+            {selectedDoubt?.replies.map((reply) => (
+              <div
+                key={reply.id}
+                className={cn(
+                  "flex",
+                  reply.sender === "student" ? "justify-end" : "justify-start"
+                )}
+              >
                 <div
-                  key={reply.id}
                   className={cn(
-                    "flex",
-                    reply.sender === "student" ? "justify-end" : "justify-start"
+                    "max-w-[80%] rounded-lg px-3.5 py-2.5",
+                    reply.sender === "student"
+                      ? "bg-foreground text-background"
+                      : "bg-muted text-foreground"
                   )}
                 >
-                  <div
+                  <p className="text-sm">{reply.text}</p>
+                  <p
                     className={cn(
-                      "max-w-[80%] rounded-lg p-3",
-                      reply.sender === "student"
-                        ? "bg-primary/10 text-foreground"
-                        : "bg-muted text-foreground"
+                      "mt-1 text-xs",
+                      reply.sender === "student" ? "text-background/60" : "text-muted-foreground"
                     )}
                   >
-                    <p className="text-sm">{reply.text}</p>
-                    <p className="text-xs mt-1 text-muted-foreground">
-                      {reply.time}
-                    </p>
-                  </div>
+                    {reply.time}
+                  </p>
                 </div>
-              ))}
-            </div>
-            <div className="p-4 border-t">
-              <div className="flex gap-2">
-                <Input
-                  placeholder="Type your message..."
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                />
-                <Button size="icon" onClick={handleSend}>
-                  <Send className="h-4 w-4" />
-                </Button>
               </div>
+            ))}
+          </div>
+          <div className="border-t border-border p-4">
+            <div className="flex gap-2">
+              <Input
+                placeholder="Type your message..."
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleSend()}
+              />
+              <Button size="icon" onClick={handleSend} aria-label="Send message">
+                <Send className="h-4 w-4" />
+              </Button>
             </div>
-          </CardContent>
-        </Card>
-      </motion.div>
-    </motion.div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

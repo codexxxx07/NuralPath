@@ -1,17 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../../components/ui/card";
-import { Separator } from "../../components/ui/separator";
-
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-};
 
 function GithubIcon({ className }) {
   return (
@@ -45,110 +37,97 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-background px-4 py-12">
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={fadeIn}
-        className="w-full max-w-md"
-      >
-        <Card>
-          <CardHeader className="space-y-1.5 text-center">
-            <CardTitle className="text-2xl font-semibold tracking-tight text-foreground">
-              Welcome back
-            </CardTitle>
-            <CardDescription className="text-sm text-muted-foreground">
-              Sign in to continue learning
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="mb-5 rounded-md border border-border bg-muted/50 px-3 py-2.5 text-xs text-muted-foreground">
-              Demo authentication — no backend is connected yet. Submitting the
-              form opens the student dashboard for preview.
-            </div>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="you@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
+    <div className="mx-auto w-full max-w-sm px-4 py-20 sm:px-6">
+      <h1 className="text-2xl font-semibold tracking-tight text-foreground">
+        Welcome back
+      </h1>
+      <p className="mt-2 text-sm text-muted-foreground">
+        Sign in to continue learning
+      </p>
 
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <div className="relative">
-                  <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="pr-10"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                  </button>
-                </div>
-              </div>
+      <p className="mt-6 border-t border-border pt-4 text-xs leading-relaxed text-muted-foreground">
+        Demo authentication — no backend is connected yet. Submitting the
+        form opens the student dashboard for preview.
+      </p>
 
-              <div className="flex items-center justify-between">
-                <label className="flex cursor-pointer items-center gap-2 text-sm text-muted-foreground">
-                  <input
-                    type="checkbox"
-                    checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                    className="h-4 w-4 rounded border-border bg-background accent-primary"
-                  />
-                  Remember me
-                </label>
-                <Link to="/forgot-password" className="text-sm text-primary hover:underline">
-                  Forgot password?
-                </Link>
-              </div>
+      <form onSubmit={handleSubmit} className="mt-6 space-y-4 border-t border-border pt-6">
+        <div className="space-y-2">
+          <Label htmlFor="email">Email</Label>
+          <Input
+            id="email"
+            type="email"
+            placeholder="you@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
 
-              <Button type="submit" className="w-full" size="lg">
-                Sign In
-                <ArrowRight className="ml-1 h-4 w-4" />
-              </Button>
-            </form>
+        <div className="space-y-2">
+          <Label htmlFor="password">Password</Label>
+          <div className="relative">
+            <Input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="pr-10"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            </button>
+          </div>
+        </div>
 
-            <div className="mt-6">
-              <div className="relative">
-                <Separator />
-                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-card px-3 text-xs text-muted-foreground">
-                  or
-                </span>
-              </div>
-            </div>
+        <div className="flex items-center justify-between">
+          <label className="flex cursor-pointer items-center gap-2 text-sm text-muted-foreground">
+            <input
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+              className="h-4 w-4 rounded border-border bg-background accent-primary"
+            />
+            Remember me
+          </label>
+          <Link to="/forgot-password" className="text-sm text-primary hover:underline">
+            Forgot password?
+          </Link>
+        </div>
 
-            <div className="mt-6 space-y-3">
-              <Button variant="outline" className="w-full" size="lg">
-                <GoogleIcon className="h-5 w-5" />
-                Continue with Google
-              </Button>
-              <Button variant="outline" className="w-full" size="lg">
-                <GithubIcon className="h-5 w-5" />
-                Continue with GitHub
-              </Button>
-            </div>
+        <Button type="submit" className="w-full" size="lg">
+          Sign In
+          <ArrowRight className="ml-1 h-4 w-4" />
+        </Button>
+      </form>
 
-            <p className="mt-6 text-center text-sm text-muted-foreground">
-              Don&apos;t have an account?{" "}
-              <Link to="/register" className="font-medium text-primary hover:underline">
-                Sign up
-              </Link>
-            </p>
-          </CardContent>
-        </Card>
-      </motion.div>
+      <div className="relative my-8">
+        <div className="border-t border-border" />
+        <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-3 text-xs text-muted-foreground">
+          or
+        </span>
+      </div>
+
+      <div className="space-y-3">
+        <Button variant="outline" className="w-full" size="lg">
+          <GoogleIcon className="h-5 w-5" />
+          Continue with Google
+        </Button>
+        <Button variant="outline" className="w-full" size="lg">
+          <GithubIcon className="h-5 w-5" />
+          Continue with GitHub
+        </Button>
+      </div>
+
+      <p className="mt-8 border-t border-border pt-6 text-center text-sm text-muted-foreground">
+        Don&apos;t have an account?{" "}
+        <Link to="/register" className="font-medium text-primary hover:underline">
+          Sign up
+        </Link>
+      </p>
     </div>
   );
 }

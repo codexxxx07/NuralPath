@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Filter, ChevronRight, ArrowLeft, Send } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../../components/ui/card";
+import { ChevronRight, ArrowLeft, Send } from "lucide-react";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Label } from "../../components/ui/label";
@@ -19,16 +17,6 @@ const submissions = [
   { id: 7, student: "Sneha Reddy", initials: "SR", assignment: "Linux Shell Customization", course: "Linux Fundamentals", submitted: "2 days ago", status: "Pending", content: "Custom bash prompt configuration with color codes, git branch display, and performance metrics." },
   { id: 8, student: "Aditya Kumar", initials: "AK", assignment: "Shell Script #4 - File Automation", course: "Shell Scripting Mastery", submitted: "3 days ago", status: "Pending", content: "File backup automation with timestamp naming and rotation policy implementation." },
 ];
-
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
 
 export default function MentorSubmissionsPage() {
   const [selectedSubmission, setSelectedSubmission] = useState(null);
@@ -53,99 +41,90 @@ export default function MentorSubmissionsPage() {
 
   if (selectedSubmission) {
     return (
-      <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
-        <motion.div variants={item}>
-          <Button variant="ghost" onClick={() => setSelectedSubmission(null)} className="mb-4">
-            <ArrowLeft className="h-4 w-4 mr-2" />
+      <div className="max-w-6xl space-y-10">
+        <div>
+          <Button variant="ghost" onClick={() => setSelectedSubmission(null)} className="mb-4 -ml-2">
+            <ArrowLeft className="h-4 w-4" />
             Back to Submissions
           </Button>
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3">
             <Avatar className="h-10 w-10">
               <AvatarFallback>{selectedSubmission.initials}</AvatarFallback>
             </Avatar>
-            <div>
+            <div className="min-w-0 flex-1">
               <h1 className="text-2xl font-semibold tracking-tight text-foreground">{selectedSubmission.student}</h1>
-              <p className="text-sm text-muted-foreground">{selectedSubmission.assignment} · {selectedSubmission.course}</p>
+              <p className="mt-0.5 text-sm text-muted-foreground">{selectedSubmission.assignment} · {selectedSubmission.course}</p>
             </div>
-            <Badge variant={selectedSubmission.status === "Pending" ? "secondary" : "success"} className="ml-auto">
+            <Badge variant={selectedSubmission.status === "Pending" ? "secondary" : "success"}>
               {selectedSubmission.status}
             </Badge>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div variants={item}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base font-semibold tracking-tight">Submitted Work</CardTitle>
-              <CardDescription>Submitted {selectedSubmission.submitted}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="p-4 rounded-md bg-muted font-mono text-sm text-foreground whitespace-pre-wrap">
-                {selectedSubmission.content}
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+        <section>
+          <div className="flex items-baseline justify-between gap-4 border-b border-border pb-3">
+            <h2 className="text-base font-semibold tracking-tight text-foreground">Submitted Work</h2>
+            <p className="text-xs text-muted-foreground">Submitted {selectedSubmission.submitted}</p>
+          </div>
+          <div className="mt-4 whitespace-pre-wrap rounded-lg border border-border bg-muted/40 p-4 font-mono text-sm text-foreground">
+            {selectedSubmission.content}
+          </div>
+        </section>
 
-        <motion.div variants={item}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base font-semibold tracking-tight">Grade & Feedback</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label>Grade</Label>
-                <Select value={grade} onValueChange={setGrade}>
-                  <SelectTrigger className="w-[200px]">
-                    <SelectValue placeholder="Select grade" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="A">A (90-100%)</SelectItem>
-                    <SelectItem value="A-">A- (85-89%)</SelectItem>
-                    <SelectItem value="B+">B+ (80-84%)</SelectItem>
-                    <SelectItem value="B">B (75-79%)</SelectItem>
-                    <SelectItem value="B-">B- (70-74%)</SelectItem>
-                    <SelectItem value="C+">C+ (65-69%)</SelectItem>
-                    <SelectItem value="C">C (60-64%)</SelectItem>
-                    <SelectItem value="D">D (50-59%)</SelectItem>
-                    <SelectItem value="F">F (Below 50%)</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label>Feedback</Label>
-                <Textarea
-                  placeholder="Provide constructive feedback on the submission..."
-                  rows={5}
-                  value={feedback}
-                  onChange={(e) => setFeedback(e.target.value)}
-                />
-              </div>
-              <div className="flex justify-end">
-                <Button onClick={handleSubmitGrade} disabled={!grade || !feedback}>
-                  <Send className="h-4 w-4 mr-2" />
-                  Submit Grade
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-      </motion.div>
+        <section>
+          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+            Grade &amp; Feedback
+          </h2>
+          <div className="space-y-4 pt-5">
+            <div className="space-y-2">
+              <Label>Grade</Label>
+              <Select value={grade} onValueChange={setGrade}>
+                <SelectTrigger className="w-[200px]">
+                  <SelectValue placeholder="Select grade" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="A">A (90-100%)</SelectItem>
+                  <SelectItem value="A-">A- (85-89%)</SelectItem>
+                  <SelectItem value="B+">B+ (80-84%)</SelectItem>
+                  <SelectItem value="B">B (75-79%)</SelectItem>
+                  <SelectItem value="B-">B- (70-74%)</SelectItem>
+                  <SelectItem value="C+">C+ (65-69%)</SelectItem>
+                  <SelectItem value="C">C (60-64%)</SelectItem>
+                  <SelectItem value="D">D (50-59%)</SelectItem>
+                  <SelectItem value="F">F (Below 50%)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label>Feedback</Label>
+              <Textarea
+                placeholder="Provide constructive feedback on the submission..."
+                rows={5}
+                value={feedback}
+                onChange={(e) => setFeedback(e.target.value)}
+              />
+            </div>
+            <div className="flex justify-end">
+              <Button onClick={handleSubmitGrade} disabled={!grade || !feedback}>
+                <Send className="h-4 w-4" />
+                Submit Grade
+              </Button>
+            </div>
+          </div>
+        </section>
+      </div>
     );
   }
 
   return (
-    <motion.div className="space-y-8" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item}>
+    <div className="max-w-6xl space-y-10">
+      <div>
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">Student Submissions</h1>
-        <p className="text-sm text-muted-foreground mt-1">{submissions.filter((s) => s.status === "Pending").length} pending reviews</p>
-      </motion.div>
+        <p className="mt-1 text-sm text-muted-foreground">{submissions.filter((s) => s.status === "Pending").length} pending reviews</p>
+      </div>
 
-      <motion.div variants={item} className="flex flex-col sm:flex-row gap-3">
-        <div className="flex items-center gap-2">
-          <Filter className="h-4 w-4 text-muted-foreground" />
-          <span className="text-sm text-muted-foreground">Filters:</span>
-        </div>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <span className="text-xs text-muted-foreground">Filters</span>
         <Select value={courseFilter} onValueChange={setCourseFilter}>
           <SelectTrigger className="w-[200px]">
             <SelectValue placeholder="All Courses" />
@@ -167,32 +146,32 @@ export default function MentorSubmissionsPage() {
             <SelectItem value="reviewed">Reviewed</SelectItem>
           </SelectContent>
         </Select>
-      </motion.div>
+      </div>
 
-      <motion.div className="space-y-3" variants={item}>
+      <div>
         {filteredSubmissions.map((sub) => (
-          <Card key={sub.id} className="cursor-pointer transition-colors hover:border-muted-foreground/40" onClick={() => setSelectedSubmission(sub)}>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-4">
-                <Avatar className="h-10 w-10">
-                  <AvatarFallback>{sub.initials}</AvatarFallback>
-                </Avatar>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-medium text-foreground">{sub.student}</h3>
-                    <Badge variant={sub.status === "Pending" ? "secondary" : "success"} className="text-xs">
-                      {sub.status}
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-muted-foreground truncate">{sub.assignment} · {sub.course}</p>
-                </div>
-                <span className="text-xs text-muted-foreground whitespace-nowrap">{sub.submitted}</span>
-                <ChevronRight className="h-4 w-4 text-muted-foreground" />
+          <div
+            key={sub.id}
+            onClick={() => setSelectedSubmission(sub)}
+            className="flex cursor-pointer items-center gap-4 border-b border-border py-4 transition-colors hover:bg-muted/40"
+          >
+            <Avatar className="h-9 w-9">
+              <AvatarFallback>{sub.initials}</AvatarFallback>
+            </Avatar>
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-2">
+                <p className="text-sm font-medium text-foreground">{sub.student}</p>
+                <Badge variant={sub.status === "Pending" ? "secondary" : "success"} className="text-xs">
+                  {sub.status}
+                </Badge>
               </div>
-            </CardContent>
-          </Card>
+              <p className="mt-0.5 truncate text-xs text-muted-foreground">{sub.assignment} · {sub.course}</p>
+            </div>
+            <span className="shrink-0 text-xs text-muted-foreground">{sub.submitted}</span>
+            <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
+          </div>
         ))}
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }

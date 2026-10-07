@@ -1,14 +1,4 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import {
-  BookOpen,
-  Plus,
-  Users,
-  Edit3,
-  Eye,
-  FileText,
-} from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -63,16 +53,6 @@ const initialCourses = [
   },
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
-
 export default function MentorCoursesPage() {
   const [courses, setCourses] = useState(initialCourses);
   const [showForm, setShowForm] = useState(false);
@@ -99,130 +79,108 @@ export default function MentorCoursesPage() {
   };
 
   return (
-    <motion.div className="space-y-8" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item} className="flex items-center justify-between">
+    <div className="max-w-6xl space-y-10">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">My Courses</h1>
-          <p className="text-sm text-muted-foreground mt-1">{courses.length} courses · {courses.filter((c) => c.status === "Published").length} published</p>
+          <p className="mt-1 text-sm text-muted-foreground">{courses.length} courses · {courses.filter((c) => c.status === "Published").length} published</p>
         </div>
-        <Button onClick={() => setShowForm(!showForm)}>
-          <Plus className="h-4 w-4 mr-2" />
-          Create New Course
-        </Button>
-      </motion.div>
+        <Button onClick={() => setShowForm(!showForm)}>Create New Course</Button>
+      </div>
 
       {showForm && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
-        >
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base font-semibold tracking-tight">Create New Course</CardTitle>
-              <CardDescription>Fill in the details to create a new course</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>Course Title</Label>
-                  <Input
-                    placeholder="e.g., Docker Essentials"
-                    value={newCourse.title}
-                    onChange={(e) => setNewCourse({ ...newCourse, title: e.target.value })}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Category</Label>
-                  <Select value={newCourse.category} onValueChange={(val) => setNewCourse({ ...newCourse, category: val })}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Programming">Programming</SelectItem>
-                      <SelectItem value="Operating Systems">Operating Systems</SelectItem>
-                      <SelectItem value="DevOps">DevOps</SelectItem>
-                      <SelectItem value="Data Science">Data Science</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
+        <section>
+          <div className="border-b border-border pb-3">
+            <h2 className="text-base font-semibold tracking-tight text-foreground">Create New Course</h2>
+            <p className="mt-1 text-xs text-muted-foreground">Fill in the details to create a new course</p>
+          </div>
+          <div className="space-y-4 pt-5">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label>Description</Label>
-                <Textarea
-                  placeholder="Describe what students will learn in this course..."
-                  rows={3}
-                  value={newCourse.description}
-                  onChange={(e) => setNewCourse({ ...newCourse, description: e.target.value })}
+                <Label>Course Title</Label>
+                <Input
+                  placeholder="e.g., Docker Essentials"
+                  value={newCourse.title}
+                  onChange={(e) => setNewCourse({ ...newCourse, title: e.target.value })}
                 />
               </div>
               <div className="space-y-2">
-                <Label>Difficulty</Label>
-                <Select value={newCourse.difficulty} onValueChange={(val) => setNewCourse({ ...newCourse, difficulty: val })}>
-                  <SelectTrigger className="w-[200px]">
-                    <SelectValue placeholder="Select difficulty" />
+                <Label>Category</Label>
+                <Select value={newCourse.category} onValueChange={(val) => setNewCourse({ ...newCourse, category: val })}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select category" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Beginner">Beginner</SelectItem>
-                    <SelectItem value="Intermediate">Intermediate</SelectItem>
-                    <SelectItem value="Advanced">Advanced</SelectItem>
+                    <SelectItem value="Programming">Programming</SelectItem>
+                    <SelectItem value="Operating Systems">Operating Systems</SelectItem>
+                    <SelectItem value="DevOps">DevOps</SelectItem>
+                    <SelectItem value="Data Science">Data Science</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
-              <div className="flex justify-end gap-3">
-                <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
-                <Button onClick={handleCreate}>Create Course</Button>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+            </div>
+            <div className="space-y-2">
+              <Label>Description</Label>
+              <Textarea
+                placeholder="Describe what students will learn in this course..."
+                rows={3}
+                value={newCourse.description}
+                onChange={(e) => setNewCourse({ ...newCourse, description: e.target.value })}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Difficulty</Label>
+              <Select value={newCourse.difficulty} onValueChange={(val) => setNewCourse({ ...newCourse, difficulty: val })}>
+                <SelectTrigger className="w-[200px]">
+                  <SelectValue placeholder="Select difficulty" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Beginner">Beginner</SelectItem>
+                  <SelectItem value="Intermediate">Intermediate</SelectItem>
+                  <SelectItem value="Advanced">Advanced</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex justify-end gap-3">
+              <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
+              <Button onClick={handleCreate}>Create Course</Button>
+            </div>
+          </div>
+        </section>
       )}
 
-      <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-4" variants={item}>
-        {courses.map((course) => (
-          <Card key={course.id} className="transition-colors hover:border-muted-foreground/40">
-            <CardContent className="p-5">
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-base font-semibold tracking-tight text-foreground truncate">{course.title}</h3>
-                  <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{course.description}</p>
+      <section>
+        <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          Courses
+        </h2>
+        <div>
+          {courses.map((course) => (
+            <div
+              key={course.id}
+              className="flex flex-col gap-3 border-b border-border py-5 sm:flex-row sm:items-start sm:gap-8"
+            >
+              <div className="min-w-0 flex-1">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-foreground">{course.title}</p>
+                    <p className="mt-0.5 text-xs text-muted-foreground">{course.description}</p>
+                  </div>
+                  <Badge variant={course.status === "Published" ? "success" : "secondary"} className="shrink-0">
+                    {course.status}
+                  </Badge>
                 </div>
-                <Badge variant={course.status === "Published" ? "success" : "secondary"}>
-                  {course.status}
-                </Badge>
+                <p className="mt-2 text-xs text-muted-foreground">
+                  {course.category} · {course.difficulty} · {course.students} students · {course.modules} modules · {course.lessons} lessons
+                </p>
               </div>
-              <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-                <span className="flex items-center gap-1">
-                  <Users className="h-3.5 w-3.5" />
-                  {course.students} students
-                </span>
-                <span className="flex items-center gap-1">
-                  <BookOpen className="h-3.5 w-3.5" />
-                  {course.modules} modules
-                </span>
-                <span className="flex items-center gap-1">
-                  <FileText className="h-3.5 w-3.5" />
-                  {course.lessons} lessons
-                </span>
+              <div className="flex shrink-0 gap-2">
+                <Button size="sm" variant="outline">Edit</Button>
+                <Button size="sm" variant="outline">Preview</Button>
               </div>
-              <div className="flex items-center gap-2">
-                <Badge variant="outline" className="text-xs">{course.category}</Badge>
-                <Badge variant="outline" className="text-xs">{course.difficulty}</Badge>
-              </div>
-              <div className="flex gap-2 mt-4">
-                <Button size="sm" variant="outline" className="flex-1">
-                  <Edit3 className="h-3.5 w-3.5 mr-1" />
-                  Edit
-                </Button>
-                <Button size="sm" variant="outline" className="flex-1">
-                  <Eye className="h-3.5 w-3.5 mr-1" />
-                  Preview
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </motion.div>
-    </motion.div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }

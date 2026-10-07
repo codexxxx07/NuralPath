@@ -1,14 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import {
-  Plus,
-  Users,
-  Edit,
-  Eye,
-  BookOpen,
-  X,
-} from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../../components/ui/card";
+import { Plus, Edit, Eye, X } from "lucide-react";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -124,23 +115,13 @@ const courses = [
   },
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.06 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-};
-
 export default function AdminCoursesPage() {
   const [showForm, setShowForm] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
 
   return (
-    <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item} className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div className="mx-auto max-w-6xl space-y-10">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">Course Management</h1>
           <p className="mt-1 text-sm text-muted-foreground">{courses.length} courses on platform</p>
@@ -149,85 +130,78 @@ export default function AdminCoursesPage() {
           <Plus className="h-4 w-4 mr-2" />
           Create Course
         </Button>
-      </motion.div>
+      </div>
 
       {showForm && (
-        <motion.div variants={item}>
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="text-base font-semibold tracking-tight">Create New Course</CardTitle>
-                  <CardDescription>Set up a new course on the platform</CardDescription>
-                </div>
-                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setShowForm(false)}>
-                  <X className="h-4 w-4" />
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <Label>Course Title</Label>
-                  <Input placeholder="e.g. Advanced TypeScript Patterns" />
-                </div>
-                <div className="space-y-2">
-                  <Label>Instructor</Label>
-                  <Input placeholder="e.g. Rahul Sharma" />
-                </div>
-                <div className="space-y-2">
-                  <Label>Price (₹)</Label>
-                  <Input type="number" placeholder="e.g. 19999" />
-                </div>
-                <div className="space-y-2">
-                  <Label>Duration</Label>
-                  <Input placeholder="e.g. 10 weeks" />
-                </div>
+        <section className="overflow-hidden rounded-lg border border-border">
+          <div className="flex items-center justify-between border-b border-border px-5 py-4">
+            <div>
+              <h2 className="text-base font-semibold tracking-tight text-foreground">Create New Course</h2>
+              <p className="mt-0.5 text-xs text-muted-foreground">Set up a new course on the platform</p>
+            </div>
+            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setShowForm(false)}>
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+          <div className="space-y-4 p-5">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label>Course Title</Label>
+                <Input placeholder="e.g. Advanced TypeScript Patterns" />
               </div>
               <div className="space-y-2">
-                <Label>Description</Label>
-                <Textarea placeholder="Course description..." rows={3} />
+                <Label>Instructor</Label>
+                <Input placeholder="e.g. Rahul Sharma" />
               </div>
-              <div className="flex items-center gap-3">
-                <Switch id="publish" />
-                <Label htmlFor="publish">Publish immediately</Label>
+              <div className="space-y-2">
+                <Label>Price (₹)</Label>
+                <Input type="number" placeholder="e.g. 19999" />
               </div>
-              <div className="flex justify-end gap-2">
-                <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
-                <Button>Create Course</Button>
+              <div className="space-y-2">
+                <Label>Duration</Label>
+                <Input placeholder="e.g. 10 weeks" />
               </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+            </div>
+            <div className="space-y-2">
+              <Label>Description</Label>
+              <Textarea placeholder="Course description..." rows={3} />
+            </div>
+            <div className="flex items-center gap-3">
+              <Switch id="publish" />
+              <Label htmlFor="publish">Publish immediately</Label>
+            </div>
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
+              <Button>Create Course</Button>
+            </div>
+          </div>
+        </section>
       )}
 
-      <motion.div className="space-y-3" variants={item}>
-        {courses.map((course) => (
-          <Card key={course.id} className="transition-colors hover:border-muted-foreground/40">
-            <CardContent className="p-5">
+      <section>
+        <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          All Courses
+        </h2>
+        <div>
+          {courses.map((course) => (
+            <div key={course.id} className="border-b border-border py-5 transition-colors hover:bg-muted/40">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
                 <div className="min-w-0 flex-1">
-                  <div className="mb-1 flex items-center gap-3">
-                    <h3 className="font-semibold text-foreground">{course.title}</h3>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h3 className="text-sm font-medium text-foreground">{course.title}</h3>
                     <Badge variant={course.status === "Published" ? "success" : course.status === "Draft" ? "secondary" : "outline"}>
                       {course.status}
                     </Badge>
                   </div>
-                  <p className="mb-2 line-clamp-1 text-sm text-muted-foreground">{course.description}</p>
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
-                    <span className="flex items-center gap-1"><BookOpen className="h-3.5 w-3.5" /> {course.modules} modules</span>
-                    <span className="flex items-center gap-1"><Users className="h-3.5 w-3.5" /> {course.students} students</span>
-                    {course.rating > 0 && (
-                      <span className="flex items-center gap-1">
-                        <span className="text-foreground">★</span> {course.rating}
-                      </span>
-                    )}
-                    <span>Instructor: {course.instructor}</span>
-                  </div>
+                  <p className="mt-1 line-clamp-1 text-xs text-muted-foreground">{course.description}</p>
+                  <p className="mt-1.5 text-xs text-muted-foreground">
+                    {course.modules} modules · {course.students} students
+                    {course.rating > 0 && <> · ★ {course.rating}</>} · Instructor: {course.instructor}
+                  </p>
                 </div>
                 <div className="flex items-center gap-6">
                   <div className="text-right">
-                    <p className="text-lg font-semibold text-foreground">{course.price}</p>
+                    <p className="text-sm font-semibold text-foreground">{course.price}</p>
                     <p className="text-xs text-muted-foreground">{course.revenue} total</p>
                   </div>
                   <div className="flex items-center gap-2">
@@ -246,17 +220,15 @@ export default function AdminCoursesPage() {
                   </div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-        ))}
-      </motion.div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {selectedCourse && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={() => setSelectedCourse(null)}>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg border border-border bg-card p-6 shadow-lg"
+          <div
+            className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg border border-border bg-background p-6 shadow-lg"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="mb-4 flex items-center justify-between">
@@ -266,42 +238,40 @@ export default function AdminCoursesPage() {
               </Button>
             </div>
 
-            <div className="mb-4">
+            <div className="mb-5">
               <h3 className="mb-1 text-lg font-semibold text-foreground">{selectedCourse.title}</h3>
               <p className="text-sm text-muted-foreground">{selectedCourse.description}</p>
             </div>
 
-            <div className="mb-4 grid grid-cols-2 gap-3">
-              <div className="rounded-md bg-muted p-3 text-center">
-                <p className="text-2xl font-semibold text-foreground">{selectedCourse.students}</p>
-                <p className="text-xs text-muted-foreground">Students</p>
+            <div className="grid grid-cols-2 border-t border-border">
+              <div className="border-b border-border py-4 pr-4">
+                <p className="text-2xl font-semibold tracking-tight text-foreground">{selectedCourse.students}</p>
+                <p className="mt-1 text-xs text-muted-foreground">Students</p>
               </div>
-              <div className="rounded-md bg-muted p-3 text-center">
-                <p className="text-2xl font-semibold text-foreground">{selectedCourse.revenue}</p>
-                <p className="text-xs text-muted-foreground">Revenue</p>
+              <div className="border-b border-border py-4 pl-4">
+                <p className="text-2xl font-semibold tracking-tight text-foreground">{selectedCourse.revenue}</p>
+                <p className="mt-1 text-xs text-muted-foreground">Revenue</p>
               </div>
-              <div className="rounded-md bg-muted p-3 text-center">
-                <p className="text-2xl font-semibold text-foreground">{selectedCourse.modules}</p>
-                <p className="text-xs text-muted-foreground">Modules</p>
+              <div className="border-b border-border py-4 pr-4">
+                <p className="text-2xl font-semibold tracking-tight text-foreground">{selectedCourse.modules}</p>
+                <p className="mt-1 text-xs text-muted-foreground">Modules</p>
               </div>
-              <div className="rounded-md bg-muted p-3 text-center">
-                <p className="text-2xl font-semibold text-foreground">{selectedCourse.duration}</p>
-                <p className="text-xs text-muted-foreground">Duration</p>
+              <div className="border-b border-border py-4 pl-4">
+                <p className="text-2xl font-semibold tracking-tight text-foreground">{selectedCourse.duration}</p>
+                <p className="mt-1 text-xs text-muted-foreground">Duration</p>
               </div>
             </div>
 
-            <Separator className="mb-4" />
-
-            <div className="mb-4 space-y-2">
-              <div className="flex items-center justify-between text-sm">
+            <div className="mt-5 space-y-3">
+              <div className="flex items-center justify-between gap-4 text-sm">
                 <span className="text-muted-foreground">Instructor</span>
                 <span className="font-medium text-foreground">{selectedCourse.instructor}</span>
               </div>
-              <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center justify-between gap-4 text-sm">
                 <span className="text-muted-foreground">Price</span>
                 <span className="font-medium text-foreground">{selectedCourse.price}</span>
               </div>
-              <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center justify-between gap-4 text-sm">
                 <span className="text-muted-foreground">Status</span>
                 <Badge variant={selectedCourse.status === "Published" ? "success" : selectedCourse.status === "Draft" ? "secondary" : "outline"}>
                   {selectedCourse.status}
@@ -309,15 +279,17 @@ export default function AdminCoursesPage() {
               </div>
             </div>
 
+            <Separator className="my-6" />
+
             <div className="flex gap-2">
               <Button className="flex-1">Edit Course</Button>
               <Button variant="outline" className="flex-1">
                 {selectedCourse.status === "Published" ? "Unpublish" : "Publish"}
               </Button>
             </div>
-          </motion.div>
+          </div>
         </div>
       )}
-    </motion.div>
+    </div>
   );
 }

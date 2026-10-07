@@ -1,19 +1,13 @@
-import { motion } from "framer-motion";
 import {
   Users,
   IndianRupee,
   TrendingUp,
   Smile,
-  ArrowUpRight,
-  ArrowDownRight,
-  Globe,
-  BarChart3,
   Clock,
   BookOpen,
   MessageSquare,
   Award,
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Progress } from "../../components/ui/progress";
 
@@ -66,172 +60,117 @@ const engagementMetrics = [
   { metric: "Certificates Issued", value: "456", icon: Award, description: "Course completion certificates" },
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
-
 export default function AdminAnalyticsPage() {
   return (
-    <motion.div className="space-y-8" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item}>
+    <div className="mx-auto max-w-6xl space-y-10">
+      <div>
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">Platform Analytics</h1>
         <p className="mt-1 text-sm text-muted-foreground">Comprehensive platform performance insights</p>
-      </motion.div>
+      </div>
 
-      <motion.div className="grid grid-cols-2 gap-4 lg:grid-cols-4" variants={item}>
+      {/* Key metrics */}
+      <div className="grid grid-cols-2 border-t border-border sm:grid-cols-4">
         {keyMetrics.map((metric) => (
-          <Card key={metric.label}>
-            <CardContent className="p-5">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="text-2xl font-semibold text-foreground">{metric.value}</p>
-                  <p className="text-sm text-muted-foreground">{metric.label}</p>
-                </div>
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground">
-                  <metric.icon className="h-4 w-4" />
-                </div>
-              </div>
-              <div className="mt-3 flex items-center gap-1">
-                {metric.up ? (
-                  <ArrowUpRight className="h-3 w-3 text-muted-foreground" />
-                ) : (
-                  <ArrowDownRight className="h-3 w-3 text-muted-foreground" />
-                )}
-                <span className="text-xs font-medium text-foreground">{metric.change}</span>
-                <span className="text-xs text-muted-foreground">vs last month</span>
-              </div>
-            </CardContent>
-          </Card>
+          <div key={metric.label} className="border-b border-border py-5 pr-6 sm:border-b-0">
+            <p className="text-2xl font-semibold tracking-tight text-foreground">{metric.value}</p>
+            <p className="mt-1 text-sm text-muted-foreground">{metric.label}</p>
+            <p className="mt-2 text-xs text-muted-foreground">
+              {metric.change} vs last month
+            </p>
+          </div>
         ))}
-      </motion.div>
+      </div>
 
-      <motion.div variants={item}>
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base font-semibold tracking-tight">
-              <BarChart3 className="h-4 w-4 text-muted-foreground" />
-              User Growth — Last 12 Months
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex h-52 items-end gap-2">
-              {monthlyUsers.map((d) => (
-                <div key={d.month} className="flex flex-1 flex-col items-center gap-2">
-                  <span className="text-[10px] font-medium text-muted-foreground">
-                    {d.value.toLocaleString("en-IN")}
-                  </span>
-                  <motion.div
-                    className="w-full rounded-t-md bg-primary"
-                    initial={{ height: 0 }}
-                    animate={{ height: `${(d.value / maxUsers) * 100}%` }}
-                    transition={{ duration: 0.6, delay: 0.05 }}
-                  />
-                  <span className="text-[10px] text-muted-foreground">{d.month}</span>
-                </div>
-              ))}
+      {/* User growth */}
+      <section>
+        <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          User Growth — Last 12 Months
+        </h2>
+        <div className="flex h-52 items-stretch gap-2 pt-5">
+          {monthlyUsers.map((d) => (
+            <div key={d.month} className="flex h-full flex-1 flex-col items-center gap-2">
+              <span className="text-[10px] font-medium text-muted-foreground">
+                {d.value.toLocaleString("en-IN")}
+              </span>
+              <div className="flex w-full flex-1 items-end">
+                <div
+                  className="w-full rounded-t-md bg-foreground transition-all duration-500"
+                  style={{ height: `${(d.value / maxUsers) * 100}%` }}
+                />
+              </div>
+              <span className="text-[10px] text-muted-foreground">{d.month}</span>
             </div>
-          </CardContent>
-        </Card>
-      </motion.div>
+          ))}
+        </div>
+      </section>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <motion.div variants={item}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-base font-semibold tracking-tight">
-                <TrendingUp className="h-4 w-4 text-muted-foreground" />
-                Course Performance
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {coursePerformance.map((course) => (
-                <div key={course.title} className="rounded-md bg-muted p-3">
-                  <div className="mb-2 flex items-center justify-between">
-                    <h3 className="text-sm font-medium text-foreground">{course.title}</h3>
-                    <Badge variant={course.trend === "New" ? "secondary" : "outline"}>{course.trend}</Badge>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3 text-sm">
-                    <div>
-                      <p className="mb-1 text-muted-foreground">Completion</p>
-                      <div className="flex items-center gap-2">
-                        <Progress value={course.completion} className="h-2 flex-1" />
-                        <span className="font-medium text-foreground">{course.completion}%</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-muted-foreground">Rating</p>
-                        <p className="font-medium text-foreground">★ {course.rating}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-muted-foreground">Students</p>
-                        <p className="font-medium text-foreground">{course.students}</p>
-                      </div>
-                    </div>
-                  </div>
+      <div className="grid gap-10 lg:grid-cols-2">
+        <section>
+          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+            Course Performance
+          </h2>
+          <div>
+            {coursePerformance.map((course) => (
+              <div key={course.title} className="border-b border-border py-4">
+                <div className="flex items-baseline justify-between gap-3">
+                  <p className="min-w-0 truncate text-sm font-medium text-foreground">{course.title}</p>
+                  <Badge variant={course.trend === "New" ? "secondary" : "outline"}>{course.trend}</Badge>
                 </div>
-              ))}
-            </CardContent>
-          </Card>
-        </motion.div>
+                <div className="mt-2.5 flex items-center gap-4">
+                  <Progress value={course.completion} className="flex-1" />
+                  <span className="w-10 shrink-0 text-right font-mono text-xs text-muted-foreground">
+                    {course.completion}%
+                  </span>
+                </div>
+                <p className="mt-2 text-xs text-muted-foreground">
+                  ★ {course.rating} rating · {course.students} students
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
 
-        <motion.div className="space-y-6" variants={item}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-base font-semibold tracking-tight">
-                <Globe className="h-4 w-4 text-muted-foreground" />
-                Geographic Distribution
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
+        <div className="space-y-10">
+          <section>
+            <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+              Geographic Distribution
+            </h2>
+            <div className="space-y-5 pt-4">
               {geographicData.map((geo) => (
-                <div key={geo.region} className="space-y-1.5">
-                  <div className="flex items-center justify-between text-sm">
+                <div key={geo.region}>
+                  <div className="flex items-center justify-between gap-3 text-sm">
                     <span className="font-medium text-foreground">{geo.region}</span>
                     <span className="text-muted-foreground">{geo.users} users ({geo.percentage}%)</span>
                   </div>
-                  <div className="h-2 overflow-hidden rounded-full bg-muted">
-                    <motion.div
-                      className="h-full rounded-full bg-primary"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${geo.percentage}%` }}
-                      transition={{ duration: 0.6, delay: 0.1 }}
+                  <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted">
+                    <div
+                      className="h-full rounded-full bg-foreground transition-all duration-500"
+                      style={{ width: `${geo.percentage}%` }}
                     />
                   </div>
                 </div>
               ))}
-            </CardContent>
-          </Card>
+            </div>
+          </section>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-base font-semibold tracking-tight">
-                <BarChart3 className="h-4 w-4 text-muted-foreground" />
-                Engagement Metrics
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
+          <section>
+            <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+              Engagement Metrics
+            </h2>
+            <div>
               {engagementMetrics.map((eng) => (
-                <div key={eng.metric} className="flex items-center gap-3 rounded-md bg-muted p-3">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-background text-muted-foreground">
-                    <eng.icon className="h-4 w-4" />
+                <div key={eng.metric} className="flex items-baseline justify-between gap-4 border-b border-border py-4">
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-foreground">{eng.metric}</p>
+                    <p className="mt-0.5 text-xs text-muted-foreground">{eng.description}</p>
                   </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-foreground">{eng.value}</p>
-                    <p className="text-xs text-muted-foreground">{eng.metric}</p>
-                  </div>
+                  <p className="shrink-0 text-sm font-medium text-foreground">{eng.value}</p>
                 </div>
               ))}
-            </CardContent>
-          </Card>
-        </motion.div>
+            </div>
+          </section>
+        </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

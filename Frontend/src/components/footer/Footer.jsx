@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { Cpu, Mail } from "lucide-react";
 import { Button } from "../ui/button";
 
 const courseLinks = [
@@ -32,20 +31,20 @@ const companyLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border bg-card">
+    <footer className="border-t border-border bg-background">
       {/* Newsletter Section */}
       <div className="border-b border-border">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center gap-6 md:flex-row md:justify-between">
+        <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+          <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
             <div>
-              <h3 className="text-lg font-semibold text-foreground font-display">
+              <h3 className="text-base font-semibold text-foreground">
                 Stay updated with the community
               </h3>
               <p className="mt-1 text-sm text-muted-foreground">
                 Join the community to get updates on courses, practice sessions, and events.
               </p>
             </div>
-            <Button asChild className="bg-primary hover:bg-primary/90 shrink-0">
+            <Button asChild className="shrink-0">
               <Link to="/community">Join the Community</Link>
             </Button>
           </div>
@@ -53,15 +52,12 @@ export default function Footer() {
       </div>
 
       {/* Main Footer */}
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-6">
+      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-6">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link to="/" className="inline-flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
-                <Cpu className="h-4 w-4" />
-              </div>
-              <span className="font-display text-lg font-bold tracking-tight text-foreground">
+            <Link to="/" className="inline-flex items-center">
+              <span className="text-sm font-semibold uppercase tracking-widest text-foreground">
                 NuralPath
               </span>
             </Link>
@@ -70,13 +66,13 @@ export default function Footer() {
               Embedded Systems, and FPGA Development — with live mentorship and
               hands-on practice.
             </p>
-            <div className="mt-4 space-y-2">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Mail className="h-4 w-4" />
-                <Link to="/contact" className="transition-colors hover:text-foreground">
-                  Contact the community
-                </Link>
-              </div>
+            <div className="mt-4">
+              <Link
+                to="/contact"
+                className="text-sm text-primary transition-colors hover:underline"
+              >
+                Contact the community
+              </Link>
             </div>
           </div>
 
@@ -160,7 +156,7 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-border">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-6 sm:flex-row sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-6 sm:flex-row sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
             <span>&copy; 2026 NuralPath. All rights reserved.</span>
             <Link to="/privacy" className="transition-colors hover:text-foreground">

@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { Clock, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "../../components/ui/button";
-import { Card, CardContent } from "../../components/ui/card";
-import { Badge } from "../../components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "../../components/ui/tabs";
 
 const categories = ["All", "Linux", "Shell", "C Programming", "Open Source"];
@@ -97,15 +94,6 @@ const staticDomains = {
   fpga: "FPGA Development",
 };
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.4, delay: i * 0.08, ease: "easeOut" },
-  }),
-};
-
 export default function CoursesPage() {
   const [searchParams] = useSearchParams();
   const [activeCategory, setActiveCategory] = useState(() => {
@@ -124,58 +112,46 @@ export default function CoursesPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero */}
-      <section className="border-b border-border bg-surface py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="max-w-2xl"
-          >
-            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
+      {/* Page header */}
+      <section className="py-20 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="max-w-2xl">
+            <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+              Courses
+            </p>
+            <h1 className="mt-4 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
               Explore Our Courses
             </h1>
-            <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
+            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
               Structured, hands-on courses designed to take you from beginner to
               confident systems programmer. Learn Linux, Shell, C, and open source
               with a project-driven approach.
             </p>
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Filters & Grid */}
-      <section className="py-12 sm:py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* Filters & list */}
+      <section className="pb-20 sm:pb-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           {/* Filter Tabs */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-          >
-            <Tabs value={activeCategory} onValueChange={setActiveCategory}>
-              <TabsList className="h-auto flex-wrap gap-1 bg-transparent p-0 sm:flex-nowrap">
-                {categories.map((cat) => (
-                  <TabsTrigger
-                    key={cat}
-                    value={cat}
-                    className="rounded-full border border-border px-4 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground data-[state=active]:border-primary data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-none"
-                  >
-                    {cat}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-            </Tabs>
-          </motion.div>
+          <Tabs value={activeCategory} onValueChange={setActiveCategory}>
+            <TabsList className="flex-wrap gap-x-6 gap-y-2">
+              {categories.map((cat) => (
+                <TabsTrigger key={cat} value={cat}>
+                  {cat}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
 
           {/* Static-domain empty state */}
           {isStaticDomain && (
-            <div className="mt-10 rounded-lg border border-border bg-card p-12 text-center">
-              <h2 className="text-xl font-semibold tracking-tight text-foreground">
+            <div className="mt-10 border-t border-border pt-8">
+              <h2 className="text-base font-semibold tracking-tight text-foreground">
                 {staticDomains[domain]} — in development
               </h2>
-              <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground leading-relaxed">
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
                 This learning domain doesn't have published course content yet.
                 The platform currently focuses on Linux & Systems programming,
                 Shell scripting, C, and Data Structures. When {staticDomains[domain]} content is ready,
@@ -187,60 +163,37 @@ export default function CoursesPage() {
             </div>
           )}
 
-          {/* Course Grid */}
+          {/* Course list */}
           {!isStaticDomain && (
-            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              <AnimatePresence mode="wait">
-                {filtered.map((course, i) => (
-                  <motion.div
-                    key={course.id}
-                    custom={i}
-                    initial="hidden"
-                    animate="visible"
-                    exit={{ opacity: 0, y: -10, transition: { duration: 0.2 } }}
-                    variants={cardVariants}
-                  >
-                    <Link to={`/courses/${course.id}`} className="block h-full">
-                      <Card className="h-full transition-colors hover:border-muted-foreground/40">
-                        {/* Preview block */}
-                        <div className="flex h-36 items-center justify-center border-b border-border bg-muted">
-                          <span className="text-4xl font-semibold tracking-tight text-muted-foreground">
-                            {course.title.charAt(0)}
-                          </span>
-                        </div>
-
-                        <CardContent className="flex flex-col gap-3 p-5">
-                          <div className="flex items-center justify-between">
-                            <Badge variant="outline">{course.level}</Badge>
-                            <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                              <Clock className="h-3.5 w-3.5" />
-                              {course.duration}
-                            </span>
-                          </div>
-
-                          <h3 className="text-base font-semibold tracking-tight text-foreground">
-                            {course.title}
-                          </h3>
-
-                          <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
-                            {course.description}
-                          </p>
-
-                          <Button variant="outline" className="mt-2 w-full" size="sm">
-                            Learn More
-                            <ArrowRight className="ml-1 h-3.5 w-3.5" />
-                          </Button>
-                        </CardContent>
-                      </Card>
-                    </Link>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+            <div className="mt-10 grid gap-x-12 sm:grid-cols-2">
+              {filtered.map((course) => (
+                <Link
+                  key={course.id}
+                  to={`/courses/${course.id}`}
+                  className="group block border-t border-border py-6 transition-colors hover:bg-muted/40"
+                >
+                  <div className="min-w-0">
+                    <h3 className="text-base font-medium text-foreground">
+                      {course.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {course.description}
+                    </p>
+                    <p className="mt-3 text-xs text-muted-foreground">
+                      {course.level} · {course.duration} · {course.category}
+                    </p>
+                    <span className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary transition-colors group-hover:underline">
+                      View course
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </span>
+                  </div>
+                </Link>
+              ))}
             </div>
           )}
 
           {!isStaticDomain && filtered.length === 0 && (
-            <div className="py-20 text-center text-sm text-muted-foreground">
+            <div className="border-t border-border py-16 text-center text-sm text-muted-foreground">
               No courses found in this category.
             </div>
           )}

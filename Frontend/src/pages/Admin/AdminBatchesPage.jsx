@@ -1,14 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import {
-  Plus,
-  Users,
-  Calendar,
-  BookOpen,
-  ChevronDown,
-  ChevronUp,
-} from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../../components/ui/card";
+import { Plus, ChevronDown, ChevronUp } from "lucide-react";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -108,24 +99,14 @@ const batches = [
   },
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
-
 export default function AdminBatchesPage() {
   const [expandedBatch, setExpandedBatch] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [newBatch, setNewBatch] = useState({ name: "", course: "", mentor: "", startDate: "", endDate: "", maxCapacity: "" });
 
   return (
-    <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item} className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div className="mx-auto max-w-6xl space-y-10">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">Batch Management</h1>
           <p className="mt-1 text-sm text-muted-foreground">{batches.length} batches total</p>
@@ -134,179 +115,175 @@ export default function AdminBatchesPage() {
           <Plus className="h-4 w-4 mr-2" />
           Create Batch
         </Button>
-      </motion.div>
+      </div>
 
       {showForm && (
-        <motion.div variants={item}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base font-semibold tracking-tight">Create New Batch</CardTitle>
-              <CardDescription>Fill in the details to create a new batch</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <Label>Batch Name</Label>
-                  <Input
-                    placeholder="e.g. Full Stack MERN — Batch 2026-F"
-                    value={newBatch.name}
-                    onChange={(e) => setNewBatch({ ...newBatch, name: e.target.value })}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Course</Label>
-                  <Select value={newBatch.course} onValueChange={(v) => setNewBatch({ ...newBatch, course: v })}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select course" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="react">Advanced React & Next.js</SelectItem>
-                      <SelectItem value="python">Python for Data Science</SelectItem>
-                      <SelectItem value="mern">Full Stack MERN Bootcamp</SelectItem>
-                      <SelectItem value="linux">Linux Administration Pro</SelectItem>
-                      <SelectItem value="devops">DevOps Bootcamp</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label>Mentor</Label>
-                  <Select value={newBatch.mentor} onValueChange={(v) => setNewBatch({ ...newBatch, mentor: v })}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Assign mentor" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="rahul">Rahul Sharma</SelectItem>
-                      <SelectItem value="neha">Neha Gupta</SelectItem>
-                      <SelectItem value="rohan">Rohan Verma</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label>Max Capacity</Label>
-                  <Input
-                    type="number"
-                    placeholder="e.g. 50"
-                    value={newBatch.maxCapacity}
-                    onChange={(e) => setNewBatch({ ...newBatch, maxCapacity: e.target.value })}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Start Date</Label>
-                  <Input
-                    type="date"
-                    value={newBatch.startDate}
-                    onChange={(e) => setNewBatch({ ...newBatch, startDate: e.target.value })}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>End Date</Label>
-                  <Input
-                    type="date"
-                    value={newBatch.endDate}
-                    onChange={(e) => setNewBatch({ ...newBatch, endDate: e.target.value })}
-                  />
-                </div>
+        <section className="overflow-hidden rounded-lg border border-border">
+          <div className="border-b border-border px-5 py-4">
+            <h2 className="text-base font-semibold tracking-tight text-foreground">Create New Batch</h2>
+            <p className="mt-0.5 text-xs text-muted-foreground">Fill in the details to create a new batch</p>
+          </div>
+          <div className="space-y-4 p-5">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label>Batch Name</Label>
+                <Input
+                  placeholder="e.g. Full Stack MERN — Batch 2026-F"
+                  value={newBatch.name}
+                  onChange={(e) => setNewBatch({ ...newBatch, name: e.target.value })}
+                />
               </div>
               <div className="space-y-2">
-                <Label>Schedule</Label>
-                <Textarea placeholder="e.g. Mon, Wed, Fri — 7:00 PM to 9:00 PM" />
+                <Label>Course</Label>
+                <Select value={newBatch.course} onValueChange={(v) => setNewBatch({ ...newBatch, course: v })}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select course" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="react">Advanced React & Next.js</SelectItem>
+                    <SelectItem value="python">Python for Data Science</SelectItem>
+                    <SelectItem value="mern">Full Stack MERN Bootcamp</SelectItem>
+                    <SelectItem value="linux">Linux Administration Pro</SelectItem>
+                    <SelectItem value="devops">DevOps Bootcamp</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
-              <div className="flex justify-end gap-2">
-                <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
-                <Button>Create Batch</Button>
+              <div className="space-y-2">
+                <Label>Mentor</Label>
+                <Select value={newBatch.mentor} onValueChange={(v) => setNewBatch({ ...newBatch, mentor: v })}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Assign mentor" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="rahul">Rahul Sharma</SelectItem>
+                    <SelectItem value="neha">Neha Gupta</SelectItem>
+                    <SelectItem value="rohan">Rohan Verma</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+              <div className="space-y-2">
+                <Label>Max Capacity</Label>
+                <Input
+                  type="number"
+                  placeholder="e.g. 50"
+                  value={newBatch.maxCapacity}
+                  onChange={(e) => setNewBatch({ ...newBatch, maxCapacity: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Start Date</Label>
+                <Input
+                  type="date"
+                  value={newBatch.startDate}
+                  onChange={(e) => setNewBatch({ ...newBatch, startDate: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>End Date</Label>
+                <Input
+                  type="date"
+                  value={newBatch.endDate}
+                  onChange={(e) => setNewBatch({ ...newBatch, endDate: e.target.value })}
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label>Schedule</Label>
+              <Textarea placeholder="e.g. Mon, Wed, Fri — 7:00 PM to 9:00 PM" />
+            </div>
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
+              <Button>Create Batch</Button>
+            </div>
+          </div>
+        </section>
       )}
 
-      <motion.div className="space-y-4" variants={item}>
-        {batches.map((batch) => (
-          <Card key={batch.id}>
-            <CardContent className="p-0">
+      <section>
+        <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          All Batches
+        </h2>
+        <div>
+          {batches.map((batch) => (
+            <div key={batch.id} className="border-b border-border">
               <div
-                className="cursor-pointer p-5 transition-colors hover:bg-muted"
+                className="cursor-pointer py-5 transition-colors hover:bg-muted/40"
                 onClick={() => setExpandedBatch(expandedBatch === batch.id ? null : batch.id)}
               >
                 <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
                   <div className="min-w-0 flex-1">
-                    <div className="mb-1 flex items-center gap-3">
-                      <h3 className="font-semibold text-foreground">{batch.name}</h3>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h3 className="text-sm font-medium text-foreground">{batch.name}</h3>
                       <Badge variant={batch.status === "Active" ? "success" : batch.status === "Completed" ? "secondary" : "outline"}>
                         {batch.status}
                       </Badge>
                     </div>
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
-                      <span className="flex items-center gap-1"><BookOpen className="h-3.5 w-3.5" /> {batch.course}</span>
-                      <span className="flex items-center gap-1"><Users className="h-3.5 w-3.5" /> {batch.studentsEnrolled}/{batch.maxCapacity} students</span>
-                      <span className="flex items-center gap-1"><Calendar className="h-3.5 w-3.5" /> {batch.startDate} — {batch.endDate}</span>
-                    </div>
+                    <p className="mt-1.5 text-xs text-muted-foreground">
+                      {batch.course} · {batch.studentsEnrolled}/{batch.maxCapacity} students · {batch.startDate} — {batch.endDate}
+                    </p>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="flex items-center gap-2">
                       <Avatar className="h-7 w-7">
                         <AvatarFallback className="text-[10px]">{batch.mentorInitials}</AvatarFallback>
                       </Avatar>
-                      <span className="hidden text-sm text-muted-foreground sm:inline">{batch.mentor}</span>
+                      <span className="hidden text-xs text-muted-foreground sm:inline">{batch.mentor}</span>
                     </div>
-                    {expandedBatch === batch.id ? <ChevronUp className="h-5 w-5 text-muted-foreground" /> : <ChevronDown className="h-5 w-5 text-muted-foreground" />}
+                    {expandedBatch === batch.id ? (
+                      <ChevronUp className="h-4 w-4 shrink-0 text-muted-foreground" />
+                    ) : (
+                      <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground" />
+                    )}
                   </div>
                 </div>
               </div>
 
               {expandedBatch === batch.id && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                  className="border-t border-border"
-                >
-                  <div className="space-y-4 p-5">
-                    <div className="grid gap-4 sm:grid-cols-3">
-                      <div>
-                        <p className="mb-1 text-xs text-muted-foreground">Schedule</p>
-                        <p className="text-sm font-medium text-foreground">{batch.schedule}</p>
-                      </div>
-                      <div>
-                        <p className="mb-1 text-xs text-muted-foreground">Enrollment</p>
-                        <p className="text-sm font-medium text-foreground">{batch.studentsEnrolled} / {batch.maxCapacity} seats filled</p>
-                      </div>
-                      <div>
-                        <p className="mb-1 text-xs text-muted-foreground">Mentor</p>
-                        <p className="text-sm font-medium text-foreground">{batch.mentor}</p>
-                      </div>
-                    </div>
-                    <Separator />
+                <div className="border-t border-border pb-5">
+                  <div className="grid gap-4 py-5 sm:grid-cols-3">
                     <div>
-                      <h4 className="mb-3 text-sm font-semibold tracking-tight text-foreground">Enrolled Students</h4>
-                      {batch.studentList.length > 0 ? (
-                        <div className="flex flex-wrap gap-2">
-                          {batch.studentList.map((s, i) => (
-                            <div key={i} className="flex items-center gap-2 rounded-full bg-muted px-3 py-1.5 text-sm">
-                              <Avatar className="h-5 w-5">
-                                <AvatarFallback className="text-[8px]">{s.initials}</AvatarFallback>
-                              </Avatar>
-                              <span className="text-foreground">{s.name}</span>
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <p className="text-sm text-muted-foreground">No students enrolled yet</p>
-                      )}
+                      <p className="mb-1 text-xs text-muted-foreground">Schedule</p>
+                      <p className="text-sm font-medium text-foreground">{batch.schedule}</p>
                     </div>
-                    <div className="flex justify-end gap-2">
+                    <div>
+                      <p className="mb-1 text-xs text-muted-foreground">Enrollment</p>
+                      <p className="text-sm font-medium text-foreground">{batch.studentsEnrolled} / {batch.maxCapacity} seats filled</p>
+                    </div>
+                    <div>
+                      <p className="mb-1 text-xs text-muted-foreground">Mentor</p>
+                      <p className="text-sm font-medium text-foreground">{batch.mentor}</p>
+                    </div>
+                  </div>
+                  <Separator />
+                  <div className="pt-5">
+                    <h4 className="mb-3 text-sm font-semibold tracking-tight text-foreground">Enrolled Students</h4>
+                    {batch.studentList.length > 0 ? (
+                      <div className="flex flex-wrap gap-2">
+                        {batch.studentList.map((s, i) => (
+                          <div key={i} className="flex items-center gap-2 rounded-md border border-border px-2.5 py-1.5 text-sm">
+                            <Avatar className="h-5 w-5">
+                              <AvatarFallback className="text-[8px]">{s.initials}</AvatarFallback>
+                            </Avatar>
+                            <span className="text-foreground">{s.name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-sm text-muted-foreground">No students enrolled yet</p>
+                    )}
+                    <div className="mt-5 flex justify-end gap-2">
                       <Button variant="outline" size="sm">Edit Batch</Button>
                       {batch.status === "Active" && (
                         <Button variant="destructive" size="sm">End Batch</Button>
                       )}
                     </div>
                   </div>
-                </motion.div>
+                </div>
               )}
-            </CardContent>
-          </Card>
-        ))}
-      </motion.div>
-    </motion.div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }

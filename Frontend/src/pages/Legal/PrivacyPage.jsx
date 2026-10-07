@@ -1,12 +1,6 @@
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "../../components/ui/button";
-
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-};
 
 const sections = [
   {
@@ -72,48 +66,42 @@ const sections = [
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-background">
-      <section>
-        <div className="mx-auto max-w-3xl px-4 py-16 sm:py-24 lg:px-8">
-          <motion.div initial="hidden" animate="visible" variants={fadeIn}>
-            <Link
-              to="/"
-              className="mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Home
-            </Link>
+      <section className="py-20 sm:py-24">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Home
+          </Link>
+
+          <div className="mt-8">
             <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
               Legal
             </p>
-            <h1 className="mt-4 text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
+            <h1 className="mt-3 text-3xl font-semibold tracking-tight text-foreground">
               Privacy Policy
             </h1>
             <p className="mt-3 text-xs text-muted-foreground">
               Last updated: September 2026
             </p>
-          </motion.div>
-        </div>
-      </section>
+          </div>
 
-      <section className="border-y border-border bg-surface py-16 sm:py-24">
-        <div className="mx-auto max-w-3xl space-y-8 px-4 sm:px-6 lg:px-8">
-          {sections.map((section) => (
-            <motion.div
-              key={section.title}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeIn}
-            >
-              <h2 className="text-xl font-semibold tracking-tight text-foreground">
-                {section.title}
-              </h2>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {section.body}
-              </p>
-            </motion.div>
-          ))}
-          <div className="pt-4">
+          <div className="mt-10 space-y-8">
+            {sections.map((section) => (
+              <div key={section.title}>
+                <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+                  {section.title}
+                </h2>
+                <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                  {section.body}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10">
             <Button asChild>
               <Link to="/community">Questions? Visit the community</Link>
             </Button>

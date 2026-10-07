@@ -1,6 +1,3 @@
-import { motion } from "framer-motion";
-import { Award, Download, Eye, Calendar, Hash } from "lucide-react";
-import { Card, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 
@@ -25,94 +22,61 @@ const certificates = [
   },
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.1 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
-
 export default function CertificatesPage() {
   return (
-    <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item}>
+    <div className="space-y-10">
+      <div>
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">Your Certificates</h1>
-        <p className="text-sm text-muted-foreground mt-1">Certificates earned from completed courses</p>
-      </motion.div>
+        <p className="mt-1 text-sm text-muted-foreground">Certificates earned from completed courses</p>
+      </div>
 
       {certificates.length === 0 ? (
-        <motion.div variants={item}>
-          <Card>
-            <CardContent className="py-12 text-center">
-              <Award className="h-10 w-10 mx-auto mb-3 text-muted-foreground opacity-50" />
-              <p className="text-sm font-medium text-foreground">No Certificates Yet</p>
-              <p className="text-sm text-muted-foreground max-w-md mx-auto mt-1">
-                Complete your enrolled courses to earn certificates. Keep learning and you'll see them here!
-              </p>
-            </CardContent>
-          </Card>
-        </motion.div>
+        <div className="border-t border-border py-12 text-center">
+          <p className="text-sm font-medium text-foreground">No Certificates Yet</p>
+          <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">
+            Complete your enrolled courses to earn certificates. Keep learning and you'll see them here!
+          </p>
+        </div>
       ) : (
-        <motion.div className="grid gap-6 md:grid-cols-2" variants={item}>
+        <div>
           {certificates.map((cert) => (
-            <Card key={cert.id} className="overflow-hidden transition-colors hover:border-muted-foreground/40">
-              <div className="p-6 border-b">
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-md bg-muted text-muted-foreground">
-                      <Award className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-base font-semibold tracking-tight text-foreground">{cert.courseName}</h3>
-                      <p className="text-sm text-muted-foreground">by {cert.instructor}</p>
-                    </div>
+            <div key={cert.id} className="border-b border-border py-6">
+              <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <p className="text-sm font-medium text-foreground">{cert.courseName}</p>
+                    <Badge variant="success">{cert.grade}</Badge>
                   </div>
-                  <Badge variant="success" className="text-sm">{cert.grade}</Badge>
-                </div>
-              </div>
-              <CardContent className="p-6 space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                  <p className="mt-1 text-xs text-muted-foreground">by {cert.instructor}</p>
+
+                  <div className="mt-4 flex flex-wrap gap-x-10 gap-y-3">
                     <div>
                       <p className="text-xs text-muted-foreground">Completed</p>
-                      <p className="text-sm font-medium text-foreground">{cert.completionDate}</p>
+                      <p className="mt-0.5 text-sm font-medium text-foreground">{cert.completionDate}</p>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Hash className="h-4 w-4 text-muted-foreground" />
                     <div>
                       <p className="text-xs text-muted-foreground">Certificate ID</p>
-                      <p className="text-sm font-medium text-foreground font-mono text-xs">{cert.certificateId}</p>
+                      <p className="mt-0.5 font-mono text-xs text-foreground">{cert.certificateId}</p>
                     </div>
                   </div>
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground mb-2">Skills Acquired</p>
-                  <div className="flex flex-wrap gap-2">
+
+                  <div className="mt-4 flex flex-wrap items-center gap-2">
+                    <span className="mr-1 text-xs text-muted-foreground">Skills Acquired</span>
                     {cert.skills.map((skill) => (
                       <Badge key={skill} variant="secondary" className="text-xs">{skill}</Badge>
                     ))}
                   </div>
                 </div>
-                <div className="flex gap-3 pt-2">
-                  <Button className="flex-1">
-                    <Download className="h-4 w-4 mr-2" />
-                    Download
-                  </Button>
-                  <Button variant="outline" className="flex-1">
-                    <Eye className="h-4 w-4 mr-2" />
-                    View
-                  </Button>
+
+                <div className="flex shrink-0 gap-3">
+                  <Button className="flex-1">Download</Button>
+                  <Button variant="outline" className="flex-1">View</Button>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       )}
-    </motion.div>
+    </div>
   );
 }

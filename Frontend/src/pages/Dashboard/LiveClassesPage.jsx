@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Calendar, Clock, Video, Users, Play, CheckCircle2, Radio } from "lucide-react";
-import { Card, CardContent } from "../../components/ui/card";
+import { Play } from "lucide-react";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
@@ -82,16 +80,6 @@ const liveClasses = [
   },
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
-
 export default function LiveClassesPage() {
   const [activeTab, setActiveTab] = useState("upcoming");
 
@@ -102,87 +90,71 @@ export default function LiveClassesPage() {
   });
 
   return (
-    <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item}>
+    <div className="space-y-10">
+      <div>
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">Live Classes</h1>
-        <p className="text-sm text-muted-foreground mt-1">Join live sessions and watch recordings</p>
-      </motion.div>
+        <p className="mt-1 text-sm text-muted-foreground">Join live sessions and watch recordings</p>
+      </div>
 
-      <motion.div variants={item}>
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList>
-            <TabsTrigger value="upcoming">
-              <Radio className="h-4 w-4 mr-2" />
-              Upcoming ({liveClasses.filter((c) => c.status === "upcoming").length})
-            </TabsTrigger>
-            <TabsTrigger value="past">
-              <CheckCircle2 className="h-4 w-4 mr-2" />
-              Past ({liveClasses.filter((c) => c.status === "completed").length})
-            </TabsTrigger>
-            <TabsTrigger value="all">All ({liveClasses.length})</TabsTrigger>
-          </TabsList>
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
+        <TabsList className="flex-wrap gap-x-6 gap-y-2">
+          <TabsTrigger value="upcoming">
+            Upcoming ({liveClasses.filter((c) => c.status === "upcoming").length})
+          </TabsTrigger>
+          <TabsTrigger value="past">
+            Past ({liveClasses.filter((c) => c.status === "completed").length})
+          </TabsTrigger>
+          <TabsTrigger value="all">All ({liveClasses.length})</TabsTrigger>
+        </TabsList>
 
-          <TabsContent value={activeTab} className="mt-4">
-            <div className="space-y-4">
-              {filteredClasses.map((cls) => (
-                <Card key={cls.id} className="transition-colors hover:border-muted-foreground/40">
-                  <CardContent className="p-5">
-                    <div className="flex flex-col md:flex-row md:items-center gap-4">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground flex-shrink-0">
-                        <Video className="h-4 w-4" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-start justify-between gap-2">
-                          <div>
-                            <h3 className="text-sm font-semibold tracking-tight text-foreground">{cls.title}</h3>
-                            <p className="text-sm text-muted-foreground">{cls.course} · {cls.mentor}</p>
-                          </div>
-                          <Badge variant={cls.status === "upcoming" ? "default" : "secondary"}>
-                            {cls.status === "upcoming" ? "Upcoming" : "Completed"}
-                          </Badge>
-                        </div>
-                        <div className="mt-3 flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-                          <div className="flex items-center gap-1">
-                            <Calendar className="h-4 w-4" />
-                            {cls.date}
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Clock className="h-4 w-4" />
-                            {cls.time}
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Users className="h-4 w-4" />
-                            {cls.attendees} attendees
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex-shrink-0">
-                        {cls.status === "upcoming" ? (
-                          <Button size="sm">
-                            <Video className="h-4 w-4 mr-2" />
-                            Join Class
-                          </Button>
-                        ) : (
-                          <Button variant="outline" size="sm">
-                            <Play className="h-4 w-4 mr-2" />
-                            Watch Recording
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-              {filteredClasses.length === 0 && (
-                <div className="py-12 text-center">
-                  <Calendar className="h-10 w-10 mx-auto mb-3 text-muted-foreground opacity-50" />
-                  <p className="text-sm font-medium text-foreground">No classes to display</p>
+        <TabsContent value={activeTab} className="mt-4">
+          <div>
+            {filteredClasses.map((cls) => (
+              <div
+                key={cls.id}
+                className="flex flex-col gap-3 border-b border-border py-5 sm:flex-row sm:items-start sm:gap-8"
+              >
+                <div className="w-full shrink-0 sm:w-36">
+                  <p className="text-xs text-muted-foreground">{cls.date}</p>
+                  <p className="mt-0.5 font-mono text-xs text-muted-foreground">{cls.time}</p>
                 </div>
-              )}
-            </div>
-          </TabsContent>
-        </Tabs>
-      </motion.div>
-    </motion.div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-foreground">{cls.title}</p>
+                      <p className="mt-0.5 text-xs text-muted-foreground">
+                        {cls.course} · {cls.mentor}
+                      </p>
+                    </div>
+                    <Badge
+                      variant={cls.status === "upcoming" ? "default" : "success"}
+                      className="shrink-0"
+                    >
+                      {cls.status === "upcoming" ? "Upcoming" : "Completed"}
+                    </Badge>
+                  </div>
+                  <p className="mt-2 text-xs text-muted-foreground">{cls.attendees} attendees</p>
+                </div>
+                <div className="shrink-0">
+                  {cls.status === "upcoming" ? (
+                    <Button size="sm">Join Class</Button>
+                  ) : (
+                    <Button variant="outline" size="sm">
+                      <Play className="h-3.5 w-3.5" />
+                      Watch Recording
+                    </Button>
+                  )}
+                </div>
+              </div>
+            ))}
+            {filteredClasses.length === 0 && (
+              <p className="py-12 text-center text-sm text-muted-foreground">
+                No classes to display
+              </p>
+            )}
+          </div>
+        </TabsContent>
+      </Tabs>
+    </div>
   );
 }

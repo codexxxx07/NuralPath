@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   Search,
   ChevronLeft,
@@ -8,11 +7,7 @@ import {
   Ban,
   Trash2,
   X,
-  Mail,
-  Calendar,
-  Shield,
 } from "lucide-react";
-import { Card, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -35,16 +30,6 @@ const allUsers = [
   { id: 12, name: "Deepak Rao", email: "deepak.r@email.com", role: "Student", status: "Inactive", joinDate: "Aug 5, 2026", initials: "DR", course: "DevOps Bootcamp", phone: "+91 87612 34568" },
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.05 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-};
-
 export default function AdminUsersPage() {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
@@ -62,15 +47,15 @@ export default function AdminUsersPage() {
   const paginated = filtered.slice((page - 1) * perPage, page * perPage);
 
   return (
-    <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item} className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div className="mx-auto max-w-6xl space-y-10">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">User Management</h1>
           <p className="mt-1 text-sm text-muted-foreground">{allUsers.length} registered users</p>
         </div>
-      </motion.div>
+      </div>
 
-      <motion.div variants={item} className="flex flex-col gap-3 sm:flex-row">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
@@ -88,111 +73,103 @@ export default function AdminUsersPage() {
             <TabsTrigger value="Admin">Admins</TabsTrigger>
           </TabsList>
         </Tabs>
-      </motion.div>
+      </div>
 
-      <motion.div variants={item} className="hidden md:block">
-        <Card>
-          <CardContent className="p-0">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">User</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">Role</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">Status</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">Join Date</th>
-                    <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-muted-foreground">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-border">
-                  {paginated.map((user) => (
-                    <tr key={user.id} className="transition-colors hover:bg-muted/50">
-                      <td className="px-4 py-3">
-                        <div className="flex items-center gap-3">
-                          <Avatar className="h-9 w-9">
-                            <AvatarFallback className="text-xs">{user.initials}</AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <p className="text-sm font-medium text-foreground">{user.name}</p>
-                            <p className="text-xs text-muted-foreground">{user.email}</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-4 py-3">
-                        <Badge variant={user.role === "Admin" ? "default" : user.role === "Mentor" ? "secondary" : "outline"}>
-                          {user.role}
-                        </Badge>
-                      </td>
-                      <td className="px-4 py-3">
-                        <Badge variant={user.status === "Active" ? "success" : user.status === "Suspended" ? "destructive" : "secondary"}>
-                          {user.status}
-                        </Badge>
-                      </td>
-                      <td className="px-4 py-3 text-sm text-muted-foreground">{user.joinDate}</td>
-                      <td className="px-4 py-3">
-                        <div className="flex items-center justify-end gap-1">
-                          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setSelectedUser(user)}>
-                            <Edit className="h-4 w-4" />
-                          </Button>
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
-                            <Ban className="h-4 w-4" />
-                          </Button>
-                          <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive">
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
-
-      <motion.div variants={item} className="space-y-3 md:hidden">
-        {paginated.map((user) => (
-          <Card key={user.id}>
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <Avatar className="h-10 w-10">
-                  <AvatarFallback className="text-xs">{user.initials}</AvatarFallback>
-                </Avatar>
-                <div className="min-w-0 flex-1">
-                  <p className="font-medium text-foreground">{user.name}</p>
-                  <p className="truncate text-xs text-muted-foreground">{user.email}</p>
-                </div>
-                <Badge variant={user.status === "Active" ? "success" : user.status === "Suspended" ? "destructive" : "secondary"}>
-                  {user.status}
-                </Badge>
-              </div>
-              <div className="mt-3 flex items-center justify-between">
-                <div className="flex items-center gap-2">
+      <div className="hidden overflow-x-auto rounded-lg border border-border md:block">
+        <table className="w-full">
+          <thead>
+            <tr>
+              <th className="border-b border-border px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">User</th>
+              <th className="border-b border-border px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">Role</th>
+              <th className="border-b border-border px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">Status</th>
+              <th className="border-b border-border px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">Join Date</th>
+              <th className="border-b border-border px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-muted-foreground">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paginated.map((user) => (
+              <tr key={user.id} className="border-b border-border transition-colors last:border-b-0 hover:bg-muted/40">
+                <td className="px-4 py-3">
+                  <div className="flex items-center gap-3">
+                    <Avatar className="h-9 w-9">
+                      <AvatarFallback className="text-xs">{user.initials}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="text-sm font-medium text-foreground">{user.name}</p>
+                      <p className="text-xs text-muted-foreground">{user.email}</p>
+                    </div>
+                  </div>
+                </td>
+                <td className="px-4 py-3">
                   <Badge variant={user.role === "Admin" ? "default" : user.role === "Mentor" ? "secondary" : "outline"}>
                     {user.role}
                   </Badge>
-                  <span className="text-xs text-muted-foreground">{user.joinDate}</span>
-                </div>
-                <div className="flex gap-1">
-                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setSelectedUser(user)}>
-                    <Edit className="h-4 w-4" />
-                  </Button>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <Ban className="h-4 w-4" />
-                  </Button>
-                  <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive">
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
+                </td>
+                <td className="px-4 py-3">
+                  <Badge variant={user.status === "Active" ? "success" : user.status === "Suspended" ? "destructive" : "secondary"}>
+                    {user.status}
+                  </Badge>
+                </td>
+                <td className="px-4 py-3 text-sm text-muted-foreground">{user.joinDate}</td>
+                <td className="px-4 py-3">
+                  <div className="flex items-center justify-end gap-1">
+                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setSelectedUser(user)}>
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                      <Ban className="h-4 w-4" />
+                    </Button>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive">
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="md:hidden">
+        {paginated.map((user) => (
+          <div key={user.id} className="border-b border-border py-4">
+            <div className="flex items-center gap-3">
+              <Avatar className="h-9 w-9">
+                <AvatarFallback className="text-xs">{user.initials}</AvatarFallback>
+              </Avatar>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-medium text-foreground">{user.name}</p>
+                <p className="truncate text-xs text-muted-foreground">{user.email}</p>
               </div>
-            </CardContent>
-          </Card>
+              <Badge variant={user.status === "Active" ? "success" : user.status === "Suspended" ? "destructive" : "secondary"}>
+                {user.status}
+              </Badge>
+            </div>
+            <div className="mt-3 flex items-center justify-between gap-3">
+              <div className="flex min-w-0 items-center gap-2">
+                <Badge variant={user.role === "Admin" ? "default" : user.role === "Mentor" ? "secondary" : "outline"}>
+                  {user.role}
+                </Badge>
+                <span className="truncate text-xs text-muted-foreground">{user.joinDate}</span>
+              </div>
+              <div className="flex shrink-0 gap-1">
+                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setSelectedUser(user)}>
+                  <Edit className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="icon" className="h-8 w-8">
+                  <Ban className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive">
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          </div>
         ))}
-      </motion.div>
+      </div>
 
       {totalPages > 1 && (
-        <motion.div variants={item} className="flex items-center justify-center gap-4">
+        <div className="flex items-center justify-center gap-4">
           <Button variant="outline" size="sm" disabled={page === 1} onClick={() => setPage(page - 1)}>
             <ChevronLeft className="h-4 w-4 mr-1" /> Previous
           </Button>
@@ -202,15 +179,13 @@ export default function AdminUsersPage() {
           <Button variant="outline" size="sm" disabled={page === totalPages} onClick={() => setPage(page + 1)}>
             Next <ChevronRight className="h-4 w-4 ml-1" />
           </Button>
-        </motion.div>
+        </div>
       )}
 
       {selectedUser && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={() => setSelectedUser(null)}>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="w-full max-w-md rounded-lg border border-border bg-card p-6 shadow-lg"
+          <div
+            className="w-full max-w-md rounded-lg border border-border bg-background p-6 shadow-lg"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="mb-4 flex items-center justify-between">
@@ -223,37 +198,34 @@ export default function AdminUsersPage() {
               <Avatar className="h-14 w-14">
                 <AvatarFallback className="text-lg">{selectedUser.initials}</AvatarFallback>
               </Avatar>
-              <div>
+              <div className="min-w-0">
                 <h3 className="font-semibold text-foreground">{selectedUser.name}</h3>
-                <p className="text-sm text-muted-foreground">{selectedUser.email}</p>
+                <p className="truncate text-sm text-muted-foreground">{selectedUser.email}</p>
               </div>
             </div>
             <Separator className="mb-4" />
             <div className="space-y-3">
-              <div className="flex items-center gap-3 text-sm">
-                <Shield className="h-4 w-4 text-muted-foreground" />
-                <span className="text-muted-foreground">Role:</span>
+              <div className="flex items-center justify-between gap-4 text-sm">
+                <span className="text-muted-foreground">Role</span>
                 <span className="font-medium text-foreground">{selectedUser.role}</span>
               </div>
-              <div className="flex items-center gap-3 text-sm">
-                <Mail className="h-4 w-4 text-muted-foreground" />
-                <span className="text-muted-foreground">Email:</span>
-                <span className="font-medium text-foreground">{selectedUser.email}</span>
+              <div className="flex items-center justify-between gap-4 text-sm">
+                <span className="text-muted-foreground">Email</span>
+                <span className="truncate font-medium text-foreground">{selectedUser.email}</span>
               </div>
-              <div className="flex items-center gap-3 text-sm">
-                <Calendar className="h-4 w-4 text-muted-foreground" />
-                <span className="text-muted-foreground">Joined:</span>
+              <div className="flex items-center justify-between gap-4 text-sm">
+                <span className="text-muted-foreground">Joined</span>
                 <span className="font-medium text-foreground">{selectedUser.joinDate}</span>
               </div>
-              <div className="flex items-center gap-3 text-sm">
-                <span className="text-muted-foreground">Status:</span>
+              <div className="flex items-center justify-between gap-4 text-sm">
+                <span className="text-muted-foreground">Status</span>
                 <Badge variant={selectedUser.status === "Active" ? "success" : selectedUser.status === "Suspended" ? "destructive" : "secondary"}>
                   {selectedUser.status}
                 </Badge>
               </div>
-              <div className="flex items-center gap-3 text-sm">
-                <span className="text-muted-foreground">Course:</span>
-                <span className="font-medium text-foreground">{selectedUser.course}</span>
+              <div className="flex items-center justify-between gap-4 text-sm">
+                <span className="text-muted-foreground">Course</span>
+                <span className="truncate font-medium text-foreground">{selectedUser.course}</span>
               </div>
             </div>
             <Separator className="my-4" />
@@ -261,9 +233,9 @@ export default function AdminUsersPage() {
               <Button className="flex-1">Edit User</Button>
               <Button variant="outline" className="flex-1">Send Email</Button>
             </div>
-          </motion.div>
+          </div>
         </div>
       )}
-    </motion.div>
+    </div>
   );
 }

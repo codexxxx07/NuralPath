@@ -1,15 +1,12 @@
-import { motion } from "framer-motion";
-import { BookOpen, Users, FileCheck, Video, TrendingUp } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Progress } from "../../components/ui/progress";
 
 const stats = [
-  { label: "Active Courses", value: "3", icon: BookOpen },
-  { label: "Total Students", value: "148", icon: Users },
-  { label: "Pending Submissions", value: "12", icon: FileCheck },
-  { label: "Live Classes This Week", value: "4", icon: Video },
+  { label: "Active Courses", value: "3" },
+  { label: "Total Students", value: "148" },
+  { label: "Pending Submissions", value: "12" },
+  { label: "Live Classes This Week", value: "4" },
 ];
 
 const upcomingClasses = [
@@ -31,138 +28,106 @@ const engagementData = [
   { course: "C Programming Deep Dive", students: 48, completion: 56, avgScore: 75 },
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
-
 export default function MentorDashboardPage() {
   return (
-    <motion.div className="space-y-8" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item}>
+    <div className="max-w-6xl space-y-12">
+      <div>
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">Mentor Dashboard</h1>
-        <p className="text-sm text-muted-foreground mt-1">Welcome back, Rahul Sharma</p>
-      </motion.div>
-
-      <motion.div className="grid grid-cols-2 lg:grid-cols-4 gap-4" variants={item}>
-        {stats.map((stat) => (
-          <Card key={stat.label}>
-            <CardContent className="p-5">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-2xl font-semibold text-foreground">{stat.value}</p>
-                  <p className="text-sm text-muted-foreground">{stat.label}</p>
-                </div>
-                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground">
-                  <stat.icon className="h-4 w-4" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </motion.div>
-
-      <div className="grid lg:grid-cols-2 gap-6">
-        <motion.div variants={item}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-base font-semibold tracking-tight">
-                <Video className="h-4 w-4 text-muted-foreground" />
-                Upcoming Live Classes
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {upcomingClasses.map((cls) => (
-                <div key={cls.id} className="flex items-start gap-3 p-3 rounded-md bg-muted">
-                  <div className="text-center min-w-[48px]">
-                    <p className="text-xs text-muted-foreground">{cls.date.split(",")[0]}</p>
-                    <p className="text-sm font-semibold text-foreground">{cls.date.split(",")[1]?.trim()}</p>
-                    <p className="text-xs text-primary">{cls.time}</p>
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-medium text-foreground text-sm">{cls.topic}</p>
-                    <p className="text-xs text-muted-foreground">{cls.course} · {cls.students} students</p>
-                  </div>
-                  <Button size="sm" variant="outline">
-                    Start
-                  </Button>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        <motion.div variants={item}>
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-base font-semibold tracking-tight">
-                <FileCheck className="h-4 w-4 text-muted-foreground" />
-                Recent Submissions
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {recentSubmissions.map((sub) => (
-                <div key={sub.id} className="flex items-center justify-between p-3 rounded-md bg-muted">
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-foreground text-sm">{sub.student}</p>
-                    <p className="text-xs text-muted-foreground truncate">{sub.assignment} · {sub.course}</p>
-                  </div>
-                  <div className="flex items-center gap-2 ml-3">
-                    <Badge variant={sub.status === "Pending" ? "secondary" : "success"}>
-                      {sub.status}
-                    </Badge>
-                    <span className="text-xs text-muted-foreground whitespace-nowrap">{sub.submitted}</span>
-                  </div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-        </motion.div>
+        <p className="mt-1 text-sm text-muted-foreground">Welcome back, Rahul Sharma</p>
       </div>
 
-      <motion.div variants={item}>
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-base font-semibold tracking-tight">
-              <TrendingUp className="h-4 w-4 text-muted-foreground" />
-              Student Engagement Summary
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-4">
-              {engagementData.map((eng) => (
-                <div key={eng.course} className="p-4 rounded-md border border-border">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-sm font-medium text-foreground">{eng.course}</h3>
-                    <span className="text-sm text-muted-foreground">{eng.students} students</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <div className="flex items-center justify-between text-sm mb-1">
-                        <span className="text-muted-foreground">Completion</span>
-                        <span className="font-medium text-foreground">{eng.completion}%</span>
-                      </div>
-                      <Progress value={eng.completion} className="h-2" />
-                    </div>
-                    <div>
-                      <div className="flex items-center justify-between text-sm mb-1">
-                        <span className="text-muted-foreground">Avg Score</span>
-                        <span className="font-medium text-foreground">{eng.avgScore}%</span>
-                      </div>
-                      <Progress value={eng.avgScore} className="h-2" />
-                    </div>
-                  </div>
+      {/* Stats */}
+      <div className="grid grid-cols-2 border-t border-border sm:grid-cols-4">
+        {stats.map((stat) => (
+          <div key={stat.label} className="border-b border-border py-5 pr-6 sm:border-b-0">
+            <p className="text-2xl font-semibold tracking-tight text-foreground">{stat.value}</p>
+            <p className="mt-1 text-sm text-muted-foreground">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="grid gap-12 lg:grid-cols-2">
+        {/* Upcoming Live Classes */}
+        <section>
+          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+            Upcoming Live Classes
+          </h2>
+          <div>
+            {upcomingClasses.map((cls) => (
+              <div key={cls.id} className="flex items-start gap-4 border-b border-border py-4">
+                <div className="w-24 shrink-0">
+                  <p className="text-xs text-muted-foreground">{cls.date.split(",")[0]}</p>
+                  <p className="mt-0.5 font-mono text-xs text-muted-foreground">{cls.date.split(",")[1]?.trim()}</p>
+                  <p className="mt-0.5 font-mono text-xs text-muted-foreground">{cls.time}</p>
                 </div>
-              ))}
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-medium text-foreground">{cls.topic}</p>
+                  <p className="mt-0.5 text-xs text-muted-foreground">{cls.course} · {cls.students} students</p>
+                </div>
+                <Button size="sm" variant="outline" className="shrink-0">
+                  Start
+                </Button>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Recent Submissions */}
+        <section>
+          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+            Recent Submissions
+          </h2>
+          <div>
+            {recentSubmissions.map((sub) => (
+              <div key={sub.id} className="flex items-start justify-between gap-4 border-b border-border py-4">
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-medium text-foreground">{sub.student}</p>
+                  <p className="mt-0.5 truncate text-xs text-muted-foreground">{sub.assignment} · {sub.course}</p>
+                </div>
+                <div className="flex shrink-0 items-center gap-3">
+                  <span className="text-xs text-muted-foreground">{sub.submitted}</span>
+                  <Badge variant={sub.status === "Pending" ? "secondary" : "success"}>
+                    {sub.status}
+                  </Badge>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+
+      {/* Student Engagement Summary */}
+      <section>
+        <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          Student Engagement Summary
+        </h2>
+        <div>
+          {engagementData.map((eng) => (
+            <div key={eng.course} className="border-b border-border py-5">
+              <div className="flex items-baseline justify-between gap-4">
+                <p className="text-sm font-medium text-foreground">{eng.course}</p>
+                <p className="text-xs text-muted-foreground">{eng.students} students</p>
+              </div>
+              <div className="mt-3 grid gap-3 sm:grid-cols-2 sm:gap-8">
+                <div className="flex items-center gap-3">
+                  <span className="w-20 shrink-0 text-xs text-muted-foreground">Completion</span>
+                  <Progress value={eng.completion} className="flex-1" />
+                  <span className="w-10 shrink-0 text-right font-mono text-xs text-muted-foreground">
+                    {eng.completion}%
+                  </span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="w-20 shrink-0 text-xs text-muted-foreground">Avg Score</span>
+                  <Progress value={eng.avgScore} className="flex-1" />
+                  <span className="w-10 shrink-0 text-right font-mono text-xs text-muted-foreground">
+                    {eng.avgScore}%
+                  </span>
+                </div>
+              </div>
             </div>
-          </CardContent>
-        </Card>
-      </motion.div>
-    </motion.div>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }
