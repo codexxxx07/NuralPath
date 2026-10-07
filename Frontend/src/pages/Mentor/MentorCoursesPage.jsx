@@ -94,70 +94,72 @@ export default function MentorCoursesPage() {
             <h2 className="text-base font-semibold tracking-tight text-foreground">Create New Course</h2>
             <p className="mt-1 text-xs text-muted-foreground">Fill in the details to create a new course</p>
           </div>
-          <div className="space-y-4 pt-5">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="card-depth mt-5 p-5 sm:p-6">
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label>Course Title</Label>
+                  <Input
+                    placeholder="e.g., Docker Essentials"
+                    value={newCourse.title}
+                    onChange={(e) => setNewCourse({ ...newCourse, title: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Category</Label>
+                  <Select value={newCourse.category} onValueChange={(val) => setNewCourse({ ...newCourse, category: val })}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Programming">Programming</SelectItem>
+                      <SelectItem value="Operating Systems">Operating Systems</SelectItem>
+                      <SelectItem value="DevOps">DevOps</SelectItem>
+                      <SelectItem value="Data Science">Data Science</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
               <div className="space-y-2">
-                <Label>Course Title</Label>
-                <Input
-                  placeholder="e.g., Docker Essentials"
-                  value={newCourse.title}
-                  onChange={(e) => setNewCourse({ ...newCourse, title: e.target.value })}
+                <Label>Description</Label>
+                <Textarea
+                  placeholder="Describe what students will learn in this course..."
+                  rows={3}
+                  value={newCourse.description}
+                  onChange={(e) => setNewCourse({ ...newCourse, description: e.target.value })}
                 />
               </div>
               <div className="space-y-2">
-                <Label>Category</Label>
-                <Select value={newCourse.category} onValueChange={(val) => setNewCourse({ ...newCourse, category: val })}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select category" />
+                <Label>Difficulty</Label>
+                <Select value={newCourse.difficulty} onValueChange={(val) => setNewCourse({ ...newCourse, difficulty: val })}>
+                  <SelectTrigger className="w-[200px]">
+                    <SelectValue placeholder="Select difficulty" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Programming">Programming</SelectItem>
-                    <SelectItem value="Operating Systems">Operating Systems</SelectItem>
-                    <SelectItem value="DevOps">DevOps</SelectItem>
-                    <SelectItem value="Data Science">Data Science</SelectItem>
+                    <SelectItem value="Beginner">Beginner</SelectItem>
+                    <SelectItem value="Intermediate">Intermediate</SelectItem>
+                    <SelectItem value="Advanced">Advanced</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
-            </div>
-            <div className="space-y-2">
-              <Label>Description</Label>
-              <Textarea
-                placeholder="Describe what students will learn in this course..."
-                rows={3}
-                value={newCourse.description}
-                onChange={(e) => setNewCourse({ ...newCourse, description: e.target.value })}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label>Difficulty</Label>
-              <Select value={newCourse.difficulty} onValueChange={(val) => setNewCourse({ ...newCourse, difficulty: val })}>
-                <SelectTrigger className="w-[200px]">
-                  <SelectValue placeholder="Select difficulty" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Beginner">Beginner</SelectItem>
-                  <SelectItem value="Intermediate">Intermediate</SelectItem>
-                  <SelectItem value="Advanced">Advanced</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="flex justify-end gap-3">
-              <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
-              <Button onClick={handleCreate}>Create Course</Button>
+              <div className="flex justify-end gap-3">
+                <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
+                <Button onClick={handleCreate}>Create Course</Button>
+              </div>
             </div>
           </div>
         </section>
       )}
 
       <section>
-        <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+        <h2 className="pb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
           Courses
         </h2>
-        <div>
-          {courses.map((course) => (
+        <div className="card-depth">
+          {courses.map((course, idx) => (
             <div
               key={course.id}
-              className="flex flex-col gap-3 border-b border-border py-5 sm:flex-row sm:items-start sm:gap-8"
+              className={`flex flex-col gap-3 px-4 py-5 sm:flex-row sm:items-start sm:gap-8 sm:px-5 ${idx !== courses.length - 1 ? "border-b border-border" : ""}`}
             >
               <div className="min-w-0 flex-1">
                 <div className="flex items-start justify-between gap-4">

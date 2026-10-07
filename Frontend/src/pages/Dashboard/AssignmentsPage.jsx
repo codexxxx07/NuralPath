@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { FileText } from "lucide-react";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
@@ -105,8 +107,8 @@ export default function AssignmentsPage() {
   return (
     <div className="space-y-10">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Assignments</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Complete assignments and track your submissions</p>
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">Assignments</h1>
+        <p className="mt-1.5 text-sm text-muted-foreground">Complete assignments and track your submissions</p>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
@@ -123,69 +125,102 @@ export default function AssignmentsPage() {
         </TabsList>
 
         <TabsContent value={activeTab} className="mt-4">
-          <div>
-            {filteredAssignments.map((assignment) => {
-              const config = statusConfig[assignment.status];
-              return (
-                <div
-                  key={assignment.id}
-                  className="flex flex-col gap-3 border-b border-border py-5 sm:flex-row sm:items-start sm:gap-8"
-                >
-                  <div className="w-28 shrink-0">
-                    <p className="text-xs text-muted-foreground">Due</p>
-                    <p className="mt-0.5 text-xs font-medium text-foreground">{assignment.dueDate}</p>
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="min-w-0">
-                        <p className="text-sm font-medium text-foreground">{assignment.title}</p>
-                        <p className="mt-0.5 text-xs text-muted-foreground">{assignment.course}</p>
-                      </div>
-                      <Badge
-                        variant={
-                          assignment.status === "graded"
-                            ? "success"
-                            : assignment.status === "submitted"
-                            ? "secondary"
-                            : "outline"
-                        }
-                        className="shrink-0"
-                      >
-                        {config.label}
-                      </Badge>
-                    </div>
-                    <p className="mt-2 text-sm text-muted-foreground">{assignment.description}</p>
-                    <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-xs text-muted-foreground">
-                      {assignment.submittedDate && (
-                        <span>Submitted {assignment.submittedDate}</span>
-                      )}
-                      <span>{assignment.xp} XP</span>
-                      {assignment.grade && (
-                        <span className="font-medium text-foreground">
-                          Grade {assignment.grade}%
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <div className="shrink-0">
-                    {assignment.status === "pending" && (
-                      <Button size="sm">Submit</Button>
-                    )}
-                    {assignment.status === "graded" && (
-                      <Button variant="outline" size="sm">
-                        View Feedback
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-            {filteredAssignments.length === 0 && (
-              <p className="py-12 text-center text-sm text-muted-foreground">
-                No assignments to display
+          {filteredAssignments.length === 0 ? (
+            <div className="py-16 text-center">
+              <FileText className="mx-auto h-8 w-8 text-muted-foreground" />
+              <p className="mt-4 text-sm font-medium text-foreground">No assignments to display</p>
+              <p className="mx-auto mt-1.5 max-w-sm text-sm text-muted-foreground">
+                Assignments for this view will appear here as they are released.
               </p>
-            )}
-          </div>
+              <Button variant="outline" asChild className="mt-5">
+                <Link to="/courses">Explore Courses</Link>
+              </Button>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[720px] border-collapse text-left">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th scope="col" className="py-3 pr-6 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      Assignment
+                    </th>
+                    <th scope="col" className="py-3 pr-6 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      Due
+                    </th>
+                    <th scope="col" className="py-3 pr-6 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      Status
+                    </th>
+                    <th scope="col" className="py-3 pr-6 text-right text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      XP
+                    </th>
+                    <th scope="col" className="py-3 text-right text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredAssignments.map((assignment) => {
+                    const config = statusConfig[assignment.status];
+                    return (
+                      <tr
+                        key={assignment.id}
+                        className="table-row border-b border-border align-top"
+                      >
+                        <td className="py-4 pr-6">
+                          <p className="text-sm font-medium text-foreground">{assignment.title}</p>
+                          <p className="mt-0.5 text-xs text-muted-foreground">{assignment.course}</p>
+                          <p className="mt-1.5 max-w-md text-sm text-muted-foreground">
+                            {assignment.description}
+                          </p>
+                          <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                            {assignment.submittedDate && (
+                              <span>Submitted {assignment.submittedDate}</span>
+                            )}
+                            {assignment.grade && (
+                              <span className="font-medium text-foreground">
+                                Grade {assignment.grade}%
+                              </span>
+                            )}
+                          </div>
+                        </td>
+                        <td className="whitespace-nowrap py-4 pr-6">
+                          <span className="font-mono text-xs text-muted-foreground">
+                            {assignment.dueDate}
+                          </span>
+                        </td>
+                        <td className="py-4 pr-6">
+                          <Badge
+                            variant={
+                              assignment.status === "graded"
+                                ? "success"
+                                : assignment.status === "submitted"
+                                ? "secondary"
+                                : "outline"
+                            }
+                          >
+                            {config.label}
+                          </Badge>
+                        </td>
+                        <td className="py-4 pr-6 text-right font-mono text-xs tabular-nums text-muted-foreground">
+                          {assignment.xp}
+                        </td>
+                        <td className="py-4 text-right">
+                          {assignment.status === "pending" && (
+                            <Button size="sm">Submit</Button>
+                          )}
+                          {assignment.status === "graded" && (
+                            <Button variant="outline" size="sm">
+                              View Feedback
+                            </Button>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
         </TabsContent>
       </Tabs>
     </div>

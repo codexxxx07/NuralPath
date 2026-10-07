@@ -32,29 +32,34 @@ export default function MentorDashboardPage() {
   return (
     <div className="max-w-6xl space-y-12">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Mentor Dashboard</h1>
+        <h1 className="text-lg font-semibold tracking-tight text-foreground">Mentor Dashboard</h1>
         <p className="mt-1 text-sm text-muted-foreground">Welcome back, Rahul Sharma</p>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 border-t border-border sm:grid-cols-4">
-        {stats.map((stat) => (
-          <div key={stat.label} className="border-b border-border py-5 pr-6 sm:border-b-0">
-            <p className="text-2xl font-semibold tracking-tight text-foreground">{stat.value}</p>
-            <p className="mt-1 text-sm text-muted-foreground">{stat.label}</p>
-          </div>
-        ))}
+      <div className="card-depth p-6">
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+          {stats.map((stat) => (
+            <div key={stat.label}>
+              <p className="text-2xl/3xl font-semibold tracking-tight text-foreground">{stat.value}</p>
+              <p className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">{stat.label}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="grid gap-12 lg:grid-cols-2">
         {/* Upcoming Live Classes */}
         <section>
-          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          <h2 className="pb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Upcoming Live Classes
           </h2>
-          <div>
-            {upcomingClasses.map((cls) => (
-              <div key={cls.id} className="flex items-start gap-4 border-b border-border py-4">
+          <div className="card-depth">
+            {upcomingClasses.map((cls, idx) => (
+              <div
+                key={cls.id}
+                className={`flex items-start gap-4 px-4 py-4 sm:px-5 ${idx !== upcomingClasses.length - 1 ? "border-b border-border" : ""}`}
+              >
                 <div className="w-24 shrink-0">
                   <p className="text-xs text-muted-foreground">{cls.date.split(",")[0]}</p>
                   <p className="mt-0.5 font-mono text-xs text-muted-foreground">{cls.date.split(",")[1]?.trim()}</p>
@@ -74,12 +79,15 @@ export default function MentorDashboardPage() {
 
         {/* Recent Submissions */}
         <section>
-          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          <h2 className="pb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Recent Submissions
           </h2>
-          <div>
-            {recentSubmissions.map((sub) => (
-              <div key={sub.id} className="flex items-start justify-between gap-4 border-b border-border py-4">
+          <div className="card-depth">
+            {recentSubmissions.map((sub, idx) => (
+              <div
+                key={sub.id}
+                className={`flex items-start justify-between gap-4 px-4 py-4 sm:px-5 ${idx !== recentSubmissions.length - 1 ? "border-b border-border" : ""}`}
+              >
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium text-foreground">{sub.student}</p>
                   <p className="mt-0.5 truncate text-xs text-muted-foreground">{sub.assignment} · {sub.course}</p>
@@ -98,12 +106,15 @@ export default function MentorDashboardPage() {
 
       {/* Student Engagement Summary */}
       <section>
-        <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+        <h2 className="pb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
           Student Engagement Summary
         </h2>
-        <div>
-          {engagementData.map((eng) => (
-            <div key={eng.course} className="border-b border-border py-5">
+        <div className="card-depth">
+          {engagementData.map((eng, idx) => (
+            <div
+              key={eng.course}
+              className={`px-4 py-5 sm:px-5 ${idx !== engagementData.length - 1 ? "border-b border-border" : ""}`}
+            >
               <div className="flex items-baseline justify-between gap-4">
                 <p className="text-sm font-medium text-foreground">{eng.course}</p>
                 <p className="text-xs text-muted-foreground">{eng.students} students</p>

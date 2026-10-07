@@ -72,7 +72,7 @@ export default function ContactPage() {
       </section>
 
       {/* Channels */}
-      <section className="border-y border-border bg-surface py-20 sm:py-24">
+      <section className="border-y border-border bg-surface py-24 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-x-12 sm:grid-cols-2">
             {contactChannels.map((channel) => (
@@ -85,10 +85,10 @@ export default function ContactPage() {
                 </p>
                 <Link
                   to={channel.to}
-                  className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
+                  className="group mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary transition-colors duration-200 hover:underline"
                 >
                   {channel.action}
-                  <ArrowRight className="h-3.5 w-3.5" />
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
                 </Link>
               </div>
             ))}
@@ -97,22 +97,20 @@ export default function ContactPage() {
       </section>
 
       {/* Form + info */}
-      <section className="py-20 sm:py-24">
+      <section className="py-24 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-12 lg:grid-cols-[1fr_420px]">
             {/* Form */}
-            <div>
-              <div className="border-b border-border pb-3">
-                <h2 className="text-base font-semibold tracking-tight text-foreground">
-                  Send a Message
-                </h2>
-              </div>
-              <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
+            <div className="card-depth p-6 sm:p-8">
+              <h2 className="text-lg font-semibold tracking-tight text-foreground">
+                Send a Message
+              </h2>
+              <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
                 Tell us what you need — help with a course, feedback, or collaborating on a project.
               </p>
 
               {submitted ? (
-                <div className="mt-8 border-t border-border pt-8">
+                <div className="mt-6 animate-fade-in">
                   <h3 className="text-base font-semibold tracking-tight text-foreground">
                     Message noted
                   </h3>
@@ -131,7 +129,7 @@ export default function ContactPage() {
                   </div>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="mt-8 space-y-5 border-t border-border pt-8">
+                <form onSubmit={handleSubmit} className="mt-6 space-y-5">
                   <div className="grid gap-5 sm:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="name">Your name</Label>
@@ -185,11 +183,11 @@ export default function ContactPage() {
 
             {/* Info side */}
             <div className="space-y-5">
-              <div className="border-t border-border py-5">
-                <h3 className="text-sm font-medium text-foreground">
+              <div className="card-depth-flat p-6">
+                <h3 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
                   Community-first support
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-2.5 text-sm leading-relaxed text-foreground">
                   Doubts are answered fastest by the student community. Post your question
                   on the community page and mentors or peers will usually respond quickly.
                 </p>
@@ -198,22 +196,22 @@ export default function ContactPage() {
                 </Button>
               </div>
 
-              <div className="border-t border-border py-5">
-                <h3 className="text-sm font-medium text-foreground">
+              <div className="card-depth-flat p-6">
+                <h3 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
                   Want to collaborate?
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-2.5 text-sm leading-relaxed text-foreground">
                   If you're building a project, contributing to open source, or running a
                   study circle, introduce yourself in the community. Collaboration is how
                   this community grows.
                 </p>
               </div>
 
-              <div className="border-t border-border py-5">
-                <h3 className="text-sm font-medium text-foreground">
+              <div className="card-depth-flat p-6">
+                <h3 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
                   What happens next?
                 </h3>
-                <ul className="mt-2 space-y-2 text-sm text-muted-foreground">
+                <ul className="mt-2.5 space-y-2 text-sm leading-relaxed text-foreground">
                   <li>
                     A team member reads every message.
                     {""} A dedicated contact inbox is on the roadmap.

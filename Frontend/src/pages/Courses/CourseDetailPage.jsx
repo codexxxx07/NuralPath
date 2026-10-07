@@ -161,7 +161,7 @@ export default function CourseDetailPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <section className="border-b border-border py-20 sm:py-24">
+      <section className="border-b border-border py-24 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <Link
             to="/courses"
@@ -193,7 +193,7 @@ export default function CourseDetailPage() {
             </div>
 
             {/* Enroll + facts */}
-            <aside className="self-start">
+            <aside className="card-depth self-start p-6">
               <Button className="w-full" size="lg" asChild>
                 <Link to="/register">
                   Enroll Now
@@ -205,22 +205,22 @@ export default function CourseDetailPage() {
               </p>
 
               <dl className="mt-6 border-t border-border">
-                <div className="flex items-center justify-between border-b border-border py-3 text-sm">
+                <div className="flex items-center justify-between border-b border-border py-3 text-sm last:border-b-0">
                   <dt className="text-muted-foreground">Duration</dt>
                   <dd className="font-medium text-foreground">{course.duration}</dd>
                 </div>
-                <div className="flex items-center justify-between border-b border-border py-3 text-sm">
+                <div className="flex items-center justify-between border-b border-border py-3 text-sm last:border-b-0">
                   <dt className="text-muted-foreground">Level</dt>
                   <dd className="font-medium text-foreground">{course.level}</dd>
                 </div>
-                <div className="flex items-center justify-between border-b border-border py-3 text-sm">
+                <div className="flex items-center justify-between border-b border-border py-3 text-sm last:border-b-0">
                   <dt className="text-muted-foreground">Learning Path</dt>
                   <dd className="font-medium text-foreground">
                     {course.isDsa ? "Data Structures" : "Systems Track"}
                   </dd>
                 </div>
                 {course.isDsa && (
-                  <div className="flex items-center justify-between border-b border-border py-3 text-sm">
+                  <div className="flex items-center justify-between border-b border-border py-3 text-sm last:border-b-0">
                     <dt className="text-muted-foreground">Certificate</dt>
                     <dd className="font-medium text-foreground">Yes</dd>
                   </div>
@@ -232,7 +232,7 @@ export default function CourseDetailPage() {
       </section>
 
       {/* Content Sections */}
-      <section className="py-20 sm:py-24">
+      <section className="py-24 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid gap-12 lg:grid-cols-[1fr_320px]">
             <div className="space-y-12">
@@ -241,11 +241,15 @@ export default function CourseDetailPage() {
                 <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
                   What You&apos;ll Learn
                 </h2>
-                <div className="grid gap-x-12 sm:grid-cols-2">
+                <div className="mt-5 grid gap-x-12 gap-y-3 sm:grid-cols-2">
                   {course.whatYouWillLearn.map((item, i) => (
-                    <div key={i} className="border-b border-border py-3">
-                      <p className="text-sm text-muted-foreground">{item}</p>
-                    </div>
+                    <p
+                      key={i}
+                      className="flex items-start gap-3 text-sm text-muted-foreground"
+                    >
+                      <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-muted-foreground" />
+                      {item}
+                    </p>
                   ))}
                 </div>
               </div>
@@ -255,12 +259,13 @@ export default function CourseDetailPage() {
                 <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
                   Prerequisites
                 </h2>
-                <ul>
+                <ul className="mt-5 space-y-3">
                   {course.prerequisites.map((item, i) => (
                     <li
                       key={i}
-                      className="border-b border-border py-3 text-sm text-muted-foreground"
+                      className="flex items-start gap-3 text-sm text-muted-foreground"
                     >
+                      <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-muted-foreground" />
                       {item}
                     </li>
                   ))}
@@ -298,18 +303,16 @@ export default function CourseDetailPage() {
             </div>
 
             {/* Sidebar note */}
-            <aside className="self-start lg:sticky lg:top-24">
-              <div className="border-t border-border pt-5">
-                <h3 className="text-sm font-medium text-foreground">
-                  About This Course
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  This course is part of the {course.isDsa ? "Data Structures & Algorithms" : "Linux & Systems"} learning track.
-                  Content is created and reviewed by community mentors. Instructor details will be
-                  announced on the community.
-                </p>
-              </div>
-              <div className="mt-5 flex flex-col gap-2 border-t border-border pt-5">
+            <aside className="card-depth self-start p-5 lg:sticky lg:top-24">
+              <h3 className="text-sm font-medium text-foreground">
+                About This Course
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                This course is part of the {course.isDsa ? "Data Structures & Algorithms" : "Linux & Systems"} learning track.
+                Content is created and reviewed by community mentors. Instructor details will be
+                announced on the community.
+              </p>
+              <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4">
                 <Button variant="outline" className="w-full" asChild>
                   <Link to="/libraries">Browse related resources</Link>
                 </Button>

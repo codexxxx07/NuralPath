@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Play } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Play, Video } from "lucide-react";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
@@ -92,8 +93,8 @@ export default function LiveClassesPage() {
   return (
     <div className="space-y-10">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Live Classes</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Join live sessions and watch recordings</p>
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">Live Classes</h1>
+        <p className="mt-1.5 text-sm text-muted-foreground">Join live sessions and watch recordings</p>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
@@ -127,7 +128,7 @@ export default function LiveClassesPage() {
                       </p>
                     </div>
                     <Badge
-                      variant={cls.status === "upcoming" ? "default" : "success"}
+                      variant={cls.status === "upcoming" ? "outline" : "secondary"}
                       className="shrink-0"
                     >
                       {cls.status === "upcoming" ? "Upcoming" : "Completed"}
@@ -148,9 +149,16 @@ export default function LiveClassesPage() {
               </div>
             ))}
             {filteredClasses.length === 0 && (
-              <p className="py-12 text-center text-sm text-muted-foreground">
-                No classes to display
-              </p>
+              <div className="py-16 text-center">
+                <Video className="mx-auto h-8 w-8 text-muted-foreground" />
+                <p className="mt-4 text-sm font-medium text-foreground">No classes to display</p>
+                <p className="mx-auto mt-1.5 max-w-sm text-sm text-muted-foreground">
+                  Sessions for this view will appear here once they are scheduled.
+                </p>
+                <Button variant="outline" asChild className="mt-5">
+                  <Link to="/courses">Explore Courses</Link>
+                </Button>
+              </div>
             )}
           </div>
         </TabsContent>

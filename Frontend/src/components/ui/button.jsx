@@ -4,25 +4,25 @@ import { cva } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bg-foreground text-background hover:bg-foreground/85",
+          "btn-tactile bg-foreground text-background hover:bg-foreground/88",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+          "btn-tactile bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
-          "border border-border bg-background hover:bg-accent hover:text-accent-foreground",
+          "btn-tactile border border-border bg-background text-foreground shadow-[var(--shadow-xs)] hover:bg-accent",
         secondary:
-          "bg-muted text-foreground hover:bg-accent",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+          "btn-tactile bg-muted text-foreground hover:bg-accent",
+        ghost: "transition-colors hover:bg-accent hover:text-accent-foreground",
+        link: "text-primary underline-offset-4 hover:underline transition-colors",
       },
       size: {
         default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-7",
+        sm: "h-9 rounded-lg px-3.5",
+        lg: "h-11 rounded-lg px-7",
         icon: "h-10 w-10",
       },
     },
@@ -47,4 +47,5 @@ const Button = React.forwardRef(
 );
 Button.displayName = "Button";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export { Button, buttonVariants };

@@ -23,6 +23,12 @@ const recommendations = [
   { title: "Contribute to a Project", description: "Find a 'good first issue' on GitHub to improve your open source skills.", priority: "Low" },
 ];
 
+const totalHours = skills.reduce((acc, skill) => acc + skill.hours, 0);
+const totalAssessments = skills.reduce((acc, skill) => acc + skill.assessments, 0);
+const averageSkill = Math.round(
+  skills.reduce((acc, skill) => acc + skill.progress, 0) / skills.length
+);
+
 const radarSize = 200;
 const radarCenter = radarSize / 2;
 const radarRadius = 80;
@@ -46,13 +52,43 @@ export default function SkillReportPage() {
   return (
     <div className="space-y-12">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Skill Report</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Comprehensive analysis of your technical skills</p>
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">Skill Report</h1>
+        <p className="mt-1.5 text-sm text-muted-foreground">Comprehensive analysis of your technical skills</p>
+      </div>
+
+      {/* Stats */}
+      <div className="card-depth p-6">
+        <dl className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3">
+          <div>
+            <dd className="text-2xl font-semibold tracking-tight text-foreground">
+              {averageSkill}%
+            </dd>
+            <dt className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">
+              Average Skill
+            </dt>
+          </div>
+          <div>
+            <dd className="text-2xl font-semibold tracking-tight text-foreground">
+              {totalHours} hrs
+            </dd>
+            <dt className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">
+              Total Hours
+            </dt>
+          </div>
+          <div>
+            <dd className="text-2xl font-semibold tracking-tight text-foreground">
+              {totalAssessments}
+            </dd>
+            <dt className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">
+              Assessments
+            </dt>
+          </div>
+        </dl>
       </div>
 
       <div className="grid gap-10 lg:grid-cols-2">
         <section>
-          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          <h2 className="border-b border-border pb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Skill Overview
           </h2>
           <div className="flex justify-center py-5">
@@ -121,7 +157,7 @@ export default function SkillReportPage() {
         </section>
 
         <section>
-          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          <h2 className="border-b border-border pb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Detailed Breakdown
           </h2>
           <div>
@@ -147,7 +183,7 @@ export default function SkillReportPage() {
 
       <div className="grid gap-10 lg:grid-cols-2">
         <section>
-          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          <h2 className="border-b border-border pb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Weak Topics
           </h2>
           <div>
@@ -163,7 +199,7 @@ export default function SkillReportPage() {
         </section>
 
         <section>
-          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          <h2 className="border-b border-border pb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Recommendations
           </h2>
           <div>

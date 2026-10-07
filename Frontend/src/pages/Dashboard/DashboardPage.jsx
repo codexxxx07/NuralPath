@@ -62,42 +62,46 @@ export default function DashboardPage() {
           <ArrowLeft className="h-4 w-4" />
           Back
         </Button>
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">
           Good evening, Arjun.
         </h1>
-        <p className="mt-1 text-sm text-muted-foreground">{today}</p>
+        <p className="mt-1.5 text-sm text-muted-foreground">{today}</p>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 border-t border-border sm:grid-cols-4">
-        {stats.map((stat) => (
-          <div key={stat.label} className="border-b border-border py-5 pr-6 sm:border-b-0">
-            <p className="text-2xl font-semibold tracking-tight text-foreground">
-              {stat.value}
-            </p>
-            <p className="mt-1 text-sm text-muted-foreground">{stat.label}</p>
-          </div>
-        ))}
+      <div className="card-depth p-6">
+        <dl className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4">
+          {stats.map((stat) => (
+            <div key={stat.label}>
+              <dd className="text-2xl font-semibold tracking-tight text-foreground">
+                {stat.value}
+              </dd>
+              <dt className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">
+                {stat.label}
+              </dt>
+            </div>
+          ))}
+        </dl>
       </div>
 
       {/* Continue Learning */}
-      <section>
-        <div className="flex items-baseline justify-between border-b border-border pb-3">
-          <h2 className="text-base font-semibold tracking-tight text-foreground">
+      <section className="card-depth p-6">
+        <div className="flex items-baseline justify-between gap-4">
+          <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Continue Learning
           </h2>
           <Link
             to="/dashboard/courses"
-            className="text-sm text-primary transition-colors hover:underline"
+            className="text-xs font-medium text-primary transition-colors duration-200 hover:text-primary/80"
           >
             View all
           </Link>
         </div>
-        <div>
+        <div className="mt-4">
           {activeCourses.map((course) => (
             <div
               key={course.id}
-              className="flex flex-col gap-3 border-b border-border py-5 sm:flex-row sm:items-center sm:gap-8"
+              className="flex flex-col gap-3 border-t border-border py-4 sm:flex-row sm:items-center sm:gap-8"
             >
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-medium text-foreground">{course.name}</p>
@@ -113,7 +117,7 @@ export default function DashboardPage() {
               </div>
               <Link
                 to="/dashboard/courses"
-                className="flex shrink-0 items-center gap-1 text-sm text-primary transition-colors hover:underline"
+                className="flex shrink-0 items-center gap-1 text-sm text-primary transition-colors duration-200 hover:text-primary/80"
               >
                 Continue
                 <ArrowRight className="h-3.5 w-3.5" />
@@ -126,14 +130,14 @@ export default function DashboardPage() {
       {/* Schedule + Activity */}
       <div className="grid gap-12 lg:grid-cols-2">
         <section>
-          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Upcoming Schedule
           </h2>
-          <div>
+          <div className="mt-4">
             {upcomingSchedule.map((event) => (
               <div
                 key={event.id}
-                className="flex items-start gap-4 border-b border-border py-4"
+                className="flex items-start gap-4 border-t border-border py-4"
               >
                 <div className="w-24 shrink-0">
                   <p className="text-xs text-muted-foreground">{event.date}</p>
@@ -153,14 +157,14 @@ export default function DashboardPage() {
         </section>
 
         <section>
-          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Recent Activity
           </h2>
-          <div>
+          <div className="mt-4">
             {recentActivity.map((activity) => (
               <div
                 key={activity.id}
-                className="flex items-baseline justify-between gap-4 border-b border-border py-4"
+                className="flex items-baseline justify-between gap-4 border-t border-border py-4"
               >
                 <p className="min-w-0 truncate text-sm text-foreground">
                   {activity.action}
@@ -174,21 +178,21 @@ export default function DashboardPage() {
 
       {/* Quick Actions */}
       <section>
-        <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+        <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
           Quick Actions
         </h2>
-        <div className="grid sm:grid-cols-3">
+        <div className="mt-4 grid gap-4 sm:grid-cols-3">
           {quickActions.map((action) => (
             <Link
               key={action.to}
               to={action.to}
-              className="group flex items-center justify-between gap-4 border-b border-border py-4 pr-4 transition-colors hover:bg-muted/40 sm:border-r sm:pr-6"
+              className="card-depth card-depth-hover group flex items-center justify-between gap-4 p-5"
             >
               <div>
                 <p className="text-sm font-medium text-foreground">{action.label}</p>
                 <p className="mt-0.5 text-xs text-muted-foreground">{action.desc}</p>
               </div>
-              <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
+              <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground transition-colors duration-200 group-hover:text-foreground" />
             </Link>
           ))}
         </div>

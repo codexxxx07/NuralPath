@@ -13,36 +13,38 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-sm px-4 py-20 sm:px-6">
-      <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-        Forgot your password?
-      </h1>
-      <p className="mt-2 text-sm text-muted-foreground">
-        Enter your email and we&apos;ll send you a reset link
-      </p>
+    <div className="mx-auto w-full max-w-md animate-fade-in px-4 py-20 sm:px-6">
+      <div className="card-depth p-6 sm:p-8">
+        <h1 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
+          Forgot your password?
+        </h1>
+        <p className="mt-1.5 text-sm text-muted-foreground">
+          Enter your email and we&apos;ll send you a reset link
+        </p>
 
-      <form onSubmit={handleSubmit} className="mt-6 space-y-4 border-t border-border pt-6">
-        <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            type="email"
-            placeholder="you@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
+        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-        <Button type="submit" className="w-full" size="lg">
-          Send Reset Link
-          <ArrowRight className="ml-1 h-4 w-4" />
-        </Button>
-      </form>
+          <Button type="submit" className="w-full" size="lg">
+            Send Reset Link
+            <ArrowRight className="ml-1 h-4 w-4" />
+          </Button>
+        </form>
+      </div>
 
-      <div className="mt-8 border-t border-border pt-6 text-center">
+      <div className="mt-6 text-center">
         <Link
           to="/login"
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to sign in

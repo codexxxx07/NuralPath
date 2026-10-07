@@ -108,7 +108,7 @@ export default function AdminBatchesPage() {
     <div className="mx-auto max-w-6xl space-y-10">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-foreground">Batch Management</h1>
+          <h1 className="text-lg font-semibold tracking-tight text-foreground">Batch Management</h1>
           <p className="mt-1 text-sm text-muted-foreground">{batches.length} batches total</p>
         </div>
         <Button onClick={() => setShowForm(!showForm)}>
@@ -118,7 +118,7 @@ export default function AdminBatchesPage() {
       </div>
 
       {showForm && (
-        <section className="overflow-hidden rounded-lg border border-border">
+        <section className="card-depth overflow-hidden">
           <div className="border-b border-border px-5 py-4">
             <h2 className="text-base font-semibold tracking-tight text-foreground">Create New Batch</h2>
             <p className="mt-0.5 text-xs text-muted-foreground">Fill in the details to create a new batch</p>
@@ -200,14 +200,14 @@ export default function AdminBatchesPage() {
       )}
 
       <section>
-        <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+        <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
           All Batches
         </h2>
-        <div>
+        <div className="mt-4">
           {batches.map((batch) => (
-            <div key={batch.id} className="border-b border-border">
+            <div key={batch.id}>
               <div
-                className="cursor-pointer py-5 transition-colors hover:bg-muted/40"
+                className="cursor-pointer border-t border-border py-5 transition-colors duration-200 hover:bg-accent/60"
                 onClick={() => setExpandedBatch(expandedBatch === batch.id ? null : batch.id)}
               >
                 <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
@@ -218,7 +218,7 @@ export default function AdminBatchesPage() {
                         {batch.status}
                       </Badge>
                     </div>
-                    <p className="mt-1.5 text-xs text-muted-foreground">
+                    <p className="mt-1.5 text-xs tabular-nums text-muted-foreground">
                       {batch.course} · {batch.studentsEnrolled}/{batch.maxCapacity} students · {batch.startDate} — {batch.endDate}
                     </p>
                   </div>
@@ -269,7 +269,7 @@ export default function AdminBatchesPage() {
                         ))}
                       </div>
                     ) : (
-                      <p className="text-sm text-muted-foreground">No students enrolled yet</p>
+                      <p className="py-6 text-center text-sm text-muted-foreground">No students enrolled yet</p>
                     )}
                     <div className="mt-5 flex justify-end gap-2">
                       <Button variant="outline" size="sm">Edit Batch</Button>

@@ -203,10 +203,10 @@ export default function MentorPYQPage() {
   return (
     <div className="max-w-6xl space-y-10">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-foreground">PYQ Management</h1>
-          <p className="mt-1 text-sm text-muted-foreground">{questionSets.length} question sets created</p>
-        </div>
+      <div>
+        <h1 className="text-lg font-semibold tracking-tight text-foreground">PYQ Management</h1>
+        <p className="mt-1 text-sm text-muted-foreground">{questionSets.length} question sets created</p>
+      </div>
         <Button onClick={() => setShowCreateSet(!showCreateSet)}>Create Question Set</Button>
       </div>
 
@@ -216,68 +216,70 @@ export default function MentorPYQPage() {
             <h2 className="text-base font-semibold tracking-tight text-foreground">Create New Question Set</h2>
             <p className="mt-1 text-xs text-muted-foreground">Define the question set details</p>
           </div>
-          <div className="space-y-4 pt-5">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <div className="space-y-2">
-                <Label>Title</Label>
-                <Input
-                  placeholder="e.g., Linux Midterm Exam"
-                  value={newSet.title}
-                  onChange={(e) => setNewSet({ ...newSet, title: e.target.value })}
-                />
+          <div className="card-depth mt-5 p-5 sm:p-6">
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label>Title</Label>
+                  <Input
+                    placeholder="e.g., Linux Midterm Exam"
+                    value={newSet.title}
+                    onChange={(e) => setNewSet({ ...newSet, title: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Course</Label>
+                  <Select value={newSet.course} onValueChange={(val) => setNewSet({ ...newSet, course: val })}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select course" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Linux Fundamentals">Linux Fundamentals</SelectItem>
+                      <SelectItem value="Shell Scripting Mastery">Shell Scripting Mastery</SelectItem>
+                      <SelectItem value="C Programming Deep Dive">C Programming Deep Dive</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Duration</Label>
+                  <Input
+                    placeholder="e.g., 60 min"
+                    value={newSet.duration}
+                    onChange={(e) => setNewSet({ ...newSet, duration: e.target.value })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Difficulty</Label>
+                  <Select value={newSet.difficulty} onValueChange={(val) => setNewSet({ ...newSet, difficulty: val })}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select difficulty" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Beginner">Beginner</SelectItem>
+                      <SelectItem value="Intermediate">Intermediate</SelectItem>
+                      <SelectItem value="Advanced">Advanced</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
-              <div className="space-y-2">
-                <Label>Course</Label>
-                <Select value={newSet.course} onValueChange={(val) => setNewSet({ ...newSet, course: val })}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select course" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Linux Fundamentals">Linux Fundamentals</SelectItem>
-                    <SelectItem value="Shell Scripting Mastery">Shell Scripting Mastery</SelectItem>
-                    <SelectItem value="C Programming Deep Dive">C Programming Deep Dive</SelectItem>
-                  </SelectContent>
-                </Select>
+              <div className="flex justify-end gap-3">
+                <Button variant="outline" onClick={() => setShowCreateSet(false)}>Cancel</Button>
+                <Button onClick={handleCreateSet}>Create &amp; Add Questions</Button>
               </div>
-              <div className="space-y-2">
-                <Label>Duration</Label>
-                <Input
-                  placeholder="e.g., 60 min"
-                  value={newSet.duration}
-                  onChange={(e) => setNewSet({ ...newSet, duration: e.target.value })}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Difficulty</Label>
-                <Select value={newSet.difficulty} onValueChange={(val) => setNewSet({ ...newSet, difficulty: val })}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select difficulty" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Beginner">Beginner</SelectItem>
-                    <SelectItem value="Intermediate">Intermediate</SelectItem>
-                    <SelectItem value="Advanced">Advanced</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <div className="flex justify-end gap-3">
-              <Button variant="outline" onClick={() => setShowCreateSet(false)}>Cancel</Button>
-              <Button onClick={handleCreateSet}>Create &amp; Add Questions</Button>
             </div>
           </div>
         </section>
       )}
 
       <section>
-        <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+        <h2 className="pb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
           Question Sets
         </h2>
-        <div>
-          {questionSets.map((set) => (
+        <div className="card-depth">
+          {questionSets.map((set, idx) => (
             <div
               key={set.id}
-              className="flex flex-col gap-3 border-b border-border py-5 sm:flex-row sm:items-start sm:gap-8"
+              className={`flex flex-col gap-3 px-4 py-5 sm:flex-row sm:items-start sm:gap-8 sm:px-5 ${idx !== questionSets.length - 1 ? "border-b border-border" : ""}`}
             >
               <div className="min-w-0 flex-1">
                 <div className="flex items-start justify-between gap-4">

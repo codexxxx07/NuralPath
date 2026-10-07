@@ -58,7 +58,7 @@ export default function AdminPaymentsPage() {
     <div className="mx-auto max-w-6xl space-y-10">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-foreground">Payments</h1>
+          <h1 className="text-lg font-semibold tracking-tight text-foreground">Payments</h1>
           <p className="mt-1 text-sm text-muted-foreground">Transaction history and revenue overview</p>
         </div>
         <Button variant="outline">
@@ -68,25 +68,27 @@ export default function AdminPaymentsPage() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 border-t border-border sm:grid-cols-4">
-        {stats.map((stat) => (
-          <div key={stat.label} className="border-b border-border py-5 pr-6 sm:border-b-0">
-            <p className="text-2xl font-semibold tracking-tight text-foreground">{stat.value}</p>
-            <p className="mt-1 text-sm text-muted-foreground">{stat.label}</p>
-            <p className="mt-2 text-xs text-muted-foreground">
-              {stat.change} vs last month
-            </p>
-          </div>
-        ))}
+      <div className="card-depth p-6">
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+          {stats.map((stat) => (
+            <div key={stat.label}>
+              <p className="text-2xl/3xl font-semibold tracking-tight tabular-nums text-foreground">{stat.value}</p>
+              <p className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">{stat.label}</p>
+              <p className="mt-2 text-xs text-muted-foreground">
+                {stat.change} vs last month
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="grid gap-10 lg:grid-cols-3">
         <section className="lg:col-span-2">
-          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Transactions
           </h2>
 
-          <div className="flex flex-col gap-3 py-4 sm:flex-row sm:items-center">
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
@@ -106,11 +108,25 @@ export default function AdminPaymentsPage() {
             </Tabs>
           </div>
 
-          <div>
+          {filtered.length === 0 ? (
+            <div className="card-depth py-16 text-center">
+              <Search className="mx-auto h-8 w-8 text-muted-foreground" />
+              <p className="mt-3 text-sm font-medium text-foreground">No transactions found</p>
+              <p className="mt-1 text-sm text-muted-foreground">No transactions match your current search or filter.</p>
+              <Button
+                variant="outline"
+                className="mt-5"
+                onClick={() => { setSearch(""); setFilter("All"); }}
+              >
+                Clear filters
+              </Button>
+            </div>
+          ) : (
+            <div>
             {filtered.map((txn) => (
               <div
                 key={txn.id}
-                className="flex items-center justify-between gap-4 border-b border-border py-4 transition-colors hover:bg-muted/40"
+                className="flex items-center justify-between gap-4 border-t border-border py-4 transition-colors duration-200 hover:bg-accent/60"
               >
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
@@ -121,30 +137,31 @@ export default function AdminPaymentsPage() {
                 </div>
                 <div className="flex shrink-0 items-center gap-4">
                   <div className="text-right">
-                    <p className="text-sm font-medium text-foreground">₹{txn.amount.toLocaleString("en-IN")}</p>
-                    <p className="text-xs text-muted-foreground">{txn.date}</p>
+                    <p className="text-sm font-medium tabular-nums text-foreground">₹{txn.amount.toLocaleString("en-IN")}</p>
+                    <p className="text-xs tabular-nums text-muted-foreground">{txn.date}</p>
                   </div>
                   <Badge
-                    variant={txn.status === "Paid" ? "success" : txn.status === "Refunded" ? "destructive" : "secondary"}
+                    variant={txn.status === "Paid" ? "success" : txn.status === "Refunded" ? "secondary" : "outline"}
                   >
                     {txn.status}
                   </Badge>
                 </div>
               </div>
             ))}
-          </div>
+            </div>
+          )}
         </section>
 
         <section>
-          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Revenue by Course
           </h2>
-          <div className="space-y-5 pt-4">
+          <div className="mt-4">
             {revenueByCourse.map((course) => (
-              <div key={course.course}>
+              <div key={course.course} className="border-t border-border py-4">
                 <div className="flex items-center justify-between gap-2 text-sm">
                   <span className="truncate font-medium text-foreground">{course.course}</span>
-                  <span className="whitespace-nowrap text-muted-foreground">
+                  <span className="whitespace-nowrap tabular-nums text-muted-foreground">
                     {course.revenue > 0 ? `₹${(course.revenue / 1000).toFixed(0)}K` : "—"}
                   </span>
                 </div>

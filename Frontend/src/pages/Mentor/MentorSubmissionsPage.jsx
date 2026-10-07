@@ -52,7 +52,7 @@ export default function MentorSubmissionsPage() {
               <AvatarFallback>{selectedSubmission.initials}</AvatarFallback>
             </Avatar>
             <div className="min-w-0 flex-1">
-              <h1 className="text-2xl font-semibold tracking-tight text-foreground">{selectedSubmission.student}</h1>
+              <h1 className="text-lg font-semibold tracking-tight text-foreground">{selectedSubmission.student}</h1>
               <p className="mt-0.5 text-sm text-muted-foreground">{selectedSubmission.assignment} · {selectedSubmission.course}</p>
             </div>
             <Badge variant={selectedSubmission.status === "Pending" ? "secondary" : "success"}>
@@ -119,7 +119,7 @@ export default function MentorSubmissionsPage() {
   return (
     <div className="max-w-6xl space-y-10">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Student Submissions</h1>
+        <h1 className="text-lg font-semibold tracking-tight text-foreground">Student Submissions</h1>
         <p className="mt-1 text-sm text-muted-foreground">{submissions.filter((s) => s.status === "Pending").length} pending reviews</p>
       </div>
 
@@ -148,12 +148,12 @@ export default function MentorSubmissionsPage() {
         </Select>
       </div>
 
-      <div>
-        {filteredSubmissions.map((sub) => (
+      <div className="card-depth">
+        {filteredSubmissions.map((sub, idx) => (
           <div
             key={sub.id}
             onClick={() => setSelectedSubmission(sub)}
-            className="flex cursor-pointer items-center gap-4 border-b border-border py-4 transition-colors hover:bg-muted/40"
+            className={`flex cursor-pointer items-center gap-4 px-4 py-4 transition-colors hover:bg-accent/60 sm:px-5 ${idx !== filteredSubmissions.length - 1 ? "border-b border-border" : ""}`}
           >
             <Avatar className="h-9 w-9">
               <AvatarFallback>{sub.initials}</AvatarFallback>

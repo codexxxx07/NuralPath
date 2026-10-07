@@ -51,27 +51,29 @@ export default function AdminDashboardPage() {
   return (
     <div className="mx-auto max-w-6xl space-y-10">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Admin Dashboard</h1>
+        <h1 className="text-lg font-semibold tracking-tight text-foreground">Admin Dashboard</h1>
         <p className="mt-1 text-sm text-muted-foreground">Platform overview and key metrics</p>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 border-t border-border sm:grid-cols-4">
-        {stats.map((stat) => (
-          <div key={stat.label} className="border-b border-border py-5 pr-6 sm:border-b-0">
-            <p className="text-2xl font-semibold tracking-tight text-foreground">{stat.value}</p>
-            <p className="mt-1 text-sm text-muted-foreground">{stat.label}</p>
-            <p className="mt-2 text-xs text-muted-foreground">
-              {stat.change} vs last month
-            </p>
-          </div>
-        ))}
+      <div className="card-depth p-6">
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+          {stats.map((stat) => (
+            <div key={stat.label}>
+              <p className="text-2xl/3xl font-semibold tracking-tight tabular-nums text-foreground">{stat.value}</p>
+              <p className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">{stat.label}</p>
+              <p className="mt-2 text-xs text-muted-foreground">
+                {stat.change} vs last month
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Revenue + Recent Registrations */}
       <div className="grid gap-10 lg:grid-cols-2">
         <section>
-          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Revenue — Last 6 Months
           </h2>
           <div className="flex h-48 items-stretch gap-3 pt-5">
@@ -93,12 +95,12 @@ export default function AdminDashboardPage() {
         </section>
 
         <section>
-          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Recent Registrations
           </h2>
-          <div>
+          <div className="mt-4">
             {recentRegistrations.map((user) => (
-              <div key={user.id} className="flex items-center gap-3 border-b border-border py-4">
+              <div key={user.id} className="flex items-center gap-3 border-t border-border py-4">
                 <Avatar className="h-8 w-8">
                   <AvatarFallback className="text-[10px]">{user.initials}</AvatarFallback>
                 </Avatar>
@@ -106,7 +108,7 @@ export default function AdminDashboardPage() {
                   <p className="text-sm font-medium text-foreground">{user.name}</p>
                   <p className="truncate text-xs text-muted-foreground">{user.course}</p>
                 </div>
-                <span className="shrink-0 text-xs text-muted-foreground">{user.date}</span>
+                <span className="shrink-0 text-xs tabular-nums text-muted-foreground">{user.date}</span>
               </div>
             ))}
           </div>
@@ -116,17 +118,17 @@ export default function AdminDashboardPage() {
       {/* Active Courses + System Alerts */}
       <div className="grid gap-10 lg:grid-cols-2">
         <section>
-          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Active Courses
           </h2>
-          <div>
+          <div className="mt-4">
             {activeCourses.map((course) => (
-              <div key={course.id} className="border-b border-border py-4">
+              <div key={course.id} className="border-t border-border py-4">
                 <div className="flex items-baseline justify-between gap-4">
                   <p className="min-w-0 truncate text-sm font-medium text-foreground">
                     {course.title}
                   </p>
-                  <span className="shrink-0 text-xs text-muted-foreground">
+                  <span className="shrink-0 text-xs tabular-nums text-muted-foreground">
                     {course.students} students
                   </span>
                 </div>
@@ -142,24 +144,25 @@ export default function AdminDashboardPage() {
         </section>
 
         <section>
-          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
             System Alerts
           </h2>
-          <div>
+          <div className="mt-4">
             {systemAlerts.map((alert) => (
-              <div key={alert.id} className="border-b border-border py-4">
-                <p className="text-sm text-foreground">{alert.message}</p>
-                <p className="mt-1 text-xs text-muted-foreground">
-                  <span className={alert.type === "error" ? "text-destructive" : undefined}>
-                    {alert.type === "error"
-                      ? "Error"
-                      : alert.type === "warning"
-                      ? "Warning"
-                      : "Info"}
-                  </span>
-                  {" · "}
-                  {alert.time}
-                </p>
+              <div key={alert.id} className="flex items-start justify-between gap-4 border-t border-border py-4">
+                <div className="min-w-0">
+                  <p className="text-sm text-foreground">{alert.message}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    <span className={alert.type === "error" ? "text-destructive" : undefined}>
+                      {alert.type === "error"
+                        ? "Error"
+                        : alert.type === "warning"
+                        ? "Warning"
+                        : "Info"}
+                    </span>
+                  </p>
+                </div>
+                <span className="shrink-0 text-xs text-muted-foreground">{alert.time}</span>
               </div>
             ))}
           </div>

@@ -50,36 +50,44 @@ export default function ProgressPage() {
   return (
     <div className="space-y-12">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Your Progress</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Track your learning journey and achievements</p>
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">Your Progress</h1>
+        <p className="mt-1.5 text-sm text-muted-foreground">Track your learning journey and achievements</p>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 border-t border-border sm:grid-cols-3">
-        <div className="border-b border-border py-5 pr-6 sm:border-b-0">
-          <p className="text-2xl font-semibold tracking-tight text-foreground">{overallProgress}%</p>
-          <p className="mt-1 text-sm text-muted-foreground">Overall Progress</p>
-        </div>
-        <div className="border-b border-border py-5 pr-6 sm:border-b-0">
-          <p className="text-2xl font-semibold tracking-tight text-foreground">12 Days</p>
-          <p className="mt-1 text-sm text-muted-foreground">Current Streak</p>
-        </div>
-        <div className="border-b border-border py-5 pr-6 sm:border-b-0">
-          <p className="text-2xl font-semibold tracking-tight text-foreground">128 hrs</p>
-          <p className="mt-1 text-sm text-muted-foreground">Total Learning</p>
-        </div>
+      <div className="card-depth p-6">
+        <dl className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3">
+          <div>
+            <dd className="text-2xl font-semibold tracking-tight text-foreground">{overallProgress}%</dd>
+            <dt className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">
+              Overall Progress
+            </dt>
+          </div>
+          <div>
+            <dd className="text-2xl font-semibold tracking-tight text-foreground">12 Days</dd>
+            <dt className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">
+              Current Streak
+            </dt>
+          </div>
+          <div>
+            <dd className="text-2xl font-semibold tracking-tight text-foreground">128 hrs</dd>
+            <dt className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">
+              Total Learning
+            </dt>
+          </div>
+        </dl>
       </div>
 
       {/* Weekly hours + streak */}
       <div className="grid gap-10 lg:grid-cols-2">
         <section>
-          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          <h2 className="border-b border-border pb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Weekly Learning Hours
           </h2>
           <div className="mt-5 flex items-end justify-between gap-2">
             {weeklyHours.map((day) => (
               <div key={day.day} className="flex flex-1 flex-col items-center gap-1.5">
-                <span className="text-xs text-muted-foreground">{day.hours}h</span>
+                <span className="font-mono text-xs text-muted-foreground">{day.hours}h</span>
                 <div className="flex h-24 w-full items-end">
                   <div
                     className="w-full rounded-sm bg-foreground"
@@ -96,7 +104,7 @@ export default function ProgressPage() {
         </section>
 
         <section>
-          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          <h2 className="border-b border-border pb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Streak Calendar
           </h2>
           <div className="mt-5 grid grid-cols-7 gap-1.5">
@@ -130,7 +138,7 @@ export default function ProgressPage() {
 
       {/* Course Progress */}
       <section>
-        <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+        <h2 className="border-b border-border pb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
           Course Progress
         </h2>
         <div>
@@ -158,7 +166,7 @@ export default function ProgressPage() {
 
       {/* Skill Progress */}
       <section>
-        <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+        <h2 className="border-b border-border pb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
           Skill Progress
         </h2>
         <div>
@@ -180,7 +188,7 @@ export default function ProgressPage() {
 
       {/* Quiz Scores */}
       <section>
-        <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+        <h2 className="border-b border-border pb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
           Quiz Scores
         </h2>
         <div>

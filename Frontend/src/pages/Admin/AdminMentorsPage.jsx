@@ -118,7 +118,7 @@ export default function AdminMentorsPage() {
     <div className="mx-auto max-w-6xl space-y-10">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-foreground">Mentor Management</h1>
+          <h1 className="text-lg font-semibold tracking-tight text-foreground">Mentor Management</h1>
           <p className="mt-1 text-sm text-muted-foreground">{mentors.length} mentors on platform</p>
         </div>
         <Button>
@@ -128,14 +128,14 @@ export default function AdminMentorsPage() {
       </div>
 
       <section>
-        <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+        <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
           All Mentors
         </h2>
-        <div>
+        <div className="mt-4">
           {mentors.map((mentor) => (
             <div
               key={mentor.id}
-              className="cursor-pointer border-b border-border py-5 transition-colors hover:bg-muted/40"
+              className="cursor-pointer border-t border-border py-5 transition-colors duration-200 hover:bg-accent/60"
               onClick={() => setSelectedMentor(mentor)}
             >
               <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-8">
@@ -146,7 +146,7 @@ export default function AdminMentorsPage() {
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
                       <p className="text-sm font-medium text-foreground">{mentor.name}</p>
-                      <Badge variant={mentor.status === "Active" ? "success" : mentor.status === "On Leave" ? "secondary" : "destructive"}>
+                      <Badge variant={mentor.status === "Active" ? "success" : mentor.status === "On Leave" ? "secondary" : "outline"}>
                         {mentor.status}
                       </Badge>
                     </div>
@@ -158,22 +158,22 @@ export default function AdminMentorsPage() {
                 <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
                   <div>
                     <p className="text-xs text-muted-foreground">Rating</p>
-                    <p className="mt-0.5 text-sm font-medium text-foreground">
+                    <p className="mt-0.5 text-sm font-medium tabular-nums text-foreground">
                       ★ {mentor.rating} <span className="font-normal text-muted-foreground">({mentor.totalReviews})</span>
                     </p>
                   </div>
                   <div>
                     <p className="text-xs text-muted-foreground">Students</p>
-                    <p className="mt-0.5 text-sm font-medium text-foreground">{mentor.studentsCount}</p>
+                    <p className="mt-0.5 text-sm font-medium tabular-nums text-foreground">{mentor.studentsCount}</p>
                   </div>
                   <div>
                     <p className="text-xs text-muted-foreground">Courses</p>
-                    <p className="mt-0.5 text-sm font-medium text-foreground">{mentor.coursesAssigned.length}</p>
+                    <p className="mt-0.5 text-sm font-medium tabular-nums text-foreground">{mentor.coursesAssigned.length}</p>
                   </div>
                   <div className="w-40">
                     <div className="flex items-baseline justify-between">
                       <p className="text-xs text-muted-foreground">Completion</p>
-                      <p className="text-xs font-medium text-foreground">{mentor.completionRate}%</p>
+                      <p className="text-xs font-medium tabular-nums text-foreground">{mentor.completionRate}%</p>
                     </div>
                     <Progress value={mentor.completionRate} className="mt-2 h-1.5" />
                   </div>
@@ -185,16 +185,16 @@ export default function AdminMentorsPage() {
       </section>
 
       {selectedMentor && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={() => setSelectedMentor(null)}>
+        <div className="fixed inset-0 z-50 flex animate-fade-in items-center justify-center bg-black/50 p-4" onClick={() => setSelectedMentor(null)}>
           <div
-            className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg border border-border bg-background p-6 shadow-lg"
+            className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-border bg-card p-6 shadow-pop animate-pop-in"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-base font-semibold tracking-tight text-foreground">Mentor Details</h2>
-              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setSelectedMentor(null)}>
+              <button type="button" className="icon-btn grid h-9 w-9 place-items-center rounded-lg text-muted-foreground" aria-label="Close dialog" title="Close" onClick={() => setSelectedMentor(null)}>
                 <X className="h-4 w-4" />
-              </Button>
+              </button>
             </div>
 
             <div className="mb-6 flex items-center gap-4">
@@ -209,20 +209,20 @@ export default function AdminMentorsPage() {
 
             <div className="grid grid-cols-2 border-t border-border">
               <div className="border-b border-border py-4 pr-4">
-                <p className="text-2xl font-semibold tracking-tight text-foreground">{selectedMentor.studentsCount}</p>
-                <p className="mt-1 text-xs text-muted-foreground">Students</p>
+                <p className="text-2xl font-semibold tracking-tight tabular-nums text-foreground">{selectedMentor.studentsCount}</p>
+                <p className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">Students</p>
               </div>
               <div className="border-b border-border py-4 pl-4">
-                <p className="text-2xl font-semibold tracking-tight text-foreground">{selectedMentor.rating}</p>
-                <p className="mt-1 text-xs text-muted-foreground">Avg Rating</p>
+                <p className="text-2xl font-semibold tracking-tight tabular-nums text-foreground">{selectedMentor.rating}</p>
+                <p className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">Avg Rating</p>
               </div>
               <div className="border-b border-border py-4 pr-4">
-                <p className="text-2xl font-semibold tracking-tight text-foreground">{selectedMentor.completionRate}%</p>
-                <p className="mt-1 text-xs text-muted-foreground">Completion</p>
+                <p className="text-2xl font-semibold tracking-tight tabular-nums text-foreground">{selectedMentor.completionRate}%</p>
+                <p className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">Completion</p>
               </div>
               <div className="border-b border-border py-4 pl-4">
-                <p className="text-2xl font-semibold tracking-tight text-foreground">{selectedMentor.avgResponseTime}</p>
-                <p className="mt-1 text-xs text-muted-foreground">Avg Response</p>
+                <p className="text-2xl font-semibold tracking-tight tabular-nums text-foreground">{selectedMentor.avgResponseTime}</p>
+                <p className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">Avg Response</p>
               </div>
             </div>
 

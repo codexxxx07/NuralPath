@@ -32,7 +32,7 @@ export default function MentorLiveClassesPage() {
   return (
     <div className="max-w-6xl space-y-10">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Live Classes</h1>
+        <h1 className="text-lg font-semibold tracking-tight text-foreground">Live Classes</h1>
         <p className="mt-1 text-sm text-muted-foreground">Manage your scheduled and past live sessions</p>
       </div>
 
@@ -44,11 +44,11 @@ export default function MentorLiveClassesPage() {
         </TabsList>
 
         <TabsContent value="scheduled">
-          <div>
-            {scheduledClasses.map((cls) => (
+          <div className="card-depth">
+            {scheduledClasses.map((cls, idx) => (
               <div
                 key={cls.id}
-                className="flex flex-col gap-3 border-b border-border py-5 sm:flex-row sm:items-start sm:gap-8"
+                className={`flex flex-col gap-3 px-4 py-5 sm:flex-row sm:items-start sm:gap-8 sm:px-5 ${idx !== scheduledClasses.length - 1 ? "border-b border-border" : ""}`}
               >
                 <div className="w-24 shrink-0">
                   <p className="text-xs text-muted-foreground">{cls.date.split(",")[0]}</p>
@@ -70,11 +70,11 @@ export default function MentorLiveClassesPage() {
         </TabsContent>
 
         <TabsContent value="past">
-          <div>
-            {pastClasses.map((cls) => (
+          <div className="card-depth">
+            {pastClasses.map((cls, idx) => (
               <div
                 key={cls.id}
-                className="flex flex-col gap-3 border-b border-border py-5 sm:flex-row sm:items-start sm:gap-8"
+                className={`flex flex-col gap-3 px-4 py-5 sm:flex-row sm:items-start sm:gap-8 sm:px-5 ${idx !== pastClasses.length - 1 ? "border-b border-border" : ""}`}
               >
                 <div className="w-24 shrink-0">
                   <p className="text-xs text-muted-foreground">{cls.date.split(",")[0]}</p>
@@ -98,58 +98,60 @@ export default function MentorLiveClassesPage() {
               <h2 className="text-base font-semibold tracking-tight text-foreground">Create New Live Class</h2>
               <p className="mt-1 text-xs text-muted-foreground">Schedule a new live session for your students</p>
             </div>
-            <div className="space-y-4 pt-5">
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="card-depth mt-5 p-5 sm:p-6">
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label>Topic</Label>
+                    <Input
+                      placeholder="e.g., Linux Process Scheduling"
+                      value={newClass.topic}
+                      onChange={(e) => setNewClass({ ...newClass, topic: e.target.value })}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Course</Label>
+                    <Select value={newClass.course} onValueChange={(val) => setNewClass({ ...newClass, course: val })}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select course" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="linux">Linux Fundamentals</SelectItem>
+                        <SelectItem value="shell">Shell Scripting Mastery</SelectItem>
+                        <SelectItem value="c">C Programming Deep Dive</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Date</Label>
+                    <Input
+                      type="date"
+                      value={newClass.date}
+                      onChange={(e) => setNewClass({ ...newClass, date: e.target.value })}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Time</Label>
+                    <Input
+                      type="time"
+                      value={newClass.time}
+                      onChange={(e) => setNewClass({ ...newClass, time: e.target.value })}
+                    />
+                  </div>
+                </div>
                 <div className="space-y-2">
-                  <Label>Topic</Label>
-                  <Input
-                    placeholder="e.g., Linux Process Scheduling"
-                    value={newClass.topic}
-                    onChange={(e) => setNewClass({ ...newClass, topic: e.target.value })}
+                  <Label>Description</Label>
+                  <Textarea
+                    placeholder="Brief description of what will be covered..."
+                    rows={3}
+                    value={newClass.description}
+                    onChange={(e) => setNewClass({ ...newClass, description: e.target.value })}
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label>Course</Label>
-                  <Select value={newClass.course} onValueChange={(val) => setNewClass({ ...newClass, course: val })}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select course" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="linux">Linux Fundamentals</SelectItem>
-                      <SelectItem value="shell">Shell Scripting Mastery</SelectItem>
-                      <SelectItem value="c">C Programming Deep Dive</SelectItem>
-                    </SelectContent>
-                  </Select>
+                <div className="flex justify-end gap-3">
+                  <Button variant="outline" onClick={() => setShowCreateForm(false)}>Cancel</Button>
+                  <Button>Schedule Class</Button>
                 </div>
-                <div className="space-y-2">
-                  <Label>Date</Label>
-                  <Input
-                    type="date"
-                    value={newClass.date}
-                    onChange={(e) => setNewClass({ ...newClass, date: e.target.value })}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Time</Label>
-                  <Input
-                    type="time"
-                    value={newClass.time}
-                    onChange={(e) => setNewClass({ ...newClass, time: e.target.value })}
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label>Description</Label>
-                <Textarea
-                  placeholder="Brief description of what will be covered..."
-                  rows={3}
-                  value={newClass.description}
-                  onChange={(e) => setNewClass({ ...newClass, description: e.target.value })}
-                />
-              </div>
-              <div className="flex justify-end gap-3">
-                <Button variant="outline" onClick={() => setShowCreateForm(false)}>Cancel</Button>
-                <Button>Schedule Class</Button>
               </div>
             </div>
           </section>

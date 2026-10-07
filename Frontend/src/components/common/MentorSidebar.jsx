@@ -17,7 +17,7 @@ export default function MentorSidebar({ isOpen, onClose }) {
       {isOpen && (
         <div
           onClick={onClose}
-          className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+          className="fixed inset-0 z-40 animate-fade-in bg-black/45 lg:hidden"
         />
       )}
 
@@ -30,12 +30,18 @@ export default function MentorSidebar({ isOpen, onClose }) {
         `}
       >
         <div className="flex items-center justify-between h-14 px-5 border-b border-border">
-          <span className="text-xs font-semibold uppercase tracking-widest text-foreground">
-            NuralPath
-          </span>
+          <div className="flex items-center gap-2.5">
+            <span className="grid h-6 w-6 place-items-center rounded-md bg-foreground text-[11px] font-bold text-background">
+              N
+            </span>
+            <span className="text-xs font-semibold uppercase tracking-widest text-foreground">
+              NuralPath
+            </span>
+          </div>
           <button
             onClick={onClose}
-            className="lg:hidden p-1 text-muted-foreground hover:text-foreground"
+            aria-label="Close menu"
+            className="icon-btn lg:hidden grid h-8 w-8 place-items-center rounded-lg text-muted-foreground"
           >
             <X className="w-4 h-4" />
           </button>
@@ -49,9 +55,9 @@ export default function MentorSidebar({ isOpen, onClose }) {
               end={item.end}
               onClick={onClose}
               className={({ isActive }) =>
-                `block rounded px-3 py-2 text-sm transition-colors ${
+                `block rounded-md px-3 py-2 text-sm transition-colors ${
                   isActive
-                    ? "bg-accent font-medium text-primary"
+                    ? "bg-accent font-medium text-foreground shadow-[inset_2px_0_0_var(--color-primary)]"
                     : "text-muted-foreground hover:bg-accent hover:text-foreground"
                 }`
               }

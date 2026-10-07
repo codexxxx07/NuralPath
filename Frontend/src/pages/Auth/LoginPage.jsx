@@ -37,92 +37,96 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-sm px-4 py-20 sm:px-6">
-      <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-        Welcome back
-      </h1>
-      <p className="mt-2 text-sm text-muted-foreground">
-        Sign in to continue learning
-      </p>
+    <div className="mx-auto w-full max-w-md animate-fade-in px-4 py-20 sm:px-6">
+      <div className="card-depth p-6 sm:p-8">
+        <h1 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
+          Welcome back
+        </h1>
+        <p className="mt-1.5 text-sm text-muted-foreground">
+          Sign in to continue learning
+        </p>
 
-      <p className="mt-6 border-t border-border pt-4 text-xs leading-relaxed text-muted-foreground">
-        Demo authentication — no backend is connected yet. Submitting the
-        form opens the student dashboard for preview.
-      </p>
+        <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+          Demo authentication — no backend is connected yet. Submitting the
+          form opens the student dashboard for preview.
+        </p>
 
-      <form onSubmit={handleSubmit} className="mt-6 space-y-4 border-t border-border pt-6">
-        <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            type="email"
-            placeholder="you@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
-          <div className="relative">
+        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
             <Input
-              id="password"
-              type={showPassword ? "text" : "password"}
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="pr-10"
+              id="email"
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
-            >
-              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-            </button>
           </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="password">Password</Label>
+            <div className="relative">
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                title={showPassword ? "Hide password" : "Show password"}
+                className="icon-btn absolute right-1.5 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-lg text-muted-foreground"
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <label className="flex cursor-pointer items-center gap-2 text-sm text-muted-foreground">
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="h-4 w-4 rounded border-border bg-background accent-primary"
+              />
+              Remember me
+            </label>
+            <Link to="/forgot-password" className="text-sm text-primary hover:underline">
+              Forgot password?
+            </Link>
+          </div>
+
+          <Button type="submit" className="w-full" size="lg">
+            Sign In
+            <ArrowRight className="ml-1 h-4 w-4" />
+          </Button>
+        </form>
+
+        <div className="relative my-8">
+          <div className="border-t border-border" />
+          <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-card px-3 text-xs text-muted-foreground">
+            or
+          </span>
         </div>
 
-        <div className="flex items-center justify-between">
-          <label className="flex cursor-pointer items-center gap-2 text-sm text-muted-foreground">
-            <input
-              type="checkbox"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
-              className="h-4 w-4 rounded border-border bg-background accent-primary"
-            />
-            Remember me
-          </label>
-          <Link to="/forgot-password" className="text-sm text-primary hover:underline">
-            Forgot password?
-          </Link>
+        <div className="space-y-3">
+          <Button variant="outline" className="w-full" size="lg">
+            <GoogleIcon className="h-5 w-5" />
+            Continue with Google
+          </Button>
+          <Button variant="outline" className="w-full" size="lg">
+            <GithubIcon className="h-5 w-5" />
+            Continue with GitHub
+          </Button>
         </div>
-
-        <Button type="submit" className="w-full" size="lg">
-          Sign In
-          <ArrowRight className="ml-1 h-4 w-4" />
-        </Button>
-      </form>
-
-      <div className="relative my-8">
-        <div className="border-t border-border" />
-        <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-3 text-xs text-muted-foreground">
-          or
-        </span>
       </div>
 
-      <div className="space-y-3">
-        <Button variant="outline" className="w-full" size="lg">
-          <GoogleIcon className="h-5 w-5" />
-          Continue with Google
-        </Button>
-        <Button variant="outline" className="w-full" size="lg">
-          <GithubIcon className="h-5 w-5" />
-          Continue with GitHub
-        </Button>
-      </div>
-
-      <p className="mt-8 border-t border-border pt-6 text-center text-sm text-muted-foreground">
+      <p className="mt-6 text-center text-sm text-muted-foreground">
         Don&apos;t have an account?{" "}
         <Link to="/register" className="font-medium text-primary hover:underline">
           Sign up

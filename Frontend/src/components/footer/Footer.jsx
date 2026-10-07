@@ -33,7 +33,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-border bg-background">
       {/* Newsletter Section */}
-      <div className="border-b border-border">
+      <div className="border-b border-border bg-surface">
         <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
           <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
             <div>
@@ -56,7 +56,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-6">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link to="/" className="inline-flex items-center">
+            <Link to="/" className="inline-flex items-center gap-2.5">
+              <span className="grid h-6 w-6 place-items-center rounded-md bg-foreground text-[11px] font-bold text-background">
+                N
+              </span>
               <span className="text-sm font-semibold uppercase tracking-widest text-foreground">
                 NuralPath
               </span>

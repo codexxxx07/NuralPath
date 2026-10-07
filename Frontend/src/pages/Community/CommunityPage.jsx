@@ -67,7 +67,7 @@ export default function CommunityPage() {
     <div className="min-h-screen bg-background">
       {/* ─── Hero ─── */}
       <section>
-        <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6 sm:py-28">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
               Student Community
@@ -96,14 +96,14 @@ export default function CommunityPage() {
       </section>
 
       {/* ─── About the community ─── */}
-      <section className="border-y border-border bg-surface py-20 sm:py-24">
+      <section className="border-y border-border bg-surface py-24 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid items-start gap-12 lg:grid-cols-2">
             <div>
               <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
                 About This Community
               </p>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground">
+              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
                 Built by students, for students
               </h2>
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
@@ -150,13 +150,13 @@ export default function CommunityPage() {
       </section>
 
       {/* ─── What the community offers ─── */}
-      <section className="py-20 sm:py-24">
+      <section className="py-24 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
               What the Community Offers
             </p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground">
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
               More Than a Course Catalog
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
@@ -164,9 +164,9 @@ export default function CommunityPage() {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-x-12 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {pillars.map((p) => (
-              <div key={p.title} className="border-t border-border py-6">
+              <div key={p.title} className="card-depth card-depth-hover p-6">
                 <h3 className="text-base font-medium text-foreground">
                   {p.title}
                 </h3>
@@ -180,13 +180,13 @@ export default function CommunityPage() {
       </section>
 
       {/* ─── How to get involved ─── */}
-      <section className="border-y border-border bg-surface py-20 sm:py-24">
+      <section className="border-y border-border bg-surface py-24 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
               Get Started
             </p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground">
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
               How Students Can Get Involved
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
@@ -194,35 +194,36 @@ export default function CommunityPage() {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-x-12 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {howToJoin.map((step) => (
-              <div key={step.step} className="border-t border-border py-6">
+              <Link
+                key={step.step}
+                to={step.to}
+                className="card-depth card-depth-hover group flex flex-col p-6"
+              >
                 <span className="font-mono text-xs text-muted-foreground">
                   {step.step}
                 </span>
-                <h3 className="mt-2 text-base font-medium text-foreground">
+                <h3 className="mt-2 text-base font-medium text-foreground transition-colors duration-200 group-hover:text-primary">
                   {step.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
                   {step.description}
                 </p>
-                <Link
-                  to={step.to}
-                  className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-                >
+                <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary transition-colors duration-200 group-hover:underline">
                   Go
                   <ArrowRight className="h-3.5 w-3.5" />
-                </Link>
-              </div>
+                </span>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
       {/* ─── CTA ─── */}
-      <section className="py-20 sm:py-24">
+      <section className="py-24 sm:py-28">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
-          <h2 className="text-2xl font-semibold tracking-tight text-foreground">
+          <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
             Your First Doubt Is the Best Place to Start
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">

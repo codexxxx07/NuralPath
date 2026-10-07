@@ -123,7 +123,7 @@ export default function AdminCoursesPage() {
     <div className="mx-auto max-w-6xl space-y-10">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-foreground">Course Management</h1>
+          <h1 className="text-lg font-semibold tracking-tight text-foreground">Course Management</h1>
           <p className="mt-1 text-sm text-muted-foreground">{courses.length} courses on platform</p>
         </div>
         <Button onClick={() => setShowForm(!showForm)}>
@@ -133,15 +133,15 @@ export default function AdminCoursesPage() {
       </div>
 
       {showForm && (
-        <section className="overflow-hidden rounded-lg border border-border">
+        <section className="card-depth overflow-hidden">
           <div className="flex items-center justify-between border-b border-border px-5 py-4">
             <div>
               <h2 className="text-base font-semibold tracking-tight text-foreground">Create New Course</h2>
               <p className="mt-0.5 text-xs text-muted-foreground">Set up a new course on the platform</p>
             </div>
-            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setShowForm(false)}>
+            <button type="button" className="icon-btn grid h-9 w-9 place-items-center rounded-lg text-muted-foreground" aria-label="Close form" title="Close" onClick={() => setShowForm(false)}>
               <X className="h-4 w-4" />
-            </Button>
+            </button>
           </div>
           <div className="space-y-4 p-5">
             <div className="grid gap-4 sm:grid-cols-2">
@@ -179,12 +179,12 @@ export default function AdminCoursesPage() {
       )}
 
       <section>
-        <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+        <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
           All Courses
         </h2>
-        <div>
+        <div className="mt-4">
           {courses.map((course) => (
-            <div key={course.id} className="border-b border-border py-5 transition-colors hover:bg-muted/40">
+            <div key={course.id} className="border-t border-border py-5 transition-colors duration-200 hover:bg-accent/60">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
@@ -201,16 +201,16 @@ export default function AdminCoursesPage() {
                 </div>
                 <div className="flex items-center gap-6">
                   <div className="text-right">
-                    <p className="text-sm font-semibold text-foreground">{course.price}</p>
-                    <p className="text-xs text-muted-foreground">{course.revenue} total</p>
+                    <p className="text-sm font-semibold tabular-nums text-foreground">{course.price}</p>
+                    <p className="text-xs tabular-nums text-muted-foreground">{course.revenue} total</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="icon" className="h-9 w-9" onClick={() => setSelectedCourse(course)}>
+                    <button type="button" className="icon-btn grid h-9 w-9 place-items-center rounded-lg text-muted-foreground" aria-label={`View ${course.title}`} title="View course" onClick={() => setSelectedCourse(course)}>
                       <Eye className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="h-9 w-9">
+                    </button>
+                    <button type="button" className="icon-btn grid h-9 w-9 place-items-center rounded-lg text-muted-foreground" aria-label={`Edit ${course.title}`} title="Edit course">
                       <Edit className="h-4 w-4" />
-                    </Button>
+                    </button>
                     <div className="flex items-center gap-2">
                       <Switch defaultChecked={course.status === "Published"} />
                       <span className="hidden text-xs text-muted-foreground sm:inline">
@@ -226,16 +226,16 @@ export default function AdminCoursesPage() {
       </section>
 
       {selectedCourse && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={() => setSelectedCourse(null)}>
+        <div className="fixed inset-0 z-50 flex animate-fade-in items-center justify-center bg-black/50 p-4" onClick={() => setSelectedCourse(null)}>
           <div
-            className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg border border-border bg-background p-6 shadow-lg"
+            className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-border bg-card p-6 shadow-pop animate-pop-in"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-base font-semibold tracking-tight text-foreground">Course Details</h2>
-              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setSelectedCourse(null)}>
+              <button type="button" className="icon-btn grid h-9 w-9 place-items-center rounded-lg text-muted-foreground" aria-label="Close dialog" title="Close" onClick={() => setSelectedCourse(null)}>
                 <X className="h-4 w-4" />
-              </Button>
+              </button>
             </div>
 
             <div className="mb-5">
@@ -245,20 +245,20 @@ export default function AdminCoursesPage() {
 
             <div className="grid grid-cols-2 border-t border-border">
               <div className="border-b border-border py-4 pr-4">
-                <p className="text-2xl font-semibold tracking-tight text-foreground">{selectedCourse.students}</p>
-                <p className="mt-1 text-xs text-muted-foreground">Students</p>
+                <p className="text-2xl font-semibold tracking-tight tabular-nums text-foreground">{selectedCourse.students}</p>
+                <p className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">Students</p>
               </div>
               <div className="border-b border-border py-4 pl-4">
-                <p className="text-2xl font-semibold tracking-tight text-foreground">{selectedCourse.revenue}</p>
-                <p className="mt-1 text-xs text-muted-foreground">Revenue</p>
+                <p className="text-2xl font-semibold tracking-tight tabular-nums text-foreground">{selectedCourse.revenue}</p>
+                <p className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">Revenue</p>
               </div>
               <div className="border-b border-border py-4 pr-4">
-                <p className="text-2xl font-semibold tracking-tight text-foreground">{selectedCourse.modules}</p>
-                <p className="mt-1 text-xs text-muted-foreground">Modules</p>
+                <p className="text-2xl font-semibold tracking-tight tabular-nums text-foreground">{selectedCourse.modules}</p>
+                <p className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">Modules</p>
               </div>
               <div className="border-b border-border py-4 pl-4">
                 <p className="text-2xl font-semibold tracking-tight text-foreground">{selectedCourse.duration}</p>
-                <p className="mt-1 text-xs text-muted-foreground">Duration</p>
+                <p className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">Duration</p>
               </div>
             </div>
 

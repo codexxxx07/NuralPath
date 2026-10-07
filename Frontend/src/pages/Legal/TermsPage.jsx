@@ -73,38 +73,41 @@ const sections = [
 export default function TermsPage() {
   return (
     <div className="min-h-screen bg-background">
-      <section className="py-20 sm:py-24">
+      <section className="py-24 sm:py-28">
         <div className="mx-auto max-w-3xl px-4 sm:px-6">
           <Link
             to="/"
-            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
           >
             <ArrowLeft className="h-4 w-4" />
             Home
           </Link>
 
-          <div className="mt-8">
+          <header className="mt-8 max-w-2xl">
             <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
               Legal
             </p>
-            <h1 className="mt-3 text-3xl font-semibold tracking-tight text-foreground">
+            <h1 className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
               Terms of Service
             </h1>
             <p className="mt-3 text-xs text-muted-foreground">
               Last updated: September 2026
             </p>
-          </div>
+          </header>
 
-          <div className="mt-10 space-y-8">
+          <div className="mt-10 max-w-2xl border-t border-border">
             {sections.map((section) => (
-              <div key={section.title}>
-                <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+              <section
+                key={section.title}
+                className="border-b border-border py-6"
+              >
+                <h2 className="text-base font-semibold tracking-tight text-foreground">
                   {section.title}
                 </h2>
-                <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                <p className="mt-2.5 text-sm leading-7 text-muted-foreground">
                   {section.body}
                 </p>
-              </div>
+              </section>
             ))}
           </div>
 

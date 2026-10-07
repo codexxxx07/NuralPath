@@ -68,16 +68,17 @@ function MentorDashboardLayout() {
         <header className="h-14 border-b border-border bg-background flex items-center px-4 lg:px-6 shrink-0">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="lg:hidden p-2 -ml-2 text-muted-foreground hover:text-foreground"
+            aria-label="Open menu"
+            className="icon-btn lg:hidden grid h-9 w-9 place-items-center rounded-lg text-muted-foreground"
           >
             <Menu className="w-5 h-5" />
           </button>
           <div className="ml-2 lg:ml-0">
-            <p className="text-sm text-muted-foreground">Mentor Dashboard</p>
+            <p className="text-sm font-medium text-foreground">Mentor Dashboard</p>
           </div>
         </header>
         <main className="flex-1 overflow-y-auto p-5 lg:p-8" data-lenis-prevent>
-          <div className="mb-5 flex items-start gap-2 rounded-md border border-border px-3 py-2.5 text-xs text-muted-foreground">
+          <div className="mb-5 flex items-start gap-2 rounded-lg border border-border bg-surface px-3.5 py-2.5 text-xs text-muted-foreground">
             <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
             <span>
               This dashboard is a frontend demo — no backend is connected yet, so all
@@ -103,16 +104,17 @@ function AdminDashboardLayout() {
         <header className="h-14 border-b border-border bg-background flex items-center px-4 lg:px-6 shrink-0">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="lg:hidden p-2 -ml-2 text-muted-foreground hover:text-foreground"
+            aria-label="Open menu"
+            className="icon-btn lg:hidden grid h-9 w-9 place-items-center rounded-lg text-muted-foreground"
           >
             <Menu className="w-5 h-5" />
           </button>
           <div className="ml-2 lg:ml-0">
-            <p className="text-sm text-muted-foreground">Admin Dashboard</p>
+            <p className="text-sm font-medium text-foreground">Admin Dashboard</p>
           </div>
         </header>
         <main className="flex-1 overflow-y-auto p-5 lg:p-8" data-lenis-prevent>
-          <div className="mb-5 flex items-start gap-2 rounded-md border border-border px-3 py-2.5 text-xs text-muted-foreground">
+          <div className="mb-5 flex items-start gap-2 rounded-lg border border-border bg-surface px-3.5 py-2.5 text-xs text-muted-foreground">
             <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
             <span>
               This dashboard is a frontend demo — no backend is connected yet, so all

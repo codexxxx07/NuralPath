@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Library } from "lucide-react";
 import { Button } from "../../components/ui/button";
+import { Badge } from "../../components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "../../components/ui/tabs";
 
 const tabs = ["All", "Courses", "Practice", "Community", "Roadmap"];
@@ -120,7 +121,7 @@ export default function LibrariesPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero */}
-      <section className="py-20 sm:py-24">
+      <section className="py-24 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
@@ -139,7 +140,7 @@ export default function LibrariesPage() {
       </section>
 
       {/* Resource list */}
-      <section className="border-t border-border py-20 sm:py-24">
+      <section className="border-t border-border py-24 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <Tabs value={activeTab} onValueChange={setActiveTab}>
@@ -151,7 +152,7 @@ export default function LibrariesPage() {
                 ))}
               </TabsList>
             </Tabs>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
               {filtered.length} item{filtered.length === 1 ? "" : "s"}
             </p>
           </div>
@@ -163,43 +164,41 @@ export default function LibrariesPage() {
                   <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
                     {category}
                   </h2>
-                  <div>
+                  <div className="mt-6 grid gap-6 sm:grid-cols-2">
                     {items.map((resource) =>
                       resource.status === "In Development" ? (
                         <div
                           key={resource.id}
-                          className="flex items-start justify-between gap-6 border-b border-border py-5 opacity-75"
+                          className="card-depth-flat flex flex-col p-5 opacity-75"
                         >
-                          <div className="min-w-0">
-                            <p className="text-sm font-medium text-foreground">
-                              {resource.title}
-                            </p>
-                            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                              {resource.description}
-                            </p>
+                          <h3 className="text-sm font-medium text-foreground">
+                            {resource.title}
+                          </h3>
+                          <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                            {resource.description}
+                          </p>
+                          <div className="mt-4">
+                            <Badge variant="secondary">{resource.status}</Badge>
                           </div>
-                          <span className="shrink-0 text-xs text-muted-foreground">
-                            {resource.status}
-                          </span>
                         </div>
                       ) : (
                         <Link
                           key={resource.id}
                           to={resource.to}
-                          className="group flex items-start justify-between gap-6 border-b border-border py-5 transition-colors hover:bg-muted/40"
+                          className="card-depth card-depth-hover group flex flex-col p-5"
                         >
-                          <div className="min-w-0">
-                            <p className="text-sm font-medium text-foreground">
+                          <div className="flex items-start justify-between gap-4">
+                            <h3 className="text-sm font-medium text-foreground transition-colors duration-200 group-hover:text-primary">
                               {resource.title}
-                            </p>
-                            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                              {resource.description}
-                            </p>
-                            <p className="mt-2 text-xs text-muted-foreground">
-                              {resource.status}
-                            </p>
+                            </h3>
+                            <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground transition-colors duration-200 group-hover:text-foreground" />
                           </div>
-                          <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
+                          <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                            {resource.description}
+                          </p>
+                          <div className="mt-4">
+                            <Badge variant="secondary">{resource.status}</Badge>
+                          </div>
                         </Link>
                       )
                     )}
@@ -210,8 +209,12 @@ export default function LibrariesPage() {
           )}
 
           {filtered.length === 0 && (
-            <div className="mt-10 border-t border-border py-12 text-center">
-              <p className="text-sm font-medium text-foreground">
+            <div className="mt-10 py-16 text-center">
+              <Library
+                className="mx-auto h-8 w-8 text-muted-foreground"
+                aria-hidden="true"
+              />
+              <p className="mt-4 text-sm font-medium text-foreground">
                 No resources in this category yet.
               </p>
             </div>

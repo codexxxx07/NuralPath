@@ -31,30 +31,35 @@ export default function MentorAnalyticsPage() {
   return (
     <div className="max-w-6xl space-y-12">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Analytics</h1>
+        <h1 className="text-lg font-semibold tracking-tight text-foreground">Analytics</h1>
         <p className="mt-1 text-sm text-muted-foreground">Insights across all your courses</p>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 border-t border-border sm:grid-cols-4">
-        {stats.map((stat) => (
-          <div key={stat.label} className="border-b border-border py-5 pr-6 sm:border-b-0">
-            <p className="text-2xl font-semibold tracking-tight text-foreground">{stat.value}</p>
-            <p className="mt-1 text-sm text-muted-foreground">{stat.label}</p>
-            <p className="mt-0.5 text-xs text-muted-foreground">{stat.change}</p>
-          </div>
-        ))}
+      <div className="card-depth p-6">
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+          {stats.map((stat) => (
+            <div key={stat.label}>
+              <p className="text-2xl/3xl font-semibold tracking-tight text-foreground">{stat.value}</p>
+              <p className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">{stat.label}</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">{stat.change}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="grid gap-12 lg:grid-cols-2">
         {/* Course Performance */}
         <section>
-          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          <h2 className="pb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Course Performance
           </h2>
-          <div>
-            {coursePerformance.map((course) => (
-              <div key={course.name} className="border-b border-border py-5">
+          <div className="card-depth">
+            {coursePerformance.map((course, idx) => (
+              <div
+                key={course.name}
+                className={`px-4 py-5 sm:px-5 ${idx !== coursePerformance.length - 1 ? "border-b border-border" : ""}`}
+              >
                 <div className="flex items-baseline justify-between gap-4">
                   <p className="text-sm font-medium text-foreground">{course.name}</p>
                   <p className="text-xs text-muted-foreground">
@@ -64,9 +69,9 @@ export default function MentorAnalyticsPage() {
                 <div className="mt-3 space-y-2">
                   <div className="flex items-center gap-3">
                     <span className="w-20 shrink-0 text-xs text-muted-foreground">Completion</span>
-                    <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
+                    <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
                       <div
-                        className="h-full rounded-full bg-foreground transition-all duration-500"
+                        className="h-full rounded-full bg-primary transition-all duration-500"
                         style={{ width: `${course.completion}%` }}
                       />
                     </div>
@@ -74,9 +79,9 @@ export default function MentorAnalyticsPage() {
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="w-20 shrink-0 text-xs text-muted-foreground">Avg Score</span>
-                    <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
+                    <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
                       <div
-                        className="h-full rounded-full bg-muted-foreground/40 transition-all duration-500"
+                        className="h-full rounded-full bg-primary/70 transition-all duration-500"
                         style={{ width: `${course.avgScore}%` }}
                       />
                     </div>
@@ -90,16 +95,19 @@ export default function MentorAnalyticsPage() {
 
         {/* Student Progress Distribution */}
         <section>
-          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          <h2 className="pb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Student Progress Distribution
           </h2>
-          <div>
-            {progressDistribution.map((dist) => (
-              <div key={dist.range} className="flex items-center gap-4 border-b border-border py-4">
+          <div className="card-depth">
+            {progressDistribution.map((dist, idx) => (
+              <div
+                key={dist.range}
+                className={`flex items-center gap-4 px-4 py-4 sm:px-5 ${idx !== progressDistribution.length - 1 ? "border-b border-border" : ""}`}
+              >
                 <span className="w-16 shrink-0 text-xs text-muted-foreground">{dist.range}</span>
-                <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
+                <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-muted">
                   <div
-                    className="h-full rounded-full bg-foreground transition-all duration-500"
+                    className="h-full rounded-full bg-primary transition-all duration-500"
                     style={{ width: `${(dist.count / maxStudents) * 100}%` }}
                   />
                 </div>
@@ -108,7 +116,7 @@ export default function MentorAnalyticsPage() {
                 </span>
               </div>
             ))}
-            <div className="flex items-center justify-between py-4">
+            <div className="flex items-center justify-between px-4 py-4 sm:px-5">
               <span className="text-sm text-muted-foreground">Total Students</span>
               <span className="text-base font-semibold text-foreground">148</span>
             </div>
@@ -118,16 +126,18 @@ export default function MentorAnalyticsPage() {
 
       {/* Engagement Metrics */}
       <section>
-        <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+        <h2 className="pb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
           Engagement Metrics
         </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4">
-          {engagementMetrics.map((metric) => (
-            <div key={metric.label} className="border-b border-border py-5 pr-6 sm:border-b-0">
-              <p className="text-2xl font-semibold tracking-tight text-foreground">{metric.value}</p>
-              <p className="mt-1 text-sm text-muted-foreground">{metric.label}</p>
-            </div>
-          ))}
+        <div className="card-depth p-6">
+          <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+            {engagementMetrics.map((metric) => (
+              <div key={metric.label}>
+                <p className="text-2xl/3xl font-semibold tracking-tight text-foreground">{metric.value}</p>
+                <p className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">{metric.label}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </div>

@@ -104,12 +104,12 @@ export default function PracticeLabPage() {
   return (
     <div className="space-y-10">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Practice Lab</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Hands-on terminal practice to sharpen your skills</p>
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">Practice Lab</h1>
+        <p className="mt-1.5 text-sm text-muted-foreground">Hands-on terminal practice to sharpen your skills</p>
       </div>
 
       <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
-        <div className="overflow-hidden rounded-lg border border-border">
+        <div className="card-depth overflow-hidden">
           <div className="border-b border-zinc-800 bg-zinc-900 px-4 py-3">
             <span className="font-mono text-xs text-zinc-400">arjun@nuralpath:~</span>
           </div>
@@ -154,7 +154,7 @@ export default function PracticeLabPage() {
 
         <div className="space-y-10">
           <section>
-            <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+            <h2 className="border-b border-border pb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
               Exercises
             </h2>
             <div>
@@ -185,9 +185,7 @@ export default function PracticeLabPage() {
                   <div className="mt-2 flex items-center justify-between">
                     <span className="text-xs text-muted-foreground">{ex.xp} XP</span>
                     {ex.status === "in-progress" && (
-                      <Button variant="ghost" size="sm" className="h-7 px-2 text-xs">
-                        Continue
-                      </Button>
+                      <Button variant="ghost" size="sm">Continue</Button>
                     )}
                   </div>
                 </div>
@@ -196,7 +194,7 @@ export default function PracticeLabPage() {
           </section>
 
           <section>
-            <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+            <h2 className="border-b border-border pb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
               Quick Reference
             </h2>
             <div className="space-y-1.5 pt-3 text-xs font-mono text-muted-foreground">

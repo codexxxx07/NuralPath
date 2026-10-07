@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Send } from "lucide-react";
+import { MessageSquare, Send } from "lucide-react";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -136,8 +136,8 @@ export default function DoubtSolvingPage() {
     <div className="space-y-10">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-foreground">Doubt Solving</h1>
-          <p className="mt-1 text-sm text-muted-foreground">Get help from mentors and resolve your doubts</p>
+          <h1 className="text-xl font-semibold tracking-tight text-foreground">Doubt Solving</h1>
+          <p className="mt-1.5 text-sm text-muted-foreground">Get help from mentors and resolve your doubts</p>
         </div>
         <Button onClick={() => setShowAskForm(!showAskForm)} className="shrink-0">
           {showAskForm ? "Cancel" : "Ask a Doubt"}
@@ -145,8 +145,8 @@ export default function DoubtSolvingPage() {
       </div>
 
       {showAskForm && (
-        <section className="rounded-lg border border-border p-5">
-          <h2 className="text-base font-semibold tracking-tight text-foreground">Ask a New Doubt</h2>
+        <section className="card-depth animate-fade-in p-6">
+          <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Ask a New Doubt</h2>
           <div className="mt-4 space-y-4">
             <Input
               placeholder="Brief title for your doubt"
@@ -181,36 +181,61 @@ export default function DoubtSolvingPage() {
 
       <div className="grid gap-8 lg:grid-cols-[300px_1fr]">
         <section className="h-fit">
-          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          <h2 className="border-b border-border pb-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Past Doubts
           </h2>
-          <div>
-            {pastDoubts.map((doubt) => (
-              <div
-                key={doubt.id}
-                onClick={() => setSelectedDoubt(doubt)}
-                className={cn(
-                  "cursor-pointer border-b border-border px-3 py-4 transition-colors",
-                  selectedDoubt?.id === doubt.id ? "bg-muted" : "hover:bg-muted/60"
-                )}
+          {pastDoubts.length === 0 ? (
+            <div className="py-16 text-center">
+              <MessageSquare className="mx-auto h-8 w-8 text-muted-foreground" />
+              <p className="mt-4 text-sm font-medium text-foreground">No doubts yet</p>
+              <p className="mx-auto mt-1.5 max-w-xs text-sm text-muted-foreground">
+                Ask your first question to get help from mentors.
+              </p>
+              <Button
+                variant="outline"
+                className="mt-5"
+                onClick={() => setShowAskForm(true)}
               >
-                <p className="line-clamp-1 text-sm font-medium text-foreground">{doubt.question}</p>
-                <div className="mt-1.5 flex items-center gap-2 text-xs text-muted-foreground">
-                  <span>{doubt.topic}</span>
-                  <span aria-hidden="true">·</span>
-                  <span>{doubt.timestamp}</span>
-                </div>
-              </div>
-            ))}
-          </div>
+                Ask a Doubt
+              </Button>
+            </div>
+          ) : (
+            <div>
+              {pastDoubts.map((doubt) => (
+                <button
+                  key={doubt.id}
+                  type="button"
+                  onClick={() => setSelectedDoubt(doubt)}
+                  className={cn(
+                    "-mx-3 w-full cursor-pointer rounded-lg border-b border-border px-3 py-3.5 text-left transition-colors duration-200",
+                    selectedDoubt?.id === doubt.id
+                      ? "bg-accent"
+                      : "hover:bg-accent/60"
+                  )}
+                >
+                  <p className="line-clamp-1 text-sm font-medium text-foreground">{doubt.question}</p>
+                  <div className="mt-1.5 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                    <span>{doubt.topic}</span>
+                    <span aria-hidden="true">·</span>
+                    <span>{doubt.timestamp}</span>
+                    <span aria-hidden="true">·</span>
+                    <span>{doubt.replies.length} replies</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          )}
         </section>
 
-        <div className="flex flex-col rounded-lg border border-border">
+        <div className="flex flex-col card-depth">
           <div className="border-b border-border px-5 py-4">
             <p className="text-sm font-medium text-foreground">{selectedDoubt?.question}</p>
             <div className="mt-2 flex flex-wrap items-center gap-2">
               <Badge variant="outline">{selectedDoubt?.topic}</Badge>
               <Badge variant="success">Resolved</Badge>
+              <span className="text-xs text-muted-foreground">
+                {selectedDoubt?.replies.length} replies
+              </span>
             </div>
           </div>
           <div className="max-h-[400px] flex-1 space-y-4 overflow-y-auto p-5">
@@ -251,7 +276,7 @@ export default function DoubtSolvingPage() {
                 onChange={(e) => setNewMessage(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSend()}
               />
-              <Button size="icon" onClick={handleSend} aria-label="Send message">
+              <Button size="icon" onClick={handleSend} aria-label="Send message" title="Send message">
                 <Send className="h-4 w-4" />
               </Button>
             </div>

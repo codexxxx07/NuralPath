@@ -171,6 +171,25 @@ const faqs = [
   },
 ];
 
+const heroStats = [
+  { value: "04", label: "Live tracks" },
+  { value: "08", label: "Week DSA path" },
+  { value: "03", label: "Role dashboards" },
+  { value: "24/7", label: "Practice lab" },
+];
+
+const previewProgress = [
+  { name: "Data Structures in C", pct: 72 },
+  { name: "Linux Fundamentals", pct: 48 },
+  { name: "Shell Scripting", pct: 30 },
+];
+
+const previewActivity = [
+  { action: "Solved “Binary Search”", when: "2h ago" },
+  { action: "Completed Arrays module", when: "Yesterday" },
+  { action: "Finished Week 03 exercise", when: "2d ago" },
+];
+
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-background">
@@ -205,44 +224,92 @@ export default function HomePage() {
               </p>
             </div>
 
-            {/* Code preview */}
-            <div className="hidden lg:block">
-              <div className="overflow-hidden rounded-lg border border-border bg-card">
-                <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
-                  <span className="font-mono text-xs text-muted-foreground">list.c</span>
-                  <span className="font-mono text-xs text-muted-foreground">C</span>
+            {/* Product preview */}
+            <div className="mt-2 lg:mt-0">
+              <div className="card-depth overflow-hidden shadow-raised">
+                <div className="flex items-center justify-between border-b border-border bg-surface px-4 py-3">
+                  <div className="flex items-center gap-2.5">
+                    <span className="grid h-5 w-5 place-items-center rounded bg-foreground text-[9px] font-bold text-background">
+                      N
+                    </span>
+                    <span className="text-xs font-semibold uppercase tracking-widest text-foreground">
+                      NuralPath
+                    </span>
+                  </div>
+                  <span className="text-xs text-muted-foreground">
+                    Learning Dashboard
+                  </span>
                 </div>
-                <div className="p-6 font-mono text-sm leading-7 text-muted-foreground">
-                  <p>
-                    <span className="font-medium text-foreground">#include</span> &lt;stdlib.h&gt;
-                  </p>
-                  <p className="mt-2">
-                    <span className="font-medium text-foreground">typedef</span> struct node {"{"}
-                  </p>
-                  <p className="pl-4">
-                    <span className="font-medium text-foreground">int</span> data;
-                  </p>
-                  <p className="pl-4">struct node *next;</p>
-                  <p>{"} node_t;"}</p>
-                  <p className="mt-2">
-                    <span className="font-medium text-foreground">node_t</span> *push(
-                    <span className="font-medium text-foreground">node_t</span> *head,{" "}
-                    <span className="font-medium text-foreground">int</span> value) {"{"}
-                  </p>
-                  <p className="pl-4">
-                    <span className="font-medium text-foreground">node_t</span> *n = malloc(
-                    <span className="font-medium text-foreground">sizeof</span>(*n));
-                  </p>
-                  <p className="pl-4">n-&gt;data = value;</p>
-                  <p className="pl-4">n-&gt;next = head;</p>
-                  <p className="pl-4">
-                    <span className="font-medium text-foreground">return</span> n;
-                  </p>
-                  <p>{"}"}</p>
+
+                <div className="space-y-5 p-5 sm:p-6">
+                  <div>
+                    <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+                      Continue learning
+                    </p>
+                    <div className="mt-3.5 space-y-3.5">
+                      {previewProgress.map((row) => (
+                        <div key={row.name}>
+                          <div className="flex items-center justify-between gap-4">
+                            <span className="truncate text-sm text-foreground">
+                              {row.name}
+                            </span>
+                            <span className="shrink-0 font-mono text-xs text-muted-foreground">
+                              {row.pct}%
+                            </span>
+                          </div>
+                          <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-muted">
+                            <div
+                              className="h-full rounded-full bg-primary transition-all duration-700"
+                              style={{ width: `${row.pct}%` }}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="border-t border-border pt-4">
+                    <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+                      Recent activity
+                    </p>
+                    <ul className="mt-3 space-y-2.5">
+                      {previewActivity.map((item) => (
+                        <li
+                          key={item.action}
+                          className="flex items-center justify-between gap-4 text-sm"
+                        >
+                          <span className="truncate text-foreground">
+                            {item.action}
+                          </span>
+                          <span className="shrink-0 text-xs text-muted-foreground">
+                            {item.when}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Statistics */}
+      <section className="border-t border-border">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <dl className="grid grid-cols-2 gap-8 py-10 sm:grid-cols-4">
+            {heroStats.map((stat) => (
+              <div key={stat.label}>
+                <dd className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+                  {stat.value}
+                </dd>
+                <dt className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">
+                  {stat.label}
+                </dt>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 
@@ -287,10 +354,10 @@ export default function HomePage() {
               <Link
                 key={track.title}
                 to={track.link}
-                className="group flex items-start justify-between gap-6 border-t border-border py-6 transition-colors hover:bg-muted/40"
+                className="group flex items-start justify-between gap-6 border-t border-border py-6"
               >
                 <div>
-                  <h3 className="text-base font-medium text-foreground">
+                  <h3 className="text-base font-medium text-foreground transition-colors group-hover:text-primary">
                     {track.title}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
@@ -300,7 +367,7 @@ export default function HomePage() {
                     {track.topics.join(" · ")}
                   </p>
                 </div>
-                <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
+                <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" />
               </Link>
             ))}
           </div>
@@ -373,15 +440,19 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-8 sm:grid-cols-3">
+          <div className="mt-10 grid gap-6 sm:grid-cols-3">
             {dashboards.map((d) => (
-              <div key={d.role} className="border-t border-border pt-5">
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">
+              <div key={d.role} className="card-depth card-depth-hover p-6">
+                <h3 className="text-xs font-semibold uppercase tracking-widest text-foreground">
                   {d.role}
                 </h3>
-                <ul className="mt-3 space-y-2">
+                <ul className="mt-4 space-y-2.5">
                   {d.items.map((item) => (
-                    <li key={item} className="text-sm text-muted-foreground">
+                    <li
+                      key={item}
+                      className="flex items-start gap-2.5 text-sm text-muted-foreground"
+                    >
+                      <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-muted-foreground" />
                       {item}
                     </li>
                   ))}

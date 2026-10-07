@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Construction, Search } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "../../components/ui/tabs";
 
@@ -113,7 +113,7 @@ export default function CoursesPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Page header */}
-      <section className="py-20 sm:py-24">
+      <section className="py-24 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
@@ -132,7 +132,7 @@ export default function CoursesPage() {
       </section>
 
       {/* Filters & list */}
-      <section className="pb-20 sm:pb-24">
+      <section className="pb-24 sm:pb-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           {/* Filter Tabs */}
           <Tabs value={activeCategory} onValueChange={setActiveCategory}>
@@ -147,11 +147,15 @@ export default function CoursesPage() {
 
           {/* Static-domain empty state */}
           {isStaticDomain && (
-            <div className="mt-10 border-t border-border pt-8">
-              <h2 className="text-base font-semibold tracking-tight text-foreground">
+            <div className="mt-10 py-16 text-center">
+              <Construction
+                className="mx-auto h-8 w-8 text-muted-foreground"
+                aria-hidden="true"
+              />
+              <h2 className="mt-4 text-sm font-medium text-foreground">
                 {staticDomains[domain]} — in development
               </h2>
-              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+              <p className="mx-auto mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
                 This learning domain doesn't have published course content yet.
                 The platform currently focuses on Linux & Systems programming,
                 Shell scripting, C, and Data Structures. When {staticDomains[domain]} content is ready,
@@ -165,36 +169,40 @@ export default function CoursesPage() {
 
           {/* Course list */}
           {!isStaticDomain && (
-            <div className="mt-10 grid gap-x-12 sm:grid-cols-2">
+            <div className="mt-10 grid gap-6 sm:grid-cols-2">
               {filtered.map((course) => (
                 <Link
                   key={course.id}
                   to={`/courses/${course.id}`}
-                  className="group block border-t border-border py-6 transition-colors hover:bg-muted/40"
+                  className="card-depth card-depth-hover group flex flex-col p-6"
                 >
-                  <div className="min-w-0">
-                    <h3 className="text-base font-medium text-foreground">
-                      {course.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                      {course.description}
-                    </p>
-                    <p className="mt-3 text-xs text-muted-foreground">
-                      {course.level} · {course.duration} · {course.category}
-                    </p>
-                    <span className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary transition-colors group-hover:underline">
-                      View course
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </span>
-                  </div>
+                  <h3 className="text-base font-medium text-foreground transition-colors duration-200 group-hover:text-primary">
+                    {course.title}
+                  </h3>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                    {course.description}
+                  </p>
+                  <p className="mt-4 text-xs text-muted-foreground">
+                    {course.level} · {course.duration} · {course.category}
+                  </p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary transition-colors duration-200 group-hover:underline">
+                    View course
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </span>
                 </Link>
               ))}
             </div>
           )}
 
           {!isStaticDomain && filtered.length === 0 && (
-            <div className="border-t border-border py-16 text-center text-sm text-muted-foreground">
-              No courses found in this category.
+            <div className="py-16 text-center">
+              <Search
+                className="mx-auto h-8 w-8 text-muted-foreground"
+                aria-hidden="true"
+              />
+              <p className="mt-4 text-sm font-medium text-foreground">
+                No courses found in this category.
+              </p>
             </div>
           )}
         </div>

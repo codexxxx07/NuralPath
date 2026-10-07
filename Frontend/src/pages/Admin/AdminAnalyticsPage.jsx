@@ -64,26 +64,28 @@ export default function AdminAnalyticsPage() {
   return (
     <div className="mx-auto max-w-6xl space-y-10">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Platform Analytics</h1>
+        <h1 className="text-lg font-semibold tracking-tight text-foreground">Platform Analytics</h1>
         <p className="mt-1 text-sm text-muted-foreground">Comprehensive platform performance insights</p>
       </div>
 
       {/* Key metrics */}
-      <div className="grid grid-cols-2 border-t border-border sm:grid-cols-4">
-        {keyMetrics.map((metric) => (
-          <div key={metric.label} className="border-b border-border py-5 pr-6 sm:border-b-0">
-            <p className="text-2xl font-semibold tracking-tight text-foreground">{metric.value}</p>
-            <p className="mt-1 text-sm text-muted-foreground">{metric.label}</p>
-            <p className="mt-2 text-xs text-muted-foreground">
-              {metric.change} vs last month
-            </p>
-          </div>
-        ))}
+      <div className="card-depth p-6">
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+          {keyMetrics.map((metric) => (
+            <div key={metric.label}>
+              <p className="text-2xl/3xl font-semibold tracking-tight tabular-nums text-foreground">{metric.value}</p>
+              <p className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">{metric.label}</p>
+              <p className="mt-2 text-xs text-muted-foreground">
+                {metric.change} vs last month
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* User growth */}
       <section>
-        <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+        <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
           User Growth — Last 12 Months
         </h2>
         <div className="flex h-52 items-stretch gap-2 pt-5">
@@ -106,12 +108,12 @@ export default function AdminAnalyticsPage() {
 
       <div className="grid gap-10 lg:grid-cols-2">
         <section>
-          <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+          <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
             Course Performance
           </h2>
-          <div>
+          <div className="mt-4">
             {coursePerformance.map((course) => (
-              <div key={course.title} className="border-b border-border py-4">
+              <div key={course.title} className="border-t border-border py-4">
                 <div className="flex items-baseline justify-between gap-3">
                   <p className="min-w-0 truncate text-sm font-medium text-foreground">{course.title}</p>
                   <Badge variant={course.trend === "New" ? "secondary" : "outline"}>{course.trend}</Badge>
@@ -132,15 +134,15 @@ export default function AdminAnalyticsPage() {
 
         <div className="space-y-10">
           <section>
-            <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+            <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
               Geographic Distribution
             </h2>
-            <div className="space-y-5 pt-4">
+            <div className="mt-4">
               {geographicData.map((geo) => (
-                <div key={geo.region}>
+                <div key={geo.region} className="border-t border-border py-4">
                   <div className="flex items-center justify-between gap-3 text-sm">
                     <span className="font-medium text-foreground">{geo.region}</span>
-                    <span className="text-muted-foreground">{geo.users} users ({geo.percentage}%)</span>
+                    <span className="tabular-nums text-muted-foreground">{geo.users} users ({geo.percentage}%)</span>
                   </div>
                   <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted">
                     <div
@@ -154,17 +156,17 @@ export default function AdminAnalyticsPage() {
           </section>
 
           <section>
-            <h2 className="border-b border-border pb-3 text-base font-semibold tracking-tight text-foreground">
+            <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
               Engagement Metrics
             </h2>
-            <div>
+            <div className="mt-4">
               {engagementMetrics.map((eng) => (
-                <div key={eng.metric} className="flex items-baseline justify-between gap-4 border-b border-border py-4">
+                <div key={eng.metric} className="flex items-baseline justify-between gap-4 border-t border-border py-4">
                   <div className="min-w-0">
                     <p className="text-sm font-medium text-foreground">{eng.metric}</p>
                     <p className="mt-0.5 text-xs text-muted-foreground">{eng.description}</p>
                   </div>
-                  <p className="shrink-0 text-sm font-medium text-foreground">{eng.value}</p>
+                  <p className="shrink-0 text-sm font-medium tabular-nums text-foreground">{eng.value}</p>
                 </div>
               ))}
             </div>

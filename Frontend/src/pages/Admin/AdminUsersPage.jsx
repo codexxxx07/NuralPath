@@ -50,12 +50,12 @@ export default function AdminUsersPage() {
     <div className="mx-auto max-w-6xl space-y-10">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-foreground">User Management</h1>
+          <h1 className="text-lg font-semibold tracking-tight text-foreground">User Management</h1>
           <p className="mt-1 text-sm text-muted-foreground">{allUsers.length} registered users</p>
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
@@ -75,20 +75,35 @@ export default function AdminUsersPage() {
         </Tabs>
       </div>
 
-      <div className="hidden overflow-x-auto rounded-lg border border-border md:block">
+      {paginated.length === 0 ? (
+        <div className="card-depth py-16 text-center">
+          <Search className="mx-auto h-8 w-8 text-muted-foreground" />
+          <p className="mt-3 text-sm font-medium text-foreground">No users found</p>
+          <p className="mt-1 text-sm text-muted-foreground">No users match your current search or filter.</p>
+          <Button
+            variant="outline"
+            className="mt-5"
+            onClick={() => { setSearch(""); setFilter("All"); setPage(1); }}
+          >
+            Clear filters
+          </Button>
+        </div>
+      ) : (
+        <>
+      <div className="card-depth hidden overflow-x-auto md:block">
         <table className="w-full">
           <thead>
             <tr>
-              <th className="border-b border-border px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">User</th>
-              <th className="border-b border-border px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">Role</th>
-              <th className="border-b border-border px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">Status</th>
-              <th className="border-b border-border px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">Join Date</th>
-              <th className="border-b border-border px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-muted-foreground">Actions</th>
+              <th className="whitespace-nowrap border-b border-border px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">User</th>
+              <th className="whitespace-nowrap border-b border-border px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">Role</th>
+              <th className="whitespace-nowrap border-b border-border px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">Status</th>
+              <th className="whitespace-nowrap border-b border-border px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">Join Date</th>
+              <th className="whitespace-nowrap border-b border-border px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-muted-foreground">Actions</th>
             </tr>
           </thead>
           <tbody>
             {paginated.map((user) => (
-              <tr key={user.id} className="border-b border-border transition-colors last:border-b-0 hover:bg-muted/40">
+              <tr key={user.id} className="table-row border-b border-border last:border-b-0">
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-3">
                     <Avatar className="h-9 w-9">
@@ -106,22 +121,22 @@ export default function AdminUsersPage() {
                   </Badge>
                 </td>
                 <td className="px-4 py-3">
-                  <Badge variant={user.status === "Active" ? "success" : user.status === "Suspended" ? "destructive" : "secondary"}>
+                  <Badge variant={user.status === "Active" ? "success" : user.status === "Suspended" ? "secondary" : "outline"}>
                     {user.status}
                   </Badge>
                 </td>
-                <td className="px-4 py-3 text-sm text-muted-foreground">{user.joinDate}</td>
+                <td className="whitespace-nowrap px-4 py-3 text-sm tabular-nums text-muted-foreground">{user.joinDate}</td>
                 <td className="px-4 py-3">
                   <div className="flex items-center justify-end gap-1">
-                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setSelectedUser(user)}>
+                    <button type="button" className="icon-btn grid h-9 w-9 place-items-center rounded-lg text-muted-foreground" aria-label={`Edit ${user.name}`} title="Edit user" onClick={() => setSelectedUser(user)}>
                       <Edit className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    </button>
+                    <button type="button" className="icon-btn grid h-9 w-9 place-items-center rounded-lg text-muted-foreground" aria-label={`Suspend ${user.name}`} title="Suspend user">
                       <Ban className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive">
+                    </button>
+                    <button type="button" className="icon-btn grid h-9 w-9 place-items-center rounded-lg text-destructive" aria-label={`Delete ${user.name}`} title="Delete user">
                       <Trash2 className="h-4 w-4" />
-                    </Button>
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -141,7 +156,7 @@ export default function AdminUsersPage() {
                 <p className="text-sm font-medium text-foreground">{user.name}</p>
                 <p className="truncate text-xs text-muted-foreground">{user.email}</p>
               </div>
-              <Badge variant={user.status === "Active" ? "success" : user.status === "Suspended" ? "destructive" : "secondary"}>
+              <Badge variant={user.status === "Active" ? "success" : user.status === "Suspended" ? "secondary" : "outline"}>
                 {user.status}
               </Badge>
             </div>
@@ -153,20 +168,22 @@ export default function AdminUsersPage() {
                 <span className="truncate text-xs text-muted-foreground">{user.joinDate}</span>
               </div>
               <div className="flex shrink-0 gap-1">
-                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setSelectedUser(user)}>
+                <button type="button" className="icon-btn grid h-9 w-9 place-items-center rounded-lg text-muted-foreground" aria-label={`Edit ${user.name}`} title="Edit user" onClick={() => setSelectedUser(user)}>
                   <Edit className="h-4 w-4" />
-                </Button>
-                <Button variant="ghost" size="icon" className="h-8 w-8">
+                </button>
+                <button type="button" className="icon-btn grid h-9 w-9 place-items-center rounded-lg text-muted-foreground" aria-label={`Suspend ${user.name}`} title="Suspend user">
                   <Ban className="h-4 w-4" />
-                </Button>
-                <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive">
+                </button>
+                <button type="button" className="icon-btn grid h-9 w-9 place-items-center rounded-lg text-destructive" aria-label={`Delete ${user.name}`} title="Delete user">
                   <Trash2 className="h-4 w-4" />
-                </Button>
+                </button>
               </div>
             </div>
           </div>
         ))}
       </div>
+        </>
+      )}
 
       {totalPages > 1 && (
         <div className="flex items-center justify-center gap-4">
@@ -183,16 +200,16 @@ export default function AdminUsersPage() {
       )}
 
       {selectedUser && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={() => setSelectedUser(null)}>
+        <div className="fixed inset-0 z-50 flex animate-fade-in items-center justify-center bg-black/50 p-4" onClick={() => setSelectedUser(null)}>
           <div
-            className="w-full max-w-md rounded-lg border border-border bg-background p-6 shadow-lg"
+            className="w-full max-w-md rounded-2xl border border-border bg-card p-6 shadow-pop animate-pop-in"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-base font-semibold tracking-tight text-foreground">User Details</h2>
-              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setSelectedUser(null)}>
+              <button type="button" className="icon-btn grid h-9 w-9 place-items-center rounded-lg text-muted-foreground" aria-label="Close dialog" title="Close" onClick={() => setSelectedUser(null)}>
                 <X className="h-4 w-4" />
-              </Button>
+              </button>
             </div>
             <div className="mb-6 flex items-center gap-4">
               <Avatar className="h-14 w-14">
@@ -219,7 +236,7 @@ export default function AdminUsersPage() {
               </div>
               <div className="flex items-center justify-between gap-4 text-sm">
                 <span className="text-muted-foreground">Status</span>
-                <Badge variant={selectedUser.status === "Active" ? "success" : selectedUser.status === "Suspended" ? "destructive" : "secondary"}>
+                <Badge variant={selectedUser.status === "Active" ? "success" : selectedUser.status === "Suspended" ? "secondary" : "outline"}>
                   {selectedUser.status}
                 </Badge>
               </div>

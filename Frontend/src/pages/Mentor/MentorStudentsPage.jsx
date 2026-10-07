@@ -106,7 +106,7 @@ export default function MentorStudentsPage() {
   return (
     <div className="max-w-6xl space-y-10">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">My Students</h1>
+        <h1 className="text-lg font-semibold tracking-tight text-foreground">My Students</h1>
         <p className="mt-1 text-sm text-muted-foreground">{students.length} students across all courses</p>
       </div>
 
@@ -130,12 +130,12 @@ export default function MentorStudentsPage() {
         </Select>
       </div>
 
-      <div>
-        {filteredStudents.map((student) => (
+      <div className="card-depth">
+        {filteredStudents.map((student, idx) => (
           <div
             key={student.id}
             onClick={() => setSelectedStudent(student)}
-            className="flex cursor-pointer flex-col gap-3 border-b border-border py-4 transition-colors hover:bg-muted/40 sm:flex-row sm:items-center sm:gap-6 sm:py-5"
+            className={`flex cursor-pointer flex-col gap-3 px-4 py-4 transition-colors hover:bg-accent/60 sm:flex-row sm:items-center sm:gap-6 sm:px-5 sm:py-5 ${idx !== filteredStudents.length - 1 ? "border-b border-border" : ""}`}
           >
             <Avatar className="h-10 w-10">
               <AvatarFallback>{student.initials}</AvatarFallback>

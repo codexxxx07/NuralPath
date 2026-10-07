@@ -102,10 +102,10 @@ export default function AboutPage() {
       </section>
 
       {/* ─── Mission & Vision ─── */}
-      <section className="border-y border-border bg-surface py-20 sm:py-24">
+      <section className="border-y border-border bg-surface py-24 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="grid gap-x-12 sm:grid-cols-2">
-            <div className="border-t border-border py-6">
+          <div className="grid gap-6 sm:grid-cols-2">
+            <div className="card-depth p-6">
               <h2 className="text-base font-semibold tracking-tight text-foreground">
                 Our Mission
               </h2>
@@ -116,7 +116,7 @@ export default function AboutPage() {
                 or gatekeeping.
               </p>
             </div>
-            <div className="border-t border-border py-6">
+            <div className="card-depth p-6">
               <h2 className="text-base font-semibold tracking-tight text-foreground">
                 Our Vision
               </h2>
@@ -132,11 +132,11 @@ export default function AboutPage() {
       </section>
 
       {/* ─── Where we are now ─── */}
-      <section className="py-20 sm:py-24">
+      <section className="py-24 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <Eyebrow>Where We Are Now</Eyebrow>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground">
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
               Honest About the Present
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
@@ -145,9 +145,9 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-x-12 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {currentState.map((s) => (
-              <div key={s.title} className="border-t border-border py-6">
+              <div key={s.title} className="card-depth p-6">
                 <h3 className="text-base font-medium text-foreground">
                   {s.title}
                 </h3>
@@ -161,18 +161,18 @@ export default function AboutPage() {
       </section>
 
       {/* ─── Values ─── */}
-      <section className="border-y border-border bg-surface py-20 sm:py-24">
+      <section className="border-y border-border bg-surface py-24 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <Eyebrow>Our Values</Eyebrow>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground">
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
               What We Stand For
             </h2>
           </div>
 
-          <div className="mt-10 grid gap-x-12 sm:grid-cols-2">
+          <div className="mt-10 grid gap-6 sm:grid-cols-2">
             {values.map((v) => (
-              <div key={v.title} className="border-t border-border py-6">
+              <div key={v.title} className="card-depth p-6">
                 <h3 className="text-base font-medium text-foreground">
                   {v.title}
                 </h3>
@@ -186,11 +186,11 @@ export default function AboutPage() {
       </section>
 
       {/* ─── How we work ─── */}
-      <section className="py-20 sm:py-24">
+      <section className="py-24 sm:py-28">
         <div className="mx-auto max-w-3xl px-4 sm:px-6">
           <div className="max-w-2xl">
             <Eyebrow>How We Work</Eyebrow>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground">
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
               A Few Things Worth Knowing
             </h2>
           </div>
@@ -211,9 +211,9 @@ export default function AboutPage() {
       </section>
 
       {/* ─── CTA ─── */}
-      <section className="border-t border-border py-20 sm:py-24">
+      <section className="border-t border-border py-24 sm:py-28">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
-          <h2 className="text-2xl font-semibold tracking-tight text-foreground">
+          <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
             Learn the Way We Build — by Doing
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
