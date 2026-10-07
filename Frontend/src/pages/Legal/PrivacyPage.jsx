@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Shield, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "../../components/ui/button";
-import { Badge } from "../../components/ui/badge";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -73,31 +72,30 @@ const sections = [
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-background">
-      <section className="relative overflow-hidden hero-gradient">
-        <div className="relative mx-auto max-w-3xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
+      <section>
+        <div className="mx-auto max-w-3xl px-4 py-16 sm:py-24 lg:px-8">
           <motion.div initial="hidden" animate="visible" variants={fadeIn}>
             <Link
               to="/"
-              className="mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               <ArrowLeft className="h-4 w-4" />
               Home
             </Link>
-            <Badge variant="secondary" className="mb-4">
-              <Shield className="mr-1 h-3 w-3" />
+            <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
               Legal
-            </Badge>
-            <h1 className="font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+            </p>
+            <h1 className="mt-4 text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
               Privacy Policy
             </h1>
-            <p className="mt-4 text-muted-foreground">
+            <p className="mt-3 text-xs text-muted-foreground">
               Last updated: September 2026
             </p>
           </motion.div>
         </div>
       </section>
 
-      <section className="border-t border-border bg-surface/40 py-14 sm:py-16">
+      <section className="border-y border-border bg-surface py-16 sm:py-24">
         <div className="mx-auto max-w-3xl space-y-8 px-4 sm:px-6 lg:px-8">
           {sections.map((section) => (
             <motion.div
@@ -107,7 +105,7 @@ export default function PrivacyPage() {
               viewport={{ once: true }}
               variants={fadeIn}
             >
-              <h2 className="text-xl font-semibold text-foreground font-display">
+              <h2 className="text-xl font-semibold tracking-tight text-foreground">
                 {section.title}
               </h2>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Terminal, ChevronRight, CheckCircle2, Lock, Play } from "lucide-react";
+import { ChevronRight, CheckCircle2, Lock, Play } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
@@ -117,22 +117,15 @@ export default function PracticeLabPage() {
   return (
     <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
       <motion.div variants={item}>
-        <h1 className="text-3xl font-bold text-foreground">Practice Lab</h1>
-        <p className="text-muted-foreground mt-1">Hands-on terminal practice to sharpen your skills</p>
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Practice Lab</h1>
+        <p className="text-sm text-muted-foreground mt-1">Hands-on terminal practice to sharpen your skills</p>
       </motion.div>
 
       <div className="grid lg:grid-cols-[1fr_320px] gap-6">
         <motion.div variants={item}>
           <Card className="overflow-hidden">
             <CardHeader className="bg-zinc-900 border-b border-zinc-800 py-3 px-4">
-              <div className="flex items-center gap-2">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-red-500" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                  <div className="w-3 h-3 rounded-full bg-green-500" />
-                </div>
-                <span className="text-zinc-400 text-sm ml-2 font-mono">arjun@nuralpath:~</span>
-              </div>
+              <span className="font-mono text-xs text-zinc-400">arjun@nuralpath:~</span>
             </CardHeader>
             <div
               ref={terminalRef}
@@ -174,7 +167,7 @@ export default function PracticeLabPage() {
         <motion.div variants={item} className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Exercises</CardTitle>
+              <CardTitle className="text-base">Exercises</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               {exercises.map((ex) => (
@@ -184,7 +177,7 @@ export default function PracticeLabPage() {
                     "p-3 rounded-lg border transition-colors",
                     ex.status === "completed" && "bg-emerald-500/5 border-emerald-500/20",
                     ex.status === "in-progress" && "bg-primary/5 border-primary/20",
-                    ex.status === "locked" && "bg-muted/50 opacity-60"
+                    ex.status === "locked" && "bg-muted opacity-60"
                   )}
                 >
                   <div className="flex items-start justify-between gap-2">
@@ -193,11 +186,11 @@ export default function PracticeLabPage() {
                         {ex.status === "completed" && <CheckCircle2 className="h-4 w-4 text-emerald-500 flex-shrink-0" />}
                         {ex.status === "locked" && <Lock className="h-4 w-4 text-muted-foreground flex-shrink-0" />}
                         {ex.status === "in-progress" && <Play className="h-4 w-4 text-primary flex-shrink-0" />}
-                        <p className="font-medium text-foreground text-sm truncate">{ex.title}</p>
+                        <p className="font-semibold text-foreground text-sm truncate">{ex.title}</p>
                       </div>
                       <p className="text-xs text-muted-foreground mt-1">{ex.description}</p>
                     </div>
-                    <Badge variant={ex.difficulty === "Easy" ? "secondary" : ex.difficulty === "Medium" ? "default" : "destructive"} className="text-xs flex-shrink-0">
+                    <Badge variant="outline" className="text-xs text-muted-foreground flex-shrink-0">
                       {ex.difficulty}
                     </Badge>
                   </div>
@@ -216,7 +209,7 @@ export default function PracticeLabPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Quick Reference</CardTitle>
+              <CardTitle className="text-base">Quick Reference</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-1 text-xs font-mono text-muted-foreground">

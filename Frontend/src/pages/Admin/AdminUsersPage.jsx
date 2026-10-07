@@ -2,10 +2,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Search,
-  Filter,
   ChevronLeft,
   ChevronRight,
-  MoreHorizontal,
   Edit,
   Ban,
   Trash2,
@@ -14,14 +12,13 @@ import {
   Calendar,
   Shield,
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
+import { Card, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Avatar, AvatarFallback } from "../../components/ui/avatar";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "../../components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "../../components/ui/tabs";
 import { Separator } from "../../components/ui/separator";
-import { cn } from "../../lib/utils";
 
 const allUsers = [
   { id: 1, name: "Aarav Patel", email: "aarav.patel@email.com", role: "Student", status: "Active", joinDate: "Jan 15, 2026", initials: "AP", course: "Advanced React & Next.js", phone: "+91 98765 43210" },
@@ -66,16 +63,16 @@ export default function AdminUsersPage() {
 
   return (
     <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <motion.div variants={item} className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">User Management</h1>
-          <p className="text-muted-foreground mt-1">{allUsers.length} registered users</p>
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">User Management</h1>
+          <p className="mt-1 text-sm text-muted-foreground">{allUsers.length} registered users</p>
         </div>
       </motion.div>
 
-      <motion.div variants={item} className="flex flex-col sm:flex-row gap-3">
+      <motion.div variants={item} className="flex flex-col gap-3 sm:flex-row">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             placeholder="Search by name or email..."
             className="pl-10"
@@ -99,40 +96,40 @@ export default function AdminUsersPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-border">
-                    <th className="text-left p-4 text-sm font-medium text-muted-foreground">User</th>
-                    <th className="text-left p-4 text-sm font-medium text-muted-foreground">Role</th>
-                    <th className="text-left p-4 text-sm font-medium text-muted-foreground">Status</th>
-                    <th className="text-left p-4 text-sm font-medium text-muted-foreground">Join Date</th>
-                    <th className="text-right p-4 text-sm font-medium text-muted-foreground">Actions</th>
+                  <tr>
+                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">User</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">Role</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">Status</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">Join Date</th>
+                    <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-muted-foreground">Actions</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-border">
                   {paginated.map((user) => (
-                    <tr key={user.id} className="border-b border-border last:border-0 hover:bg-muted/50 transition-colors">
-                      <td className="p-4">
+                    <tr key={user.id} className="transition-colors hover:bg-muted/50">
+                      <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
                           <Avatar className="h-9 w-9">
                             <AvatarFallback className="text-xs">{user.initials}</AvatarFallback>
                           </Avatar>
                           <div>
-                            <p className="font-medium text-foreground text-sm">{user.name}</p>
+                            <p className="text-sm font-medium text-foreground">{user.name}</p>
                             <p className="text-xs text-muted-foreground">{user.email}</p>
                           </div>
                         </div>
                       </td>
-                      <td className="p-4">
+                      <td className="px-4 py-3">
                         <Badge variant={user.role === "Admin" ? "default" : user.role === "Mentor" ? "secondary" : "outline"}>
                           {user.role}
                         </Badge>
                       </td>
-                      <td className="p-4">
+                      <td className="px-4 py-3">
                         <Badge variant={user.status === "Active" ? "success" : user.status === "Suspended" ? "destructive" : "secondary"}>
                           {user.status}
                         </Badge>
                       </td>
-                      <td className="p-4 text-sm text-muted-foreground">{user.joinDate}</td>
-                      <td className="p-4">
+                      <td className="px-4 py-3 text-sm text-muted-foreground">{user.joinDate}</td>
+                      <td className="px-4 py-3">
                         <div className="flex items-center justify-end gap-1">
                           <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setSelectedUser(user)}>
                             <Edit className="h-4 w-4" />
@@ -140,7 +137,7 @@ export default function AdminUsersPage() {
                           <Button variant="ghost" size="icon" className="h-8 w-8">
                             <Ban className="h-4 w-4" />
                           </Button>
-                          <Button variant="ghost" size="icon" className="h-8 w-8 text-red-500 hover:text-red-600">
+                          <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive">
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </div>
@@ -154,7 +151,7 @@ export default function AdminUsersPage() {
         </Card>
       </motion.div>
 
-      <motion.div variants={item} className="md:hidden space-y-3">
+      <motion.div variants={item} className="space-y-3 md:hidden">
         {paginated.map((user) => (
           <Card key={user.id}>
             <CardContent className="p-4">
@@ -162,15 +159,15 @@ export default function AdminUsersPage() {
                 <Avatar className="h-10 w-10">
                   <AvatarFallback className="text-xs">{user.initials}</AvatarFallback>
                 </Avatar>
-                <div className="flex-1 min-w-0">
+                <div className="min-w-0 flex-1">
                   <p className="font-medium text-foreground">{user.name}</p>
-                  <p className="text-xs text-muted-foreground truncate">{user.email}</p>
+                  <p className="truncate text-xs text-muted-foreground">{user.email}</p>
                 </div>
                 <Badge variant={user.status === "Active" ? "success" : user.status === "Suspended" ? "destructive" : "secondary"}>
                   {user.status}
                 </Badge>
               </div>
-              <div className="flex items-center justify-between mt-3">
+              <div className="mt-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Badge variant={user.role === "Admin" ? "default" : user.role === "Mentor" ? "secondary" : "outline"}>
                     {user.role}
@@ -184,7 +181,7 @@ export default function AdminUsersPage() {
                   <Button variant="ghost" size="icon" className="h-8 w-8">
                     <Ban className="h-4 w-4" />
                   </Button>
-                  <Button variant="ghost" size="icon" className="h-8 w-8 text-red-500 hover:text-red-600">
+                  <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive">
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
@@ -213,16 +210,16 @@ export default function AdminUsersPage() {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-card border border-border rounded-lg shadow-lg w-full max-w-md p-6"
+            className="w-full max-w-md rounded-lg border border-border bg-card p-6 shadow-lg"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-foreground">User Details</h2>
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="text-base font-semibold tracking-tight text-foreground">User Details</h2>
               <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setSelectedUser(null)}>
                 <X className="h-4 w-4" />
               </Button>
             </div>
-            <div className="flex items-center gap-4 mb-6">
+            <div className="mb-6 flex items-center gap-4">
               <Avatar className="h-14 w-14">
                 <AvatarFallback className="text-lg">{selectedUser.initials}</AvatarFallback>
               </Avatar>

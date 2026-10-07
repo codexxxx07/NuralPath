@@ -39,14 +39,14 @@ export default function Navbar() {
   const closeMobile = () => setMobileOpen(false);
 
   return (
-    <header className="sticky top-0 z-50 h-16 border-b border-border bg-background/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 h-16 border-b border-border bg-background">
       <nav
         className="mx-auto flex h-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
         aria-label="Main navigation"
       >
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2" aria-label="NuralPath home">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
             <Cpu className="h-4 w-4" />
           </div>
           <span className="font-display text-xl font-bold tracking-tight text-foreground">
@@ -83,7 +83,7 @@ export default function Navbar() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 8 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute left-0 top-full z-50 mt-1 w-80 rounded-xl border border-border bg-card p-2 shadow-xl"
+                      className="absolute left-0 top-full z-50 mt-1 w-80 rounded-lg border border-border bg-card p-2 shadow-lg"
                     >
                       {link.children.map((child) => (
                         <NavLink
@@ -189,7 +189,7 @@ export default function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="overflow-hidden border-b border-border bg-background/95 backdrop-blur-md lg:hidden"
+            className="overflow-hidden border-b border-border bg-background lg:hidden"
           >
             <div className="space-y-1 px-4 pb-4 pt-2">
               {navLinks.map((link) =>

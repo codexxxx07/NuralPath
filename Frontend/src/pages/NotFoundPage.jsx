@@ -10,20 +10,20 @@ const fadeIn = {
 
 export default function NotFoundPage() {
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4">
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <motion.div
         initial="hidden"
         animate="visible"
         variants={fadeIn}
         className="text-center"
       >
-        <p className="text-[8rem] font-bold leading-none text-primary/20 select-none">
+        <p className="select-none text-[8rem] font-semibold leading-none tracking-tight text-foreground">
           404
         </p>
-        <h1 className="-mt-4 text-2xl font-bold text-foreground">
+        <h1 className="-mt-4 text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
           Page Not Found
         </h1>
-        <p className="mt-3 text-muted-foreground">
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
           The page you&apos;re looking for doesn&apos;t exist.
         </p>
         <Button asChild className="mt-8" size="lg">

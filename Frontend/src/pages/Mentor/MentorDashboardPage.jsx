@@ -1,27 +1,15 @@
 import { motion } from "framer-motion";
-import {
-  BookOpen,
-  Users,
-  FileCheck,
-  Video,
-  Clock,
-  ArrowRight,
-  CheckCircle2,
-  AlertCircle,
-  TrendingUp,
-  Star,
-} from "lucide-react";
+import { BookOpen, Users, FileCheck, Video, TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Progress } from "../../components/ui/progress";
-import { cn } from "../../lib/utils";
 
 const stats = [
-  { label: "Active Courses", value: "3", icon: BookOpen, color: "text-blue-500" },
-  { label: "Total Students", value: "148", icon: Users, color: "text-emerald-500" },
-  { label: "Pending Submissions", value: "12", icon: FileCheck, color: "text-orange-500" },
-  { label: "Live Classes This Week", value: "4", icon: Video, color: "text-purple-500" },
+  { label: "Active Courses", value: "3", icon: BookOpen },
+  { label: "Total Students", value: "148", icon: Users },
+  { label: "Pending Submissions", value: "12", icon: FileCheck },
+  { label: "Live Classes This Week", value: "4", icon: Video },
 ];
 
 const upcomingClasses = [
@@ -57,8 +45,8 @@ export default function MentorDashboardPage() {
   return (
     <motion.div className="space-y-8" variants={container} initial="hidden" animate="show">
       <motion.div variants={item}>
-        <h1 className="text-3xl font-bold text-foreground">Mentor Dashboard</h1>
-        <p className="text-muted-foreground mt-1">Welcome back, Rahul Sharma</p>
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Mentor Dashboard</h1>
+        <p className="text-sm text-muted-foreground mt-1">Welcome back, Rahul Sharma</p>
       </motion.div>
 
       <motion.div className="grid grid-cols-2 lg:grid-cols-4 gap-4" variants={item}>
@@ -67,11 +55,11 @@ export default function MentorDashboardPage() {
             <CardContent className="p-5">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                  <p className="text-2xl font-semibold text-foreground">{stat.value}</p>
                   <p className="text-sm text-muted-foreground">{stat.label}</p>
                 </div>
-                <div className={cn("p-3 rounded-lg bg-muted", stat.color)}>
-                  <stat.icon className="h-5 w-5" />
+                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground">
+                  <stat.icon className="h-4 w-4" />
                 </div>
               </div>
             </CardContent>
@@ -83,14 +71,14 @@ export default function MentorDashboardPage() {
         <motion.div variants={item}>
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <Video className="h-5 w-5 text-purple-500" />
+              <CardTitle className="flex items-center gap-2 text-base font-semibold tracking-tight">
+                <Video className="h-4 w-4 text-muted-foreground" />
                 Upcoming Live Classes
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               {upcomingClasses.map((cls) => (
-                <div key={cls.id} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                <div key={cls.id} className="flex items-start gap-3 p-3 rounded-md bg-muted">
                   <div className="text-center min-w-[48px]">
                     <p className="text-xs text-muted-foreground">{cls.date.split(",")[0]}</p>
                     <p className="text-sm font-semibold text-foreground">{cls.date.split(",")[1]?.trim()}</p>
@@ -112,20 +100,20 @@ export default function MentorDashboardPage() {
         <motion.div variants={item}>
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <FileCheck className="h-5 w-5 text-orange-500" />
+              <CardTitle className="flex items-center gap-2 text-base font-semibold tracking-tight">
+                <FileCheck className="h-4 w-4 text-muted-foreground" />
                 Recent Submissions
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               {recentSubmissions.map((sub) => (
-                <div key={sub.id} className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
+                <div key={sub.id} className="flex items-center justify-between p-3 rounded-md bg-muted">
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-foreground text-sm">{sub.student}</p>
                     <p className="text-xs text-muted-foreground truncate">{sub.assignment} · {sub.course}</p>
                   </div>
                   <div className="flex items-center gap-2 ml-3">
-                    <Badge variant={sub.status === "Pending" ? "destructive" : "success"}>
+                    <Badge variant={sub.status === "Pending" ? "secondary" : "success"}>
                       {sub.status}
                     </Badge>
                     <span className="text-xs text-muted-foreground whitespace-nowrap">{sub.submitted}</span>
@@ -140,17 +128,17 @@ export default function MentorDashboardPage() {
       <motion.div variants={item}>
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <TrendingUp className="h-5 w-5 text-emerald-500" />
+            <CardTitle className="flex items-center gap-2 text-base font-semibold tracking-tight">
+              <TrendingUp className="h-4 w-4 text-muted-foreground" />
               Student Engagement Summary
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid gap-4">
               {engagementData.map((eng) => (
-                <div key={eng.course} className="p-4 rounded-lg bg-muted/50">
+                <div key={eng.course} className="p-4 rounded-md border border-border">
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-medium text-foreground">{eng.course}</h3>
+                    <h3 className="text-sm font-medium text-foreground">{eng.course}</h3>
                     <span className="text-sm text-muted-foreground">{eng.students} students</span>
                   </div>
                   <div className="grid grid-cols-2 gap-4">

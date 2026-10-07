@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Mail, ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
@@ -20,20 +20,19 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4 py-12">
+    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-background px-4 py-12">
       <motion.div
         initial="hidden"
         animate="visible"
         variants={fadeIn}
         className="w-full max-w-md"
       >
-        <Card className="border-border">
-          <CardHeader className="text-center space-y-2">
-            <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground font-bold text-lg">
-              N
-            </div>
-            <CardTitle className="text-2xl font-bold text-foreground">Forgot your password?</CardTitle>
-            <CardDescription className="text-muted-foreground">
+        <Card>
+          <CardHeader className="space-y-1.5 text-center">
+            <CardTitle className="text-2xl font-semibold tracking-tight text-foreground">
+              Forgot your password?
+            </CardTitle>
+            <CardDescription className="text-sm text-muted-foreground">
               Enter your email and we&apos;ll send you a reset link
             </CardDescription>
           </CardHeader>
@@ -41,17 +40,13 @@ export default function ForgotPasswordPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
 
               <Button type="submit" className="w-full" size="lg">
@@ -63,7 +58,7 @@ export default function ForgotPasswordPage() {
             <div className="mt-6 text-center">
               <Link
                 to="/login"
-                className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
               >
                 <ArrowLeft className="h-4 w-4" />
                 Back to sign in

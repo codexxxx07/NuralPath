@@ -7,7 +7,6 @@ import {
   Heart,
   Zap,
   ArrowRight,
-  Building2,
   FileCode2,
   Users,
   Sparkles,
@@ -15,7 +14,6 @@ import {
 } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Card, CardContent } from "../../components/ui/card";
-import { Badge } from "../../components/ui/badge";
 
 function AnimateOnScroll({ children, className, delay = 0 }) {
   const ref = useRef(null);
@@ -99,30 +97,28 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* ─── Hero ─── */}
-      <section className="relative overflow-hidden hero-gradient">
-        <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+      <section>
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="mx-auto max-w-3xl text-center"
           >
-            <Badge variant="secondary" className="mb-4">
-              <Building2 className="mr-1 h-3 w-3" />
+            <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
               About NuralPath
-            </Badge>
-            <h1 className="font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-              A Community for People Serious About{" "}
-              <span className="gradient-text">Systems Fundamentals</span>
+            </p>
+            <h1 className="mt-4 text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
+              A Community for People Serious About Systems Fundamentals
             </h1>
-            <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+            <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
               NuralPath is a student-focused learning community built around
               hands-on skills in Linux, shell scripting, C, and data structures.
               We're building the platform in the open — and everything we claim
               here reflects what actually exists today.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Button size="lg" asChild className="bg-primary hover:bg-primary/90 gap-2">
+              <Button size="lg" asChild>
                 <Link to="/courses">
                   Explore Courses
                   <ArrowRight className="h-4 w-4" />
@@ -137,17 +133,19 @@ export default function AboutPage() {
       </section>
 
       {/* ─── Mission & Vision ─── */}
-      <section className="border-y border-border bg-surface/40 py-20 sm:py-24">
+      <section className="border-y border-border bg-surface py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-8 lg:grid-cols-2">
             <AnimateOnScroll>
-              <Card className="h-full border-border/50">
+              <Card className="h-full">
                 <CardContent className="p-8">
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                    <Target className="h-6 w-6" />
+                  <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground">
+                    <Target className="h-5 w-5" />
                   </div>
-                  <h2 className="text-2xl font-bold text-foreground font-display">Our Mission</h2>
-                  <p className="mt-3 leading-relaxed text-muted-foreground">
+                  <h2 className="text-xl font-semibold tracking-tight text-foreground">
+                    Our Mission
+                  </h2>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                     To make solid, hands-on systems education genuinely accessible —
                     so any student who wants to really understand Linux, C, and
                     data structures can learn by doing, without expensive setups
@@ -157,13 +155,15 @@ export default function AboutPage() {
               </Card>
             </AnimateOnScroll>
             <AnimateOnScroll delay={0.1}>
-              <Card className="h-full border-border/50">
+              <Card className="h-full">
                 <CardContent className="p-8">
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-500">
-                    <Eye className="h-6 w-6" />
+                  <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground">
+                    <Eye className="h-5 w-5" />
                   </div>
-                  <h2 className="text-2xl font-bold text-foreground font-display">Our Vision</h2>
-                  <p className="mt-3 leading-relaxed text-muted-foreground">
+                  <h2 className="text-xl font-semibold tracking-tight text-foreground">
+                    Our Vision
+                  </h2>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                     A future where the systems and hardware talent pipeline
                     grows out of deliberate practice — where track after track
                     (including VLSI, Embedded, and FPGA) is opened to students
@@ -177,14 +177,16 @@ export default function AboutPage() {
       </section>
 
       {/* ─── Where we are now ─── */}
-      <section className="py-20 sm:py-24">
+      <section className="py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll className="text-center">
-            <Badge variant="secondary" className="mb-4">Where We Are Now</Badge>
-            <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+              Where We Are Now
+            </p>
+            <h2 className="mt-4 text-xl font-semibold tracking-tight text-foreground">
               Honest About the Present
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">
               No inflated numbers, no fabricated placements — just what's built,
               what's being built, and how we work.
             </p>
@@ -192,13 +194,17 @@ export default function AboutPage() {
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {currentState.map((s, i) => (
               <AnimateOnScroll key={s.title} delay={i * 0.1}>
-                <Card className="h-full border-border/50">
+                <Card className="h-full">
                   <CardContent className="p-6">
-                    <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground">
                       <s.icon className="h-5 w-5" />
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground font-display">{s.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.description}</p>
+                    <h3 className="text-base font-semibold tracking-tight text-foreground">
+                      {s.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {s.description}
+                    </p>
                   </CardContent>
                 </Card>
               </AnimateOnScroll>
@@ -208,24 +214,30 @@ export default function AboutPage() {
       </section>
 
       {/* ─── Values ─── */}
-      <section className="border-y border-border bg-surface/40 py-20 sm:py-24">
+      <section className="border-y border-border bg-surface py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll className="text-center">
-            <Badge variant="secondary" className="mb-4">Our Values</Badge>
-            <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+              Our Values
+            </p>
+            <h2 className="mt-4 text-xl font-semibold tracking-tight text-foreground">
               What We Stand For
             </h2>
           </AnimateOnScroll>
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {values.map((v, i) => (
               <AnimateOnScroll key={v.title} delay={i * 0.1}>
-                <Card className="h-full border-border/50">
+                <Card className="h-full">
                   <CardContent className="p-6">
-                    <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground">
                       <v.icon className="h-5 w-5" />
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground font-display">{v.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{v.description}</p>
+                    <h3 className="text-base font-semibold tracking-tight text-foreground">
+                      {v.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {v.description}
+                    </p>
                   </CardContent>
                 </Card>
               </AnimateOnScroll>
@@ -235,20 +247,26 @@ export default function AboutPage() {
       </section>
 
       {/* ─── How we work ─── */}
-      <section className="py-20 sm:py-24">
+      <section className="py-16 sm:py-24">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll className="text-center">
-            <Badge variant="secondary" className="mb-4">How We Work</Badge>
-            <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+              How We Work
+            </p>
+            <h2 className="mt-4 text-xl font-semibold tracking-tight text-foreground">
               A Few Things Worth Knowing
             </h2>
           </AnimateOnScroll>
           <div className="mt-12 space-y-6">
             {principles.map((p, i) => (
               <AnimateOnScroll key={p.question} delay={i * 0.08}>
-                <div className="rounded-xl border border-border/50 bg-card p-6">
-                  <h3 className="text-lg font-semibold text-foreground font-display">{p.question}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.answer}</p>
+                <div className="rounded-lg border border-border bg-surface p-6">
+                  <h3 className="text-base font-semibold tracking-tight text-foreground">
+                    {p.question}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {p.answer}
+                  </p>
                 </div>
               </AnimateOnScroll>
             ))}
@@ -257,17 +275,17 @@ export default function AboutPage() {
       </section>
 
       {/* ─── CTA ─── */}
-      <section className="border-t border-border bg-primary/5 py-20">
+      <section className="border-t border-border bg-surface py-16 sm:py-24">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
           <AnimateOnScroll>
-            <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            <h2 className="text-xl font-semibold tracking-tight text-foreground">
               Learn the Way We Build — by Doing
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
+            <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
               Create a free account, pick a track, and start practicing today.
             </p>
             <div className="mt-8">
-              <Button size="lg" asChild className="bg-primary hover:bg-primary/90 gap-2">
+              <Button size="lg" asChild>
                 <Link to="/register">
                   Start Learning
                   <ArrowRight className="h-4 w-4" />

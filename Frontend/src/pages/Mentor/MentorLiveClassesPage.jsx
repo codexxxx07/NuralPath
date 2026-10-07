@@ -1,16 +1,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import {
-  Video,
   Calendar,
   Clock,
   Users,
   Play,
   PlayCircle,
-  Plus,
   ExternalLink,
   CheckCircle2,
-  FileText,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
@@ -20,7 +17,6 @@ import { Label } from "../../components/ui/label";
 import { Textarea } from "../../components/ui/textarea";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../../components/ui/tabs";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../../components/ui/select";
-import { cn } from "../../lib/utils";
 
 const scheduledClasses = [
   { id: 1, date: "Mon, Aug 25", time: "10:00 AM - 11:30 AM", topic: "Linux Kernel Internals", course: "Linux Fundamentals", students: 42, meetingUrl: "#" },
@@ -46,7 +42,7 @@ const item = {
 };
 
 export default function MentorLiveClassesPage() {
-  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [, setShowCreateForm] = useState(false);
   const [newClass, setNewClass] = useState({
     topic: "",
     course: "",
@@ -58,8 +54,8 @@ export default function MentorLiveClassesPage() {
   return (
     <motion.div className="space-y-8" variants={container} initial="hidden" animate="show">
       <motion.div variants={item}>
-        <h1 className="text-3xl font-bold text-foreground">Live Classes</h1>
-        <p className="text-muted-foreground mt-1">Manage your scheduled and past live sessions</p>
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Live Classes</h1>
+        <p className="text-sm text-muted-foreground mt-1">Manage your scheduled and past live sessions</p>
       </motion.div>
 
       <motion.div variants={item}>
@@ -155,7 +151,7 @@ export default function MentorLiveClassesPage() {
           <TabsContent value="create">
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">Create New Live Class</CardTitle>
+                <CardTitle className="text-base font-semibold tracking-tight">Create New Live Class</CardTitle>
                 <CardDescription>Schedule a new live session for your students</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">

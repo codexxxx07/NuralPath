@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
   Cpu,
@@ -19,11 +19,9 @@ import {
   Lock,
   Target,
   Monitor,
-  Sparkles,
   ArrowRight,
   ArrowUpRight,
   CheckCircle2,
-  Code2,
   ListChecks,
   GraduationCap,
   TrendingUp,
@@ -49,17 +47,25 @@ function AnimateOnScroll({ children, className, delay = 0 }) {
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={{
-        hidden: { opacity: 0, y: 30 },
+        hidden: { opacity: 0, y: 16 },
         visible: {
           opacity: 1,
           y: 0,
-          transition: { duration: 0.55, delay, ease: "easeOut" },
+          transition: { duration: 0.45, delay, ease: "easeOut" },
         },
       }}
       className={className}
     >
       {children}
     </motion.div>
+  );
+}
+
+function Eyebrow({ children }) {
+  return (
+    <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+      {children}
+    </p>
   );
 }
 
@@ -70,8 +76,6 @@ const liveTracks = [
     description:
       "Ground-up Linux fundamentals: filesystem, permissions, processes, and the tools every systems engineer depends on daily.",
     topics: ["Filesystem", "Processes", "Permissions", "Text Tools"],
-    bgColor: "bg-emerald-500/10",
-    textColor: "text-emerald-500",
     link: "/courses?domain=linux",
   },
   {
@@ -80,8 +84,6 @@ const liveTracks = [
     description:
       "Write real shell scripts — automation, parsing, and everyday productivity using Bash and POSIX tools.",
     topics: ["Bash", "Scripting", "Automation", "POSIX"],
-    bgColor: "bg-cyan-500/10",
-    textColor: "text-cyan-500",
     link: "/courses?domain=shell",
   },
   {
@@ -90,8 +92,6 @@ const liveTracks = [
     description:
       "The language at the heart of systems software: pointers, memory, structs, and building programs that run close to the metal.",
     topics: ["Pointers", "Memory", "Structs", "File I/O"],
-    bgColor: "bg-indigo-500/10",
-    textColor: "text-indigo-500",
     link: "/courses?domain=c",
   },
   {
@@ -100,8 +100,6 @@ const liveTracks = [
     description:
       "An 8-week track implementing real data structures from scratch: linked lists, trees, heaps, graphs, and sorting.",
     topics: ["Linked Lists", "Trees", "Heaps", "Graphs"],
-    bgColor: "bg-purple-500/10",
-    textColor: "text-purple-500",
     link: "/courses/6",
   },
 ];
@@ -111,22 +109,16 @@ const upcomingDomains = [
     icon: Cpu,
     title: "VLSI Design",
     description: "RTL, verification, physical design, timing analysis.",
-    bgColor: "bg-indigo-500/10",
-    textColor: "text-indigo-500",
   },
   {
     icon: Zap,
     title: "Embedded Systems",
     description: "ARM, RTOS, firmware, device drivers.",
-    bgColor: "bg-cyan-500/10",
-    textColor: "text-cyan-500",
   },
   {
     icon: Layers,
     title: "FPGA Development",
     description: "Verilog/VHDL, SoC design, DSP on FPGA.",
-    bgColor: "bg-purple-500/10",
-    textColor: "text-purple-500",
   },
 ];
 
@@ -240,50 +232,44 @@ const faqs = [
   },
 ];
 
-function DashboardPreview({ role, title, accent, stats, menu }) {
+function DashboardPreview({ role, title, stats, menu }) {
   return (
-    <div className="flex flex-col overflow-hidden rounded-xl border border-border/70 bg-card shadow-xl">
-      {/* window chrome */}
+    <div className="flex flex-col overflow-hidden rounded-lg border border-border bg-card">
       <div className="flex items-center gap-2 border-b border-border bg-surface px-4 py-2.5">
-        <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
-        <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/80" />
-        <span className="h-2.5 w-2.5 rounded-full bg-green-400/80" />
-        <span className="ml-2 text-xs font-medium text-muted-foreground">{title}</span>
+        <span className="ml-1 font-mono text-xs text-muted-foreground">{title}</span>
         <Badge variant="secondary" className="ml-auto gap-1 text-[10px]">
           <Lock className="h-2.5 w-2.5" />
           Preview
         </Badge>
       </div>
       <div className="flex flex-1">
-        {/* mini sidebar */}
         <div className="hidden w-28 shrink-0 flex-col gap-1 border-r border-border bg-surface/60 p-3 sm:flex">
           {menu.map((item, i) => (
             <span
               key={item}
-              className={`truncate rounded-md px-2 py-1 text-[10px] font-medium ${
-                i === 0 ? `${accent} bg-secondary` : "text-muted-foreground"
+              className={`truncate rounded px-2 py-1 text-[10px] font-medium ${
+                i === 0 ? "bg-accent text-foreground" : "text-muted-foreground"
               }`}
             >
               {item}
             </span>
           ))}
         </div>
-        {/* content */}
         <div className="flex-1 p-4">
           <p className="text-xs font-semibold text-foreground">{role}</p>
           <p className="mb-3 text-[10px] text-muted-foreground">Multiline placeholder</p>
           <div className="grid grid-cols-2 gap-2">
             {stats.map((s) => (
-              <div key={s.label} className="rounded-lg border border-border/60 p-2">
-                <p className="text-sm font-bold text-foreground">{s.value}</p>
+              <div key={s.label} className="rounded-md border border-border/60 p-2">
+                <p className="text-sm font-semibold text-foreground">{s.value}</p>
                 <p className="text-[10px] text-muted-foreground">{s.label}</p>
               </div>
             ))}
           </div>
           <div className="mt-2 space-y-1.5">
-            <div className="h-1.5 w-full rounded bg-secondary" />
-            <div className="h-1.5 w-4/5 rounded bg-secondary" />
-            <div className="h-1.5 w-3/5 rounded bg-secondary" />
+            <div className="h-1.5 w-full rounded bg-muted" />
+            <div className="h-1.5 w-4/5 rounded bg-muted" />
+            <div className="h-1.5 w-3/5 rounded bg-muted" />
           </div>
         </div>
       </div>
@@ -295,7 +281,6 @@ const dashboards = [
   {
     role: "Student",
     title: "student-dashboard",
-    accent: "text-foreground",
     stats: [
       { label: "Courses", value: "4" },
       { label: "Streak", value: "12 days" },
@@ -307,7 +292,6 @@ const dashboards = [
   {
     role: "Mentor",
     title: "mentor-dashboard",
-    accent: "text-foreground",
     stats: [
       { label: "Students", value: "18" },
       { label: "Open doubts", value: "5" },
@@ -319,7 +303,6 @@ const dashboards = [
   {
     role: "Admin",
     title: "admin-dashboard",
-    accent: "text-foreground",
     stats: [
       { label: "Courses", value: "8" },
       { label: "Users", value: "320" },
@@ -331,144 +314,121 @@ const dashboards = [
 ];
 
 export default function HomePage() {
-  const heroRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-  const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
-
   return (
     <div className="min-h-screen bg-background">
-      {/* ─── Hero ─── */}
-      <section ref={heroRef} className="relative overflow-hidden hero-gradient">
-        {/* Grid pattern background */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(99,102,241,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(99,102,241,0.03)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)]" />
+      {/* Hero */}
+      <section className="border-b border-border">
+        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+          <div className="grid items-center gap-14 lg:grid-cols-2">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="max-w-xl"
+            >
+              <Eyebrow>NuralPath</Eyebrow>
+              <h1 className="mt-4 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+                Build the{" "}
+                <span className="text-primary">C &amp; Linux</span>{" "}
+                foundations engineers actually use
+              </h1>
+              <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+                Hands-on learning paths in Linux, shell scripting, C, and data
+                structures — with a built-in practice lab, progress dashboards,
+                and a community of students learning right alongside you.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button size="lg" asChild>
+                  <Link to="/register">
+                    Start Learning Free
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button size="lg" variant="outline" asChild>
+                  <Link to="/courses">Explore Courses</Link>
+                </Button>
+              </div>
+              <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                  <span>Free tier available</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                  <span>Practice lab included</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                  <span>No experience required</span>
+                </div>
+              </div>
+            </motion.div>
 
-        <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
-          <motion.div style={{ opacity: heroOpacity, scale: heroScale }}>
-            <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-              <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                className="max-w-xl"
-              >
-                <Badge variant="secondary" className="mb-4 gap-1.5">
-                  <Sparkles className="h-3 w-3" />
-                  Student-focused · Hands-on · Beginner friendly
-                </Badge>
-                <h1 className="font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                  Build the{" "}
-                  <span className="gradient-text">C &amp; Linux</span>{" "}
-                  Foundations Engineers Actually Use
-                </h1>
-                <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-                  Hands-on learning paths in Linux, shell scripting, C, and
-                  data structures — with a built-in practice lab, progress
-                  dashboards, and a community of students learning right
-                  alongside you.
-                </p>
-                <div className="mt-8 flex flex-wrap gap-4">
-                  <Button size="lg" asChild className="bg-primary hover:bg-primary/90 gap-2">
-                    <Link to="/register">
-                      Start Learning Free
-                      <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                  <Button size="lg" variant="outline" asChild>
-                    <Link to="/courses">Explore Courses</Link>
-                  </Button>
+            {/* C / Data Structures terminal preview */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+              className="relative hidden lg:block"
+            >
+              <div className="overflow-hidden rounded-lg border border-border bg-card">
+                <div className="flex items-center gap-2 border-b border-border bg-surface px-4 py-3">
+                  <span className="font-mono text-xs text-muted-foreground">list.c</span>
                 </div>
-                <div className="mt-8 flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                    <span>Free tier available</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                    <span>Practice lab included</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                    <span>No experience required</span>
-                  </div>
+                <div className="p-6 font-mono text-sm leading-6 text-foreground/80">
+                  <p>
+                    <span className="text-primary">#include</span>{" "}
+                    <span className="text-emerald-500">&lt;stdlib.h&gt;</span>
+                  </p>
+                  <p className="mt-2">
+                    <span className="text-primary">typedef</span>{" "}
+                    <span className="text-primary">struct</span> node {"{"}
+                  </p>
+                  <p className="pl-4">
+                    <span className="text-primary">int</span> data;
+                  </p>
+                  <p className="pl-4 text-muted-foreground">struct node *next;</p>
+                  <p>{"} node_t;"}</p>
+                  <p className="mt-2">
+                    <span className="text-primary">node_t</span> *push(
+                    <span className="text-primary">node_t</span> *head,{" "}
+                    <span className="text-primary">int</span> value){" "}
+                    {"{"}
+                  </p>
+                  <p className="pl-4">
+                    <span className="text-primary">node_t</span> *n ={" "}
+                    <span className="text-cyan-500">malloc</span>(
+                    <span className="text-primary">sizeof</span>(
+                    <span className="text-primary">*</span>n));
+                  </p>
+                  <p className="pl-4">n-&gt;data = value;</p>
+                  <p className="pl-4">n-&gt;next = head;</p>
+                  <p className="pl-4">
+                    <span className="text-primary">return</span> n;
+                  </p>
+                  <p>{"}"}</p>
                 </div>
-              </motion.div>
-
-              {/* C / Data Structures terminal illustration */}
-              <motion.div
-                initial={{ opacity: 0, x: 40 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-                className="relative hidden lg:block"
-              >
-                <div className="relative overflow-hidden rounded-xl border border-border bg-card shadow-2xl glow-indigo">
-                  <div className="flex items-center gap-2 border-b border-border bg-surface px-4 py-3">
-                    <span className="h-3 w-3 rounded-full bg-red-400" />
-                    <span className="h-3 w-3 rounded-full bg-yellow-400" />
-                    <span className="h-3 w-3 rounded-full bg-green-400" />
-                    <span className="ml-3 text-xs font-medium text-muted-foreground font-mono">
-                      list.c
-                    </span>
-                  </div>
-                  <div className="p-5 font-mono text-sm leading-6 text-foreground/80">
-                    <p>
-                      <span className="text-purple-500">#include</span>{" "}
-                      <span className="text-emerald-500">&lt;stdlib.h&gt;</span>
-                    </p>
-                    <p className="mt-2">
-                      <span className="text-purple-500">typedef</span>{" "}
-                      <span className="text-purple-500">struct</span> node {"{"}
-                    </p>
-                    <p className="pl-4">
-                      <span className="text-purple-500">int</span> data;
-                    </p>
-                    <p className="pl-4 text-muted-foreground">struct node *next;</p>
-                    <p>{"} node_t;"}</p>
-                    <p className="mt-2">
-                      <span className="text-purple-500">node_t</span> *push(
-                      <span className="text-purple-500">node_t</span> *head,{" "}
-                      <span className="text-purple-500">int</span> value){" "}
-                      {"{"}
-                    </p>
-                    <p className="pl-4">
-                      <span className="text-purple-500">node_t</span> *n ={" "}
-                      <span className="text-cyan-500">malloc</span>(
-                      <span className="text-purple-500">sizeof</span>(
-                      <span className="text-purple-500">*</span>n));
-                    </p>
-                    <p className="pl-4">n-&gt;data = value;</p>
-                    <p className="pl-4">n-&gt;next = head;</p>
-                    <p className="pl-4">
-                      <span className="text-purple-500">return</span> n;
-                    </p>
-                    <p>{"}"}</p>
-                  </div>
-                  <div className="pointer-events-none absolute -bottom-12 -right-12 h-48 w-48 rounded-full bg-primary/15 blur-3xl" />
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* ─── Learning Focus Strip ─── */}
-      <section className="border-y border-border bg-surface/50">
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center gap-4 text-center">
-            <p className="text-sm font-medium uppercase tracking-wider text-muted-foreground">
-              What you'll actually learn here
+      {/* Learning Focus Strip */}
+      <section className="border-b border-border">
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-center gap-5 text-center">
+            <p className="text-sm font-medium text-muted-foreground">
+              What you&apos;ll actually learn here
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-3">
+            <div className="flex flex-wrap items-center justify-center gap-2">
               {liveTracks.map((t) => (
                 <Link
                   key={t.title}
                   to={t.link}
-                  className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-card px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary/50 hover:text-primary"
+                  className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm text-foreground transition-colors hover:border-muted-foreground/40"
                 >
-                  <t.icon className={`h-4 w-4 ${t.textColor}`} />
+                  <t.icon className="h-4 w-4 text-muted-foreground" />
                   {t.title}
                 </Link>
               ))}
@@ -477,50 +437,46 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── Live Learning Tracks ─── */}
-      <section className="py-20 sm:py-28">
+      {/* Live Learning Tracks */}
+      <section className="py-20 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll className="text-center">
-            <Badge variant="secondary" className="mb-4">
-              Live Learning Tracks
-            </Badge>
-            <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          <AnimateOnScroll className="max-w-2xl">
+            <Eyebrow>Live Learning Tracks</Eyebrow>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
               Start Learning Today
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+            <p className="mt-3 text-muted-foreground">
               Four tracks are live right now, built for real skill development —
               not just video-watching.
             </p>
           </AnimateOnScroll>
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {liveTracks.map((domain, i) => (
-              <AnimateOnScroll key={domain.title} delay={i * 0.1}>
+              <AnimateOnScroll key={domain.title} delay={i * 0.06}>
                 <Link to={domain.link}>
-                  <Card className="group h-full cursor-pointer border-border/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                    <CardContent className="p-6">
-                      <div
-                        className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl ${domain.bgColor} ${domain.textColor} transition-transform group-hover:scale-110`}
-                      >
-                        <domain.icon className="h-6 w-6" />
+                  <Card className="group h-full transition-colors hover:border-muted-foreground/40">
+                    <CardContent className="p-5">
+                      <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-muted text-muted-foreground">
+                        <domain.icon className="h-5 w-5" />
                       </div>
-                      <h3 className="text-lg font-semibold text-foreground font-display">
+                      <h3 className="text-base font-semibold tracking-tight text-foreground">
                         {domain.title}
                       </h3>
                       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                         {domain.description}
                       </p>
-                      <div className="mt-4 flex flex-wrap gap-2">
+                      <div className="mt-4 flex flex-wrap gap-1.5">
                         {domain.topics.map((topic) => (
                           <span
                             key={topic}
-                            className="rounded-full bg-secondary px-2.5 py-1 text-xs font-medium text-muted-foreground"
+                            className="rounded-full bg-muted px-2.5 py-1 text-xs text-muted-foreground"
                           >
                             {topic}
                           </span>
                         ))}
                       </div>
-                      <div className="mt-4 flex items-center gap-1 text-sm font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100">
+                      <div className="mt-4 flex items-center gap-1 text-sm text-muted-foreground transition-colors group-hover:text-foreground">
                         Explore
                         <ArrowUpRight className="h-3.5 w-3.5" />
                       </div>
@@ -532,15 +488,15 @@ export default function HomePage() {
           </div>
 
           {/* In development banner */}
-          <AnimateOnScroll className="mt-10">
-            <div className="grid gap-4 rounded-xl border border-border/50 bg-surface/40 p-6 sm:grid-cols-3">
+          <AnimateOnScroll className="mt-12">
+            <div className="grid gap-6 rounded-lg border border-border bg-surface p-6 sm:grid-cols-3">
               {upcomingDomains.map((d) => (
                 <div key={d.title}>
                   <div className="flex items-center gap-2">
-                    <div className={`flex h-8 w-8 items-center justify-center rounded-lg ${d.bgColor} ${d.textColor}`}>
+                    <div className="flex h-8 w-8 items-center justify-center rounded-md bg-muted text-muted-foreground">
                       <d.icon className="h-4 w-4" />
                     </div>
-                    <h3 className="font-semibold text-foreground">{d.title}</h3>
+                    <h3 className="text-sm font-semibold text-foreground">{d.title}</h3>
                     <Badge variant="secondary" className="ml-auto text-[10px]">
                       In Development
                     </Badge>
@@ -555,37 +511,35 @@ export default function HomePage() {
               <Link to="/libraries" className="font-medium text-primary hover:underline">
                 roadmap in Libraries
               </Link>{" "}
-              and we'll announce when they're ready.
+              and we&apos;ll announce when they&apos;re ready.
             </p>
           </AnimateOnScroll>
         </div>
       </section>
 
-      {/* ─── Platform Features ─── */}
-      <section className="border-y border-border bg-surface/40 py-20 sm:py-28">
+      {/* Platform Features */}
+      <section className="border-y border-border bg-surface py-20 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll className="text-center">
-            <Badge variant="secondary" className="mb-4">
-              Platform Features
-            </Badge>
-            <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          <AnimateOnScroll className="max-w-2xl">
+            <Eyebrow>Platform Features</Eyebrow>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
               Tools Focused on Helping You Learn
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+            <p className="mt-3 text-muted-foreground">
               Everything here exists to move you from watching to doing — as
               quickly as possible.
             </p>
           </AnimateOnScroll>
 
-          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((f, i) => (
-              <AnimateOnScroll key={f.title} delay={i * 0.08}>
-                <Card className="h-full border-border/50 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
-                  <CardContent className="p-6">
-                    <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <AnimateOnScroll key={f.title} delay={i * 0.05}>
+                <Card className="h-full">
+                  <CardContent className="p-5">
+                    <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-muted text-muted-foreground">
                       <f.icon className="h-5 w-5" />
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground font-display">
+                    <h3 className="text-base font-semibold tracking-tight text-foreground">
                       {f.title}
                     </h3>
                     <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
@@ -599,25 +553,23 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── Dashboard Preview ─── */}
-      <section className="py-20 sm:py-28">
+      {/* Dashboard Preview */}
+      <section className="py-20 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll className="text-center">
-            <Badge variant="secondary" className="mb-4">
-              Dashboards
-            </Badge>
-            <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          <AnimateOnScroll className="max-w-2xl">
+            <Eyebrow>Dashboards</Eyebrow>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
               Your Learning, in One Place
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+            <p className="mt-3 text-muted-foreground">
               Separate dashboards for students, mentors, and admins — with
               courses, practice, doubt solving, and progress tracking.
             </p>
           </AnimateOnScroll>
 
-          <div className="mt-14 grid gap-6 lg:grid-cols-3">
+          <div className="mt-10 grid gap-4 lg:grid-cols-3">
             {dashboards.map((d, i) => (
-              <AnimateOnScroll key={d.role} delay={i * 0.1}>
+              <AnimateOnScroll key={d.role} delay={i * 0.06}>
                 <DashboardPreview {...d} />
               </AnimateOnScroll>
             ))}
@@ -628,7 +580,7 @@ export default function HomePage() {
               <Lock className="h-4 w-4 shrink-0" />
               This shows sample layout only. Sign in to open your real, live dashboard.
             </p>
-            <Button size="lg" asChild className="mt-6 bg-primary hover:bg-primary/90 gap-2">
+            <Button size="lg" asChild className="mt-6">
               <Link to="/dashboard">
                 Open Dashboard
                 <ArrowRight className="h-4 w-4" />
@@ -638,17 +590,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── DSA Track ─── */}
-      <section className="border-y border-border bg-surface/40 py-20 sm:py-28">
+      {/* DSA Track */}
+      <section className="border-y border-border bg-surface py-20 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <AnimateOnScroll>
-              <div>
-                <Badge variant="secondary" className="mb-4">
-                  <Code2 className="mr-1 h-3 w-3" />
-                  Featured Track
-                </Badge>
-                <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              <div className="max-w-xl">
+                <Eyebrow>Featured Track</Eyebrow>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
                   Data Structures in C — 8 Weeks to Real Skill
                 </h2>
                 <p className="mt-4 leading-relaxed text-muted-foreground">
@@ -668,8 +617,8 @@ export default function HomePage() {
                     </li>
                   ))}
                 </ul>
-                <div className="mt-8 flex flex-wrap gap-4">
-                  <Button size="lg" asChild className="bg-primary hover:bg-primary/90 gap-2">
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <Button size="lg" asChild>
                     <Link to="/courses/6">
                       View the DSA Track
                       <ArrowRight className="h-4 w-4" />
@@ -678,12 +627,12 @@ export default function HomePage() {
                 </div>
               </div>
             </AnimateOnScroll>
-            <AnimateOnScroll delay={0.1}>
-              <Card className="border-border/50">
-                <CardContent className="p-6">
+            <AnimateOnScroll delay={0.08}>
+              <Card>
+                <CardContent className="p-5">
                   <div className="mb-4 flex items-center gap-2">
-                    <ListChecks className="h-5 w-5 text-primary" />
-                    <h3 className="font-semibold text-foreground font-display">
+                    <ListChecks className="h-4 w-4 text-muted-foreground" />
+                    <h3 className="text-base font-semibold tracking-tight text-foreground">
                       8-Week Curriculum
                     </h3>
                   </div>
@@ -691,9 +640,9 @@ export default function HomePage() {
                     {dsaWeeks.map((week, i) => (
                       <div
                         key={week}
-                        className="flex items-center gap-3 rounded-lg border border-border/60 bg-surface/40 px-3 py-2"
+                        className="flex items-center gap-3 rounded-md border border-border bg-surface px-3 py-2"
                       >
-                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-primary/10 font-mono text-xs font-bold text-primary">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded bg-muted font-mono text-xs text-muted-foreground">
                           {i + 1}
                         </span>
                         <span className="text-sm text-muted-foreground">{week}</span>
@@ -707,29 +656,27 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── How It Works ─── */}
-      <section className="py-20 sm:py-28">
+      {/* How It Works */}
+      <section className="py-20 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <AnimateOnScroll className="text-center">
-            <Badge variant="secondary" className="mb-4">
-              How It Works
-            </Badge>
-            <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          <AnimateOnScroll className="max-w-2xl">
+            <Eyebrow>How It Works</Eyebrow>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
               From Your First Command to Your First Project
             </h2>
           </AnimateOnScroll>
 
-          <div className="relative mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             {howItWorks.map((step, i) => (
-              <AnimateOnScroll key={step.step} delay={i * 0.12}>
-                <div className="relative text-center">
-                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                    <step.icon className="h-7 w-7" />
+              <AnimateOnScroll key={step.step} delay={i * 0.06}>
+                <div className="text-center">
+                  <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-md bg-muted text-muted-foreground">
+                    <step.icon className="h-6 w-6" />
                   </div>
-                  <span className="text-xs font-bold text-primary/50 font-mono">
+                  <span className="font-mono text-xs font-medium text-muted-foreground">
                     STEP {step.step}
                   </span>
-                  <h3 className="mt-2 text-lg font-semibold text-foreground font-display">
+                  <h3 className="mt-2 text-base font-semibold tracking-tight text-foreground">
                     {step.title}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
@@ -742,72 +689,65 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── Community teaser ─── */}
-      <section className="border-y border-border bg-surface/40 py-20 sm:py-24">
+      {/* Community teaser */}
+      <section className="border-y border-border bg-surface py-20 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-10 lg:grid-cols-2">
             <AnimateOnScroll>
-              <Badge variant="secondary" className="mb-4">
-                <Users className="mr-1 h-3 w-3" />
-                Student Community
-              </Badge>
-              <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                You're Not Learning Alone
-              </h2>
-              <p className="mt-4 leading-relaxed text-muted-foreground">
-                Ask doubts, review each other's code, and collaborate on
-                projects. The community is where the real learning sticks.
-              </p>
-              <div className="mt-8 flex flex-wrap gap-4">
-                <Button asChild className="bg-primary hover:bg-primary/90 gap-2">
-                  <Link to="/community">
-                    Join the Community
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button variant="outline" asChild>
-                  <Link to="/about">Learn About Us</Link>
-                </Button>
+              <div className="max-w-xl">
+                <Eyebrow>Student Community</Eyebrow>
+                <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+                  You&apos;re Not Learning Alone
+                </h2>
+                <p className="mt-4 leading-relaxed text-muted-foreground">
+                  Ask doubts, review each other&apos;s code, and collaborate on
+                  projects. The community is where the real learning sticks.
+                </p>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <Button asChild>
+                    <Link to="/community">
+                      Join the Community
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button variant="outline" asChild>
+                    <Link to="/about">Learn About Us</Link>
+                  </Button>
+                </div>
               </div>
             </AnimateOnScroll>
-            <AnimateOnScroll delay={0.1}>
+            <AnimateOnScroll delay={0.08}>
               <div className="grid gap-4 sm:grid-cols-2">
                 {[
                   {
                     icon: MessageSquare,
                     title: "Doubt solving",
                     description: "Get unstuck fast with help from peers and mentors.",
-                    color: "text-emerald-500",
-                    bg: "bg-emerald-500/10",
                   },
                   {
                     icon: Network,
                     title: "Study groups",
                     description: "Learn in small groups moving through tracks together.",
-                    color: "text-cyan-500",
-                    bg: "bg-cyan-500/10",
                   },
                   {
                     icon: GitBranch,
                     title: "Project collabs",
                     description: "Team up on C and shell projects for real experience.",
-                    color: "text-indigo-500",
-                    bg: "bg-indigo-500/10",
                   },
                   {
                     icon: ShieldCheck,
                     title: "Safe space",
                     description: "Questions at every level are welcome, always.",
-                    color: "text-purple-500",
-                    bg: "bg-purple-500/10",
                   },
                 ].map((c) => (
-                  <Card key={c.title} className="border-border/50">
+                  <Card key={c.title}>
                     <CardContent className="p-5">
-                      <div className={`mb-3 flex h-10 w-10 items-center justify-center rounded-lg ${c.bg} ${c.color}`}>
-                        <c.icon className="h-5 w-5" />
+                      <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground">
+                        <c.icon className="h-4 w-4" />
                       </div>
-                      <h3 className="font-semibold text-foreground">{c.title}</h3>
+                      <h3 className="text-sm font-semibold tracking-tight text-foreground">
+                        {c.title}
+                      </h3>
                       <p className="mt-1 text-sm text-muted-foreground">{c.description}</p>
                     </CardContent>
                   </Card>
@@ -818,19 +758,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── FAQ ─── */}
-      <section className="py-20 sm:py-28">
+      {/* FAQ */}
+      <section className="py-20 sm:py-24">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <AnimateOnScroll className="text-center">
-            <Badge variant="secondary" className="mb-4">
-              FAQ
-            </Badge>
-            <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            <Eyebrow>FAQ</Eyebrow>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
               Frequently Asked Questions
             </h2>
           </AnimateOnScroll>
 
-          <AnimateOnScroll className="mt-12" delay={0.1}>
+          <AnimateOnScroll className="mt-10" delay={0.05}>
             <Accordion type="single" collapsible className="w-full">
               {faqs.map((faq, i) => (
                 <AccordionItem key={i} value={`faq-${i}`}>
@@ -847,29 +785,28 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── CTA ─── */}
-      <section className="relative overflow-hidden border-t border-border py-20 sm:py-28">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-cyan-500/5" />
-        <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+      {/* CTA */}
+      <section className="border-t border-border py-20 sm:py-24">
+        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
           <AnimateOnScroll>
-            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-              <BookOpen className="h-8 w-8" />
+            <div className="mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-md bg-muted text-muted-foreground">
+              <BookOpen className="h-6 w-6" />
             </div>
-            <h2 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
               Ready to Start Learning?
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
               Create a free account, pick a track, and write your first command
               today. The community will be right there with you.
             </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Button size="lg" asChild className="bg-primary hover:bg-primary/90 gap-2">
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <Button size="lg" asChild>
                 <Link to="/register">
                   Get Started Free
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" asChild className="gap-2">
+              <Button size="lg" variant="outline" asChild>
                 <Link to="/courses">
                   Browse Courses
                   <ChevronRight className="h-4 w-4" />

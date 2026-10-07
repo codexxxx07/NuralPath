@@ -3,22 +3,18 @@ import { motion } from "framer-motion";
 import {
   Plus,
   Star,
-  Users,
   BookOpen,
   Mail,
   Phone,
   Calendar,
   X,
-  Award,
-  TrendingUp,
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../../components/ui/card";
+import { Card, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Avatar, AvatarFallback } from "../../components/ui/avatar";
 import { Progress } from "../../components/ui/progress";
 import { Separator } from "../../components/ui/separator";
-import { cn } from "../../lib/utils";
 
 const mentors = [
   {
@@ -140,10 +136,10 @@ export default function AdminMentorsPage() {
 
   return (
     <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <motion.div variants={item} className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Mentor Management</h1>
-          <p className="text-muted-foreground mt-1">{mentors.length} mentors on platform</p>
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">Mentor Management</h1>
+          <p className="mt-1 text-sm text-muted-foreground">{mentors.length} mentors on platform</p>
         </div>
         <Button>
           <Plus className="h-4 w-4 mr-2" />
@@ -151,17 +147,17 @@ export default function AdminMentorsPage() {
         </Button>
       </motion.div>
 
-      <motion.div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" variants={item}>
+      <motion.div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" variants={item}>
         {mentors.map((mentor) => (
-          <Card key={mentor.id} className="hover:shadow-md transition-shadow cursor-pointer" onClick={() => setSelectedMentor(mentor)}>
+          <Card key={mentor.id} className="cursor-pointer transition-colors hover:border-muted-foreground/40" onClick={() => setSelectedMentor(mentor)}>
             <CardContent className="p-5">
-              <div className="flex items-start gap-4 mb-4">
+              <div className="mb-4 flex items-start gap-4">
                 <Avatar className="h-12 w-12">
                   <AvatarFallback className="text-sm font-medium">{mentor.initials}</AvatarFallback>
                 </Avatar>
-                <div className="flex-1 min-w-0">
+                <div className="min-w-0 flex-1">
                   <h3 className="font-semibold text-foreground">{mentor.name}</h3>
-                  <p className="text-xs text-muted-foreground truncate">{mentor.email}</p>
+                  <p className="truncate text-xs text-muted-foreground">{mentor.email}</p>
                   <Badge variant={mentor.status === "Active" ? "success" : mentor.status === "On Leave" ? "secondary" : "destructive"} className="mt-1">
                     {mentor.status}
                   </Badge>
@@ -171,7 +167,7 @@ export default function AdminMentorsPage() {
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-muted-foreground">Rating</span>
                   <div className="flex items-center gap-1">
-                    <Star className="h-3.5 w-3.5 text-yellow-500 fill-yellow-500" />
+                    <Star className="h-3.5 w-3.5 fill-foreground text-foreground" />
                     <span className="font-medium text-foreground">{mentor.rating}</span>
                     <span className="text-muted-foreground">({mentor.totalReviews})</span>
                   </div>
@@ -185,14 +181,14 @@ export default function AdminMentorsPage() {
                   <span className="font-medium text-foreground">{mentor.coursesAssigned.length}</span>
                 </div>
                 <div>
-                  <div className="flex items-center justify-between text-sm mb-1">
+                  <div className="mb-1 flex items-center justify-between text-sm">
                     <span className="text-muted-foreground">Completion Rate</span>
                     <span className="font-medium text-foreground">{mentor.completionRate}%</span>
                   </div>
                   <Progress value={mentor.completionRate} className="h-1.5" />
                 </div>
               </div>
-              <div className="flex flex-wrap gap-1 mt-3">
+              <div className="mt-3 flex flex-wrap gap-1">
                 {mentor.expertise.map((skill) => (
                   <Badge key={skill} variant="outline" className="text-[10px]">
                     {skill}
@@ -209,61 +205,61 @@ export default function AdminMentorsPage() {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-card border border-border rounded-lg shadow-lg w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto"
+            className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg border border-border bg-card p-6 shadow-lg"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-foreground">Mentor Details</h2>
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="text-base font-semibold tracking-tight text-foreground">Mentor Details</h2>
               <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setSelectedMentor(null)}>
                 <X className="h-4 w-4" />
               </Button>
             </div>
 
-            <div className="flex items-center gap-4 mb-6">
+            <div className="mb-6 flex items-center gap-4">
               <Avatar className="h-16 w-16">
                 <AvatarFallback className="text-lg font-medium">{selectedMentor.initials}</AvatarFallback>
               </Avatar>
               <div>
-                <h3 className="font-semibold text-foreground text-lg">{selectedMentor.name}</h3>
+                <h3 className="text-lg font-semibold text-foreground">{selectedMentor.name}</h3>
                 <p className="text-sm text-muted-foreground">{selectedMentor.bio}</p>
               </div>
             </div>
 
             <Separator className="mb-4" />
 
-            <div className="grid grid-cols-2 gap-4 mb-4">
-              <div className="p-3 rounded-lg bg-muted/50 text-center">
-                <p className="text-xl font-bold text-foreground">{selectedMentor.studentsCount}</p>
+            <div className="mb-4 grid grid-cols-2 gap-3">
+              <div className="rounded-md bg-muted p-3 text-center">
+                <p className="text-2xl font-semibold text-foreground">{selectedMentor.studentsCount}</p>
                 <p className="text-xs text-muted-foreground">Students</p>
               </div>
-              <div className="p-3 rounded-lg bg-muted/50 text-center">
-                <p className="text-xl font-bold text-foreground">{selectedMentor.rating}</p>
+              <div className="rounded-md bg-muted p-3 text-center">
+                <p className="text-2xl font-semibold text-foreground">{selectedMentor.rating}</p>
                 <p className="text-xs text-muted-foreground">Avg Rating</p>
               </div>
-              <div className="p-3 rounded-lg bg-muted/50 text-center">
-                <p className="text-xl font-bold text-foreground">{selectedMentor.completionRate}%</p>
+              <div className="rounded-md bg-muted p-3 text-center">
+                <p className="text-2xl font-semibold text-foreground">{selectedMentor.completionRate}%</p>
                 <p className="text-xs text-muted-foreground">Completion</p>
               </div>
-              <div className="p-3 rounded-lg bg-muted/50 text-center">
-                <p className="text-xl font-bold text-foreground">{selectedMentor.avgResponseTime}</p>
+              <div className="rounded-md bg-muted p-3 text-center">
+                <p className="text-2xl font-semibold text-foreground">{selectedMentor.avgResponseTime}</p>
                 <p className="text-xs text-muted-foreground">Avg Response</p>
               </div>
             </div>
 
             <Separator className="mb-4" />
 
-            <div className="space-y-3 mb-4">
-              <h4 className="font-medium text-foreground text-sm">Assigned Courses</h4>
+            <div className="mb-4 space-y-3">
+              <h4 className="text-sm font-semibold tracking-tight text-foreground">Assigned Courses</h4>
               {selectedMentor.coursesAssigned.map((course) => (
-                <div key={course} className="flex items-center gap-2 p-2 rounded-lg bg-muted/50">
+                <div key={course} className="flex items-center gap-2 rounded-md bg-muted p-2">
                   <BookOpen className="h-4 w-4 text-muted-foreground" />
                   <span className="text-sm text-foreground">{course}</span>
                 </div>
               ))}
             </div>
 
-            <div className="space-y-2 mb-4">
-              <h4 className="font-medium text-foreground text-sm">Contact</h4>
+            <div className="mb-4 space-y-2">
+              <h4 className="text-sm font-semibold tracking-tight text-foreground">Contact</h4>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Mail className="h-4 w-4" />
                 <span>{selectedMentor.email}</span>

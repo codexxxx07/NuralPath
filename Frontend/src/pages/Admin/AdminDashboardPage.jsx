@@ -16,13 +16,12 @@ import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Progress } from "../../components/ui/progress";
 import { Avatar, AvatarFallback } from "../../components/ui/avatar";
-import { cn } from "../../lib/utils";
 
 const stats = [
-  { label: "Total Users", value: "2,847", change: "+12.5%", up: true, icon: Users, color: "text-blue-500" },
-  { label: "Active Students", value: "1,234", change: "+8.2%", up: true, icon: GraduationCap, color: "text-emerald-500" },
-  { label: "Revenue", value: "₹12,45,000", change: "+18.3%", up: true, icon: IndianRupee, color: "text-purple-500" },
-  { label: "Completion Rate", value: "72%", change: "-2.1%", up: false, icon: TrendingUp, color: "text-orange-500" },
+  { label: "Total Users", value: "2,847", change: "+12.5%", up: true, icon: Users },
+  { label: "Active Students", value: "1,234", change: "+8.2%", up: true, icon: GraduationCap },
+  { label: "Revenue", value: "₹12,45,000", change: "+18.3%", up: true, icon: IndianRupee },
+  { label: "Completion Rate", value: "72%", change: "-2.1%", up: false, icon: TrendingUp },
 ];
 
 const revenueData = [
@@ -71,32 +70,30 @@ export default function AdminDashboardPage() {
   return (
     <motion.div className="space-y-8" variants={container} initial="hidden" animate="show">
       <motion.div variants={item}>
-        <h1 className="text-3xl font-bold text-foreground">Admin Dashboard</h1>
-        <p className="text-muted-foreground mt-1">Platform overview and key metrics</p>
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Admin Dashboard</h1>
+        <p className="mt-1 text-sm text-muted-foreground">Platform overview and key metrics</p>
       </motion.div>
 
-      <motion.div className="grid grid-cols-2 lg:grid-cols-4 gap-4" variants={item}>
+      <motion.div className="grid grid-cols-2 gap-4 lg:grid-cols-4" variants={item}>
         {stats.map((stat) => (
           <Card key={stat.label}>
             <CardContent className="p-5">
-              <div className="flex items-center justify-between">
+              <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                  <p className="text-2xl font-semibold text-foreground">{stat.value}</p>
                   <p className="text-sm text-muted-foreground">{stat.label}</p>
                 </div>
-                <div className={cn("p-3 rounded-lg bg-muted", stat.color)}>
-                  <stat.icon className="h-5 w-5" />
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground">
+                  <stat.icon className="h-4 w-4" />
                 </div>
               </div>
-              <div className="flex items-center gap-1 mt-3">
+              <div className="mt-3 flex items-center gap-1">
                 {stat.up ? (
-                  <ArrowUpRight className="h-3 w-3 text-emerald-500" />
+                  <ArrowUpRight className="h-3 w-3 text-muted-foreground" />
                 ) : (
-                  <ArrowDownRight className="h-3 w-3 text-red-500" />
+                  <ArrowDownRight className="h-3 w-3 text-muted-foreground" />
                 )}
-                <span className={cn("text-xs font-medium", stat.up ? "text-emerald-500" : "text-red-500")}>
-                  {stat.change}
-                </span>
+                <span className="text-xs font-medium text-foreground">{stat.change}</span>
                 <span className="text-xs text-muted-foreground">vs last month</span>
               </div>
             </CardContent>
@@ -104,20 +101,20 @@ export default function AdminDashboardPage() {
         ))}
       </motion.div>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid gap-6 lg:grid-cols-2">
         <motion.div variants={item}>
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <IndianRupee className="h-5 w-5 text-purple-500" />
+              <CardTitle className="flex items-center gap-2 text-base font-semibold tracking-tight">
+                <IndianRupee className="h-4 w-4 text-muted-foreground" />
                 Revenue — Last 6 Months
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex items-end gap-3 h-48">
+              <div className="flex h-48 items-end gap-3">
                 {revenueData.map((d) => (
-                  <div key={d.month} className="flex-1 flex flex-col items-center gap-2">
-                    <span className="text-xs text-muted-foreground font-medium">
+                  <div key={d.month} className="flex flex-1 flex-col items-center gap-2">
+                    <span className="text-xs font-medium text-muted-foreground">
                       ₹{(d.value / 100000).toFixed(1)}L
                     </span>
                     <motion.div
@@ -137,22 +134,22 @@ export default function AdminDashboardPage() {
         <motion.div variants={item}>
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <Users className="h-5 w-5 text-blue-500" />
+              <CardTitle className="flex items-center gap-2 text-base font-semibold tracking-tight">
+                <Users className="h-4 w-4 text-muted-foreground" />
                 Recent Registrations
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
+            <CardContent className="space-y-2">
               {recentRegistrations.map((user) => (
-                <div key={user.id} className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
+                <div key={user.id} className="flex items-center gap-3 rounded-md bg-muted p-3">
                   <Avatar className="h-9 w-9">
                     <AvatarFallback className="text-xs">{user.initials}</AvatarFallback>
                   </Avatar>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-foreground text-sm">{user.name}</p>
-                    <p className="text-xs text-muted-foreground truncate">{user.course}</p>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-medium text-foreground">{user.name}</p>
+                    <p className="truncate text-xs text-muted-foreground">{user.course}</p>
                   </div>
-                  <span className="text-xs text-muted-foreground whitespace-nowrap">{user.date}</span>
+                  <span className="whitespace-nowrap text-xs text-muted-foreground">{user.date}</span>
                 </div>
               ))}
             </CardContent>
@@ -160,23 +157,23 @@ export default function AdminDashboardPage() {
         </motion.div>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid gap-6 lg:grid-cols-2">
         <motion.div variants={item}>
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <BookOpen className="h-5 w-5 text-emerald-500" />
+              <CardTitle className="flex items-center gap-2 text-base font-semibold tracking-tight">
+                <BookOpen className="h-4 w-4 text-muted-foreground" />
                 Active Courses
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-3">
               {activeCourses.map((course) => (
-                <div key={course.id} className="p-3 rounded-lg bg-muted/50">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-medium text-foreground text-sm">{course.title}</h3>
+                <div key={course.id} className="rounded-md bg-muted p-3">
+                  <div className="mb-2 flex items-center justify-between">
+                    <h3 className="text-sm font-medium text-foreground">{course.title}</h3>
                     <Badge variant="secondary">{course.students} students</Badge>
                   </div>
-                  <div className="flex items-center justify-between text-sm mb-1">
+                  <div className="mb-1 flex items-center justify-between text-sm">
                     <span className="text-muted-foreground">Completion</span>
                     <span className="font-medium text-foreground">{course.completion}%</span>
                   </div>
@@ -190,33 +187,31 @@ export default function AdminDashboardPage() {
         <motion.div variants={item}>
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <AlertTriangle className="h-5 w-5 text-orange-500" />
+              <CardTitle className="flex items-center gap-2 text-base font-semibold tracking-tight">
+                <AlertTriangle className="h-4 w-4 text-muted-foreground" />
                 System Alerts
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
+            <CardContent className="space-y-2">
               {systemAlerts.map((alert) => (
-                <div key={alert.id} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
-                  <div className={cn("mt-0.5", alert.type === "error" ? "text-red-500" : alert.type === "warning" ? "text-orange-500" : "text-blue-500")}>
-                    {alert.type === "error" ? (
-                      <AlertTriangle className="h-4 w-4" />
-                    ) : alert.type === "warning" ? (
-                      <AlertTriangle className="h-4 w-4" />
-                    ) : (
+                <div key={alert.id} className="flex items-start gap-3 rounded-md bg-muted p-3">
+                  <div className={`mt-0.5 ${alert.type === "error" ? "text-destructive" : "text-muted-foreground"}`}>
+                    {alert.type === "info" ? (
                       <CheckCircle2 className="h-4 w-4" />
+                    ) : (
+                      <AlertTriangle className="h-4 w-4" />
                     )}
                   </div>
                   <div className="flex-1">
                     <p className="text-sm text-foreground">{alert.message}</p>
-                    <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+                    <p className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
                       <Clock className="h-3 w-3" />
                       {alert.time}
                     </p>
                   </div>
                 </div>
               ))}
-              <Button variant="outline" className="w-full mt-2">
+              <Button variant="outline" className="mt-2 w-full">
                 View All Alerts
               </Button>
             </CardContent>

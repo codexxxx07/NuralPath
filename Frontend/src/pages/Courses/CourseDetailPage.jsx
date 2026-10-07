@@ -26,7 +26,6 @@ const courseData = {
       "Master the Linux command line, file systems, permissions, and basic system administration. This course takes you from zero to confidently navigating and managing a Linux environment.",
     level: "Beginner",
     duration: "6 weeks",
-    gradient: "from-emerald-500/20 to-teal-600/20",
     whatYouWillLearn: [
       "Navigate the Linux file system using the command line",
       "Manage files, directories, and permissions effectively",
@@ -80,7 +79,6 @@ const courseData = {
       "Implement linked lists, stacks, queues, trees, and graphs in C. Build problem-solving skills with real coding challenges — the foundation of every serious software engineer.",
     level: "Intermediate",
     duration: "8 weeks",
-    gradient: "from-rose-500/20 to-pink-600/20",
     whatYouWillLearn: [
       "Implement linked lists, stacks, and queues in C",
       "Understand complexity analysis and when to choose each structure",
@@ -142,7 +140,6 @@ const courseData = {
     description: "Course details are being finalized.",
     level: "Intermediate",
     duration: "8 weeks",
-    gradient: "from-primary/20 to-primary/10",
     whatYouWillLearn: [
       "Understand core concepts and fundamentals",
       "Apply practical skills through hands-on exercises",
@@ -183,7 +180,7 @@ export default function CourseDetailPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero */}
-      <section className="border-b border-border bg-surface/40 py-16 sm:py-20">
+      <section className="border-b border-border bg-surface py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div initial="hidden" animate="visible" variants={fadeIn}>
             <Link
@@ -194,12 +191,10 @@ export default function CourseDetailPage() {
               All Courses
             </Link>
 
-            <div className="grid gap-10 lg:grid-cols-[1fr_380px]">
+            <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
               <div>
-                <div className="flex items-center gap-3 mb-4">
-                  <Badge variant={course.level === "Beginner" ? "success" : course.level === "Advanced" ? "outline" : "secondary"}>
-                    {course.level}
-                  </Badge>
+                <div className="mb-4 flex items-center gap-3">
+                  <Badge variant="outline">{course.level}</Badge>
                   {course.isDsa && (
                     <Badge variant="secondary" className="gap-1">
                       <BookOpen className="h-3 w-3" />
@@ -208,37 +203,32 @@ export default function CourseDetailPage() {
                   )}
                 </div>
 
-                <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
                   {course.title}
                 </h1>
-                <p className="mt-4 text-muted-foreground leading-relaxed">
+                <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
                   {course.description}
                 </p>
 
-                <div className="mt-6 flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
+                <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
                   <span className="flex items-center gap-1.5">
-                    <Clock className="h-4 w-4" />
+                    <Clock className="h-3.5 w-3.5" />
                     {course.duration}
                   </span>
                   <span className="flex items-center gap-1.5">
-                    <Calendar className="h-4 w-4" />
+                    <Calendar className="h-3.5 w-3.5" />
                     Flexible Schedule
                   </span>
                   <span className="flex items-center gap-1.5">
-                    <Award className="h-4 w-4" />
+                    <Award className="h-3.5 w-3.5" />
                     Certificate Included
                   </span>
                 </div>
               </div>
 
               {/* Enroll Card */}
-              <Card className="border-border self-start">
+              <Card className="self-start">
                 <CardContent className="p-6">
-                  <div className={`mb-4 flex h-32 items-center justify-center rounded-lg bg-gradient-to-br ${course.gradient}`}>
-                    <span className="text-5xl font-bold text-foreground/10">
-                      {course.title.charAt(0)}
-                    </span>
-                  </div>
                   <Button className="w-full" size="lg" asChild>
                     <Link to="/register">
                       Enroll Now
@@ -281,16 +271,18 @@ export default function CourseDetailPage() {
       {/* Content Sections */}
       <section className="py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-[1fr_380px]">
+          <div className="grid gap-12 lg:grid-cols-[1fr_320px]">
             <div className="space-y-12">
               {/* What You'll Learn */}
               <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
-                <h2 className="text-2xl font-bold text-foreground">What You&apos;ll Learn</h2>
+                <h2 className="text-xl font-semibold tracking-tight text-foreground">
+                  What You&apos;ll Learn
+                </h2>
                 <div className="mt-6 grid gap-3 sm:grid-cols-2">
                   {course.whatYouWillLearn.map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
-                      <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                      <span className="text-sm text-muted-foreground">{item}</span>
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground" />
+                      <span className="text-sm text-muted-foreground leading-relaxed">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -298,11 +290,13 @@ export default function CourseDetailPage() {
 
               {/* Prerequisites */}
               <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
-                <h2 className="text-2xl font-bold text-foreground">Prerequisites</h2>
+                <h2 className="text-xl font-semibold tracking-tight text-foreground">
+                  Prerequisites
+                </h2>
                 <ul className="mt-6 space-y-3">
                   {course.prerequisites.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
-                      <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                    <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground leading-relaxed">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground" />
                       {item}
                     </li>
                   ))}
@@ -311,17 +305,19 @@ export default function CourseDetailPage() {
 
               {/* Curriculum */}
               <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
-                <h2 className="text-2xl font-bold text-foreground">Curriculum</h2>
-                <p className="mt-2 text-sm text-muted-foreground">
+                <h2 className="text-xl font-semibold tracking-tight text-foreground">
+                  Curriculum
+                </h2>
+                <p className="mt-2 text-xs text-muted-foreground">
                   {course.syllabus.length} modules · {course.duration}
                 </p>
                 <Accordion type="single" collapsible className="mt-6 w-full">
                   {course.syllabus.map((module, i) => (
                     <AccordionItem key={i} value={`module-${i}`}>
-                      <AccordionTrigger className="text-left text-foreground">
+                      <AccordionTrigger className="text-left text-sm text-foreground">
                         {module.title}
                       </AccordionTrigger>
-                      <AccordionContent className="text-muted-foreground">
+                      <AccordionContent className="text-muted-foreground leading-relaxed">
                         {module.content}
                       </AccordionContent>
                     </AccordionItem>
@@ -332,9 +328,11 @@ export default function CourseDetailPage() {
 
             {/* Sidebar note */}
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeIn}>
-              <Card className="border-border sticky top-24">
+              <Card className="sticky top-24">
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-bold text-foreground">About This Course</h3>
+                  <h3 className="text-base font-semibold tracking-tight text-foreground">
+                    About This Course
+                  </h3>
                   <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
                     This course is part of the {course.isDsa ? "Data Structures & Algorithms" : "Linux & Systems"} learning track.
                     Content is created and reviewed by community mentors. Instructor details will be

@@ -1,15 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  FileText,
-  Plus,
-  CheckCircle2,
-  XCircle,
-  Eye,
-  Trash2,
-  GripVertical,
-  List,
-} from "lucide-react";
+import { Plus, Eye, Trash2, List } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
@@ -17,7 +8,6 @@ import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Textarea } from "../../components/ui/textarea";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../../components/ui/select";
-import { Separator } from "../../components/ui/separator";
 import { cn } from "../../lib/utils";
 
 const initialQuestionSets = [
@@ -102,8 +92,8 @@ export default function MentorPYQPage() {
       <motion.div className="space-y-8" variants={container} initial="hidden" animate="show">
         <motion.div variants={item} className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-foreground">{selectedSet.title}</h1>
-            <p className="text-muted-foreground mt-1">{questions.length} questions added · {selectedSet.duration}</p>
+            <h1 className="text-2xl font-semibold tracking-tight text-foreground">{selectedSet.title}</h1>
+            <p className="text-sm text-muted-foreground mt-1">{questions.length} questions added · {selectedSet.duration}</p>
           </div>
           <div className="flex gap-2">
             <Button variant="outline" onClick={() => { setShowAddQuestion(false); setSelectedSet(null); setQuestions([]); }}>
@@ -115,7 +105,7 @@ export default function MentorPYQPage() {
         <motion.div variants={item}>
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Add MCQ Question</CardTitle>
+              <CardTitle className="text-base font-semibold tracking-tight">Add MCQ Question</CardTitle>
               <CardDescription>Question {questions.length + 1}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -198,11 +188,11 @@ export default function MentorPYQPage() {
           <motion.div variants={item}>
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">Questions Preview</CardTitle>
+                <CardTitle className="text-base font-semibold tracking-tight">Questions Preview</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 {questions.map((q) => (
-                  <div key={q.id} className="p-4 rounded-lg bg-muted/50">
+                  <div key={q.id} className="p-4 rounded-md border border-border">
                     <div className="flex items-start justify-between mb-2">
                       <p className="font-medium text-foreground text-sm">
                         <span className="text-primary mr-1">Q{q.id}.</span>
@@ -241,8 +231,8 @@ export default function MentorPYQPage() {
     <motion.div className="space-y-8" variants={container} initial="hidden" animate="show">
       <motion.div variants={item} className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">PYQ Management</h1>
-          <p className="text-muted-foreground mt-1">{questionSets.length} question sets created</p>
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">PYQ Management</h1>
+          <p className="text-sm text-muted-foreground mt-1">{questionSets.length} question sets created</p>
         </div>
         <Button onClick={() => setShowCreateSet(!showCreateSet)}>
           <Plus className="h-4 w-4 mr-2" />
@@ -257,7 +247,7 @@ export default function MentorPYQPage() {
         >
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Create New Question Set</CardTitle>
+              <CardTitle className="text-base font-semibold tracking-tight">Create New Question Set</CardTitle>
               <CardDescription>Define the question set details</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -316,11 +306,11 @@ export default function MentorPYQPage() {
 
       <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" variants={item}>
         {questionSets.map((set) => (
-          <Card key={set.id} className="hover:border-primary/50 transition-colors">
+          <Card key={set.id} className="transition-colors hover:border-muted-foreground/40">
             <CardContent className="p-5">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-foreground truncate">{set.title}</h3>
+                  <h3 className="text-base font-semibold tracking-tight text-foreground truncate">{set.title}</h3>
                   <p className="text-sm text-muted-foreground mt-1">{set.course}</p>
                 </div>
                 <Badge variant={set.status === "Published" ? "success" : "secondary"}>

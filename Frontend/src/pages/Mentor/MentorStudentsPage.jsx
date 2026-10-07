@@ -1,16 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  Users,
-  Search,
-  Mail,
-  Clock,
-  ChevronRight,
-  ArrowLeft,
-  BookOpen,
-  TrendingUp,
-} from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../../components/ui/card";
+import { Search, Clock, ArrowLeft, BookOpen } from "lucide-react";
+import { Card, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -18,7 +9,6 @@ import { Avatar, AvatarFallback } from "../../components/ui/avatar";
 import { Progress } from "../../components/ui/progress";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../../components/ui/select";
 import { Separator } from "../../components/ui/separator";
-import { cn } from "../../lib/utils";
 
 const students = [
   { id: 1, name: "Priya Sharma", initials: "PS", email: "priya.sharma@email.com", course: "Linux Fundamentals", progress: 82, lastActive: "2 hours ago", status: "Active", enrolled: "Jun 15, 2026", quizzes: 8, avgScore: 88 },
@@ -57,7 +47,7 @@ export default function MentorStudentsPage() {
   const statusColor = (status) => {
     if (status === "Active") return "success";
     if (status === "Idle") return "secondary";
-    return "destructive";
+    return "outline";
   };
 
   if (selectedStudent) {
@@ -78,8 +68,8 @@ export default function MentorStudentsPage() {
                   <AvatarFallback className="text-lg">{selectedStudent.initials}</AvatarFallback>
                 </Avatar>
                 <div>
-                  <h1 className="text-2xl font-bold text-foreground">{selectedStudent.name}</h1>
-                  <p className="text-muted-foreground">{selectedStudent.email}</p>
+                  <h1 className="text-2xl font-semibold tracking-tight text-foreground">{selectedStudent.name}</h1>
+                  <p className="text-sm text-muted-foreground">{selectedStudent.email}</p>
                   <Badge variant={statusColor(selectedStudent.status)} className="mt-1">{selectedStudent.status}</Badge>
                 </div>
               </div>
@@ -87,20 +77,20 @@ export default function MentorStudentsPage() {
               <Separator className="mb-6" />
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                <div className="text-center p-4 rounded-lg bg-muted/50">
-                  <p className="text-2xl font-bold text-foreground">{selectedStudent.progress}%</p>
+                <div className="text-center p-4 rounded-md border border-border">
+                  <p className="text-2xl font-semibold text-foreground">{selectedStudent.progress}%</p>
                   <p className="text-sm text-muted-foreground">Progress</p>
                 </div>
-                <div className="text-center p-4 rounded-lg bg-muted/50">
-                  <p className="text-2xl font-bold text-foreground">{selectedStudent.quizzes}</p>
+                <div className="text-center p-4 rounded-md border border-border">
+                  <p className="text-2xl font-semibold text-foreground">{selectedStudent.quizzes}</p>
                   <p className="text-sm text-muted-foreground">Quizzes Taken</p>
                 </div>
-                <div className="text-center p-4 rounded-lg bg-muted/50">
-                  <p className="text-2xl font-bold text-foreground">{selectedStudent.avgScore}%</p>
+                <div className="text-center p-4 rounded-md border border-border">
+                  <p className="text-2xl font-semibold text-foreground">{selectedStudent.avgScore}%</p>
                   <p className="text-sm text-muted-foreground">Avg Score</p>
                 </div>
-                <div className="text-center p-4 rounded-lg bg-muted/50">
-                  <p className="text-2xl font-bold text-foreground">{selectedStudent.lastActive}</p>
+                <div className="text-center p-4 rounded-md border border-border">
+                  <p className="text-2xl font-semibold text-foreground">{selectedStudent.lastActive}</p>
                   <p className="text-sm text-muted-foreground">Last Active</p>
                 </div>
               </div>
@@ -109,7 +99,7 @@ export default function MentorStudentsPage() {
                 <div>
                   <h3 className="font-medium text-foreground mb-2">Course</h3>
                   <div className="flex items-center gap-2">
-                    <BookOpen className="h-4 w-4 text-primary" />
+                    <BookOpen className="h-4 w-4 text-muted-foreground" />
                     <span className="text-foreground">{selectedStudent.course}</span>
                   </div>
                 </div>
@@ -135,8 +125,8 @@ export default function MentorStudentsPage() {
   return (
     <motion.div className="space-y-8" variants={container} initial="hidden" animate="show">
       <motion.div variants={item}>
-        <h1 className="text-3xl font-bold text-foreground">My Students</h1>
-        <p className="text-muted-foreground mt-1">{students.length} students across all courses</p>
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground">My Students</h1>
+        <p className="text-sm text-muted-foreground mt-1">{students.length} students across all courses</p>
       </motion.div>
 
       <motion.div variants={item} className="flex flex-col sm:flex-row gap-3">
@@ -164,7 +154,7 @@ export default function MentorStudentsPage() {
 
       <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-4" variants={item}>
         {filteredStudents.map((student) => (
-          <Card key={student.id} className="hover:border-primary/50 transition-colors cursor-pointer" onClick={() => setSelectedStudent(student)}>
+          <Card key={student.id} className="cursor-pointer transition-colors hover:border-muted-foreground/40" onClick={() => setSelectedStudent(student)}>
             <CardContent className="p-5">
               <div className="flex items-start gap-4">
                 <Avatar className="h-12 w-12">

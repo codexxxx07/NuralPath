@@ -8,12 +8,9 @@ import {
   Compass,
   Send,
   CheckCircle2,
-  LifeBuoy,
-  Sparkles,
 } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Card, CardContent } from "../../components/ui/card";
-import { Badge } from "../../components/ui/badge";
 import { Input } from "../../components/ui/input";
 import { Textarea } from "../../components/ui/textarea";
 import { Label } from "../../components/ui/label";
@@ -35,8 +32,6 @@ const contactChannels = [
       "The fastest way to reach the community and get answers to your questions.",
     action: "Visit Community",
     to: "/community",
-    color: "text-indigo-500",
-    bg: "bg-indigo-500/10",
   },
   {
     icon: GraduationCap,
@@ -45,8 +40,6 @@ const contactChannels = [
       "Create a free account to explore courses, the practice lab, and your dashboard.",
     action: "Create Account",
     to: "/register",
-    color: "text-emerald-500",
-    bg: "bg-emerald-500/10",
   },
   {
     icon: Compass,
@@ -55,8 +48,6 @@ const contactChannels = [
       "Browse available courses in Linux, Shell, C Programming, Open Source, and DSA.",
     action: "Browse Courses",
     to: "/courses",
-    color: "text-cyan-500",
-    bg: "bg-cyan-500/10",
   },
   {
     icon: MessageSquare,
@@ -65,8 +56,6 @@ const contactChannels = [
       "Have a doubt about a practice exercise or a concept? Ask the student community.",
     action: "Ask a Doubt",
     to: "/community",
-    color: "text-purple-500",
-    bg: "bg-purple-500/10",
   },
 ];
 
@@ -87,22 +76,21 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero */}
-      <section className="relative overflow-hidden hero-gradient">
-        <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
+      <section>
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:py-24 lg:px-8">
           <motion.div
             initial="hidden"
             animate="visible"
             variants={fadeIn}
             className="max-w-2xl"
           >
-            <Badge variant="secondary" className="mb-4">
-              <LifeBuoy className="mr-1 h-3 w-3" />
+            <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
               Contact Us
-            </Badge>
-            <h1 className="font-display text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-              Get in Touch with the <span className="gradient-text">Community</span>
+            </p>
+            <h1 className="mt-4 text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
+              Get in Touch with the Community
             </h1>
-            <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
               Questions about courses, the practice lab, or joining the community?
               Here's every way to reach us.
             </p>
@@ -111,17 +99,17 @@ export default function ContactPage() {
       </section>
 
       {/* Channels */}
-      <section className="border-y border-border bg-surface/40 py-16 sm:py-20">
+      <section className="border-y border-border bg-surface py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {contactChannels.map((channel, i) => (
               <motion.div key={channel.title} variants={fadeIn} custom={i} initial="hidden" animate="visible">
-                <Card className="h-full border-border/50 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
+                <Card className="h-full transition-colors hover:border-muted-foreground/40">
                   <CardContent className="flex h-full flex-col p-6">
-                    <div className={`mb-4 flex h-11 w-11 items-center justify-center rounded-lg ${channel.bg} ${channel.color}`}>
-                      <channel.icon className="h-5 w-5" />
+                    <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground">
+                      <channel.icon className="h-4 w-4" />
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground font-display">
+                    <h3 className="text-base font-semibold tracking-tight text-foreground">
                       {channel.title}
                     </h3>
                     <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
@@ -139,27 +127,27 @@ export default function ContactPage() {
       </section>
 
       {/* Form + info */}
-      <section className="py-16 sm:py-20">
+      <section className="py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-[1fr_420px]">
             {/* Form */}
             <motion.div variants={fadeIn} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <Card className="border-border">
+              <Card>
                 <CardContent className="p-6 sm:p-8">
-                  <h2 className="text-2xl font-bold text-foreground font-display">
+                  <h2 className="text-xl font-semibold tracking-tight text-foreground">
                     Send a Message
                   </h2>
-                  <p className="mt-2 text-sm text-muted-foreground">
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                     Tell us what you need — help with a course, feedback, or collaborating on a project.
                   </p>
 
                   {submitted ? (
-                    <div className="mt-8 rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-8 text-center">
-                      <CheckCircle2 className="mx-auto h-12 w-12 text-emerald-500" />
-                      <h3 className="mt-4 text-lg font-semibold text-foreground">
+                    <div className="mt-8 rounded-lg border border-border bg-muted p-8 text-center">
+                      <CheckCircle2 className="mx-auto h-8 w-8 text-emerald-500" />
+                      <h3 className="mt-4 text-base font-semibold tracking-tight text-foreground">
                         Message noted
                       </h3>
-                      <p className="mt-2 text-sm text-muted-foreground">
+                      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                         Thanks{formState.name ? `, ${formState.name}` : ""}! This form is a UI
                         preview — no email backend is connected yet, so nothing was sent.
                         For the fastest response, reach us through the community page.
@@ -219,8 +207,7 @@ export default function ContactPage() {
                         <Send className="mr-2 h-4 w-4" />
                         Send Message
                       </Button>
-                      <p className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <Sparkles className="h-3.5 w-3.5 shrink-0 text-primary" />
+                      <p className="text-xs leading-relaxed text-muted-foreground">
                         This demo form doesn't send data anywhere yet — a backend hasn't been connected.
                         Your message stays in your browser.
                       </p>
@@ -239,10 +226,10 @@ export default function ContactPage() {
               viewport={{ once: true }}
               className="space-y-5"
             >
-              <Card className="border-border/50">
+              <Card>
                 <CardContent className="p-6">
-                  <h3 className="flex items-center gap-2 text-lg font-semibold text-foreground">
-                    <MessageSquare className="h-5 w-5 text-primary" />
+                  <h3 className="flex items-center gap-2 text-base font-semibold tracking-tight text-foreground">
+                    <MessageSquare className="h-4 w-4 text-muted-foreground" />
                     Community-first support
                   </h3>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
@@ -255,10 +242,10 @@ export default function ContactPage() {
                 </CardContent>
               </Card>
 
-              <Card className="border-border/50">
+              <Card>
                 <CardContent className="p-6">
-                  <h3 className="flex items-center gap-2 text-lg font-semibold text-foreground">
-                    <Users className="h-5 w-5 text-emerald-500" />
+                  <h3 className="flex items-center gap-2 text-base font-semibold tracking-tight text-foreground">
+                    <Users className="h-4 w-4 text-muted-foreground" />
                     Want to collaborate?
                   </h3>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
@@ -269,10 +256,10 @@ export default function ContactPage() {
                 </CardContent>
               </Card>
 
-              <Card className="border-border/50">
+              <Card>
                 <CardContent className="p-6">
-                  <h3 className="flex items-center gap-2 text-lg font-semibold text-foreground">
-                    <Compass className="h-5 w-5 text-cyan-500" />
+                  <h3 className="flex items-center gap-2 text-base font-semibold tracking-tight text-foreground">
+                    <Compass className="h-4 w-4 text-muted-foreground" />
                     What happens next?
                   </h3>
                   <ul className="mt-3 space-y-2.5 text-sm text-muted-foreground">

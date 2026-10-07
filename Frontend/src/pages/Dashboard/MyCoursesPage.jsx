@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { BookOpen, Clock, ArrowRight, ChevronDown, Filter, Play, CheckCircle2 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
+import { BookOpen, ArrowRight, Filter, Play } from "lucide-react";
+import { Card, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Progress } from "../../components/ui/progress";
 import { Button } from "../../components/ui/button";
@@ -90,21 +90,26 @@ export default function MyCoursesPage() {
   return (
     <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
       <motion.div variants={item}>
-        <h1 className="text-3xl font-bold text-foreground">My Courses</h1>
-        <p className="text-muted-foreground mt-1">Track your enrolled courses and progress</p>
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground">My Courses</h1>
+        <p className="text-sm text-muted-foreground mt-1">Track your enrolled courses and progress</p>
       </motion.div>
 
       <motion.div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4" variants={item}>
         <div className="flex flex-wrap gap-2">
           {filters.map((filter) => (
-            <Button
+            <button
               key={filter}
-              variant={activeFilter === filter ? "default" : "outline"}
-              size="sm"
+              type="button"
               onClick={() => setActiveFilter(filter)}
+              className={cn(
+                "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+                activeFilter === filter
+                  ? "bg-primary/10 text-primary"
+                  : "text-muted-foreground hover:text-foreground hover:bg-accent"
+              )}
             >
               {filter}
-            </Button>
+            </button>
           ))}
         </div>
         <div className="flex items-center gap-2">
@@ -123,16 +128,16 @@ export default function MyCoursesPage() {
 
       <motion.div className="grid gap-4" variants={item}>
         {filteredCourses.map((course) => (
-          <Card key={course.id} className="hover:border-primary/30 transition-colors">
+          <Card key={course.id} className="transition-colors hover:border-primary/40">
             <CardContent className="p-6">
               <div className="flex flex-col md:flex-row md:items-center gap-4">
-                <div className="p-3 rounded-lg bg-primary/10 flex-shrink-0">
-                  <BookOpen className="h-6 w-6 text-primary" />
+                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground flex-shrink-0">
+                  <BookOpen className="h-4 w-4" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <h3 className="font-semibold text-foreground text-lg">{course.name}</h3>
+                      <h3 className="text-base font-semibold tracking-tight text-foreground">{course.name}</h3>
                       <p className="text-sm text-muted-foreground">by {course.instructor}</p>
                     </div>
                     <div className="flex gap-2 flex-shrink-0">
@@ -141,22 +146,22 @@ export default function MyCoursesPage() {
                       ))}
                     </div>
                   </div>
-                  <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
+                  <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3">
                     <div>
-                      <p className="text-muted-foreground">Progress</p>
-                      <p className="font-medium text-foreground">{course.progress}%</p>
+                      <p className="text-xs text-muted-foreground">Progress</p>
+                      <p className="text-sm font-medium text-foreground">{course.progress}%</p>
                     </div>
                     <div>
-                      <p className="text-muted-foreground">Lessons</p>
-                      <p className="font-medium text-foreground">{course.completedLessons}/{course.totalLessons}</p>
+                      <p className="text-xs text-muted-foreground">Lessons</p>
+                      <p className="text-sm font-medium text-foreground">{course.completedLessons}/{course.totalLessons}</p>
                     </div>
                     <div>
-                      <p className="text-muted-foreground">Duration</p>
-                      <p className="font-medium text-foreground">{course.duration}</p>
+                      <p className="text-xs text-muted-foreground">Duration</p>
+                      <p className="text-sm font-medium text-foreground">{course.duration}</p>
                     </div>
                     <div>
-                      <p className="text-muted-foreground">Last Accessed</p>
-                      <p className="font-medium text-foreground">{course.lastAccessed}</p>
+                      <p className="text-xs text-muted-foreground">Last Accessed</p>
+                      <p className="text-sm font-medium text-foreground">{course.lastAccessed}</p>
                     </div>
                   </div>
                   <div className="mt-3">

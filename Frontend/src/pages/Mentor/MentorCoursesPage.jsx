@@ -6,8 +6,6 @@ import {
   Users,
   Edit3,
   Eye,
-  Clock,
-  CheckCircle2,
   FileText,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../../components/ui/card";
@@ -17,7 +15,6 @@ import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Textarea } from "../../components/ui/textarea";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../../components/ui/select";
-import { cn } from "../../lib/utils";
 
 const initialCourses = [
   {
@@ -105,8 +102,8 @@ export default function MentorCoursesPage() {
     <motion.div className="space-y-8" variants={container} initial="hidden" animate="show">
       <motion.div variants={item} className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">My Courses</h1>
-          <p className="text-muted-foreground mt-1">{courses.length} courses · {courses.filter((c) => c.status === "Published").length} published</p>
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">My Courses</h1>
+          <p className="text-sm text-muted-foreground mt-1">{courses.length} courses · {courses.filter((c) => c.status === "Published").length} published</p>
         </div>
         <Button onClick={() => setShowForm(!showForm)}>
           <Plus className="h-4 w-4 mr-2" />
@@ -122,7 +119,7 @@ export default function MentorCoursesPage() {
         >
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Create New Course</CardTitle>
+              <CardTitle className="text-base font-semibold tracking-tight">Create New Course</CardTitle>
               <CardDescription>Fill in the details to create a new course</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -183,11 +180,11 @@ export default function MentorCoursesPage() {
 
       <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-4" variants={item}>
         {courses.map((course) => (
-          <Card key={course.id} className="hover:border-primary/50 transition-colors">
+          <Card key={course.id} className="transition-colors hover:border-muted-foreground/40">
             <CardContent className="p-5">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-foreground truncate">{course.title}</h3>
+                  <h3 className="text-base font-semibold tracking-tight text-foreground truncate">{course.title}</h3>
                   <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{course.description}</p>
                 </div>
                 <Badge variant={course.status === "Published" ? "success" : "secondary"}>

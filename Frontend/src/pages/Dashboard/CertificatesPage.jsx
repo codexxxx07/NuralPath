@@ -1,9 +1,8 @@
 import { motion } from "framer-motion";
-import { Award, Download, Eye, Calendar, Hash, BookOpen } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
+import { Award, Download, Eye, Calendar, Hash } from "lucide-react";
+import { Card, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
-import { cn } from "../../lib/utils";
 
 const certificates = [
   {
@@ -40,17 +39,17 @@ export default function CertificatesPage() {
   return (
     <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
       <motion.div variants={item}>
-        <h1 className="text-3xl font-bold text-foreground">Your Certificates</h1>
-        <p className="text-muted-foreground mt-1">Certificates earned from completed courses</p>
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Your Certificates</h1>
+        <p className="text-sm text-muted-foreground mt-1">Certificates earned from completed courses</p>
       </motion.div>
 
       {certificates.length === 0 ? (
         <motion.div variants={item}>
           <Card>
-            <CardContent className="py-16 text-center">
-              <Award className="h-16 w-16 mx-auto mb-4 text-muted-foreground opacity-50" />
-              <h3 className="text-lg font-semibold text-foreground mb-2">No Certificates Yet</h3>
-              <p className="text-muted-foreground max-w-md mx-auto">
+            <CardContent className="py-12 text-center">
+              <Award className="h-10 w-10 mx-auto mb-3 text-muted-foreground opacity-50" />
+              <p className="text-sm font-medium text-foreground">No Certificates Yet</p>
+              <p className="text-sm text-muted-foreground max-w-md mx-auto mt-1">
                 Complete your enrolled courses to earn certificates. Keep learning and you'll see them here!
               </p>
             </CardContent>
@@ -59,15 +58,15 @@ export default function CertificatesPage() {
       ) : (
         <motion.div className="grid gap-6 md:grid-cols-2" variants={item}>
           {certificates.map((cert) => (
-            <Card key={cert.id} className="overflow-hidden">
-              <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent p-6 border-b">
+            <Card key={cert.id} className="overflow-hidden transition-colors hover:border-muted-foreground/40">
+              <div className="p-6 border-b">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="p-3 rounded-lg bg-primary/20">
-                      <Award className="h-8 w-8 text-primary" />
+                    <div className="flex h-10 w-10 items-center justify-center rounded-md bg-muted text-muted-foreground">
+                      <Award className="h-5 w-5" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-foreground">{cert.courseName}</h3>
+                      <h3 className="text-base font-semibold tracking-tight text-foreground">{cert.courseName}</h3>
                       <p className="text-sm text-muted-foreground">by {cert.instructor}</p>
                     </div>
                   </div>
@@ -75,19 +74,19 @@ export default function CertificatesPage() {
                 </div>
               </div>
               <CardContent className="p-6 space-y-4">
-                <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="grid grid-cols-2 gap-4">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4 text-muted-foreground" />
                     <div>
-                      <p className="text-muted-foreground">Completed</p>
-                      <p className="font-medium text-foreground">{cert.completionDate}</p>
+                      <p className="text-xs text-muted-foreground">Completed</p>
+                      <p className="text-sm font-medium text-foreground">{cert.completionDate}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <Hash className="h-4 w-4 text-muted-foreground" />
                     <div>
-                      <p className="text-muted-foreground">Certificate ID</p>
-                      <p className="font-medium text-foreground font-mono text-xs">{cert.certificateId}</p>
+                      <p className="text-xs text-muted-foreground">Certificate ID</p>
+                      <p className="text-sm font-medium text-foreground font-mono text-xs">{cert.certificateId}</p>
                     </div>
                   </div>
                 </div>

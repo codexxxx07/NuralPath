@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { TrendingUp, Flame, BookOpen, Award, Target } from "lucide-react";
+import { TrendingUp, Flame, Award } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Progress } from "../../components/ui/progress";
@@ -63,19 +63,19 @@ export default function ProgressPage() {
   return (
     <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
       <motion.div variants={item}>
-        <h1 className="text-3xl font-bold text-foreground">Your Progress</h1>
-        <p className="text-muted-foreground mt-1">Track your learning journey and achievements</p>
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Your Progress</h1>
+        <p className="text-sm text-muted-foreground mt-1">Track your learning journey and achievements</p>
       </motion.div>
 
       <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-4" variants={item}>
         <Card>
           <CardContent className="p-5">
             <div className="flex items-center gap-3">
-              <div className="p-3 rounded-lg bg-primary/10">
-                <TrendingUp className="h-5 w-5 text-primary" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground">
+                <TrendingUp className="h-4 w-4" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-foreground">{overallProgress}%</p>
+                <p className="text-2xl font-semibold text-foreground">{overallProgress}%</p>
                 <p className="text-sm text-muted-foreground">Overall Progress</p>
               </div>
             </div>
@@ -84,11 +84,11 @@ export default function ProgressPage() {
         <Card>
           <CardContent className="p-5">
             <div className="flex items-center gap-3">
-              <div className="p-3 rounded-lg bg-orange-500/10">
-                <Flame className="h-5 w-5 text-orange-500" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground">
+                <Flame className="h-4 w-4" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-foreground">12 Days</p>
+                <p className="text-2xl font-semibold text-foreground">12 Days</p>
                 <p className="text-sm text-muted-foreground">Current Streak</p>
               </div>
             </div>
@@ -97,11 +97,11 @@ export default function ProgressPage() {
         <Card>
           <CardContent className="p-5">
             <div className="flex items-center gap-3">
-              <div className="p-3 rounded-lg bg-emerald-500/10">
-                <Award className="h-5 w-5 text-emerald-500" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground">
+                <Award className="h-4 w-4" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-foreground">128 hrs</p>
+                <p className="text-2xl font-semibold text-foreground">128 hrs</p>
                 <p className="text-sm text-muted-foreground">Total Learning</p>
               </div>
             </div>
@@ -113,7 +113,7 @@ export default function ProgressPage() {
         <motion.div variants={item}>
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Weekly Learning Hours</CardTitle>
+              <CardTitle className="text-base">Weekly Learning Hours</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex items-end justify-between gap-2 h-40">
@@ -138,10 +138,7 @@ export default function ProgressPage() {
         <motion.div variants={item}>
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Flame className="h-5 w-5 text-orange-500" />
-                Streak Calendar
-              </CardTitle>
+              <CardTitle className="text-base">Streak Calendar</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-7 gap-1.5">
@@ -155,7 +152,7 @@ export default function ProgressPage() {
                     key={i}
                     className={cn(
                       "aspect-square rounded-md flex items-center justify-center text-xs",
-                      active ? "bg-orange-500 text-white" : "bg-muted text-muted-foreground"
+                      active ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
                     )}
                   >
                     {i + 1}
@@ -164,7 +161,7 @@ export default function ProgressPage() {
               </div>
               <div className="mt-3 flex items-center gap-4 text-xs text-muted-foreground">
                 <div className="flex items-center gap-1">
-                  <div className="w-3 h-3 rounded bg-orange-500" /> Active
+                  <div className="w-3 h-3 rounded bg-primary" /> Active
                 </div>
                 <div className="flex items-center gap-1">
                   <div className="w-3 h-3 rounded bg-muted" /> Missed
@@ -178,7 +175,7 @@ export default function ProgressPage() {
       <motion.div variants={item}>
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Course Progress</CardTitle>
+            <CardTitle className="text-base">Course Progress</CardTitle>
           </CardHeader>
           <CardContent className="space-y-5">
             {courseProgress.map((course) => (
@@ -202,10 +199,7 @@ export default function ProgressPage() {
       <motion.div variants={item}>
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Target className="h-5 w-5 text-primary" />
-              Skill Progress
-            </CardTitle>
+            <CardTitle className="text-base">Skill Progress</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -230,12 +224,12 @@ export default function ProgressPage() {
       <motion.div variants={item}>
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Quiz Scores</CardTitle>
+            <CardTitle className="text-base">Quiz Scores</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
               {quizScores.map((quiz, i) => (
-                <div key={i} className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
+                <div key={i} className="flex items-center justify-between rounded-md bg-muted p-3">
                   <div>
                     <p className="font-medium text-foreground text-sm">{quiz.quiz}</p>
                     <p className="text-xs text-muted-foreground">{quiz.course} · {quiz.date}</p>

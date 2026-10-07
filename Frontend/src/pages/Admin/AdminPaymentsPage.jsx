@@ -7,24 +7,20 @@ import {
   TrendingUp,
   ArrowUpRight,
   ArrowDownRight,
-  Filter,
   Search,
   Download,
-  ChevronDown,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "../../components/ui/tabs";
-import { Separator } from "../../components/ui/separator";
-import { cn } from "../../lib/utils";
+import { Tabs, TabsList, TabsTrigger } from "../../components/ui/tabs";
 
 const stats = [
-  { label: "Total Revenue", value: "₹12,45,000", change: "+18.3%", up: true, icon: IndianRupee, color: "text-emerald-500" },
-  { label: "Pending Payments", value: "₹87,500", change: "+5.2%", up: true, icon: Clock, color: "text-orange-500" },
-  { label: "Refunds", value: "₹23,000", change: "-12.0%", up: false, icon: RefreshCw, color: "text-red-500" },
-  { label: "This Month", value: "₹3,45,000", change: "+22.1%", up: true, icon: TrendingUp, color: "text-blue-500" },
+  { label: "Total Revenue", value: "₹12,45,000", change: "+18.3%", up: true, icon: IndianRupee },
+  { label: "Pending Payments", value: "₹87,500", change: "+5.2%", up: true, icon: Clock },
+  { label: "Refunds", value: "₹23,000", change: "-12.0%", up: false, icon: RefreshCw },
+  { label: "This Month", value: "₹3,45,000", change: "+22.1%", up: true, icon: TrendingUp },
 ];
 
 const transactions = [
@@ -43,11 +39,11 @@ const transactions = [
 ];
 
 const revenueByCourse = [
-  { course: "Full Stack MERN Bootcamp", revenue: 495000, students: 198, color: "bg-blue-500" },
-  { course: "Python for Data Science", revenue: 468000, students: 234, color: "bg-emerald-500" },
-  { course: "Advanced React & Next.js", revenue: 372000, students: 186, color: "bg-purple-500" },
-  { course: "Linux Administration Pro", revenue: 213000, students: 142, color: "bg-orange-500" },
-  { course: "DevOps Bootcamp", revenue: 0, students: 87, color: "bg-gray-500" },
+  { course: "Full Stack MERN Bootcamp", revenue: 495000, students: 198 },
+  { course: "Python for Data Science", revenue: 468000, students: 234 },
+  { course: "Advanced React & Next.js", revenue: 372000, students: 186 },
+  { course: "Linux Administration Pro", revenue: 213000, students: 142 },
+  { course: "DevOps Bootcamp", revenue: 0, students: 87 },
 ];
 
 const maxCourseRevenue = Math.max(...revenueByCourse.map((c) => c.revenue));
@@ -74,10 +70,10 @@ export default function AdminPaymentsPage() {
 
   return (
     <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <motion.div variants={item} className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Payments</h1>
-          <p className="text-muted-foreground mt-1">Transaction history and revenue overview</p>
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">Payments</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Transaction history and revenue overview</p>
         </div>
         <Button variant="outline">
           <Download className="h-4 w-4 mr-2" />
@@ -85,28 +81,26 @@ export default function AdminPaymentsPage() {
         </Button>
       </motion.div>
 
-      <motion.div className="grid grid-cols-2 lg:grid-cols-4 gap-4" variants={item}>
+      <motion.div className="grid grid-cols-2 gap-4 lg:grid-cols-4" variants={item}>
         {stats.map((stat) => (
           <Card key={stat.label}>
             <CardContent className="p-5">
-              <div className="flex items-center justify-between">
+              <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                  <p className="text-2xl font-semibold text-foreground">{stat.value}</p>
                   <p className="text-sm text-muted-foreground">{stat.label}</p>
                 </div>
-                <div className={cn("p-3 rounded-lg bg-muted", stat.color)}>
-                  <stat.icon className="h-5 w-5" />
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground">
+                  <stat.icon className="h-4 w-4" />
                 </div>
               </div>
-              <div className="flex items-center gap-1 mt-3">
+              <div className="mt-3 flex items-center gap-1">
                 {stat.up ? (
-                  <ArrowUpRight className="h-3 w-3 text-emerald-500" />
+                  <ArrowUpRight className="h-3 w-3 text-muted-foreground" />
                 ) : (
-                  <ArrowDownRight className="h-3 w-3 text-red-500" />
+                  <ArrowDownRight className="h-3 w-3 text-muted-foreground" />
                 )}
-                <span className={cn("text-xs font-medium", stat.up ? "text-emerald-500" : "text-red-500")}>
-                  {stat.change}
-                </span>
+                <span className="text-xs font-medium text-foreground">{stat.change}</span>
                 <span className="text-xs text-muted-foreground">vs last month</span>
               </div>
             </CardContent>
@@ -114,16 +108,16 @@ export default function AdminPaymentsPage() {
         ))}
       </motion.div>
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid gap-6 lg:grid-cols-3">
         <motion.div className="lg:col-span-2" variants={item}>
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Transactions</CardTitle>
+              <CardTitle className="text-base font-semibold tracking-tight">Transactions</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col gap-3 sm:flex-row">
                 <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     placeholder="Search student or course..."
                     className="pl-10"
@@ -143,15 +137,15 @@ export default function AdminPaymentsPage() {
 
               <div className="space-y-2">
                 {filtered.map((txn) => (
-                  <div key={txn.id} className="flex items-center justify-between p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-0.5">
-                        <p className="font-medium text-foreground text-sm">{txn.student}</p>
+                  <div key={txn.id} className="flex items-center justify-between rounded-md bg-muted p-3 transition-colors hover:bg-accent">
+                    <div className="min-w-0 flex-1">
+                      <div className="mb-0.5 flex items-center gap-2">
+                        <p className="text-sm font-medium text-foreground">{txn.student}</p>
                         <span className="text-xs text-muted-foreground">{txn.id}</span>
                       </div>
-                      <p className="text-xs text-muted-foreground truncate">{txn.course}</p>
+                      <p className="truncate text-xs text-muted-foreground">{txn.course}</p>
                     </div>
-                    <div className="flex items-center gap-4 ml-4">
+                    <div className="ml-4 flex items-center gap-4">
                       <div className="text-right">
                         <p className="font-semibold text-foreground">₹{txn.amount.toLocaleString("en-IN")}</p>
                         <p className="text-xs text-muted-foreground">{txn.date}</p>
@@ -172,20 +166,20 @@ export default function AdminPaymentsPage() {
         <motion.div variants={item}>
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Revenue by Course</CardTitle>
+              <CardTitle className="text-base font-semibold tracking-tight">Revenue by Course</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {revenueByCourse.map((course) => (
                 <div key={course.course} className="space-y-2">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-foreground font-medium truncate">{course.course}</span>
-                    <span className="text-muted-foreground whitespace-nowrap ml-2">
+                  <div className="flex items-center justify-between gap-2 text-sm">
+                    <span className="truncate font-medium text-foreground">{course.course}</span>
+                    <span className="whitespace-nowrap text-muted-foreground">
                       {course.revenue > 0 ? `₹${(course.revenue / 1000).toFixed(0)}K` : "—"}
                     </span>
                   </div>
-                  <div className="h-2 rounded-full bg-muted overflow-hidden">
+                  <div className="h-2 overflow-hidden rounded-full bg-muted">
                     <motion.div
-                      className={cn("h-full rounded-full", course.color)}
+                      className="h-full rounded-full bg-primary"
                       initial={{ width: 0 }}
                       animate={{ width: `${course.revenue > 0 ? (course.revenue / maxCourseRevenue) * 100 : 0}%` }}
                       transition={{ duration: 0.6, delay: 0.1 }}

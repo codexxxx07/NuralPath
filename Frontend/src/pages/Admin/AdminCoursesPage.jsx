@@ -3,14 +3,9 @@ import { motion } from "framer-motion";
 import {
   Plus,
   Users,
-  IndianRupee,
   Edit,
   Eye,
-  Archive,
-  CheckCircle2,
-  XCircle,
   BookOpen,
-  BarChart3,
   X,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../../components/ui/card";
@@ -21,7 +16,6 @@ import { Label } from "../../components/ui/label";
 import { Textarea } from "../../components/ui/textarea";
 import { Switch } from "../../components/ui/switch";
 import { Separator } from "../../components/ui/separator";
-import { cn } from "../../lib/utils";
 
 const courses = [
   {
@@ -146,10 +140,10 @@ export default function AdminCoursesPage() {
 
   return (
     <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <motion.div variants={item} className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Course Management</h1>
-          <p className="text-muted-foreground mt-1">{courses.length} courses on platform</p>
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">Course Management</h1>
+          <p className="mt-1 text-sm text-muted-foreground">{courses.length} courses on platform</p>
         </div>
         <Button onClick={() => setShowForm(!showForm)}>
           <Plus className="h-4 w-4 mr-2" />
@@ -163,7 +157,7 @@ export default function AdminCoursesPage() {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle className="text-lg">Create New Course</CardTitle>
+                  <CardTitle className="text-base font-semibold tracking-tight">Create New Course</CardTitle>
                   <CardDescription>Set up a new course on the platform</CardDescription>
                 </div>
                 <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setShowForm(false)}>
@@ -172,7 +166,7 @@ export default function AdminCoursesPage() {
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label>Course Title</Label>
                   <Input placeholder="e.g. Advanced TypeScript Patterns" />
@@ -198,7 +192,7 @@ export default function AdminCoursesPage() {
                 <Switch id="publish" />
                 <Label htmlFor="publish">Publish immediately</Label>
               </div>
-              <div className="flex gap-2 justify-end">
+              <div className="flex justify-end gap-2">
                 <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
                 <Button>Create Course</Button>
               </div>
@@ -209,23 +203,23 @@ export default function AdminCoursesPage() {
 
       <motion.div className="space-y-3" variants={item}>
         {courses.map((course) => (
-          <Card key={course.id} className="hover:shadow-md transition-shadow">
+          <Card key={course.id} className="transition-colors hover:border-muted-foreground/40">
             <CardContent className="p-5">
-              <div className="flex flex-col lg:flex-row lg:items-center gap-4">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-3 mb-1">
+              <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
+                <div className="min-w-0 flex-1">
+                  <div className="mb-1 flex items-center gap-3">
                     <h3 className="font-semibold text-foreground">{course.title}</h3>
                     <Badge variant={course.status === "Published" ? "success" : course.status === "Draft" ? "secondary" : "outline"}>
                       {course.status}
                     </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-2 line-clamp-1">{course.description}</p>
+                  <p className="mb-2 line-clamp-1 text-sm text-muted-foreground">{course.description}</p>
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
                     <span className="flex items-center gap-1"><BookOpen className="h-3.5 w-3.5" /> {course.modules} modules</span>
                     <span className="flex items-center gap-1"><Users className="h-3.5 w-3.5" /> {course.students} students</span>
                     {course.rating > 0 && (
                       <span className="flex items-center gap-1">
-                        <span className="text-yellow-500">★</span> {course.rating}
+                        <span className="text-foreground">★</span> {course.rating}
                       </span>
                     )}
                     <span>Instructor: {course.instructor}</span>
@@ -233,7 +227,7 @@ export default function AdminCoursesPage() {
                 </div>
                 <div className="flex items-center gap-6">
                   <div className="text-right">
-                    <p className="text-lg font-bold text-foreground">{course.price}</p>
+                    <p className="text-lg font-semibold text-foreground">{course.price}</p>
                     <p className="text-xs text-muted-foreground">{course.revenue} total</p>
                   </div>
                   <div className="flex items-center gap-2">
@@ -245,7 +239,7 @@ export default function AdminCoursesPage() {
                     </Button>
                     <div className="flex items-center gap-2">
                       <Switch defaultChecked={course.status === "Published"} />
-                      <span className="text-xs text-muted-foreground hidden sm:inline">
+                      <span className="hidden text-xs text-muted-foreground sm:inline">
                         {course.status === "Published" ? "Live" : "Hidden"}
                       </span>
                     </div>
@@ -262,43 +256,43 @@ export default function AdminCoursesPage() {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-card border border-border rounded-lg shadow-lg w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto"
+            className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-lg border border-border bg-card p-6 shadow-lg"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-foreground">Course Details</h2>
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="text-base font-semibold tracking-tight text-foreground">Course Details</h2>
               <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setSelectedCourse(null)}>
                 <X className="h-4 w-4" />
               </Button>
             </div>
 
             <div className="mb-4">
-              <h3 className="font-semibold text-foreground text-lg mb-1">{selectedCourse.title}</h3>
+              <h3 className="mb-1 text-lg font-semibold text-foreground">{selectedCourse.title}</h3>
               <p className="text-sm text-muted-foreground">{selectedCourse.description}</p>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 mb-4">
-              <div className="p-3 rounded-lg bg-muted/50 text-center">
-                <p className="text-xl font-bold text-foreground">{selectedCourse.students}</p>
+            <div className="mb-4 grid grid-cols-2 gap-3">
+              <div className="rounded-md bg-muted p-3 text-center">
+                <p className="text-2xl font-semibold text-foreground">{selectedCourse.students}</p>
                 <p className="text-xs text-muted-foreground">Students</p>
               </div>
-              <div className="p-3 rounded-lg bg-muted/50 text-center">
-                <p className="text-xl font-bold text-foreground">{selectedCourse.revenue}</p>
+              <div className="rounded-md bg-muted p-3 text-center">
+                <p className="text-2xl font-semibold text-foreground">{selectedCourse.revenue}</p>
                 <p className="text-xs text-muted-foreground">Revenue</p>
               </div>
-              <div className="p-3 rounded-lg bg-muted/50 text-center">
-                <p className="text-xl font-bold text-foreground">{selectedCourse.modules}</p>
+              <div className="rounded-md bg-muted p-3 text-center">
+                <p className="text-2xl font-semibold text-foreground">{selectedCourse.modules}</p>
                 <p className="text-xs text-muted-foreground">Modules</p>
               </div>
-              <div className="p-3 rounded-lg bg-muted/50 text-center">
-                <p className="text-xl font-bold text-foreground">{selectedCourse.duration}</p>
+              <div className="rounded-md bg-muted p-3 text-center">
+                <p className="text-2xl font-semibold text-foreground">{selectedCourse.duration}</p>
                 <p className="text-xs text-muted-foreground">Duration</p>
               </div>
             </div>
 
             <Separator className="mb-4" />
 
-            <div className="space-y-2 mb-4">
+            <div className="mb-4 space-y-2">
               <div className="flex items-center justify-between text-sm">
                 <span className="text-muted-foreground">Instructor</span>
                 <span className="font-medium text-foreground">{selectedCourse.instructor}</span>

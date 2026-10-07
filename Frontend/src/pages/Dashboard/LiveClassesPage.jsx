@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Calendar, Clock, Video, Users, Play, CheckCircle2, Radio } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
+import { Card, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
-import { cn } from "../../lib/utils";
 
 const liveClasses = [
   {
@@ -105,8 +104,8 @@ export default function LiveClassesPage() {
   return (
     <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
       <motion.div variants={item}>
-        <h1 className="text-3xl font-bold text-foreground">Live Classes</h1>
-        <p className="text-muted-foreground mt-1">Join live sessions and watch recordings</p>
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Live Classes</h1>
+        <p className="text-sm text-muted-foreground mt-1">Join live sessions and watch recordings</p>
       </motion.div>
 
       <motion.div variants={item}>
@@ -126,19 +125,16 @@ export default function LiveClassesPage() {
           <TabsContent value={activeTab} className="mt-4">
             <div className="space-y-4">
               {filteredClasses.map((cls) => (
-                <Card key={cls.id} className={cn(
-                  "transition-colors",
-                  cls.status === "upcoming" && "border-l-4 border-l-primary"
-                )}>
+                <Card key={cls.id} className="transition-colors hover:border-muted-foreground/40">
                   <CardContent className="p-5">
                     <div className="flex flex-col md:flex-row md:items-center gap-4">
-                      <div className="p-3 rounded-lg bg-primary/10 flex-shrink-0">
-                        <Video className="h-6 w-6 text-primary" />
+                      <div className="flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground flex-shrink-0">
+                        <Video className="h-4 w-4" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-start justify-between gap-2">
                           <div>
-                            <h3 className="font-semibold text-foreground">{cls.title}</h3>
+                            <h3 className="text-sm font-semibold tracking-tight text-foreground">{cls.title}</h3>
                             <p className="text-sm text-muted-foreground">{cls.course} · {cls.mentor}</p>
                           </div>
                           <Badge variant={cls.status === "upcoming" ? "default" : "secondary"}>
@@ -178,9 +174,9 @@ export default function LiveClassesPage() {
                 </Card>
               ))}
               {filteredClasses.length === 0 && (
-                <div className="text-center py-12 text-muted-foreground">
-                  <Calendar className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                  <p>No classes to display</p>
+                <div className="py-12 text-center">
+                  <Calendar className="h-10 w-10 mx-auto mb-3 text-muted-foreground opacity-50" />
+                  <p className="text-sm font-medium text-foreground">No classes to display</p>
                 </div>
               )}
             </div>

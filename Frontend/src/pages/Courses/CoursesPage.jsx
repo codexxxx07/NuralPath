@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Clock, ArrowRight, Construction } from "lucide-react";
+import { Clock, ArrowRight } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Card, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
@@ -25,7 +25,6 @@ const courses = [
     level: "Beginner",
     category: "Linux",
     duration: "6 weeks",
-    gradient: "from-emerald-500/20 to-teal-600/20",
   },
   {
     id: 2,
@@ -35,7 +34,6 @@ const courses = [
     level: "Intermediate",
     category: "Shell",
     duration: "8 weeks",
-    gradient: "from-blue-500/20 to-indigo-600/20",
   },
   {
     id: 3,
@@ -45,7 +43,6 @@ const courses = [
     level: "Beginner",
     category: "C Programming",
     duration: "10 weeks",
-    gradient: "from-violet-500/20 to-purple-600/20",
   },
   {
     id: 4,
@@ -55,7 +52,6 @@ const courses = [
     level: "Advanced",
     category: "Linux",
     duration: "12 weeks",
-    gradient: "from-amber-500/20 to-orange-600/20",
   },
   {
     id: 5,
@@ -65,7 +61,6 @@ const courses = [
     level: "Advanced",
     category: "Shell",
     duration: "6 weeks",
-    gradient: "from-cyan-500/20 to-sky-600/20",
   },
   {
     id: 6,
@@ -75,7 +70,6 @@ const courses = [
     level: "Intermediate",
     category: "C Programming",
     duration: "8 weeks",
-    gradient: "from-rose-500/20 to-pink-600/20",
   },
   {
     id: 7,
@@ -85,7 +79,6 @@ const courses = [
     level: "Intermediate",
     category: "Open Source",
     duration: "4 weeks",
-    gradient: "from-lime-500/20 to-green-600/20",
   },
   {
     id: 8,
@@ -95,7 +88,6 @@ const courses = [
     level: "Advanced",
     category: "Linux",
     duration: "10 weeks",
-    gradient: "from-slate-500/20 to-zinc-600/20",
   },
 ];
 
@@ -103,12 +95,6 @@ const staticDomains = {
   vlsi: "VLSI Design",
   embedded: "Embedded Systems",
   fpga: "FPGA Development",
-};
-
-const levelVariant = {
-  Beginner: "success",
-  Intermediate: "secondary",
-  Advanced: "outline",
 };
 
 const cardVariants = {
@@ -139,7 +125,7 @@ export default function CoursesPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero */}
-      <section className="border-b border-border bg-surface/40 py-16 sm:py-20">
+      <section className="border-b border-border bg-surface py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -147,10 +133,10 @@ export default function CoursesPage() {
             transition={{ duration: 0.5 }}
             className="max-w-2xl"
           >
-            <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
               Explore Our Courses
             </h1>
-            <p className="mt-4 text-lg text-muted-foreground">
+            <p className="mt-4 text-sm text-muted-foreground leading-relaxed">
               Structured, hands-on courses designed to take you from beginner to
               confident systems programmer. Learn Linux, Shell, C, and open source
               with a project-driven approach.
@@ -174,7 +160,7 @@ export default function CoursesPage() {
                   <TabsTrigger
                     key={cat}
                     value={cat}
-                    className="rounded-full border border-border px-4 py-1.5 text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm"
+                    className="rounded-full border border-border px-4 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground data-[state=active]:border-primary data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-none"
                   >
                     {cat}
                   </TabsTrigger>
@@ -185,30 +171,25 @@ export default function CoursesPage() {
 
           {/* Static-domain empty state */}
           {isStaticDomain && (
-            <div className="mt-10">
-              <div className="rounded-2xl border border-border bg-card p-12 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                  <Construction className="h-8 w-8" />
-                </div>
-                <h2 className="text-2xl font-bold text-foreground font-display">
-                  {staticDomains[domain]} — in development
-                </h2>
-                <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
-                  This learning domain doesn't have published course content yet.
-                  The platform currently focuses on Linux & Systems programming,
-                  Shell scripting, C, and Data Structures. When {staticDomains[domain]} content is ready,
-                  it will appear here.
-                </p>
-                <Button asChild className="mt-6" variant="outline">
-                  <Link to="/courses">Browse available courses</Link>
-                </Button>
-              </div>
+            <div className="mt-10 rounded-lg border border-border bg-card p-12 text-center">
+              <h2 className="text-xl font-semibold tracking-tight text-foreground">
+                {staticDomains[domain]} — in development
+              </h2>
+              <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground leading-relaxed">
+                This learning domain doesn't have published course content yet.
+                The platform currently focuses on Linux & Systems programming,
+                Shell scripting, C, and Data Structures. When {staticDomains[domain]} content is ready,
+                it will appear here.
+              </p>
+              <Button asChild className="mt-6" variant="outline">
+                <Link to="/courses">Browse available courses</Link>
+              </Button>
             </div>
           )}
 
           {/* Course Grid */}
           {!isStaticDomain && (
-            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               <AnimatePresence mode="wait">
                 {filtered.map((course, i) => (
                   <motion.div
@@ -220,32 +201,28 @@ export default function CoursesPage() {
                     variants={cardVariants}
                   >
                     <Link to={`/courses/${course.id}`} className="block h-full">
-                      <Card className="h-full transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
-                        {/* Thumbnail area */}
-                        <div
-                          className={`flex h-40 items-center justify-center rounded-t-lg bg-gradient-to-br ${course.gradient}`}
-                        >
-                          <span className="text-4xl font-bold text-foreground/10">
+                      <Card className="h-full transition-colors hover:border-muted-foreground/40">
+                        {/* Preview block */}
+                        <div className="flex h-36 items-center justify-center border-b border-border bg-muted">
+                          <span className="text-4xl font-semibold tracking-tight text-muted-foreground">
                             {course.title.charAt(0)}
                           </span>
                         </div>
 
                         <CardContent className="flex flex-col gap-3 p-5">
                           <div className="flex items-center justify-between">
-                            <Badge variant={levelVariant[course.level]}>
-                              {course.level}
-                            </Badge>
-                            <span className="flex items-center gap-1 text-sm text-muted-foreground">
+                            <Badge variant="outline">{course.level}</Badge>
+                            <span className="flex items-center gap-1 text-xs text-muted-foreground">
                               <Clock className="h-3.5 w-3.5" />
                               {course.duration}
                             </span>
                           </div>
 
-                          <h3 className="text-lg font-semibold text-foreground leading-snug">
+                          <h3 className="text-base font-semibold tracking-tight text-foreground">
                             {course.title}
                           </h3>
 
-                          <p className="text-sm text-muted-foreground line-clamp-2">
+                          <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
                             {course.description}
                           </p>
 
@@ -263,7 +240,7 @@ export default function CoursesPage() {
           )}
 
           {!isStaticDomain && filtered.length === 0 && (
-            <div className="py-20 text-center text-muted-foreground">
+            <div className="py-20 text-center text-sm text-muted-foreground">
               No courses found in this category.
             </div>
           )}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { FileText, Clock, CheckCircle2, AlertCircle, Send, Calendar } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
+import { FileText, Clock, CheckCircle2, Send, Calendar } from "lucide-react";
+import { Card, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
@@ -111,16 +111,16 @@ export default function AssignmentsPage() {
   });
 
   const statusConfig = {
-    pending: { color: "bg-orange-500/10 text-orange-500", icon: Clock, label: "Pending" },
-    submitted: { color: "bg-blue-500/10 text-blue-500", icon: Send, label: "Submitted" },
+    pending: { color: "bg-muted text-muted-foreground", icon: Clock, label: "Pending" },
+    submitted: { color: "bg-muted text-muted-foreground", icon: Send, label: "Submitted" },
     graded: { color: "bg-emerald-500/10 text-emerald-500", icon: CheckCircle2, label: "Graded" },
   };
 
   return (
     <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
       <motion.div variants={item}>
-        <h1 className="text-3xl font-bold text-foreground">Assignments</h1>
-        <p className="text-muted-foreground mt-1">Complete assignments and track your submissions</p>
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Assignments</h1>
+        <p className="text-sm text-muted-foreground mt-1">Complete assignments and track your submissions</p>
       </motion.div>
 
       <motion.div variants={item}>
@@ -149,13 +149,13 @@ export default function AssignmentsPage() {
                   <Card key={assignment.id}>
                     <CardContent className="p-5">
                       <div className="flex flex-col md:flex-row md:items-start gap-4">
-                        <div className={cn("p-3 rounded-lg flex-shrink-0", config.color)}>
-                          <Icon className="h-5 w-5" />
+                        <div className={cn("flex h-9 w-9 items-center justify-center rounded-md flex-shrink-0", config.color)}>
+                          <Icon className="h-4 w-4" />
                         </div>
                         <div className="flex-1">
                           <div className="flex items-start justify-between gap-2">
                             <div>
-                              <h3 className="font-semibold text-foreground">{assignment.title}</h3>
+                              <h3 className="text-sm font-semibold tracking-tight text-foreground">{assignment.title}</h3>
                               <p className="text-sm text-muted-foreground mt-1">{assignment.course}</p>
                             </div>
                             <Badge variant={assignment.status === "graded" ? "success" : assignment.status === "submitted" ? "secondary" : "outline"}>
@@ -173,7 +173,7 @@ export default function AssignmentsPage() {
                             )}
                             <span>{assignment.xp} XP</span>
                             {assignment.grade && (
-                              <span className="font-semibold text-emerald-500">
+                              <span className="font-medium text-foreground">
                                 Grade: {assignment.grade}%
                               </span>
                             )}
@@ -198,9 +198,9 @@ export default function AssignmentsPage() {
                 );
               })}
               {filteredAssignments.length === 0 && (
-                <div className="text-center py-12 text-muted-foreground">
-                  <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                  <p>No assignments to display</p>
+                <div className="py-12 text-center">
+                  <FileText className="h-10 w-10 mx-auto mb-3 text-muted-foreground opacity-50" />
+                  <p className="text-sm font-medium text-foreground">No assignments to display</p>
                 </div>
               )}
             </div>

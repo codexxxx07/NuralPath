@@ -21,13 +21,6 @@ export function ThemeProvider({ children }) {
     localStorage.setItem("nuralpath-theme", theme);
   }, [theme]);
 
-  useEffect(() => {
-    const stored = localStorage.getItem("nuralpath-theme");
-    if (!stored) {
-      setTheme("light");
-    }
-  }, []);
-
   const toggleTheme = () => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };

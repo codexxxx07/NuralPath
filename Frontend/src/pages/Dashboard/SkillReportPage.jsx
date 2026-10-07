@@ -1,16 +1,16 @@
 import { motion } from "framer-motion";
-import { Target, TrendingUp, AlertTriangle, Lightbulb, Clock, BookOpen, Award } from "lucide-react";
+import { Clock, Award } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Progress } from "../../components/ui/progress";
 import { cn } from "../../lib/utils";
 
 const skills = [
-  { name: "Linux", progress: 75, hours: 42, assessments: 8, level: "Intermediate", color: "#3b82f6" },
-  { name: "Shell", progress: 60, hours: 28, assessments: 5, level: "Intermediate", color: "#10b981" },
-  { name: "C", progress: 80, hours: 35, assessments: 7, level: "Advanced", color: "#f59e0b" },
-  { name: "Git", progress: 55, hours: 12, assessments: 3, level: "Beginner", color: "#8b5cf6" },
-  { name: "Open Source", progress: 40, hours: 11, assessments: 2, level: "Beginner", color: "#ef4444" },
+  { name: "Linux", progress: 75, hours: 42, assessments: 8, level: "Intermediate" },
+  { name: "Shell", progress: 60, hours: 28, assessments: 5, level: "Intermediate" },
+  { name: "C", progress: 80, hours: 35, assessments: 7, level: "Advanced" },
+  { name: "Git", progress: 55, hours: 12, assessments: 3, level: "Beginner" },
+  { name: "Open Source", progress: 40, hours: 11, assessments: 2, level: "Beginner" },
 ];
 
 const weakTopics = [
@@ -60,18 +60,15 @@ export default function SkillReportPage() {
   return (
     <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
       <motion.div variants={item}>
-        <h1 className="text-3xl font-bold text-foreground">Skill Report</h1>
-        <p className="text-muted-foreground mt-1">Comprehensive analysis of your technical skills</p>
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Skill Report</h1>
+        <p className="text-sm text-muted-foreground mt-1">Comprehensive analysis of your technical skills</p>
       </motion.div>
 
       <div className="grid lg:grid-cols-[1fr_1fr] gap-6">
         <motion.div variants={item}>
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Target className="h-5 w-5 text-primary" />
-                Skill Overview
-              </CardTitle>
+              <CardTitle className="text-base">Skill Overview</CardTitle>
             </CardHeader>
             <CardContent className="flex justify-center py-4">
               <div className="relative">
@@ -86,7 +83,7 @@ export default function SkillReportPage() {
                         key={level}
                         points={points}
                         fill="none"
-                        stroke="hsl(var(--border))"
+                        stroke="var(--color-border)"
                         strokeWidth="1"
                         opacity={0.5}
                       />
@@ -101,7 +98,7 @@ export default function SkillReportPage() {
                         y1={radarCenter}
                         x2={p.x}
                         y2={p.y}
-                        stroke="hsl(var(--border))"
+                        stroke="var(--color-border)"
                         strokeWidth="1"
                         opacity={0.3}
                       />
@@ -109,15 +106,15 @@ export default function SkillReportPage() {
                   })}
                   <polygon
                     points={polygonPoints}
-                    fill="hsl(var(--primary))"
+                    fill="var(--color-primary)"
                     fillOpacity={0.2}
-                    stroke="hsl(var(--primary))"
+                    stroke="var(--color-primary)"
                     strokeWidth={2}
                   />
                   {skills.map((skill, i) => {
                     const p = getRadarPoint(i, total, skill.progress);
                     return (
-                      <circle key={i} cx={p.x} cy={p.y} r={4} fill={skill.color} />
+                      <circle key={i} cx={p.x} cy={p.y} r={4} fill="var(--color-primary)" />
                     );
                   })}
                   {skills.map((skill, i) => {
@@ -144,14 +141,14 @@ export default function SkillReportPage() {
         <motion.div variants={item}>
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Detailed Breakdown</CardTitle>
+              <CardTitle className="text-base">Detailed Breakdown</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {skills.map((skill) => (
                 <div key={skill.name} className="space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: skill.color }} />
+                      <div className="w-3 h-3 rounded-full bg-primary" />
                       <span className="font-medium text-foreground">{skill.name}</span>
                       <Badge variant="secondary" className="text-xs">{skill.level}</Badge>
                     </div>
@@ -173,19 +170,16 @@ export default function SkillReportPage() {
         <motion.div variants={item}>
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-orange-500" />
-                Weak Topics
-              </CardTitle>
+              <CardTitle className="text-base">Weak Topics</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               {weakTopics.map((topic, i) => (
-                <div key={i} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                <div key={i} className="flex items-start gap-3 rounded-lg border border-border p-3">
                   <div className={cn(
                     "w-2 h-2 rounded-full mt-1.5 flex-shrink-0",
-                    topic.severity === "high" && "bg-red-500",
-                    topic.severity === "medium" && "bg-orange-500",
-                    topic.severity === "low" && "bg-yellow-500"
+                    topic.severity === "high" && "bg-destructive",
+                    topic.severity === "medium" && "bg-muted-foreground",
+                    topic.severity === "low" && "bg-border"
                   )} />
                   <div className="flex-1">
                     <p className="font-medium text-foreground text-sm">{topic.topic}</p>
@@ -200,10 +194,7 @@ export default function SkillReportPage() {
         <motion.div variants={item}>
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Lightbulb className="h-5 w-5 text-primary" />
-                Recommendations
-              </CardTitle>
+              <CardTitle className="text-base">Recommendations</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               {recommendations.map((rec, i) => (

@@ -45,7 +45,7 @@ export default function AdminSidebar({ isOpen, onClose }) {
         `}
       >
         <div className="flex items-center justify-between h-16 px-6 border-b border-border">
-          <span className="text-lg font-bold text-primary">NuralPath</span>
+          <span className="text-base font-semibold tracking-tight text-foreground">NuralPath</span>
           <button
             onClick={onClose}
             className="lg:hidden p-1 text-muted-foreground hover:text-foreground"
@@ -62,9 +62,9 @@ export default function AdminSidebar({ isOpen, onClose }) {
               end={item.end}
               onClick={onClose}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                `flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
                   isActive
-                    ? "bg-primary/10 text-primary"
+                    ? "bg-accent text-foreground"
                     : "text-muted-foreground hover:text-foreground hover:bg-accent"
                 }`
               }

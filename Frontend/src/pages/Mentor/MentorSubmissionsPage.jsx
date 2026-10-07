@@ -1,25 +1,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  FileCheck,
-  Filter,
-  ChevronRight,
-  ArrowLeft,
-  Send,
-  CheckCircle2,
-  Clock,
-  AlertCircle,
-} from "lucide-react";
+import { Filter, ChevronRight, ArrowLeft, Send } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
-import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Textarea } from "../../components/ui/textarea";
 import { Avatar, AvatarFallback } from "../../components/ui/avatar";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../../components/ui/select";
-import { Separator } from "../../components/ui/separator";
-import { cn } from "../../lib/utils";
 
 const submissions = [
   { id: 1, student: "Priya Sharma", initials: "PS", assignment: "Linux Process Lab", course: "Linux Fundamentals", submitted: "2 hours ago", status: "Pending", content: "Process management using fork(), exec(), and wait() system calls. Created a process tree visualization script." },
@@ -76,10 +64,10 @@ export default function MentorSubmissionsPage() {
               <AvatarFallback>{selectedSubmission.initials}</AvatarFallback>
             </Avatar>
             <div>
-              <h1 className="text-2xl font-bold text-foreground">{selectedSubmission.student}</h1>
-              <p className="text-muted-foreground">{selectedSubmission.assignment} · {selectedSubmission.course}</p>
+              <h1 className="text-2xl font-semibold tracking-tight text-foreground">{selectedSubmission.student}</h1>
+              <p className="text-sm text-muted-foreground">{selectedSubmission.assignment} · {selectedSubmission.course}</p>
             </div>
-            <Badge variant={selectedSubmission.status === "Pending" ? "destructive" : "success"} className="ml-auto">
+            <Badge variant={selectedSubmission.status === "Pending" ? "secondary" : "success"} className="ml-auto">
               {selectedSubmission.status}
             </Badge>
           </div>
@@ -88,11 +76,11 @@ export default function MentorSubmissionsPage() {
         <motion.div variants={item}>
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Submitted Work</CardTitle>
+              <CardTitle className="text-base font-semibold tracking-tight">Submitted Work</CardTitle>
               <CardDescription>Submitted {selectedSubmission.submitted}</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="p-4 rounded-lg bg-muted/50 font-mono text-sm text-foreground whitespace-pre-wrap">
+              <div className="p-4 rounded-md bg-muted font-mono text-sm text-foreground whitespace-pre-wrap">
                 {selectedSubmission.content}
               </div>
             </CardContent>
@@ -102,7 +90,7 @@ export default function MentorSubmissionsPage() {
         <motion.div variants={item}>
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Grade & Feedback</CardTitle>
+              <CardTitle className="text-base font-semibold tracking-tight">Grade & Feedback</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
@@ -149,8 +137,8 @@ export default function MentorSubmissionsPage() {
   return (
     <motion.div className="space-y-8" variants={container} initial="hidden" animate="show">
       <motion.div variants={item}>
-        <h1 className="text-3xl font-bold text-foreground">Student Submissions</h1>
-        <p className="text-muted-foreground mt-1">{submissions.filter((s) => s.status === "Pending").length} pending reviews</p>
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Student Submissions</h1>
+        <p className="text-sm text-muted-foreground mt-1">{submissions.filter((s) => s.status === "Pending").length} pending reviews</p>
       </motion.div>
 
       <motion.div variants={item} className="flex flex-col sm:flex-row gap-3">
@@ -183,7 +171,7 @@ export default function MentorSubmissionsPage() {
 
       <motion.div className="space-y-3" variants={item}>
         {filteredSubmissions.map((sub) => (
-          <Card key={sub.id} className="hover:border-primary/50 transition-colors cursor-pointer" onClick={() => setSelectedSubmission(sub)}>
+          <Card key={sub.id} className="cursor-pointer transition-colors hover:border-muted-foreground/40" onClick={() => setSelectedSubmission(sub)}>
             <CardContent className="p-4">
               <div className="flex items-center gap-4">
                 <Avatar className="h-10 w-10">
@@ -192,7 +180,7 @@ export default function MentorSubmissionsPage() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <h3 className="font-medium text-foreground">{sub.student}</h3>
-                    <Badge variant={sub.status === "Pending" ? "destructive" : "success"} className="text-xs">
+                    <Badge variant={sub.status === "Pending" ? "secondary" : "success"} className="text-xs">
                       {sub.status}
                     </Badge>
                   </div>

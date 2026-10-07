@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { HelpCircle, Send, Tag, Clock, MessageSquare, Plus, X } from "lucide-react";
+import { Send, Clock, Plus, X } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
@@ -148,8 +148,8 @@ export default function DoubtSolvingPage() {
     <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
       <motion.div className="flex items-center justify-between" variants={item}>
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Doubt Solving</h1>
-          <p className="text-muted-foreground mt-1">Get help from mentors and resolve your doubts</p>
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">Doubt Solving</h1>
+          <p className="text-sm text-muted-foreground mt-1">Get help from mentors and resolve your doubts</p>
         </div>
         <Button onClick={() => setShowAskForm(!showAskForm)}>
           {showAskForm ? <X className="h-4 w-4 mr-2" /> : <Plus className="h-4 w-4 mr-2" />}
@@ -161,7 +161,7 @@ export default function DoubtSolvingPage() {
         <motion.div variants={item}>
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Ask a New Doubt</CardTitle>
+              <CardTitle className="text-base">Ask a New Doubt</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <Input
@@ -199,10 +199,7 @@ export default function DoubtSolvingPage() {
       <motion.div className="grid lg:grid-cols-[320px_1fr] gap-6" variants={item}>
         <Card className="h-fit">
           <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <MessageSquare className="h-5 w-5" />
-              Past Doubts
-            </CardTitle>
+            <CardTitle className="text-base">Past Doubts</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             {pastDoubts.map((doubt) => (
@@ -211,8 +208,8 @@ export default function DoubtSolvingPage() {
                 className={cn(
                   "p-3 rounded-lg cursor-pointer transition-colors border",
                   selectedDoubt?.id === doubt.id
-                    ? "bg-primary/10 border-primary/30"
-                    : "hover:bg-muted/50 border-transparent"
+                    ? "bg-primary/10 border-primary/20"
+                    : "hover:bg-muted border-transparent"
                 )}
                 onClick={() => setSelectedDoubt(doubt)}
               >
@@ -230,7 +227,7 @@ export default function DoubtSolvingPage() {
 
         <Card className="flex flex-col">
           <CardHeader className="border-b">
-            <CardTitle className="text-lg">{selectedDoubt?.question}</CardTitle>
+            <CardTitle className="text-base">{selectedDoubt?.question}</CardTitle>
             <div className="flex items-center gap-2 mt-1">
               <Badge variant="secondary">{selectedDoubt?.topic}</Badge>
               <Badge variant="success">Resolved</Badge>
@@ -250,15 +247,12 @@ export default function DoubtSolvingPage() {
                     className={cn(
                       "max-w-[80%] rounded-lg p-3",
                       reply.sender === "student"
-                        ? "bg-primary text-primary-foreground"
+                        ? "bg-primary/10 text-foreground"
                         : "bg-muted text-foreground"
                     )}
                   >
                     <p className="text-sm">{reply.text}</p>
-                    <p className={cn(
-                      "text-xs mt-1",
-                      reply.sender === "student" ? "text-primary-foreground/70" : "text-muted-foreground"
-                    )}>
+                    <p className="text-xs mt-1 text-muted-foreground">
                       {reply.time}
                     </p>
                   </div>

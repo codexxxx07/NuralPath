@@ -7,7 +7,6 @@ import {
   BookOpen,
   ChevronDown,
   ChevronUp,
-  X,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
@@ -18,7 +17,6 @@ import { Textarea } from "../../components/ui/textarea";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../../components/ui/select";
 import { Avatar, AvatarFallback } from "../../components/ui/avatar";
 import { Separator } from "../../components/ui/separator";
-import { cn } from "../../lib/utils";
 
 const batches = [
   {
@@ -127,10 +125,10 @@ export default function AdminBatchesPage() {
 
   return (
     <motion.div className="space-y-6" variants={container} initial="hidden" animate="show">
-      <motion.div variants={item} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <motion.div variants={item} className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Batch Management</h1>
-          <p className="text-muted-foreground mt-1">{batches.length} batches total</p>
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">Batch Management</h1>
+          <p className="mt-1 text-sm text-muted-foreground">{batches.length} batches total</p>
         </div>
         <Button onClick={() => setShowForm(!showForm)}>
           <Plus className="h-4 w-4 mr-2" />
@@ -142,18 +140,22 @@ export default function AdminBatchesPage() {
         <motion.div variants={item}>
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Create New Batch</CardTitle>
+              <CardTitle className="text-base font-semibold tracking-tight">Create New Batch</CardTitle>
               <CardDescription>Fill in the details to create a new batch</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label>Batch Name</Label>
-                  <Input placeholder="e.g. Full Stack MERN — Batch 2026-F" />
+                  <Input
+                    placeholder="e.g. Full Stack MERN — Batch 2026-F"
+                    value={newBatch.name}
+                    onChange={(e) => setNewBatch({ ...newBatch, name: e.target.value })}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label>Course</Label>
-                  <Select>
+                  <Select value={newBatch.course} onValueChange={(v) => setNewBatch({ ...newBatch, course: v })}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select course" />
                     </SelectTrigger>
@@ -168,7 +170,7 @@ export default function AdminBatchesPage() {
                 </div>
                 <div className="space-y-2">
                   <Label>Mentor</Label>
-                  <Select>
+                  <Select value={newBatch.mentor} onValueChange={(v) => setNewBatch({ ...newBatch, mentor: v })}>
                     <SelectTrigger>
                       <SelectValue placeholder="Assign mentor" />
                     </SelectTrigger>
@@ -181,22 +183,35 @@ export default function AdminBatchesPage() {
                 </div>
                 <div className="space-y-2">
                   <Label>Max Capacity</Label>
-                  <Input type="number" placeholder="e.g. 50" />
+                  <Input
+                    type="number"
+                    placeholder="e.g. 50"
+                    value={newBatch.maxCapacity}
+                    onChange={(e) => setNewBatch({ ...newBatch, maxCapacity: e.target.value })}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label>Start Date</Label>
-                  <Input type="date" />
+                  <Input
+                    type="date"
+                    value={newBatch.startDate}
+                    onChange={(e) => setNewBatch({ ...newBatch, startDate: e.target.value })}
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label>End Date</Label>
-                  <Input type="date" />
+                  <Input
+                    type="date"
+                    value={newBatch.endDate}
+                    onChange={(e) => setNewBatch({ ...newBatch, endDate: e.target.value })}
+                  />
                 </div>
               </div>
               <div className="space-y-2">
                 <Label>Schedule</Label>
                 <Textarea placeholder="e.g. Mon, Wed, Fri — 7:00 PM to 9:00 PM" />
               </div>
-              <div className="flex gap-2 justify-end">
+              <div className="flex justify-end gap-2">
                 <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
                 <Button>Create Batch</Button>
               </div>
@@ -210,12 +225,12 @@ export default function AdminBatchesPage() {
           <Card key={batch.id}>
             <CardContent className="p-0">
               <div
-                className="p-5 cursor-pointer hover:bg-muted/30 transition-colors"
+                className="cursor-pointer p-5 transition-colors hover:bg-muted"
                 onClick={() => setExpandedBatch(expandedBatch === batch.id ? null : batch.id)}
               >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-3 mb-1">
+                <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+                  <div className="min-w-0 flex-1">
+                    <div className="mb-1 flex items-center gap-3">
                       <h3 className="font-semibold text-foreground">{batch.name}</h3>
                       <Badge variant={batch.status === "Active" ? "success" : batch.status === "Completed" ? "secondary" : "outline"}>
                         {batch.status}
@@ -232,7 +247,7 @@ export default function AdminBatchesPage() {
                       <Avatar className="h-7 w-7">
                         <AvatarFallback className="text-[10px]">{batch.mentorInitials}</AvatarFallback>
                       </Avatar>
-                      <span className="text-sm text-muted-foreground hidden sm:inline">{batch.mentor}</span>
+                      <span className="hidden text-sm text-muted-foreground sm:inline">{batch.mentor}</span>
                     </div>
                     {expandedBatch === batch.id ? <ChevronUp className="h-5 w-5 text-muted-foreground" /> : <ChevronDown className="h-5 w-5 text-muted-foreground" />}
                   </div>
@@ -246,28 +261,28 @@ export default function AdminBatchesPage() {
                   transition={{ duration: 0.3 }}
                   className="border-t border-border"
                 >
-                  <div className="p-5 space-y-4">
-                    <div className="grid sm:grid-cols-3 gap-4 text-sm">
+                  <div className="space-y-4 p-5">
+                    <div className="grid gap-4 sm:grid-cols-3">
                       <div>
-                        <p className="text-muted-foreground mb-1">Schedule</p>
-                        <p className="font-medium text-foreground">{batch.schedule}</p>
+                        <p className="mb-1 text-xs text-muted-foreground">Schedule</p>
+                        <p className="text-sm font-medium text-foreground">{batch.schedule}</p>
                       </div>
                       <div>
-                        <p className="text-muted-foreground mb-1">Enrollment</p>
-                        <p className="font-medium text-foreground">{batch.studentsEnrolled} / {batch.maxCapacity} seats filled</p>
+                        <p className="mb-1 text-xs text-muted-foreground">Enrollment</p>
+                        <p className="text-sm font-medium text-foreground">{batch.studentsEnrolled} / {batch.maxCapacity} seats filled</p>
                       </div>
                       <div>
-                        <p className="text-muted-foreground mb-1">Mentor</p>
-                        <p className="font-medium text-foreground">{batch.mentor}</p>
+                        <p className="mb-1 text-xs text-muted-foreground">Mentor</p>
+                        <p className="text-sm font-medium text-foreground">{batch.mentor}</p>
                       </div>
                     </div>
                     <Separator />
                     <div>
-                      <h4 className="font-medium text-foreground mb-3">Enrolled Students</h4>
+                      <h4 className="mb-3 text-sm font-semibold tracking-tight text-foreground">Enrolled Students</h4>
                       {batch.studentList.length > 0 ? (
                         <div className="flex flex-wrap gap-2">
                           {batch.studentList.map((s, i) => (
-                            <div key={i} className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/50 text-sm">
+                            <div key={i} className="flex items-center gap-2 rounded-full bg-muted px-3 py-1.5 text-sm">
                               <Avatar className="h-5 w-5">
                                 <AvatarFallback className="text-[8px]">{s.initials}</AvatarFallback>
                               </Avatar>
@@ -279,7 +294,7 @@ export default function AdminBatchesPage() {
                         <p className="text-sm text-muted-foreground">No students enrolled yet</p>
                       )}
                     </div>
-                    <div className="flex gap-2 justify-end">
+                    <div className="flex justify-end gap-2">
                       <Button variant="outline" size="sm">Edit Batch</Button>
                       {batch.status === "Active" && (
                         <Button variant="destructive" size="sm">End Batch</Button>
