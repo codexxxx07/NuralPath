@@ -77,20 +77,114 @@ const linkBase =
 const idleLink = `${linkBase} font-medium text-muted-foreground after:scale-x-0 hover:text-foreground hover:after:scale-x-100`;
 const activeLink = `${linkBase} font-semibold text-foreground after:scale-x-100`;
 
+const MENU_WIDTH = 288; // w-72
+const MENU_GUTTER = 16;
+
+// Menus are centred under their trigger, but nudged horizontally so they
+// never extend past the viewport edges (e.g. near the last nav item).
+function getMenuShift(triggerEl) {
+  if (!triggerEl || typeof window === "undefined") return 0;
+  const rect = triggerEl.getBoundingClientRect();
+  const width = Math.min(MENU_WIDTH, window.innerWidth - MENU_GUTTER * 2);
+  if (width <= 0) return 0;
+
+  const triggerCentre = rect.left + rect.width / 2;
+  const minCentre = MENU_GUTTER + width / 2;
+  const maxCentre = window.innerWidth - MENU_GUTTER - width / 2;
+  if (minCentre > maxCentre) return 0;
+
+  const centre = Math.min(Math.max(triggerCentre, minCentre), maxCentre);
+  return Math.round(centre - triggerCentre);
+}
+
+function focusPanelLink(panelRefs, label, position = "first", attempts = 12) {
+  const panel = panelRefs.current[label];
+  if (!panel) return;
+  const links = panel.querySelectorAll("a[href]");
+  if (!links.length) return;
+  const target = position === "last" ? links[links.length - 1] : links[0];
+  target.focus();
+  // A panel that is still mid-transition can refuse focus for a frame or
+  // two; retry briefly until the browser accepts it.
+  if (document.activeElement !== target && attempts > 0) {
+    requestAnimationFrame(() => focusPanelLink(panelRefs, label, position, attempts - 1));
+  }
+}
+
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState(null);
+  const [menuShift, setMenuShift] = useState(0);
   const [openGroups, setOpenGroups] = useState([]);
   const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef(null);
+  const mobileButtonRef = useRef(null);
+  const triggerRefs = useRef({});
+  const panelRefs = useRef({});
+  const containerRefs = useRef({});
+  const pendingFocusRef = useRef(null);
   const location = useLocation();
   const locationKey = `${location.pathname}${location.search}`;
+  const [lastLocationKey, setLastLocationKey] = useState(locationKey);
 
-  useEffect(() => {
+  // Close any open navigation surface when the route changes. Adjusting
+  // state during render is the documented alternative to an effect here.
+  if (lastLocationKey !== locationKey) {
+    setLastLocationKey(locationKey);
     setOpenMenu(null);
     setMobileOpen(false);
-  }, [locationKey]);
+  }
+
+  const openDropdown = (label) => {
+    setMenuShift(getMenuShift(triggerRefs.current[label]));
+    setOpenMenu(label);
+  };
+
+  const toggleDropdown = (label) => {
+    if (openMenu === label) {
+      setOpenMenu(null);
+      return;
+    }
+    openDropdown(label);
+  };
+
+  const openDropdownWithFocus = (label, position) => {
+    pendingFocusRef.current = { label, position };
+    openDropdown(label);
+  };
+
+  // Run after the panel is committed (its `inert` attribute removed and its
+  // opening transition started), so the browser accepts focus on the link.
+  useEffect(() => {
+    const request = pendingFocusRef.current;
+    if (!request || openMenu !== request.label) return undefined;
+    const frame = requestAnimationFrame(() => {
+      pendingFocusRef.current = null;
+      focusPanelLink(panelRefs, request.label, request.position);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [openMenu]);
+
+  const handleMenuKeyDown = (event) => {
+    const links = Array.from(event.currentTarget.querySelectorAll("a[href]"));
+    if (!links.length) return;
+    const index = links.indexOf(document.activeElement);
+
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      links[index < 0 ? 0 : (index + 1) % links.length].focus();
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      links[index < 0 ? links.length - 1 : (index - 1 + links.length) % links.length].focus();
+    } else if (event.key === "Home") {
+      event.preventDefault();
+      links[0].focus();
+    } else if (event.key === "End") {
+      event.preventDefault();
+      links[links.length - 1].focus();
+    }
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 6);
@@ -102,18 +196,25 @@ export default function Navbar() {
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "Escape") {
+        if (openMenu) triggerRefs.current[openMenu]?.focus();
+        else if (mobileOpen) mobileButtonRef.current?.focus();
         setOpenMenu(null);
         setMobileOpen(false);
       }
     };
     const onPointerDown = (e) => {
-      if (headerRef.current && !headerRef.current.contains(e.target)) {
-        setOpenMenu(null);
+      // Any press outside the open menu closes it, even inside the header.
+      if (openMenu) {
+        const container = containerRefs.current[openMenu];
+        if (!container || !container.contains(e.target)) setOpenMenu(null);
+      }
+      if (mobileOpen && headerRef.current && !headerRef.current.contains(e.target)) {
         setMobileOpen(false);
       }
     };
     const onResize = () => {
       if (window.innerWidth >= 1024) setMobileOpen(false);
+      if (openMenu) setMenuShift(getMenuShift(triggerRefs.current[openMenu]));
     };
     window.addEventListener("keydown", onKey);
     document.addEventListener("pointerdown", onPointerDown);
@@ -123,7 +224,7 @@ export default function Navbar() {
       document.removeEventListener("pointerdown", onPointerDown);
       window.removeEventListener("resize", onResize);
     };
-  }, []);
+  }, [openMenu, mobileOpen]);
 
   const themeLabel = theme === "dark" ? "Switch to light mode" : "Switch to dark mode";
 
@@ -159,80 +260,118 @@ export default function Navbar() {
           </Link>
 
           <ul className="hidden items-center gap-5 lg:flex xl:gap-6">
-            {navItems.map((item) =>
-              item.items ? (
+            {navItems.map((item) => {
+              if (!item.items) {
+                return (
+                  <li key={item.to}>
+                    <NavLink
+                      to={item.to}
+                      end
+                      className={({ isActive }) => (isActive ? activeLink : idleLink)}
+                    >
+                      {item.label}
+                    </NavLink>
+                  </li>
+                );
+              }
+
+              const isOpen = openMenu === item.label;
+              const menuId = `nav-menu-${item.label.toLowerCase()}`;
+              const isActive = (item.match || [item.to]).some(
+                (path) => location.pathname === path || location.pathname.startsWith(`${path}/`)
+              );
+
+              return (
                 <li
                   key={item.label}
+                  ref={(node) => {
+                    containerRefs.current[item.label] = node;
+                  }}
                   className="relative"
-                  onMouseEnter={() => setOpenMenu(item.label)}
-                  onMouseLeave={() => setOpenMenu((m) => (m === item.label ? null : m))}
+                  onBlur={(e) => {
+                    // Close once keyboard focus leaves the trigger and its panel.
+                    if (e.relatedTarget && !e.currentTarget.contains(e.relatedTarget)) {
+                      setOpenMenu((current) => (current === item.label ? null : current));
+                    }
+                  }}
                 >
                   <button
                     type="button"
-                    aria-expanded={openMenu === item.label}
+                    ref={(node) => {
+                      triggerRefs.current[item.label] = node;
+                    }}
+                    aria-expanded={isOpen}
+                    aria-controls={menuId}
                     aria-haspopup="true"
-                    onClick={() => setOpenMenu((m) => (m === item.label ? null : item.label))}
+                    onClick={() => toggleDropdown(item.label)}
+                    onKeyDown={(e) => {
+                      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+                        e.preventDefault();
+                        openDropdownWithFocus(item.label, e.key === "ArrowUp" ? "last" : "first");
+                      }
+                    }}
                     className={cn(
-                      (item.match || [item.to]).some(
-                        (path) => location.pathname === path || location.pathname.startsWith(`${path}/`)
-                      )
-                        ? activeLink
-                        : idleLink,
+                      isActive ? activeLink : idleLink,
                       "flex cursor-pointer items-center gap-1"
                     )}
                   >
                     {item.label}
                     <ChevronDown
+                      aria-hidden="true"
                       className={cn(
                         "h-3 w-3 transition-transform duration-200",
-                        openMenu === item.label && "rotate-180"
+                        isOpen && "rotate-180"
                       )}
                     />
                   </button>
-                  {openMenu === item.label ? (
-                    <div className="surface-pop absolute left-1/2 top-full z-50 mt-3 w-72 -translate-x-1/2 animate-pop-in rounded-xl p-1.5">
-                      <div className="flex items-center justify-between px-2.5 pb-1.5 pt-1">
-                        <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                          {item.blurb}
-                        </span>
-                        <span className="h-1 w-1 rounded-full bg-[var(--color-brass)]" />
-                      </div>
-                      {item.items.map((child) => (
-                        <NavLink
-                          key={child.to + child.label}
-                          to={child.to}
-                          onClick={() => setOpenMenu(null)}
-                          className={({ isActive }) =>
-                            cn(
-                              "group flex items-start justify-between gap-2 rounded-[5px] px-2.5 py-2 transition-colors",
-                              isActive
-                                ? "bg-[var(--color-accent)]"
-                                : "hover:bg-[var(--color-accent)]/70"
-                            )
-                          }
-                        >
-                          <span className="min-w-0">
-                            <span className="block text-[13px] font-medium text-foreground">{child.label}</span>
-                            <span className="block text-[11px] text-muted-foreground">{child.desc}</span>
-                          </span>
-                          <ArrowRight className="mt-0.5 h-3 w-3 shrink-0 text-muted-foreground opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100" />
-                        </NavLink>
-                      ))}
-                    </div>
-                  ) : null}
-                </li>
-              ) : (
-                <li key={item.to}>
-                  <NavLink
-                    to={item.to}
-                    end
-                    className={({ isActive }) => (isActive ? activeLink : idleLink)}
+                  <div
+                    id={menuId}
+                    ref={(node) => {
+                      panelRefs.current[item.label] = node;
+                    }}
+                    role="group"
+                    aria-label={item.label}
+                    inert={!isOpen}
+                    style={{ marginLeft: menuShift }}
+                    onKeyDown={handleMenuKeyDown}
+                    className={cn(
+                      "surface-pop absolute left-1/2 top-full z-50 mt-3 w-72 max-w-[calc(100vw-2rem)] origin-top -translate-x-1/2 rounded-xl p-1.5 will-change-transform transition-[opacity,translate,scale,visibility] duration-200 ease-out",
+                      isOpen
+                        ? "visible translate-y-0 scale-100 opacity-100"
+                        : "invisible -translate-y-1 scale-[0.985] opacity-0 pointer-events-none"
+                    )}
                   >
-                    {item.label}
-                  </NavLink>
+                    <div className="flex items-center justify-between px-2.5 pb-1.5 pt-1">
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                        {item.blurb}
+                      </span>
+                      <span className="h-1 w-1 rounded-full bg-[var(--color-brass)]" />
+                    </div>
+                    {item.items.map((child) => (
+                      <NavLink
+                        key={child.to + child.label}
+                        to={child.to}
+                        onClick={() => setOpenMenu(null)}
+                        className={({ isActive: linkActive }) =>
+                          cn(
+                            "group flex items-start justify-between gap-2 rounded-[5px] px-2.5 py-2 transition-colors",
+                            linkActive
+                              ? "bg-[var(--color-accent)]"
+                              : "hover:bg-[var(--color-accent)]/70"
+                          )
+                        }
+                      >
+                        <span className="min-w-0">
+                          <span className="block text-[13px] font-medium text-foreground">{child.label}</span>
+                          <span className="block text-[11px] text-muted-foreground">{child.desc}</span>
+                        </span>
+                        <ArrowRight className="mt-0.5 h-3 w-3 shrink-0 text-muted-foreground opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100" />
+                      </NavLink>
+                    ))}
+                  </div>
                 </li>
-              )
-            )}
+              );
+            })}
           </ul>
         </div>
 
@@ -280,6 +419,7 @@ export default function Navbar() {
           </button>
           <button
             type="button"
+            ref={mobileButtonRef}
             onClick={() => setMobileOpen((v) => !v)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
@@ -334,6 +474,7 @@ export default function Navbar() {
                 );
               }
               const expanded = openGroups.includes(item.label);
+              const groupId = `mobile-group-${item.label.toLowerCase()}`;
               return (
                 <li key={item.label} className="border-b border-border/60 last:border-b-0">
                   <button
@@ -344,15 +485,17 @@ export default function Navbar() {
                       )
                     }
                     aria-expanded={expanded}
+                    aria-controls={groupId}
                     className="flex min-h-11 w-full items-center justify-between gap-2 rounded-[4px] px-3 text-sm font-medium text-foreground"
                   >
                     {item.label}
                     <ChevronDown
+                      aria-hidden="true"
                       className={cn("h-4 w-4 text-muted-foreground transition-transform", expanded && "rotate-180")}
                     />
                   </button>
                   {expanded ? (
-                    <ul className="animate-fade-in pb-2">
+                    <ul id={groupId} className="animate-fade-in pb-2">
                       {item.items.map((child) => (
                         <li key={child.to + child.label}>
                           <NavLink
