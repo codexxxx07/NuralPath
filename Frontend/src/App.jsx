@@ -3,6 +3,7 @@ import { Routes, Route, Outlet } from "react-router-dom";
 import { Menu, Info } from "lucide-react";
 import MainLayout from "./layouts/MainLayout";
 import DashboardLayout from "./layouts/DashboardLayout";
+import ErrorBoundary from "./components/common/ErrorBoundary";
 import MentorSidebar from "./components/common/MentorSidebar";
 import AdminSidebar from "./components/common/AdminSidebar";
 
@@ -148,8 +149,9 @@ function AdminDashboardLayout() {
 
 export default function App() {
   return (
-    <Suspense fallback={<PageLoader />}>
-      <Routes>
+    <ErrorBoundary>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
         {/* Public */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
@@ -253,6 +255,7 @@ export default function App() {
         {/* 404 */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </Suspense>
+      </Suspense>
+    </ErrorBoundary>
   );
 }

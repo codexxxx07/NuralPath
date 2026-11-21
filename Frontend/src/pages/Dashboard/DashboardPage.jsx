@@ -68,6 +68,31 @@ export default function DashboardPage() {
         <p className="mt-1.5 text-sm text-muted-foreground">{today}</p>
       </div>
 
+      {/* Study desk strip */}
+      <div className="wood flex flex-wrap items-center justify-between gap-3 rounded-xl px-4 py-3.5">
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/55">
+            Study desk
+          </p>
+          <p className="mt-0.5 font-display text-lg text-[#fbf3e4]">Today&apos;s page is open.</p>
+        </div>
+        <div className="flex flex-wrap gap-1.5">
+          {[
+            { to: "/daily-challenge", label: "Daily challenge" },
+            { to: "/notes", label: "Notebook" },
+            { to: "/quizzes", label: "Quizzes" },
+          ].map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              className="rounded-[4px] border border-white/25 bg-white/10 px-2.5 py-1.5 text-[11px] font-medium text-white/90 transition-colors hover:bg-white/20"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+
       {/* Stats */}
       <div className="card-depth p-6">
         <dl className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4">

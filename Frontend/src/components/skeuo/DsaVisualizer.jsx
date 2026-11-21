@@ -8,8 +8,6 @@ import { MetalPanel } from "./Surfaces";
    state — no invented motion.
    ──────────────────────────────────────────────────────────── */
 
-const clone = (a) => a.map((x) => (typeof x === "object" ? { ...x } : x));
-
 function bubbleFrames(input) {
   const a = [...input];
   const frames = [{ array: [...a], note: "Start: compare each adjacent pair, left to right.", active: [], done: [] }];
@@ -566,25 +564,6 @@ function LinkedListVisual() {
   );
 }
 
-const TREE = {
-  value: 40,
-  left: { value: 20, left: { value: 10 }, right: { value: 30 } },
-  right: { value: 60, left: { value: 50 }, right: { value: 70 } },
-};
-
-function flattenTree(node) {
-  const out = [];
-  const walk = (n, depth, x, path) => {
-    if (!n) return;
-    out.push({ value: n.value, depth, x, path });
-    walk(n.left, depth + 1, x - 100 / (depth + 1), `${path}L`);
-    walk(n.right, depth + 1, x + 100 / (depth + 1), `${path}R`);
-  };
-  walk(node, 0, 50, "root");
-  return out;
-}
-
-const TREE_NODES = flattenTree(TREE);
 const TREE_ORDER = {
   inorder: [10, 20, 30, 40, 50, 60, 70],
   preorder: [40, 20, 10, 30, 60, 50, 70],

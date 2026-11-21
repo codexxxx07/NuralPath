@@ -72,13 +72,22 @@ const resources = [
     status: "Available",
   },
   {
+    id: "roadmap-dsa",
+    category: "Roadmap",
+    title: "DSA Learning Library",
+    description:
+      "Seven topic books with a staged roadmap, a filterable practice set, interview questions and printable cheat sheets.",
+    to: "/dsa",
+    status: "Available",
+  },
+  {
     id: "roadmap-vlsi",
     category: "Roadmap",
-    title: "VLSI Design Resources",
+    title: "VLSI Learning Library",
     description:
-      "RTL design, verification, and physical design material. Content is being prepared — nothing published yet.",
-    to: "/courses",
-    status: "In Development",
+      "Nine technical topics from digital electronics to UVM, with a dependency-aware roadmap, schematics and practice questions.",
+    to: "/vlsi",
+    status: "Available",
   },
   {
     id: "roadmap-embedded",

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, CalendarDays, Megaphone, MessageSquare, Plus, Send, Users } from "lucide-react";
+import { ArrowRight, CalendarDays, Megaphone, MessageSquare, Send, Users } from "lucide-react";
 import { Container, PageHeader } from "../../components/skeuo/Page";
 import { Input } from "../../components/ui/input";
 import { Textarea } from "../../components/ui/textarea";

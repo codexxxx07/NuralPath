@@ -8,7 +8,8 @@ import { cn } from "../../lib/utils";
 const STORE_KEY = "nuralpath-daily-challenges";
 const DAY_MS = 86400000;
 
-const isoDate = (d) => d.toISOString().slice(0, 10);
+const isoDate = (d) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
 function dayIndex(date) {
   const start = Date.UTC(2026, 0, 1);

@@ -86,13 +86,11 @@ export default function Navbar() {
   const headerRef = useRef(null);
   const location = useLocation();
   const locationKey = `${location.pathname}${location.search}`;
-  const [lastKey, setLastKey] = useState(locationKey);
 
-  if (lastKey !== locationKey) {
-    setLastKey(locationKey);
-    setMenu(null);
+  useEffect(() => {
+    setOpenMenu(null);
     setMobileOpen(false);
-  }
+  }, [locationKey]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 6);

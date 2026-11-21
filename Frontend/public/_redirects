@@ -1,0 +1,2 @@
+# SPA history fallback so deep links (e.g. /dsa/arrays) survive a refresh.
+/*    /index.html   200
