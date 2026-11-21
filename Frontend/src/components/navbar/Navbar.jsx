@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
-import { Show, UserButton } from "@clerk/react";
+import { useAuth, UserButton } from "@clerk/react";
 import { Sun, Moon, Menu, X, ChevronDown, ArrowRight } from "lucide-react";
 import { useTheme } from "../../hooks/useTheme";
 import { cn } from "../../lib/utils";
@@ -118,6 +118,12 @@ function focusPanelLink(panelRefs, label, position = "first", attempts = 12) {
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
+  const { isLoaded, isSignedIn } = useAuth();
+  // Auth actions must not depend on Clerk finishing its script load: if Clerk
+  // is still loading (or cannot initialize at all) <Show> renders nothing and
+  // the Login/Signup buttons disappear. Default to the signed-out actions and
+  // swap to the profile control only once Clerk confirms a signed-in session.
+  const signedIn = isLoaded && isSignedIn;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState(null);
   const [menuShift, setMenuShift] = useState(0);
@@ -394,23 +400,24 @@ export default function Navbar() {
               <Moon className="h-3.5 w-3.5 animate-theme-swap" />
             )}
           </button>
-          <Show when="signed-out">
-            <Link
-              to="/login"
-              className="btn-paper btn-tactile ml-1 inline-flex h-8 items-center rounded-[5px] px-3 text-xs font-medium"
-            >
-              Login
-            </Link>
-            <Link
-              to="/register"
-              className="btn-ink btn-tactile inline-flex h-8 items-center rounded-[5px] px-3 text-xs font-medium"
-            >
-              Sign up
-            </Link>
-          </Show>
-          <Show when="signed-in">
+          {signedIn ? (
             <UserButton appearance={userButtonAppearance} />
-          </Show>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="btn-paper btn-tactile ml-1 inline-flex h-8 items-center rounded-[5px] px-3 text-xs font-medium"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="btn-ink btn-tactile inline-flex h-8 items-center rounded-[5px] px-3 text-xs font-medium"
+              >
+                Sign up
+              </Link>
+            </>
+          )}
         </div>
 
         <div className="flex items-center gap-1.5 lg:hidden">
@@ -532,23 +539,7 @@ export default function Navbar() {
           </ul>
 
           <div className="mt-2 flex flex-col gap-2 border-t border-border px-1 pb-1 pt-3">
-            <Show when="signed-out">
-              <Link
-                to="/login"
-                onClick={() => setMobileOpen(false)}
-                className="btn-paper btn-tactile flex h-10 items-center justify-center rounded-[5px] text-sm font-medium"
-              >
-                Login
-              </Link>
-              <Link
-                to="/register"
-                onClick={() => setMobileOpen(false)}
-                className="btn-ink btn-tactile flex h-10 items-center justify-center rounded-[5px] text-sm font-medium"
-              >
-                Create an account
-              </Link>
-            </Show>
-            <Show when="signed-in">
+            {signedIn ? (
               <div className="flex items-center gap-3 rounded-[5px] border border-border bg-[var(--color-paper-warm)] px-3 py-2">
                 <UserButton appearance={userButtonAppearance} />
                 <Link
@@ -559,7 +550,24 @@ export default function Navbar() {
                   Open dashboard
                 </Link>
               </div>
-            </Show>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  onClick={() => setMobileOpen(false)}
+                  className="btn-paper btn-tactile flex h-10 items-center justify-center rounded-[5px] text-sm font-medium"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  onClick={() => setMobileOpen(false)}
+                  className="btn-ink btn-tactile flex h-10 items-center justify-center rounded-[5px] text-sm font-medium"
+                >
+                  Create an account
+                </Link>
+              </>
+            )}
           </div>
         </div>
       ) : null}
