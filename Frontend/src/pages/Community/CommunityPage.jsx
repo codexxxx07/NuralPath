@@ -1,248 +1,303 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
-import { Button } from "../../components/ui/button";
+import { ArrowRight, CalendarDays, Megaphone, MessageSquare, Plus, Send, Users } from "lucide-react";
+import { Container, PageHeader } from "../../components/skeuo/Page";
+import { Input } from "../../components/ui/input";
+import { Textarea } from "../../components/ui/textarea";
+import { MaterialTag, StickyNote } from "../../components/skeuo/Surfaces";
+import { cn } from "../../lib/utils";
 
-const pillars = [
+const STORE_KEY = "nuralpath-community";
+const TABS = ["Board", "Study groups", "Announcements", "Events", "Resources"];
+
+const announcements = [
   {
-    title: "Learning & Skill Building",
-    description:
-      "Follow structured tracks in Linux, Shell, C, and Data Structures. Study together in small groups, work through the curriculum, and practice in the built-in terminal lab.",
+    date: "2026-11-18",
+    title: "DSA and VLSI libraries are open",
+    body: "All seven DSA topics and nine VLSI topics are written, with roadmaps, practice prompts and printable cheat sheets.",
   },
   {
-    title: "Hands-on Practice",
-    description:
-      "The practice lab gives every student an interactive terminal for day-to-day practice — no setup required. Get stuck less and build muscle memory faster.",
+    date: "2026-11-10",
+    title: "Notes and daily challenges have local storage",
+    body: "Notes, roadmap progress and challenge records are saved in your browser. Nothing is synced to an account yet.",
   },
   {
-    title: "Networking",
-    description:
-      "Meet fellow students working toward the same goals, share progress, and build the kind of connections that help you grow as an engineer.",
-  },
-  {
-    title: "Projects & Collaboration",
-    description:
-      "Team up on projects — from data structure libraries to shell tooling. Collaborating on real code is the fastest way to learn.",
-  },
-  {
-    title: "Hackathons & Competitions",
-    description:
-      "Community-run coding challenges and mini-hackathons are organized around the learning tracks. Participation is the goal — not just winning.",
-  },
-  {
-    title: "Internship & Job Opportunities",
-    description:
-      "As the community grows, opportunities get shared with students first — internships, referrals, and openings posted by members and mentors.",
+    date: "2026-10-30",
+    title: "Community board is a local prototype",
+    body: "Posts you write here are visible only in this browser. A shared backend is not connected, so activity is not fabricated.",
   },
 ];
 
-const howToJoin = [
-  {
-    step: "01",
-    title: "Create a free account",
-    description: "Sign up to get your student dashboard, course progress, and practice lab access.",
-    to: "/register",
-  },
-  {
-    step: "02",
-    title: "Pick a learning track",
-    description: "Start with Linux Fundamentals or jump into Data Structures in C.",
-    to: "/courses",
-  },
-  {
-    step: "03",
-    title: "Practice every day",
-    description: "Use the practice lab to drill commands and concepts until they stick.",
-    to: "/dashboard/practice-lab",
-  },
-  {
-    step: "04",
-    title: "Contribute back",
-    description: "Help others with doubts, review peers' code, and share what you build.",
-    to: "/community",
-  },
+const events = [
+  { date: "Weekly", title: "DSA problem circle", body: "Pick one pattern, solve two prompts, explain the invariant to each other.", place: "Community board thread" },
+  { date: "Weekly", title: "RTL review hour", body: "Bring a module and a testbench. Review assignment style, resets and constraint coverage.", place: "Community board thread" },
+  { date: "Monthly", title: "Project demo day", body: "Show what you built. No rankings, no pitch competition — feedback only.", place: "Community board thread" },
+];
+
+const resources = [
+  { title: "DSA library", note: "Seven topics from arrays to dynamic programming.", to: "/dsa" },
+  { title: "VLSI workstation", note: "Devices, CMOS, RTL, timing and verification.", to: "/vlsi" },
+  { title: "Cheat sheets", note: "Printable DSA and VLSI references.", to: "/dsa/cheat-sheets" },
+  { title: "Notes", note: "Your own notebook, saved in this browser.", to: "/notes" },
+  { title: "Quizzes", note: "Timed exam-style papers with explanations.", to: "/quizzes" },
+  { title: "Doubts wall", note: "Ask, reply and mark questions resolved.", to: "/doubts" },
 ];
 
 export default function CommunityPage() {
+  const [tab, setTab] = useState("Board");
+  const [posts, setPosts] = useState([]);
+  const [form, setForm] = useState({ name: "", message: "", kind: "Discussion" });
+  const [status, setStatus] = useState("");
+
+  useEffect(() => {
+    try {
+      setPosts(JSON.parse(localStorage.getItem(STORE_KEY) || "[]"));
+    } catch {
+      setPosts([]);
+    }
+  }, []);
+
+  const persist = (next) => {
+    setPosts(next);
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify(next));
+    } catch {
+      setStatus("Could not write to browser storage.");
+    }
+  };
+
+  const post = () => {
+    if (!form.message.trim()) {
+      setStatus("Write something before posting.");
+      return;
+    }
+    const entry = {
+      id: `post-${Date.now()}`,
+      name: form.name.trim() || "Anonymous student",
+      message: form.message.trim(),
+      kind: tab === "Study groups" ? "Study group" : form.kind,
+      createdAt: new Date().toISOString(),
+    };
+    persist([entry, ...posts]);
+    setForm({ name: form.name, message: "", kind: form.kind });
+    setStatus("Posted to this browser's board.");
+  };
+
+  const remove = (id) => {
+    persist(posts.filter((p) => p.id !== id));
+    setStatus("Post removed.");
+  };
+
+  const visible = posts.filter((p) =>
+    tab === "Study groups" ? p.kind === "Study group" : tab === "Board" ? p.kind !== "Study group" : true
+  );
+
   return (
-    <div className="min-h-screen bg-background">
-      {/* ─── Hero ─── */}
-      <section>
-        <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6 sm:py-28">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-              Student Community
-            </p>
-            <h1 className="mt-4 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-              Learn, Build, and Grow Together
-            </h1>
-            <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
-              NuralPath is a student-driven community for anyone serious about Linux,
-              C, and Data Structures. Whether you're just starting or already building
-              systems-level projects, there's a place for you here.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Button size="lg" asChild>
-                <Link to="/register">
-                  Join the Community
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link to="/courses">Explore Learning Tracks</Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+    <div className="min-h-screen">
+      <Container className="py-8 sm:py-10">
+        <PageHeader
+          accent="wood"
+          eyebrow="Community"
+          meta="Local prototype"
+          title="The classroom board, without invented activity."
+          description="Discussions, study groups, announcements and shared resources. Posts are stored in this browser only; there is no shared backend, so the board starts empty on a new device."
+          breadcrumbs={[{ label: "Home", to: "/" }, { label: "Community" }]}
+          actions={
+            <Link
+              to="/doubts"
+              className="btn-ink btn-tactile inline-flex h-10 items-center gap-2 rounded-lg px-4 text-sm font-medium"
+            >
+              Ask a doubt <ArrowRight className="h-4 w-4" />
+            </Link>
+          }
+        />
 
-      {/* ─── About the community ─── */}
-      <section className="border-y border-border bg-surface py-24 sm:py-28">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="grid items-start gap-12 lg:grid-cols-2">
-            <div>
-              <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-                About This Community
-              </p>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-                Built by students, for students
+        <div className="mt-6 flex flex-wrap gap-1.5" role="tablist" aria-label="Community sections">
+          {TABS.map((t) => (
+            <button
+              key={t}
+              type="button"
+              role="tab"
+              aria-selected={tab === t}
+              onClick={() => {
+                setTab(t);
+                setStatus("");
+              }}
+              className={cn(
+                "rounded-[4px] border px-3 py-1.5 text-xs transition-colors",
+                tab === t
+                  ? "border-[var(--color-wood)] bg-[var(--color-paper-deep)] font-semibold text-foreground"
+                  : "border-border bg-[var(--color-card)] text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {t}
+            </button>
+          ))}
+        </div>
+
+        {(tab === "Board" || tab === "Study groups") && (
+          <div className="mt-5 grid gap-5 lg:grid-cols-[320px_minmax(0,1fr)]">
+            <div className="paper h-fit rounded-lg p-4 shadow-[var(--shadow-sm)]">
+              <h2 className="font-display text-lg text-foreground">
+                {tab === "Study groups" ? "Propose a study group" : "Post to the board"}
               </h2>
-              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                The community exists so that no student has to figure out systems
-                programming, C, or data structures alone. It's a place where you can
-                ask questions without hesitation, practice without embarrassment, and
-                find people at the same stage as you.
-              </p>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                We keep things focused: real learning, real practice, and real
-                collaboration — not hype. If you're willing to put in consistent
-                effort, you'll find everyone here willing to help you along.
+              <div className="mt-3 space-y-2.5">
+                <Input
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  placeholder="Your name (optional)"
+                  aria-label="Your name"
+                  className="h-9 text-xs"
+                />
+                {tab === "Board" ? (
+                  <select
+                    value={form.kind}
+                    onChange={(e) => setForm({ ...form, kind: e.target.value })}
+                    aria-label="Post type"
+                    className="field h-9 w-full rounded-[4px] px-2 text-xs"
+                  >
+                    <option>Discussion</option>
+                    <option>Question</option>
+                    <option>Resource</option>
+                  </select>
+                ) : null}
+                <Textarea
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  rows={4}
+                  placeholder={
+                    tab === "Study groups"
+                      ? "What are you studying, and what would you like to work through together?"
+                      : "Share a thought, a resource, or something you are stuck on."
+                  }
+                  aria-label="Post message"
+                  className="text-xs"
+                />
+                <button
+                  type="button"
+                  onClick={post}
+                  className="btn-ink btn-tactile inline-flex h-9 w-full items-center justify-center gap-1.5 rounded-md text-xs font-medium"
+                >
+                  <Send className="h-3.5 w-3.5" /> {tab === "Study groups" ? "Propose group" : "Post"}
+                </button>
+                {status ? <p className="text-[11px] text-muted-foreground">{status}</p> : null}
+              </div>
+              <p className="mt-3 border-t border-border/70 pt-2 text-[10px] leading-relaxed text-muted-foreground">
+                Local only. Do not post anything private — this is a prototype board.
               </p>
             </div>
 
-            <div className="grid gap-x-10 sm:grid-cols-2">
-              <div className="border-t border-border py-5">
-                <h3 className="text-sm font-medium text-foreground">Focused</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-                  We concentrate on the fundamentals that matter: Linux, C, algorithms, and systems thinking.
-                </p>
-              </div>
-              <div className="border-t border-border py-5">
-                <h3 className="text-sm font-medium text-foreground">Supportive</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-                  No question is too basic. Beginners and advanced learners help each other daily.
-                </p>
-              </div>
-              <div className="border-t border-border py-5">
-                <h3 className="text-sm font-medium text-foreground">Hands-on</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-                  Everything is tied to practice — you learn by typing, running, and debugging.
-                </p>
-              </div>
-              <div className="border-t border-border py-5">
-                <h3 className="text-sm font-medium text-foreground">Growing</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-                  New tracks and resources are added as students actually build them.
-                </p>
-              </div>
+            <div className="space-y-2.5">
+              {visible.length ? (
+                visible.map((p) => (
+                  <article key={p.id} className="paper rounded-lg p-4 shadow-[var(--shadow-sm)]">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <span className="grid h-7 w-7 place-items-center rounded-full bg-[var(--color-wood)] font-hand text-sm text-white">
+                          {p.name.slice(0, 1).toUpperCase()}
+                        </span>
+                        <span className="text-xs font-semibold text-foreground">{p.name}</span>
+                        <MaterialTag>{p.kind}</MaterialTag>
+                      </div>
+                      <span className="text-[10px] text-muted-foreground">
+                        {new Date(p.createdAt).toLocaleString()}
+                      </span>
+                    </div>
+                    <p className="mt-2 whitespace-pre-wrap text-[13.5px] leading-6 text-foreground/90">{p.message}</p>
+                    <button
+                      type="button"
+                      onClick={() => remove(p.id)}
+                      className="mt-2 text-[10px] text-muted-foreground hover:text-[var(--color-destructive)]"
+                    >
+                      Delete
+                    </button>
+                  </article>
+                ))
+              ) : (
+                <div className="rounded-lg border border-dashed border-border px-5 py-12 text-center">
+                  <MessageSquare className="mx-auto h-6 w-6 text-muted-foreground/50" />
+                  <p className="mt-2 text-sm font-medium text-foreground">No posts in this browser yet</p>
+                  <p className="mx-auto mt-1 max-w-sm text-xs leading-relaxed text-muted-foreground">
+                    {tab === "Study groups"
+                      ? "There are no groups recorded here. Propose one with a focus and a rhythm."
+                      : "The board starts empty by design. Write the first post; it will appear here after a reload too."}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
-        </div>
-      </section>
+        )}
 
-      {/* ─── What the community offers ─── */}
-      <section className="py-24 sm:py-28">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="max-w-2xl">
-            <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-              What the Community Offers
-            </p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-              More Than a Course Catalog
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Everything below is something students can actually participate in right now.
-            </p>
-          </div>
-
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {pillars.map((p) => (
-              <div key={p.title} className="card-depth card-depth-hover p-6">
-                <h3 className="text-base font-medium text-foreground">
-                  {p.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {p.description}
-                </p>
-              </div>
+        {tab === "Announcements" && (
+          <div className="mt-5 space-y-3">
+            {announcements.map((a) => (
+              <article key={a.title} className="paper rounded-lg p-4 shadow-[var(--shadow-sm)]">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Megaphone className="h-4 w-4 text-[var(--color-wood)]" />
+                  <h2 className="text-sm font-semibold text-foreground">{a.title}</h2>
+                  <span className="ml-auto font-mono text-[10px] text-muted-foreground">
+                    {new Date(a.date).toLocaleDateString()}
+                  </span>
+                </div>
+                <p className="mt-1.5 text-[13px] leading-relaxed text-muted-foreground">{a.body}</p>
+              </article>
             ))}
           </div>
-        </div>
-      </section>
+        )}
 
-      {/* ─── How to get involved ─── */}
-      <section className="border-y border-border bg-surface py-24 sm:py-28">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="max-w-2xl">
-            <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-              Get Started
-            </p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-              How Students Can Get Involved
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Joining is simple, and you can start learning in the next five minutes.
+        {tab === "Events" && (
+          <div className="mt-5 grid gap-3 sm:grid-cols-3">
+            {events.map((e) => (
+              <div key={e.title} className="paper rounded-lg p-4 shadow-[var(--shadow-sm)]">
+                <div className="flex items-center gap-2">
+                  <CalendarDays className="h-4 w-4 text-[var(--color-wood)]" />
+                  <MaterialTag tone="brass">{e.date}</MaterialTag>
+                </div>
+                <h2 className="mt-2 text-sm font-semibold text-foreground">{e.title}</h2>
+                <p className="mt-1 text-[12.5px] leading-relaxed text-muted-foreground">{e.body}</p>
+                <p className="mt-2 text-[11px] text-muted-foreground">{e.place}</p>
+              </div>
+            ))}
+            <p className="sm:col-span-3 text-[11px] text-muted-foreground">
+              These are recurring community formats, not scheduled bookings. There is no ticketing or
+              calendar integration on this build.
             </p>
           </div>
+        )}
 
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {howToJoin.map((step) => (
-              <Link
-                key={step.step}
-                to={step.to}
-                className="card-depth card-depth-hover group flex flex-col p-6"
-              >
-                <span className="font-mono text-xs text-muted-foreground">
-                  {step.step}
-                </span>
-                <h3 className="mt-2 text-base font-medium text-foreground transition-colors duration-200 group-hover:text-primary">
-                  {step.title}
-                </h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
-                  {step.description}
-                </p>
-                <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary transition-colors duration-200 group-hover:underline">
-                  Go
-                  <ArrowRight className="h-3.5 w-3.5" />
+        {tab === "Resources" && (
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {resources.map((r) => (
+              <Link key={r.to + r.title} to={r.to} className="card-depth card-depth-hover group p-4">
+                <h2 className="text-sm font-semibold text-foreground">{r.title}</h2>
+                <p className="mt-1 text-[12.5px] leading-relaxed text-muted-foreground">{r.note}</p>
+                <span className="mt-2 inline-flex items-center gap-1 text-[11px] text-primary">
+                  Open <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
                 </span>
               </Link>
             ))}
           </div>
-        </div>
-      </section>
+        )}
 
-      {/* ─── CTA ─── */}
-      <section className="py-24 sm:py-28">
-        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
-          <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-            Your First Doubt Is the Best Place to Start
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            Join the community, ask your first question, and start your learning journey
-            with people who'll help you through it.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Button size="lg" asChild>
-              <Link to="/register">
-                Join for Free
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-            <Button size="lg" variant="outline" asChild>
-              <Link to="/about">Learn About Us</Link>
-            </Button>
+        <div className="mt-8 grid gap-4 sm:grid-cols-[minmax(0,1fr)_280px]">
+          <div className="rounded-lg border border-border bg-[var(--color-paper-warm)] p-4">
+            <div className="flex items-center gap-2">
+              <Users className="h-4 w-4 text-[var(--color-wood)]" />
+              <h2 className="text-sm font-semibold text-foreground">Peer learning, honestly</h2>
+            </div>
+            <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">
+              A shared community needs accounts, moderation and a server. This build has none of those, so
+              it does not pretend to. Use the board to draft posts and the doubts wall to practise asking
+              precise questions.
+            </p>
           </div>
+          <StickyNote tone="yellow">
+            <p className="font-hand text-xl leading-6">
+              A good question includes what you tried and what actually happened.
+            </p>
+          </StickyNote>
         </div>
-      </section>
+      </Container>
     </div>
   );
 }

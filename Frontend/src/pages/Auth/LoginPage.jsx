@@ -1,137 +1,144 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff, ArrowRight } from "lucide-react";
+import { ArrowRight, Eye, EyeOff, Info } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
-
-function GithubIcon({ className }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
-    </svg>
-  );
-}
-
-function GoogleIcon({ className }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4" />
-      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
-      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
-      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
-    </svg>
-  );
-}
+import { StickyNote } from "../../components/skeuo/Surfaces";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/dashboard");
+    const next = {};
+    if (!email.trim()) next.email = "Enter your email address.";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) next.email = "Enter a valid email address.";
+    if (!password) next.password = "Enter your password.";
+    else if (password.length < 6) next.password = "Password must be at least 6 characters.";
+    setErrors(next);
+    if (Object.keys(next).length === 0) navigate("/dashboard");
   };
 
   return (
-    <div className="mx-auto w-full max-w-md animate-fade-in px-4 py-20 sm:px-6">
-      <div className="card-depth p-6 sm:p-8">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
-          Welcome back
-        </h1>
-        <p className="mt-1.5 text-sm text-muted-foreground">
-          Sign in to continue learning
-        </p>
+    <div className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 sm:py-16">
+      <div className="grid items-start gap-6 md:grid-cols-[minmax(0,1fr)_300px]">
+        <div className="paper animate-fade-in rounded-xl p-5 shadow-[var(--shadow-card)] sm:p-8">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+            NuralPath · student sign in
+          </p>
+          <h1 className="mt-2 font-display text-3xl text-foreground">Welcome back.</h1>
+          <p className="mt-1.5 text-sm text-muted-foreground">
+            Sign in to continue learning at your desk.
+          </p>
 
-        <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
-          Demo authentication — no backend is connected yet. Submitting the
-          form opens the student dashboard for preview.
-        </p>
-
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="you@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+          <div className="mt-4 flex items-start gap-2 rounded-md border border-border bg-[var(--color-paper-warm)] px-3 py-2 text-[11px] leading-relaxed text-muted-foreground">
+            <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+            <span>
+              Demo authentication — no backend is connected. Submitting valid credentials opens the
+              student dashboard preview; nothing is verified or stored.
+            </span>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <div className="relative">
+          <form onSubmit={handleSubmit} noValidate className="mt-5 space-y-4">
+            <div className="space-y-1.5">
+              <Label htmlFor="email">Email</Label>
               <Input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="pr-10"
+                id="email"
+                type="email"
+                autoComplete="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                aria-invalid={Boolean(errors.email)}
+                aria-describedby={errors.email ? "email-error" : undefined}
+                error={Boolean(errors.email)}
               />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                aria-label={showPassword ? "Hide password" : "Show password"}
-                title={showPassword ? "Hide password" : "Show password"}
-                className="icon-btn absolute right-1.5 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-lg text-muted-foreground"
-              >
-                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-              </button>
+              {errors.email ? (
+                <p id="email-error" className="text-[11px] text-[var(--color-destructive)]">{errors.email}</p>
+              ) : null}
             </div>
-          </div>
 
-          <div className="flex items-center justify-between">
-            <label className="flex cursor-pointer items-center gap-2 text-sm text-muted-foreground">
-              <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                className="h-4 w-4 rounded border-border bg-background accent-primary"
-              />
-              Remember me
-            </label>
-            <Link to="/forgot-password" className="text-sm text-primary hover:underline">
-              Forgot password?
+            <div className="space-y-1.5">
+              <Label htmlFor="password">Password</Label>
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  autoComplete="current-password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="pr-10"
+                  aria-invalid={Boolean(errors.password)}
+                  aria-describedby={errors.password ? "password-error" : undefined}
+                  error={Boolean(errors.password)}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((v) => !v)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  className="icon-btn absolute right-1.5 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-[4px] text-muted-foreground"
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+              {errors.password ? (
+                <p id="password-error" className="text-[11px] text-[var(--color-destructive)]">{errors.password}</p>
+              ) : null}
+            </div>
+
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <label className="flex cursor-pointer items-center gap-2 text-xs text-muted-foreground">
+                <input
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  className="h-4 w-4 rounded border-border bg-background accent-[var(--color-wood)]"
+                />
+                Remember me
+              </label>
+              <Link to="/forgot-password" className="text-xs font-medium text-primary hover:underline">
+                Forgot password?
+              </Link>
+            </div>
+
+            <Button type="submit" className="h-11 w-full" size="lg">
+              Sign in <ArrowRight className="ml-1 h-4 w-4" />
+            </Button>
+          </form>
+
+          <p className="mt-5 border-t border-border pt-4 text-center text-sm text-muted-foreground">
+            Don&apos;t have an account?{" "}
+            <Link to="/register" className="font-medium text-primary hover:underline">
+              Create one
             </Link>
+          </p>
+        </div>
+
+        <aside className="space-y-4 md:pt-6">
+          <StickyNote tone="yellow" taped>
+            <p className="font-hand text-xl leading-6">
+              Pick up where you left off — the notebook remembers.
+            </p>
+          </StickyNote>
+          <div className="paper rounded-lg p-4 shadow-[var(--shadow-sm)]">
+            <h2 className="text-sm font-semibold text-foreground">What is protected</h2>
+            <p className="mt-1.5 text-[12px] leading-relaxed text-muted-foreground">
+              Dashboards contain sample data in this build. No private user data exists to expose, and
+              no credentials are stored.
+            </p>
           </div>
-
-          <Button type="submit" className="w-full" size="lg">
-            Sign In
-            <ArrowRight className="ml-1 h-4 w-4" />
-          </Button>
-        </form>
-
-        <div className="relative my-8">
-          <div className="border-t border-border" />
-          <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-card px-3 text-xs text-muted-foreground">
-            or
-          </span>
-        </div>
-
-        <div className="space-y-3">
-          <Button variant="outline" className="w-full" size="lg">
-            <GoogleIcon className="h-5 w-5" />
-            Continue with Google
-          </Button>
-          <Button variant="outline" className="w-full" size="lg">
-            <GithubIcon className="h-5 w-5" />
-            Continue with GitHub
-          </Button>
-        </div>
+          <Link to="/" className="inline-block text-xs text-muted-foreground hover:text-foreground">
+            ← Back to the desk
+          </Link>
+        </aside>
       </div>
-
-      <p className="mt-6 text-center text-sm text-muted-foreground">
-        Don&apos;t have an account?{" "}
-        <Link to="/register" className="font-medium text-primary hover:underline">
-          Sign up
-        </Link>
-      </p>
     </div>
   );
 }

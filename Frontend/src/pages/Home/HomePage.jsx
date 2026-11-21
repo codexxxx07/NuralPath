@@ -1,671 +1,452 @@
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
-  ArrowUpRight,
+  Bookmark,
+  BookOpen,
+  Calculator,
+  CalendarDays,
+  Check,
+  CircuitBoard,
+  Code2,
+  Compass,
+  ListChecks,
+  MessageSquareText,
+  NotebookPen,
+  Pencil,
+  Pin,
+  Sparkles,
+  Users,
 } from "lucide-react";
-import { Button } from "../../components/ui/button";
+import { Container } from "../../components/skeuo/Page";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "../../components/ui/accordion";
+  Eyebrow,
+  MaterialTag,
+  PaperCard,
+  ProgressMeter,
+  SectionHeading,
+  StickyNote,
+  WoodPanel,
+} from "../../components/skeuo/Surfaces";
 
-function Eyebrow({ children }) {
-  return (
-    <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-      {children}
-    </p>
-  );
-}
-
-const liveTracks = [
+const platforms = [
   {
-    title: "Linux & Systems",
-    description:
-      "Ground-up Linux fundamentals: filesystem, permissions, processes, and the tools every systems engineer depends on daily.",
-    topics: ["Filesystem", "Processes", "Permissions", "Text Tools"],
-    link: "/courses?domain=linux",
+    title: "DSA Library",
+    note: "Seven topics on a shelf, from arrays to dynamic programming.",
+    to: "/dsa",
+    icon: Code2,
+    tone: "blue",
   },
   {
-    title: "Shell Scripting",
-    description:
-      "Write real shell scripts — automation, parsing, and everyday productivity using Bash and POSIX tools.",
-    topics: ["Bash", "Scripting", "Automation", "POSIX"],
-    link: "/courses?domain=shell",
+    title: "VLSI Workstation",
+    note: "Devices, CMOS, RTL, timing and verification, with schematics.",
+    to: "/vlsi",
+    icon: CircuitBoard,
+    tone: "green",
   },
   {
-    title: "C Programming",
-    description:
-      "The language at the heart of systems software: pointers, memory, structs, and building programs that run close to the metal.",
-    topics: ["Pointers", "Memory", "Structs", "File I/O"],
-    link: "/courses?domain=c",
+    title: "Quizzes",
+    note: "Timed exam papers with explanations after submission.",
+    to: "/quizzes",
+    icon: ListChecks,
+    tone: "amber",
   },
   {
-    title: "Data Structures in C",
-    description:
-      "An 8-week track implementing real data structures from scratch: linked lists, trees, heaps, graphs, and sorting.",
-    topics: ["Linked Lists", "Trees", "Heaps", "Graphs"],
-    link: "/courses/6",
+    title: "Daily Challenge",
+    note: "One question a day on a physical calendar page.",
+    to: "/daily-challenge",
+    icon: CalendarDays,
+    tone: "pink",
+  },
+  {
+    title: "Notebook",
+    note: "Write, tag and search notes saved in this browser.",
+    to: "/notes",
+    icon: NotebookPen,
+    tone: "amber",
+  },
+  {
+    title: "Community",
+    note: "A board for discussions and a wall for doubts.",
+    to: "/community",
+    icon: Users,
+    tone: "green",
+  },
+  {
+    title: "Career Desk",
+    note: "Placement planner, mock interviews and a resume sheet.",
+    to: "/placement",
+    icon: Compass,
+    tone: "blue",
   },
 ];
 
-const upcomingDomains = [
-  { title: "VLSI Design", description: "RTL, verification, physical design, timing analysis." },
-  { title: "Embedded Systems", description: "ARM, RTOS, firmware, device drivers." },
-  { title: "FPGA Development", description: "Verilog/VHDL, SoC design, DSP on FPGA." },
+const journey = [
+  { title: "Learn", note: "Read a topic end to end. Understand the invariant before the syntax.", icon: BookOpen },
+  { title: "Practice", note: "Rebuild the code without looking, then work two prompts.", icon: Pencil },
+  { title: "Test", note: "Sit a timed paper or attempt the daily challenge.", icon: ListChecks },
+  { title: "Improve", note: "Read the explanation and fix the specific mistake you made.", icon: Sparkles },
+  { title: "Build", note: "Apply the pattern in a project or interview answer.", icon: CircuitBoard },
 ];
 
-const features = [
-  {
-    title: "Structured Learning Tracks",
-    description:
-      "Curated paths in Linux, Shell, C, and Data Structures that take you from basics to building real programs.",
-  },
-  {
-    title: "Built-in Practice Lab",
-    description:
-      "An interactive terminal right in the platform. Practice commands and compile C code without any setup.",
-  },
-  {
-    title: "Progress Dashboards",
-    description:
-      "Course progress, streaks, skill reports, and certificates in one dashboard per role — student, mentor, or admin.",
-  },
-  {
-    title: "Doubt Solving",
-    description:
-      "Ask questions when you're stuck. Other students and mentors help out — no question is too basic.",
-  },
-  {
-    title: "Curated Resources",
-    description:
-      "Cheat sheets, references, and a roadmap collecting the best learning material in one place.",
-  },
-  {
-    title: "Git & Open Source",
-    description:
-      "Learn version control and practice contribution workflows that prepare you for real open-source projects.",
-  },
+const shelfPreview = [
+  { title: "Arrays", to: "/dsa/arrays", tone: "#3f6285", label: "DS-01" },
+  { title: "Trees", to: "/dsa/trees", tone: "#4d6b4f", label: "DS-05" },
+  { title: "Graphs", to: "/dsa/graphs", tone: "#41617a", label: "DS-06" },
+  { title: "CMOS", to: "/vlsi/cmos", tone: "#7a5a3c", label: "VLSI-03" },
 ];
 
-const howItWorks = [
-  {
-    step: "01",
-    title: "Pick a Track",
-    description: "Start with Linux Fundamentals, Shell, C, or the Data Structures track based on your goals.",
-  },
-  {
-    step: "02",
-    title: "Follow the Curriculum",
-    description: "Structured modules with hands-on exercises — each step builds on the last.",
-  },
-  {
-    step: "03",
-    title: "Practice Daily",
-    description: "Use the practice lab to drill commands and compile code until concepts stick.",
-  },
-  {
-    step: "04",
-    title: "Build & Share",
-    description: "Apply what you learn in projects and share them with the community for feedback.",
-  },
-];
-
-const dsaWeeks = [
-  "Complexity & Recursion",
-  "Linked Lists",
-  "Stacks & Queues",
-  "Trees",
-  "Heaps",
-  "Graphs",
-  "Sorting & Searching",
-  "Capstone Project",
-];
-
-const dashboards = [
-  {
-    role: "Student",
-    items: ["Courses & progress", "Practice lab", "Doubts & assignments", "Certificates"],
-  },
-  {
-    role: "Mentor",
-    items: ["Students & submissions", "Live classes", "Course management", "Analytics"],
-  },
-  {
-    role: "Admin",
-    items: ["Users & batches", "Courses & mentors", "Payments", "Platform analytics"],
-  },
-];
-
-const faqs = [
-  {
-    question: "Do I need any prior experience to get started?",
-    answer:
-      "No. The Linux, Shell, and C tracks start from the fundamentals. If you're comfortable using a computer and browser, you can start today.",
-  },
-  {
-    question: "What do I need on my own machine?",
-    answer:
-      "Just a computer with an internet connection. The practice lab runs in your browser, so there's no software to install before you begin.",
-  },
-  {
-    question: "Is the content free?",
-    answer:
-      "A free tier is available so you can start learning right away. Paid plans and their exact pricing are still being finalized and will be announced when ready.",
-  },
-  {
-    question: "Are VLSI, Embedded, and FPGA courses available?",
-    answer:
-      "Not yet. Those tracks are in development — we're building them in the open. Anything not yet available is clearly labeled as in development rather than advertised as live.",
-  },
-  {
-    question: "How do certificates work?",
-    answer:
-      "Certificates are currently a dashboard feature of the prototype. The official certification process will be defined and announced once the platform is fully live.",
-  },
-  {
-    question: "How is this different from a content library?",
-    answer:
-      "This is a learning community: structured tracks, a practice lab, progress tracking, and other students to ask for help — not just a collection of videos.",
-  },
-];
-
-const heroStats = [
-  { value: "04", label: "Live tracks" },
-  { value: "08", label: "Week DSA path" },
-  { value: "03", label: "Role dashboards" },
-  { value: "24/7", label: "Practice lab" },
-];
-
-const previewProgress = [
-  { name: "Data Structures in C", pct: 72 },
-  { name: "Linux Fundamentals", pct: 48 },
-  { name: "Shell Scripting", pct: 30 },
-];
-
-const previewActivity = [
-  { action: "Solved “Binary Search”", when: "2h ago" },
-  { action: "Completed Arrays module", when: "Yesterday" },
-  { action: "Finished Week 03 exercise", when: "2d ago" },
+const deskNotes = [
+  { text: "Practise the invariant, not the output.", tone: "yellow" },
+  { text: "A fake solved count teaches nothing.", tone: "green" },
 ];
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero */}
-      <section>
-        <div className="mx-auto max-w-6xl px-4 pt-24 pb-20 sm:px-6 sm:pt-32 sm:pb-24">
-          <div className="grid items-start gap-16 lg:grid-cols-2">
-            <div className="max-w-xl">
-              <h1 className="text-4xl font-semibold leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                Learn better.
-                <br />
-                Build consistently.
-              </h1>
-              <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground">
-                A focused learning platform for students, mentors and communities
-                — hands-on paths in Linux, shell scripting, C, and data
-                structures, with a built-in practice lab.
-              </p>
-              <div className="mt-9 flex flex-wrap gap-3">
-                <Button size="lg" asChild>
-                  <Link to="/register">
-                    Start Learning
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button size="lg" variant="outline" asChild>
-                  <Link to="/courses">Explore Courses</Link>
-                </Button>
-              </div>
-              <p className="mt-8 text-sm text-muted-foreground">
-                Free tier available &nbsp;·&nbsp; Practice lab included &nbsp;·&nbsp; No experience required
-              </p>
-            </div>
-
-            {/* Product preview */}
-            <div className="mt-2 lg:mt-0">
-              <div className="card-depth overflow-hidden shadow-raised">
-                <div className="flex items-center justify-between border-b border-border bg-surface px-4 py-3">
-                  <div className="flex items-center gap-2.5">
-                    <span className="grid h-5 w-5 place-items-center rounded bg-foreground text-[9px] font-bold text-background">
-                      N
-                    </span>
-                    <span className="text-xs font-semibold uppercase tracking-widest text-foreground">
-                      NuralPath
-                    </span>
-                  </div>
-                  <span className="text-xs text-muted-foreground">
-                    Learning Dashboard
+    <div className="min-h-screen">
+      {/* Hero — the study desk */}
+      <section className="relative overflow-hidden pt-8 sm:pt-12">
+        <Container>
+          <div className="desk relative overflow-hidden rounded-2xl border border-[var(--color-wood-dark)]/35 px-4 py-9 shadow-[var(--shadow-raised)] sm:px-8 sm:py-12 lg:px-10">
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-1.5 bg-[linear-gradient(90deg,var(--color-wood-dark),var(--color-wood-light),var(--color-wood-dark))]" />
+            <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.95fr)]">
+              <div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <MaterialTag tone="chalk">NuralPath</MaterialTag>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-[#5c4a34] dark:text-white/55">
+                    a digital study environment
                   </span>
                 </div>
+                <h1 className="mt-4 max-w-xl text-balance font-display text-4xl leading-[1.06] text-[#2a2117] dark:text-[#f4ecdd] sm:text-5xl lg:text-[3.4rem]">
+                  Learning that feels like
+                  <span className="relative mx-2 inline-block">
+                    <span className="relative z-10">sitting at a desk</span>
+                    <span
+                      className="absolute inset-x-0 bottom-1.5 z-0 h-3 -rotate-[0.6deg] bg-[color-mix(in_srgb,#f5e58a_80%,transparent)]"
+                      aria-hidden="true"
+                    />
+                  </span>
+                  .
+                </h1>
+                <p className="mt-5 max-w-lg text-pretty text-[15px] leading-7 text-[#4a3d2c] dark:text-white/70">
+                  DSA on a bookshelf. VLSI on a workbench. Notes in a notebook, challenges on a
+                  calendar. One organised place to learn, practise and prepare — without another flat
+                  dashboard.
+                </p>
+                <div className="mt-7 flex flex-wrap gap-2.5">
+                  <Link
+                    to="/dsa"
+                    className="btn-ink btn-tactile inline-flex h-11 items-center gap-2 rounded-lg px-5 text-sm font-medium"
+                  >
+                    Start learning <ArrowRight className="h-4 w-4" />
+                  </Link>
+                  <Link
+                    to="/vlsi"
+                    className="btn-paper btn-tactile inline-flex h-11 items-center gap-2 rounded-lg px-5 text-sm font-medium"
+                  >
+                    Explore the workstation
+                  </Link>
+                </div>
+                <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-[#5c4a34] dark:text-white/55">
+                  <span className="flex items-center gap-1.5"><Check className="h-3.5 w-3.5" /> No setup</span>
+                  <span className="flex items-center gap-1.5"><Check className="h-3.5 w-3.5" /> Free to browse</span>
+                  <span className="flex items-center gap-1.5"><Check className="h-3.5 w-3.5" /> Honest labels</span>
+                </div>
+              </div>
 
-                <div className="space-y-5 p-5 sm:p-6">
-                  <div>
-                    <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-                      Continue learning
+              {/* Physical desk arrangement */}
+              <div className="relative">
+                <div className="relative mx-auto max-w-md">
+                  {/* Notebook */}
+                  <div className="relative rotate-[0.8deg] rounded-[6px] bg-[#f7f2e6] p-4 pt-8 shadow-[0_18px_30px_-16px_rgba(40,28,14,0.65),0_2px_4px_rgba(40,28,14,0.25)] ring-1 ring-[#d8c9b1] dark:bg-[#25211b] dark:ring-[#453b2e]">
+                    <div className="absolute inset-y-0 left-4 w-px bg-[#d9a89a]/60" />
+                    <div className="absolute -top-2 left-6 h-5 w-16 -rotate-3 bg-[color-mix(in_srgb,#d9c9a8_75%,transparent)] shadow-sm" />
+                    <div className="flex items-center justify-between">
+                      <p className="font-hand text-lg text-[#6b5840] dark:text-[#c0b39d]">this week</p>
+                      <Bookmark className="h-4 w-4 fill-[#8c3a29] text-[#8c3a29]" />
+                    </div>
+                    <p className="mt-1 font-display text-lg text-[#2a2117] dark:text-[#f0e8d8]">
+                      Learning progress
                     </p>
-                    <div className="mt-3.5 space-y-3.5">
-                      {previewProgress.map((row) => (
-                        <div key={row.name}>
-                          <div className="flex items-center justify-between gap-4">
-                            <span className="truncate text-sm text-foreground">
-                              {row.name}
-                            </span>
-                            <span className="shrink-0 font-mono text-xs text-muted-foreground">
-                              {row.pct}%
-                            </span>
-                          </div>
-                          <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-muted">
-                            <div
-                              className="h-full rounded-full bg-primary transition-all duration-700"
-                              style={{ width: `${row.pct}%` }}
-                            />
-                          </div>
-                        </div>
-                      ))}
+                    <div className="mt-3 space-y-2.5">
+                      <ProgressMeter value={64} label="Arrays & strings" tone="blue" />
+                      <ProgressMeter value={38} label="Trees & graphs" tone="green" />
+                      <ProgressMeter value={22} label="CMOS & timing" tone="wood" />
+                    </div>
+                    <div className="mt-3 flex items-center justify-between border-t border-[#dccdb6] pt-2 text-[10px] text-[#7a6750] dark:border-[#453b2e] dark:text-[#b4a690]">
+                      <span>3 topics in progress</span>
+                      <span>9 practice prompts</span>
                     </div>
                   </div>
 
-                  <div className="border-t border-border pt-4">
-                    <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-                      Recent activity
-                    </p>
-                    <ul className="mt-3 space-y-2.5">
-                      {previewActivity.map((item) => (
-                        <li
-                          key={item.action}
-                          className="flex items-center justify-between gap-4 text-sm"
-                        >
-                          <span className="truncate text-foreground">
-                            {item.action}
-                          </span>
-                          <span className="shrink-0 text-xs text-muted-foreground">
-                            {item.when}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
+                  {/* Pencil */}
+                  <div className="absolute -right-2 top-8 h-28 w-2.5 rotate-[18deg] rounded-[2px] bg-[linear-gradient(90deg,#e0b34a,#c8952f_45%,#8a6318)] shadow-[0_3px_6px_rgba(40,28,14,0.35)]">
+                    <span className="absolute -top-2 left-0 h-3 w-2.5 bg-[#e8d3b0]" />
+                    <span className="absolute -bottom-1.5 left-0 h-2.5 w-2.5 rotate-45 bg-[#3b342b]" />
+                  </div>
+
+                  {/* Sticky notes */}
+                  <div className="absolute -bottom-5 -left-3 w-36 rotate-[-4deg]">
+                    <StickyNote tone="yellow" className="p-2.5">
+                      <p className="font-hand text-[15px] leading-5">Read → rebuild → practise.</p>
+                    </StickyNote>
+                  </div>
+                  <div className="absolute -bottom-8 right-0 w-32 rotate-[3deg]">
+                    <StickyNote tone="green" className="p-2.5">
+                      <p className="font-hand text-[15px] leading-5">Daily page, 10 minutes.</p>
+                    </StickyNote>
+                  </div>
+
+                  {/* Book stack */}
+                  <div className="absolute -right-1 bottom-14 hidden w-24 sm:block">
+                    <div className="h-3 rounded-[2px] bg-[#41617a] shadow-[0_2px_3px_rgba(40,28,14,0.35)]" />
+                    <div className="mt-1 h-3 w-[92%] rounded-[2px] bg-[#7a5a3c] shadow-[0_2px_3px_rgba(40,28,14,0.35)]" />
+                    <div className="mt-1 h-3 w-[84%] rounded-[2px] bg-[#4d6b4f] shadow-[0_2px_3px_rgba(40,28,14,0.35)]" />
                   </div>
                 </div>
+
+                <p className="mt-12 text-center text-[10px] uppercase tracking-[0.2em] text-[#6b5840] dark:text-white/45">
+                  progress shown is a preview, not your data
+                </p>
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Statistics */}
-      <section className="border-t border-border">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <dl className="grid grid-cols-2 gap-8 py-10 sm:grid-cols-4">
-            {heroStats.map((stat) => (
-              <div key={stat.label}>
-                <dd className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-                  {stat.value}
-                </dd>
-                <dt className="mt-1.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">
-                  {stat.label}
-                </dt>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </section>
-
-      {/* Learning focus strip */}
-      <section className="border-y border-border">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="flex flex-col gap-3 py-5 sm:flex-row sm:items-center sm:gap-8">
-            <span className="shrink-0 text-sm text-muted-foreground">
-              What you&apos;ll actually learn here
+          {/* Wooden desk rail with quick facts */}
+          <WoodPanel className="mt-4 flex flex-wrap items-center justify-between gap-4 px-4 py-3 sm:px-6">
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[11px] text-white/80">
+              <span className="flex items-center gap-1.5"><BookOpen className="h-3.5 w-3.5" /> 7 DSA topics</span>
+              <span className="flex items-center gap-1.5"><CircuitBoard className="h-3.5 w-3.5" /> 9 VLSI topics</span>
+              <span className="flex items-center gap-1.5"><ListChecks className="h-3.5 w-3.5" /> 3 exam papers</span>
+              <span className="flex items-center gap-1.5"><Calculator className="h-3.5 w-3.5" /> Step-accurate visualizer</span>
+            </div>
+            <span className="rounded-[3px] border border-white/25 px-2 py-0.5 text-[10px] uppercase tracking-widest text-white/70">
+              built in the open
             </span>
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-              {liveTracks.map((t) => (
-                <Link
-                  key={t.title}
-                  to={t.link}
-                  className="text-sm text-foreground transition-colors hover:text-primary"
-                >
-                  {t.title}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
+          </WoodPanel>
+        </Container>
       </section>
 
-      {/* Live Learning Tracks */}
-      <section className="py-24 sm:py-28">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="max-w-2xl">
-            <Eyebrow>Live Learning Tracks</Eyebrow>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-              Start learning today
-            </h2>
-            <p className="mt-3 text-muted-foreground">
-              Four tracks are live right now, built for real skill development —
-              not just video-watching.
-            </p>
+      {/* Platform overview */}
+      <section className="pt-16 sm:pt-20">
+        <Container>
+          <SectionHeading
+            eyebrow="On the platform"
+            title="Every tool has a physical place."
+            description="Not a grid of identical rounded cards. A shelf for topics, a desk for progress, a calendar for habits, a board for questions."
+          />
+          <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {platforms.map((p) => {
+              const tone =
+                p.tone === "blue"
+                  ? "border-t-[#6f96b8]"
+                  : p.tone === "green"
+                    ? "border-t-[var(--color-circuit)]"
+                    : p.tone === "pink"
+                      ? "border-t-[#b57a8a]"
+                      : "border-t-[var(--color-brass)]";
+              return (
+                <Link
+                  key={p.title}
+                  to={p.to}
+                  className={`card-depth card-depth-hover group flex flex-col border-t-[3px] p-4 ${tone}`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="metal grid h-8 w-8 place-items-center rounded-[5px]">
+                      <p.icon className="h-4 w-4" />
+                    </span>
+                    <ArrowRight className="h-3.5 w-3.5 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+                  </div>
+                  <h3 className="mt-3 font-display text-lg leading-tight text-foreground">{p.title}</h3>
+                  <p className="mt-1.5 text-[12.5px] leading-relaxed text-muted-foreground">{p.note}</p>
+                </Link>
+              );
+            })}
           </div>
+        </Container>
+      </section>
 
-          <div className="mt-10 grid gap-x-12 sm:grid-cols-2">
-            {liveTracks.map((track) => (
-              <Link
-                key={track.title}
-                to={track.link}
-                className="group flex items-start justify-between gap-6 border-t border-border py-6"
-              >
-                <div>
-                  <h3 className="text-base font-medium text-foreground transition-colors group-hover:text-primary">
-                    {track.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {track.description}
-                  </p>
-                  <p className="mt-3 text-xs text-muted-foreground">
-                    {track.topics.join(" · ")}
-                  </p>
-                </div>
-                <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-muted-foreground transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" />
+      {/* Learning journey */}
+      <section className="pt-16 sm:pt-20">
+        <Container>
+          <div className="paper rounded-xl p-5 shadow-[var(--shadow-card)] sm:p-8">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div className="max-w-xl">
+                <Eyebrow>The learning journey</Eyebrow>
+                <h2 className="mt-2 font-display text-2xl text-foreground sm:text-3xl">
+                  Learn → Practice → Test → Improve → Build
+                </h2>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  Five stages, repeated for every pattern. The loop matters more than the volume.
+                </p>
+              </div>
+              <Link to="/dsa/roadmap" className="inline-flex items-center gap-1 text-sm font-medium text-primary">
+                See the roadmap <ArrowRight className="h-3.5 w-3.5" />
               </Link>
-            ))}
-          </div>
+            </div>
 
-          {/* In development */}
-          <div className="mt-12 border-t border-border pt-6">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-              <div className="grid gap-4 sm:grid-cols-3 sm:gap-10">
-                {upcomingDomains.map((d) => (
-                  <div key={d.title}>
-                    <p className="text-sm font-medium text-foreground">{d.title}</p>
-                    <p className="mt-1 text-sm text-muted-foreground">{d.description}</p>
+            <ol className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+              {journey.map((step, i) => (
+                <li key={step.title} className="relative rounded-lg border border-border/80 bg-[var(--color-card)] p-4 shadow-[var(--shadow-xs)]">
+                  <span className="absolute -top-2 left-4 rounded-[2px] bg-[var(--color-wood)] px-1.5 py-0.5 font-mono text-[9px] text-white">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <step.icon className="mt-1 h-4 w-4 text-[var(--color-wood)]" />
+                  <h3 className="mt-2 text-sm font-semibold text-foreground">{step.title}</h3>
+                  <p className="mt-1 text-[12px] leading-relaxed text-muted-foreground">{step.note}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Container>
+      </section>
+
+      {/* Shelf preview + notes rail */}
+      <section className="pt-16 sm:pt-20">
+        <Container>
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_310px]">
+            <div>
+              <SectionHeading
+                eyebrow="From the shelves"
+                title="Pick a book, not a menu item."
+                description="DSA topics stand on a shelf. VLSI blocks sit on a circuit board. Different environments, one consistent way to learn."
+              />
+              <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {shelfPreview.map((book) => (
+                  <Link
+                    key={book.title}
+                    to={book.to}
+                    className="book-cover flex h-44 flex-col justify-between p-3 pl-4 sm:h-52"
+                    style={{ "--book": book.tone }}
+                  >
+                    <span className="text-[9px] font-semibold uppercase tracking-[0.16em] text-white/65">
+                      {book.label}
+                    </span>
+                    <div>
+                      <span className="font-display text-lg leading-tight text-white">{book.title}</span>
+                      <span className="mt-2 block h-px w-8 bg-white/40" />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+              <div className="shelf-edge mt-2 h-3 rounded-[2px]" aria-hidden="true" />
+
+              <div className="mt-5 flex flex-wrap gap-2">
+                <Link to="/dsa" className="btn-paper btn-tactile inline-flex h-9 items-center gap-1.5 rounded-md px-3 text-xs font-medium">
+                  All DSA books <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+                <Link to="/vlsi" className="btn-paper btn-tactile inline-flex h-9 items-center gap-1.5 rounded-md px-3 text-xs font-medium">
+                  All VLSI blocks <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              {deskNotes.map((note) => (
+                <StickyNote key={note.text} tone={note.tone} taped>
+                  <p className="font-hand text-xl leading-6">{note.text}</p>
+                </StickyNote>
+              ))}
+
+              <PaperCard lined className="p-4">
+                <div className="flex items-center gap-2">
+                  <Pin className="h-4 w-4 text-[var(--color-wood)]" />
+                  <h3 className="text-sm font-semibold text-foreground">Saved topics</h3>
+                </div>
+                <p className="mt-1.5 text-[12px] leading-relaxed text-muted-foreground">
+                  Bookmark any topic from its page. Bookmarks are stored in this browser and shown as a
+                  ribbon on the topic.
+                </p>
+                <Link to="/notes" className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-primary">
+                  Open the notebook <ArrowRight className="h-3 w-3" />
+                </Link>
+              </PaperCard>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* Community + CTA */}
+      <section className="py-16 sm:py-20">
+        <Container>
+          <div className="chalkboard rounded-xl px-5 py-8 sm:px-9 sm:py-10">
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/50">
+                  The classroom board
+                </p>
+                <h2 className="mt-2 max-w-lg font-display text-2xl leading-tight text-[#f3eee0] sm:text-3xl">
+                  Ask the question you have been avoiding.
+                </h2>
+                <p className="mt-3 max-w-lg text-sm leading-relaxed text-white/65">
+                  Every learner gets stuck. The doubts wall is built for precise questions: what you
+                  tried, what you expected, what happened. The community board holds discussions and
+                  study-group proposals.
+                </p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <Link
+                    to="/doubts"
+                    className="btn-paper btn-tactile inline-flex h-9 items-center gap-1.5 rounded-md px-3 text-xs font-medium"
+                  >
+                    <MessageSquareText className="h-3.5 w-3.5" /> Ask a doubt
+                  </Link>
+                  <Link
+                    to="/community"
+                    className="inline-flex h-9 items-center gap-1.5 rounded-md border border-white/25 bg-white/10 px-3 text-xs font-medium text-white/90 transition-colors hover:bg-white/15"
+                  >
+                    Visit the community
+                  </Link>
+                </div>
+              </div>
+
+              <div className="space-y-2.5">
+                {[
+                  { icon: BookOpen, text: "Curated topics with consistent structure." },
+                  { icon: Pencil, text: "Practice prompts you work in your own editor." },
+                  { icon: ListChecks, text: "Timed papers with honest marking." },
+                  { icon: MessageSquareText, text: "A doubts wall with real, local replies." },
+                ].map((item) => (
+                  <div key={item.text} className="flex items-start gap-2.5 rounded-md border border-white/10 bg-black/20 px-3 py-2.5 text-[12.5px] text-white/75">
+                    <item.icon className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#d9c08b]" />
+                    {item.text}
                   </div>
                 ))}
               </div>
-              <span className="shrink-0 rounded-full border border-border px-2.5 py-0.5 text-xs text-muted-foreground">
-                In development
-              </span>
-            </div>
-            <p className="mt-6 max-w-2xl text-sm text-muted-foreground">
-              VLSI, Embedded, and FPGA tracks are being built in the open. Follow
-              the{" "}
-              <Link to="/libraries" className="font-medium text-primary hover:underline">
-                roadmap in Libraries
-              </Link>{" "}
-              and we&apos;ll announce when they&apos;re ready.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Platform Features */}
-      <section className="border-y border-border bg-surface py-24 sm:py-28">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="max-w-2xl">
-            <Eyebrow>Platform Features</Eyebrow>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-              Tools focused on helping you learn
-            </h2>
-            <p className="mt-3 text-muted-foreground">
-              Everything here exists to move you from watching to doing — as
-              quickly as possible.
-            </p>
-          </div>
-
-          <div className="mt-10 grid gap-x-12 sm:grid-cols-2 lg:grid-cols-3">
-            {features.map((f) => (
-              <div key={f.title} className="border-t border-border py-6">
-                <h3 className="text-base font-medium text-foreground">{f.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {f.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Dashboards */}
-      <section className="py-24 sm:py-28">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="max-w-2xl">
-            <Eyebrow>Dashboards</Eyebrow>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-              Your learning, in one place
-            </h2>
-            <p className="mt-3 text-muted-foreground">
-              Separate dashboards for students, mentors, and admins — with
-              courses, practice, doubt solving, and progress tracking.
-            </p>
-          </div>
-
-          <div className="mt-10 grid gap-6 sm:grid-cols-3">
-            {dashboards.map((d) => (
-              <div key={d.role} className="card-depth card-depth-hover p-6">
-                <h3 className="text-xs font-semibold uppercase tracking-widest text-foreground">
-                  {d.role}
-                </h3>
-                <ul className="mt-4 space-y-2.5">
-                  {d.items.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-2.5 text-sm text-muted-foreground"
-                    >
-                      <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-muted-foreground" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-10 border-t border-border pt-6">
-            <p className="text-sm text-muted-foreground">
-              Sign in to open your real, live dashboard with your own courses and
-              progress.
-            </p>
-            <Button asChild className="mt-4">
-              <Link to="/dashboard">
-                Open Dashboard
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* DSA Track */}
-      <section className="border-y border-border bg-surface py-24 sm:py-28">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="grid items-start gap-12 lg:grid-cols-2">
-            <div className="max-w-xl">
-              <Eyebrow>Featured Track</Eyebrow>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-                Data Structures in C — 8 weeks to real skill
-              </h2>
-              <p className="mt-4 leading-relaxed text-muted-foreground">
-                This track takes you from recursion and complexity analysis to
-                building full data structure implementations in C. Every
-                structure is written by you, from scratch — not just watched.
-              </p>
-              <ul className="mt-6 space-y-3">
-                {[
-                  "Implement linked lists, stacks, and queues by hand",
-                  "Understand trees, heaps, and graphs through code",
-                  "Finish with a capstone project you can show off",
-                ].map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-sm">
-                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-foreground" />
-                    <span className="text-muted-foreground">{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-8">
-                <Button size="lg" asChild>
-                  <Link to="/courses/6">
-                    View the DSA Track
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">
-                8-Week Curriculum
-              </h3>
-              <ul className="mt-4">
-                {dsaWeeks.map((week, i) => (
-                  <li
-                    key={week}
-                    className="flex items-center gap-4 border-t border-border py-3 text-sm"
-                  >
-                    <span className="w-6 shrink-0 font-mono text-xs text-muted-foreground">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="text-foreground">{week}</span>
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section className="py-24 sm:py-28">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="max-w-2xl">
-            <Eyebrow>How It Works</Eyebrow>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-              From your first command to your first project
-            </h2>
-          </div>
-
-          <div className="mt-10 grid gap-x-12 sm:grid-cols-2 lg:grid-cols-4">
-            {howItWorks.map((step) => (
-              <div key={step.step} className="border-t border-border py-6">
-                <span className="font-mono text-xs text-muted-foreground">
-                  {step.step}
-                </span>
-                <h3 className="mt-2 text-base font-medium text-foreground">
-                  {step.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {step.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Community teaser */}
-      <section className="border-y border-border bg-surface py-24 sm:py-28">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="grid items-start gap-12 lg:grid-cols-2">
-            <div className="max-w-xl">
-              <Eyebrow>Student Community</Eyebrow>
-              <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-                You&apos;re not learning alone
-              </h2>
-              <p className="mt-4 leading-relaxed text-muted-foreground">
-                Ask doubts, review each other&apos;s code, and collaborate on
-                projects. The community is where the real learning sticks.
-              </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Button asChild>
-                  <Link to="/community">
-                    Join the Community
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button variant="outline" asChild>
-                  <Link to="/about">Learn About Us</Link>
-                </Button>
-              </div>
-            </div>
-
-            <div className="grid gap-x-10 sm:grid-cols-2">
-              {[
-                {
-                  title: "Doubt solving",
-                  description: "Get unstuck fast with help from peers and mentors.",
-                },
-                {
-                  title: "Study groups",
-                  description: "Learn in small groups moving through tracks together.",
-                },
-                {
-                  title: "Project collabs",
-                  description: "Team up on C and shell projects for real experience.",
-                },
-                {
-                  title: "Safe space",
-                  description: "Questions at every level are welcome, always.",
-                },
-              ].map((c) => (
-                <div key={c.title} className="border-t border-border py-5">
-                  <h3 className="text-sm font-medium text-foreground">{c.title}</h3>
-                  <p className="mt-1.5 text-sm text-muted-foreground">{c.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="py-24 sm:py-28">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6">
-          <div className="text-center">
-            <Eyebrow>FAQ</Eyebrow>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-              Frequently asked questions
-            </h2>
-          </div>
-
-          <div className="mt-10">
-            <Accordion type="single" collapsible className="w-full">
-              {faqs.map((faq, i) => (
-                <AccordionItem key={i} value={`faq-${i}`}>
-                  <AccordionTrigger className="text-left text-foreground font-medium">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
-        </div>
+        </Container>
       </section>
 
       {/* CTA */}
-      <section className="border-t border-border py-24 sm:py-28">
-        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
-          <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-            Ready to start learning?
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-            Create a free account, pick a track, and write your first command
-            today. The community will be right there with you.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Button size="lg" asChild>
-              <Link to="/register">
-                Get Started Free
-                <ArrowRight className="h-4 w-4" />
+      <section className="pb-4">
+        <Container>
+          <div className="paper relative overflow-hidden rounded-xl px-5 py-9 text-center shadow-[var(--shadow-card)] sm:px-8 sm:py-12">
+            <div className="absolute inset-x-0 top-0 h-1.5 bg-[linear-gradient(90deg,var(--color-wood-dark),var(--color-brass),var(--color-wood-dark))]" />
+            <h2 className="mx-auto max-w-xl text-balance font-display text-2xl text-foreground sm:text-3xl">
+              Open a book. Stay for the habit.
+            </h2>
+            <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-muted-foreground">
+              Start with the DSA shelf or the VLSI workstation, then keep a notebook and a daily page.
+              Learning is a place you return to.
+            </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-2.5">
+              <Link
+                to="/dsa/roadmap"
+                className="btn-ink btn-tactile inline-flex h-10 items-center gap-2 rounded-lg px-5 text-sm font-medium"
+              >
+                Begin the DSA path <ArrowRight className="h-4 w-4" />
               </Link>
-            </Button>
-            <Button size="lg" variant="outline" asChild>
-              <Link to="/courses">Browse Courses</Link>
-            </Button>
+              <Link
+                to="/register"
+                className="btn-paper btn-tactile inline-flex h-10 items-center gap-2 rounded-lg px-5 text-sm font-medium"
+              >
+                Create an account
+              </Link>
+            </div>
+            <p className="mt-3 text-[11px] text-muted-foreground">
+              No payment details required. Dashboards are clearly labelled demos.
+            </p>
           </div>
-        </div>
+        </Container>
       </section>
     </div>
   );

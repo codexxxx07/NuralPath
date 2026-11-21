@@ -13,6 +13,14 @@ const navItems = [
   { to: "/dashboard/skill-report", label: "Skill Report" },
 ];
 
+const studyTools = [
+  { to: "/daily-challenge", label: "Daily Challenge" },
+  { to: "/notes", label: "Notebook" },
+  { to: "/quizzes", label: "Quizzes" },
+  { to: "/dsa", label: "DSA Library" },
+  { to: "/vlsi", label: "VLSI Workstation" },
+];
+
 export default function Sidebar({ isOpen, onClose }) {
   return (
     <>
@@ -67,6 +75,22 @@ export default function Sidebar({ isOpen, onClose }) {
               {item.label}
             </NavLink>
           ))}
+
+          <div className="mt-3 border-t border-border pt-3">
+            <p className="px-3 pb-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+              Study tools
+            </p>
+            {studyTools.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                onClick={onClose}
+                className="block rounded-md px-3 py-1.5 text-[13px] text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </div>
         </nav>
       </aside>
     </>

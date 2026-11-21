@@ -1,230 +1,170 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
-import { Button } from "../../components/ui/button";
+import { ArrowRight, Info } from "lucide-react";
+import { Container, PageHeader } from "../../components/skeuo/Page";
 import { Input } from "../../components/ui/input";
 import { Textarea } from "../../components/ui/textarea";
 import { Label } from "../../components/ui/label";
+import { Button } from "../../components/ui/button";
+import { PaperCard, StickyNote } from "../../components/skeuo/Surfaces";
 
-const contactChannels = [
+const channels = [
   {
-    title: "Join the Community",
-    description:
-      "The fastest way to reach the community and get answers to your questions.",
-    action: "Visit Community",
+    title: "Community board",
+    desc: "Post a discussion or a study-group proposal. Saved in this browser.",
+    action: "Open the board",
     to: "/community",
   },
   {
-    title: "Becoming a Student",
-    description:
-      "Create a free account to explore courses, the practice lab, and your dashboard.",
-    action: "Create Account",
-    to: "/register",
+    title: "Doubts wall",
+    desc: "Ask a precise technical question with code and context.",
+    action: "Ask a doubt",
+    to: "/doubts",
   },
   {
-    title: "Explore Courses",
-    description:
-      "Browse available courses in Linux, Shell, C Programming, Open Source, and DSA.",
-    action: "Browse Courses",
-    to: "/courses",
-  },
-  {
-    title: "Ask the Community",
-    description:
-      "Have a doubt about a practice exercise or a concept? Ask the student community.",
-    action: "Ask a Doubt",
-    to: "/community",
+    title: "FAQ",
+    desc: "What the platform does, what it does not, and where data lives.",
+    action: "Read the FAQ",
+    to: "/faq",
   },
 ];
 
 export default function ContactPage() {
-  const [formState, setFormState] = useState({
-    name: "",
-    email: "",
-    topic: "",
-    message: "",
-  });
+  const [form, setForm] = useState({ name: "", email: "", topic: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [errors, setErrors] = useState({});
 
-  const handleSubmit = (e) => {
+  const submit = (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    const next = {};
+    if (!form.name.trim()) next.name = "Enter your name.";
+    if (!form.email.trim()) next.email = "Enter your email.";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) next.email = "Enter a valid email.";
+    if (!form.message.trim()) next.message = "Write a message.";
+    setErrors(next);
+    if (Object.keys(next).length === 0) setSubmitted(true);
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero */}
-      <section>
-        <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-24">
-          <div className="max-w-2xl">
-            <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-              Contact Us
-            </p>
-            <h1 className="mt-4 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-              Get in Touch with the Community
-            </h1>
-            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              Questions about courses, the practice lab, or joining the community?
-              Here's every way to reach us.
-            </p>
-          </div>
-        </div>
-      </section>
+    <div className="min-h-screen">
+      <Container className="py-8 sm:py-10">
+        <PageHeader
+          accent="wood"
+          eyebrow="Contact"
+          meta="Community-first"
+          title="Reach the community, honestly."
+          description="The fastest path is the doubts wall or the community board. The message form below is a UI preview: no email backend is connected, and it will say so after submission."
+          breadcrumbs={[{ label: "Home", to: "/" }, { label: "Contact" }]}
+        />
 
-      {/* Channels */}
-      <section className="border-y border-border bg-surface py-24 sm:py-28">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="grid gap-x-12 sm:grid-cols-2">
-            {contactChannels.map((channel) => (
-              <div key={channel.title} className="border-t border-border py-5">
-                <h3 className="text-sm font-medium text-foreground">
-                  {channel.title}
-                </h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-                  {channel.description}
+        <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+          <PaperCard className="p-5 sm:p-7">
+            <h2 className="font-display text-xl text-foreground">Send a message</h2>
+            <p className="mt-1.5 text-[13px] leading-relaxed text-muted-foreground">
+              Course questions, feedback, or a correction in the technical content.
+            </p>
+
+            {submitted ? (
+              <div className="mt-5 animate-fade-in rounded-md border border-border bg-[var(--color-paper-warm)] p-4">
+                <h3 className="text-sm font-semibold text-foreground">Message noted</h3>
+                <p className="mt-1.5 text-[13px] leading-relaxed text-muted-foreground">
+                  Thanks{form.name ? `, ${form.name}` : ""}. This form is a UI preview — no email
+                  backend is connected, so nothing was sent. For an actual conversation, use the
+                  community board or the doubts wall.
                 </p>
-                <Link
-                  to={channel.to}
-                  className="group mt-3 inline-flex items-center gap-1 text-sm font-medium text-primary transition-colors duration-200 hover:underline"
-                >
-                  {channel.action}
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
-                </Link>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <Button asChild size="sm">
+                    <Link to="/doubts">Ask a doubt</Link>
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => setSubmitted(false)}>
+                    Edit message
+                  </Button>
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Form + info */}
-      <section className="py-24 sm:py-28">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="grid gap-12 lg:grid-cols-[1fr_420px]">
-            {/* Form */}
-            <div className="card-depth p-6 sm:p-8">
-              <h2 className="text-lg font-semibold tracking-tight text-foreground">
-                Send a Message
-              </h2>
-              <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
-                Tell us what you need — help with a course, feedback, or collaborating on a project.
-              </p>
-
-              {submitted ? (
-                <div className="mt-6 animate-fade-in">
-                  <h3 className="text-base font-semibold tracking-tight text-foreground">
-                    Message noted
-                  </h3>
-                  <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
-                    Thanks{formState.name ? `, ${formState.name}` : ""}! This form is a UI
-                    preview — no email backend is connected yet, so nothing was sent.
-                    For the fastest response, reach us through the community page.
-                  </p>
-                  <div className="mt-6 flex flex-wrap gap-3">
-                    <Button asChild>
-                      <Link to="/community">Open Community</Link>
-                    </Button>
-                    <Button variant="outline" onClick={() => setSubmitted(false)}>
-                      Send another
-                    </Button>
+            ) : (
+              <form onSubmit={submit} noValidate className="mt-5 space-y-4">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="name">Your name</Label>
+                    <Input
+                      id="name"
+                      value={form.name}
+                      onChange={(e) => setForm({ ...form, name: e.target.value })}
+                      placeholder="e.g. Aarav"
+                      error={Boolean(errors.name)}
+                      aria-invalid={Boolean(errors.name)}
+                    />
+                    {errors.name ? <p className="text-[11px] text-[var(--color-destructive)]">{errors.name}</p> : null}
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={form.email}
+                      onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      placeholder="you@example.com"
+                      error={Boolean(errors.email)}
+                      aria-invalid={Boolean(errors.email)}
+                    />
+                    {errors.email ? <p className="text-[11px] text-[var(--color-destructive)]">{errors.email}</p> : null}
                   </div>
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="mt-6 space-y-5">
-                  <div className="grid gap-5 sm:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Your name</Label>
-                      <Input
-                        id="name"
-                        placeholder="e.g. Aarav"
-                        value={formState.name}
-                        onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Your email</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        placeholder="you@example.com"
-                        value={formState.email}
-                        onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="topic">Topic</Label>
-                    <Input
-                      id="topic"
-                      placeholder="e.g. Question about the DSA course"
-                      value={formState.topic}
-                      onChange={(e) => setFormState({ ...formState, topic: e.target.value })}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Message</Label>
-                    <Textarea
-                      id="message"
-                      rows={5}
-                      placeholder="Write your message here..."
-                      value={formState.message}
-                      onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                    />
-                  </div>
-                  <Button type="submit" size="lg" className="w-full sm:w-auto">
-                    Send Message
-                  </Button>
-                  <p className="text-xs leading-relaxed text-muted-foreground">
-                    This demo form doesn't send data anywhere yet — a backend hasn't been connected.
-                    Your message stays in your browser.
-                  </p>
-                </form>
-              )}
-            </div>
 
-            {/* Info side */}
-            <div className="space-y-5">
-              <div className="card-depth-flat p-6">
-                <h3 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-                  Community-first support
-                </h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-foreground">
-                  Doubts are answered fastest by the student community. Post your question
-                  on the community page and mentors or peers will usually respond quickly.
-                </p>
-                <Button variant="outline" size="sm" asChild className="mt-4">
-                  <Link to="/community">Open Community</Link>
+                <div className="space-y-1.5">
+                  <Label htmlFor="topic">Topic</Label>
+                  <Input
+                    id="topic"
+                    value={form.topic}
+                    onChange={(e) => setForm({ ...form, topic: e.target.value })}
+                    placeholder="e.g. Correction in the STA page"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <Label htmlFor="message">Message</Label>
+                  <Textarea
+                    id="message"
+                    rows={5}
+                    value={form.message}
+                    onChange={(e) => setForm({ ...form, message: e.target.value })}
+                    placeholder="Write your message here…"
+                    error={Boolean(errors.message)}
+                    aria-invalid={Boolean(errors.message)}
+                  />
+                  {errors.message ? <p className="text-[11px] text-[var(--color-destructive)]">{errors.message}</p> : null}
+                </div>
+
+                <Button type="submit" size="lg" className="h-11 w-full sm:w-auto">
+                  Send message <ArrowRight className="ml-1 h-4 w-4" />
                 </Button>
-              </div>
 
-              <div className="card-depth-flat p-6">
-                <h3 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-                  Want to collaborate?
-                </h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-foreground">
-                  If you're building a project, contributing to open source, or running a
-                  study circle, introduce yourself in the community. Collaboration is how
-                  this community grows.
+                <p className="flex items-start gap-2 text-[11px] leading-relaxed text-muted-foreground">
+                  <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                  This demo form does not send data anywhere. Your message stays in this page.
                 </p>
-              </div>
+              </form>
+            )}
+          </PaperCard>
 
-              <div className="card-depth-flat p-6">
-                <h3 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
-                  What happens next?
-                </h3>
-                <ul className="mt-2.5 space-y-2 text-sm leading-relaxed text-foreground">
-                  <li>
-                    A team member reads every message.
-                    {""} A dedicated contact inbox is on the roadmap.
-                  </li>
-                  <li>
-                    For time-sensitive questions, the community page is the fastest path.
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          <aside className="space-y-3">
+            {channels.map((c) => (
+              <Link key={c.to} to={c.to} className="card-depth card-depth-hover group block p-4">
+                <h3 className="text-sm font-semibold text-foreground">{c.title}</h3>
+                <p className="mt-1 text-[12.5px] leading-relaxed text-muted-foreground">{c.desc}</p>
+                <span className="mt-2 inline-flex items-center gap-1 text-[11px] font-medium text-primary">
+                  {c.action} <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+                </span>
+              </Link>
+            ))}
+            <StickyNote tone="pink">
+              <p className="font-hand text-xl leading-6">
+                Include what you tried. It saves a round trip.
+              </p>
+            </StickyNote>
+          </aside>
         </div>
-      </section>
+      </Container>
     </div>
   );
 }

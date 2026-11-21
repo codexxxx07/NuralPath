@@ -1,63 +1,101 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
-import { Sun, Moon, Menu, X, ChevronDown } from "lucide-react";
-import { Button } from "../ui/button";
+import { Sun, Moon, Menu, X, ChevronDown, ArrowRight } from "lucide-react";
 import { useTheme } from "../../hooks/useTheme";
+import { cn } from "../../lib/utils";
 
-const navLinks = [
+const navItems = [
   { to: "/", label: "Home" },
-  { to: "/courses", label: "Courses" },
   {
-    label: "Domains",
-    children: [
-      { to: "/courses?domain=vlsi", label: "VLSI Design", desc: "RTL to GDSII" },
-      { to: "/courses?domain=embedded", label: "Embedded Systems", desc: "ARM, RISC-V" },
-      { to: "/courses?domain=fpga", label: "FPGA Development", desc: "Verilog, VHDL" },
-      { to: "/courses?domain=linux", label: "Linux & Systems", desc: "Kernel, Drivers" },
+    to: "/dsa",
+    label: "DSA",
+    blurb: "A programming library",
+    match: ["/dsa"],
+    items: [
+      { to: "/dsa", label: "Library", desc: "Seven topic books" },
+      { to: "/dsa/roadmap", label: "Roadmap", desc: "Stages and prerequisites" },
+      { to: "/dsa/practice", label: "Practice", desc: "Filterable problem set" },
+      { to: "/dsa/interview-questions", label: "Interview questions", desc: "Expandable answers" },
+      { to: "/dsa/cheat-sheets", label: "Cheat sheets", desc: "Printable references" },
     ],
   },
-  { to: "/community", label: "Community" },
-  { to: "/libraries", label: "Resources" },
-  { to: "/about", label: "About" },
+  {
+    to: "/vlsi",
+    label: "VLSI",
+    blurb: "An engineering workstation",
+    match: ["/vlsi"],
+    items: [
+      { to: "/vlsi", label: "Workstation", desc: "All nine topic blocks" },
+      { to: "/vlsi/roadmap", label: "Roadmap", desc: "Dependency-aware path" },
+      { to: "/vlsi/sta", label: "Timing", desc: "Setup, hold, corners" },
+      { to: "/vlsi/physical-design", label: "Physical design", desc: "Floorplan to signoff" },
+      { to: "/vlsi/interview-questions", label: "Interview questions", desc: "Technical screens" },
+      { to: "/vlsi/cheat-sheets", label: "Cheat sheets", desc: "Printable references" },
+    ],
+  },
+  {
+    to: "/quizzes",
+    label: "Learn",
+    blurb: "Practice instruments",
+    match: ["/quizzes", "/daily-challenge", "/notes", "/blogs", "/libraries"],
+    items: [
+      { to: "/quizzes", label: "Quizzes", desc: "Timed exam papers" },
+      { to: "/daily-challenge", label: "Daily challenge", desc: "One task a day" },
+      { to: "/notes", label: "Notes", desc: "Your local notebook" },
+      { to: "/blogs", label: "Blog", desc: "Essays from the desk" },
+      { to: "/libraries", label: "Libraries", desc: "Resources and roadmap" },
+    ],
+  },
+  {
+    to: "/placement",
+    label: "Career",
+    blurb: "Preparation planner",
+    match: ["/placement", "/mock-interviews", "/resume"],
+    items: [
+      { to: "/placement", label: "Placement", desc: "Semester-by-semester plan" },
+      { to: "/mock-interviews", label: "Mock interviews", desc: "Self-reviewed practice" },
+      { to: "/resume", label: "Resume builder", desc: "Draft and print" },
+    ],
+  },
+  {
+    to: "/community",
+    label: "Community",
+    blurb: "The classroom board",
+    match: ["/community", "/doubts", "/about", "/faq"],
+    items: [
+      { to: "/community", label: "Community", desc: "Board, groups, events" },
+      { to: "/doubts", label: "Doubts", desc: "Ask and reply" },
+      { to: "/about", label: "About", desc: "Purpose and philosophy" },
+      { to: "/faq", label: "FAQ", desc: "Honest answers" },
+    ],
+  },
 ];
 
 const linkBase =
-  "relative rounded-sm py-2 text-sm leading-5 transition-[color,translate] duration-200 ease-out after:absolute after:inset-x-0 after:bottom-[3px] after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:content-[''] after:transition-[scale] after:duration-200 after:ease-out";
+  "relative rounded-[3px] px-1 py-2 text-[13px] leading-5 transition-colors duration-200 after:absolute after:inset-x-0 after:-bottom-0.5 after:h-[2px] after:origin-left after:rounded-full after:bg-[var(--color-wood)] after:transition-transform after:duration-200 after:ease-out after:content-['']";
 
-const idleLink = `${linkBase} inline-block font-medium text-muted-foreground after:bg-foreground/40 hover:-translate-y-px hover:text-foreground hover:after:scale-x-100`;
-const activeLink = `${linkBase} inline-block font-semibold text-foreground after:scale-x-100 after:bg-primary`;
-const triggerClosed = `${linkBase} flex cursor-pointer items-center gap-1 font-medium text-muted-foreground after:bg-foreground/40 hover:-translate-y-px hover:text-foreground hover:after:scale-x-100`;
-const triggerOpen = `${linkBase} flex cursor-pointer items-center gap-1 font-medium text-foreground after:scale-x-100 after:bg-foreground/40`;
-
-const mobileRow = (depth) => ({ isActive }) =>
-  `flex min-h-11 w-full items-center rounded-lg text-sm transition-colors duration-200 ${
-    depth ? "pl-7 pr-3" : "px-3"
-  } ${
-    isActive
-      ? "bg-accent font-semibold text-foreground shadow-[inset_2px_0_0_0_var(--color-primary)]"
-      : "font-medium text-muted-foreground hover:bg-accent/70 hover:text-foreground"
-  }`;
+const idleLink = `${linkBase} font-medium text-muted-foreground after:scale-x-0 hover:text-foreground hover:after:scale-x-100`;
+const activeLink = `${linkBase} font-semibold text-foreground after:scale-x-100`;
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [domainsOpen, setDomainsOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState(null);
+  const [openGroups, setOpenGroups] = useState([]);
   const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef(null);
   const location = useLocation();
   const locationKey = `${location.pathname}${location.search}`;
-  const [lastLocationKey, setLastLocationKey] = useState(locationKey);
+  const [lastKey, setLastKey] = useState(locationKey);
 
-  const closeMobile = () => setMobileOpen(false);
-
-  if (lastLocationKey !== locationKey) {
-    setLastLocationKey(locationKey);
-    setDomainsOpen(false);
+  if (lastKey !== locationKey) {
+    setLastKey(locationKey);
+    setMenu(null);
     setMobileOpen(false);
   }
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 6);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -66,13 +104,13 @@ export default function Navbar() {
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "Escape") {
-        setDomainsOpen(false);
+        setOpenMenu(null);
         setMobileOpen(false);
       }
     };
     const onPointerDown = (e) => {
       if (headerRef.current && !headerRef.current.contains(e.target)) {
-        setDomainsOpen(false);
+        setOpenMenu(null);
         setMobileOpen(false);
       }
     };
@@ -92,74 +130,107 @@ export default function Navbar() {
   const themeLabel = theme === "dark" ? "Switch to light mode" : "Switch to dark mode";
 
   return (
-    <header ref={headerRef} className="sticky top-0 z-50 px-4 pt-3 sm:px-6 sm:pt-4">
+    <header
+      ref={headerRef}
+      className="site-header sticky top-0 z-50 px-3 pt-2.5 sm:px-5 sm:pt-3"
+    >
       <nav
         aria-label="Main navigation"
-        className={`mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-3 rounded-2xl border border-border px-4 backdrop-blur-md transition-[background-color,border-color,box-shadow] duration-200 ease-out sm:px-5 lg:h-16 lg:px-6 ${
-          scrolled ? "bg-card/95 shadow-raised" : "bg-card/85 shadow-card"
-        }`}
+        className={cn(
+          "paper mx-auto flex w-full max-w-6xl items-center justify-between gap-3 rounded-xl px-3 transition-[box-shadow,border-color] duration-200 sm:px-4 lg:h-[58px]",
+          scrolled ? "shadow-[var(--shadow-raised)]" : "shadow-[var(--shadow-float)]"
+        )}
       >
-        {/* Brand + desktop links */}
-        <div className="flex min-w-0 items-center gap-4 lg:gap-5 xl:gap-6">
+        <div className="flex min-w-0 items-center gap-4 lg:gap-6">
           <Link
             to="/"
-            onClick={closeMobile}
             aria-label="NuralPath home"
-            className="flex shrink-0 items-center gap-2.5 rounded-lg transition-[scale] duration-200 ease-out active:scale-[0.97]"
+            className="flex shrink-0 items-center gap-2.5 py-2.5 transition-transform duration-200 active:scale-[0.98]"
           >
-            <span className="grid h-7 w-7 place-items-center rounded-lg bg-foreground text-xs font-bold text-background">
+            <span className="grid h-8 w-8 place-items-center rounded-[5px] border border-[color-mix(in_srgb,var(--color-wood-dark)_70%,black)] bg-[linear-gradient(160deg,var(--color-wood-light),var(--color-wood)_55%,var(--color-wood-dark))] font-display text-sm font-bold text-[#fdf4e4] shadow-[0_1px_0_rgba(255,255,255,0.35)_inset,0_2px_3px_rgba(50,35,18,0.35)]">
               N
             </span>
-            <span className="whitespace-nowrap text-sm font-semibold uppercase tracking-widest text-foreground">
-              NuralPath
+            <span className="flex flex-col leading-none">
+              <span className="font-display text-[15px] font-semibold tracking-tight text-foreground">
+                NuralPath
+              </span>
+              <span className="mt-0.5 hidden text-[8.5px] uppercase tracking-[0.22em] text-muted-foreground sm:block">
+                study environment
+              </span>
             </span>
           </Link>
 
           <ul className="hidden items-center gap-5 lg:flex xl:gap-6">
-            {navLinks.map((link) =>
-              link.children ? (
+            {navItems.map((item) =>
+              item.items ? (
                 <li
-                  key={link.label}
+                  key={item.label}
                   className="relative"
-                  onMouseEnter={() => setDomainsOpen(true)}
-                  onMouseLeave={() => setDomainsOpen(false)}
+                  onMouseEnter={() => setOpenMenu(item.label)}
+                  onMouseLeave={() => setOpenMenu((m) => (m === item.label ? null : m))}
                 >
                   <button
                     type="button"
-                    aria-expanded={domainsOpen}
+                    aria-expanded={openMenu === item.label}
                     aria-haspopup="true"
-                    onClick={() => setDomainsOpen((open) => !open)}
-                    className={domainsOpen ? triggerOpen : triggerClosed}
+                    onClick={() => setOpenMenu((m) => (m === item.label ? null : item.label))}
+                    className={cn(
+                      (item.match || [item.to]).some(
+                        (path) => location.pathname === path || location.pathname.startsWith(`${path}/`)
+                      )
+                        ? activeLink
+                        : idleLink,
+                      "flex cursor-pointer items-center gap-1"
+                    )}
                   >
-                    {link.label}
+                    {item.label}
                     <ChevronDown
-                      className={`h-3.5 w-3.5 transition-[rotate] duration-200 ${domainsOpen ? "rotate-180" : ""}`}
+                      className={cn(
+                        "h-3 w-3 transition-transform duration-200",
+                        openMenu === item.label && "rotate-180"
+                      )}
                     />
                   </button>
-                  {domainsOpen && (
-                    <div className="surface-pop absolute left-0 top-full z-50 mt-2.5 w-72 animate-pop-in rounded-2xl p-1.5">
-                      {link.children.map((child) => (
+                  {openMenu === item.label ? (
+                    <div className="surface-pop absolute left-1/2 top-full z-50 mt-3 w-72 -translate-x-1/2 animate-pop-in rounded-xl p-1.5">
+                      <div className="flex items-center justify-between px-2.5 pb-1.5 pt-1">
+                        <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                          {item.blurb}
+                        </span>
+                        <span className="h-1 w-1 rounded-full bg-[var(--color-brass)]" />
+                      </div>
+                      {item.items.map((child) => (
                         <NavLink
-                          key={child.to}
+                          key={child.to + child.label}
                           to={child.to}
-                          onClick={() => setDomainsOpen(false)}
-                          className="block rounded-lg px-3 py-2.5 transition-colors duration-150 hover:bg-accent"
+                          onClick={() => setOpenMenu(null)}
+                          className={({ isActive }) =>
+                            cn(
+                              "group flex items-start justify-between gap-2 rounded-[5px] px-2.5 py-2 transition-colors",
+                              isActive
+                                ? "bg-[var(--color-accent)]"
+                                : "hover:bg-[var(--color-accent)]/70"
+                            )
+                          }
                         >
-                          <p className="text-sm font-medium text-foreground">{child.label}</p>
-                          <p className="text-xs text-muted-foreground">{child.desc}</p>
+                          <span className="min-w-0">
+                            <span className="block text-[13px] font-medium text-foreground">{child.label}</span>
+                            <span className="block text-[11px] text-muted-foreground">{child.desc}</span>
+                          </span>
+                          <ArrowRight className="mt-0.5 h-3 w-3 shrink-0 text-muted-foreground opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100" />
                         </NavLink>
                       ))}
                     </div>
-                  )}
+                  ) : null}
                 </li>
               ) : (
-                <li key={link.to}>
+                <li key={item.to}>
                   <NavLink
-                    to={link.to}
-                    end={link.to === "/"}
+                    to={item.to}
+                    end
                     className={({ isActive }) => (isActive ? activeLink : idleLink)}
                   >
-                    {link.label}
+                    {item.label}
                   </NavLink>
                 </li>
               )
@@ -167,14 +238,41 @@ export default function Navbar() {
           </ul>
         </div>
 
-        {/* Desktop actions */}
-        <div className="hidden items-center gap-2 lg:flex">
+        <div className="hidden items-center gap-1.5 lg:flex">
           <button
             type="button"
             onClick={toggleTheme}
             aria-label={themeLabel}
             title={themeLabel}
-            className="icon-btn grid h-9 w-9 cursor-pointer place-items-center rounded-lg border border-border text-muted-foreground"
+            className="metal grid h-8 w-8 cursor-pointer place-items-center rounded-[5px] transition-transform active:translate-y-px"
+          >
+            {theme === "dark" ? (
+              <Sun className="h-3.5 w-3.5 animate-theme-swap" />
+            ) : (
+              <Moon className="h-3.5 w-3.5 animate-theme-swap" />
+            )}
+          </button>
+          <Link
+            to="/login"
+            className="btn-paper btn-tactile ml-1 inline-flex h-8 items-center rounded-[5px] px-3 text-xs font-medium"
+          >
+            Login
+          </Link>
+          <Link
+            to="/register"
+            className="btn-ink btn-tactile inline-flex h-8 items-center rounded-[5px] px-3 text-xs font-medium"
+          >
+            Sign up
+          </Link>
+        </div>
+
+        <div className="flex items-center gap-1.5 lg:hidden">
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label={themeLabel}
+            title={themeLabel}
+            className="metal grid h-9 w-9 cursor-pointer place-items-center rounded-[5px]"
           >
             {theme === "dark" ? (
               <Sun className="h-4 w-4 animate-theme-swap" />
@@ -182,102 +280,124 @@ export default function Navbar() {
               <Moon className="h-4 w-4 animate-theme-swap" />
             )}
           </button>
-          <Button variant="outline" size="sm" className="nav-cta ml-1.5 cursor-pointer" asChild>
-            <Link to="/login">Login</Link>
-          </Button>
-          <Button size="sm" className="nav-cta cursor-pointer" asChild>
-            <Link to="/register">Sign Up</Link>
-          </Button>
-        </div>
-
-        {/* Mobile actions */}
-        <div className="flex items-center gap-1.5 lg:hidden">
           <button
             type="button"
-            onClick={toggleTheme}
-            aria-label={themeLabel}
-            title={themeLabel}
-            className="icon-btn grid h-10 w-10 cursor-pointer place-items-center rounded-lg border border-border text-muted-foreground"
-          >
-            {theme === "dark" ? (
-              <Sun className="h-4.5 w-4.5 animate-theme-swap" />
-            ) : (
-              <Moon className="h-4.5 w-4.5 animate-theme-swap" />
-            )}
-          </button>
-          <button
-            type="button"
-            onClick={() => setMobileOpen((prev) => !prev)}
+            onClick={() => setMobileOpen((v) => !v)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
             aria-controls="mobile-menu"
-            className="icon-btn grid h-10 w-10 cursor-pointer place-items-center rounded-lg border border-border text-muted-foreground"
+            className="metal grid h-9 w-9 cursor-pointer place-items-center rounded-[5px]"
           >
-            <span className="relative block h-5 w-5" aria-hidden="true">
+            <span className="relative block h-4 w-4" aria-hidden="true">
               <Menu
-                className={`absolute inset-0 h-5 w-5 transition-[opacity,rotate] duration-200 ease-out ${
-                  mobileOpen ? "rotate-90 opacity-0" : "rotate-0 opacity-100"
-                }`}
+                className={cn(
+                  "absolute inset-0 h-4 w-4 transition-[opacity,rotate] duration-200",
+                  mobileOpen ? "rotate-90 opacity-0" : "opacity-100"
+                )}
               />
               <X
-                className={`absolute inset-0 h-5 w-5 transition-[opacity,rotate] duration-200 ease-out ${
-                  mobileOpen ? "rotate-0 opacity-100" : "-rotate-90 opacity-0"
-                }`}
+                className={cn(
+                  "absolute inset-0 h-4 w-4 transition-[opacity,rotate] duration-200",
+                  mobileOpen ? "opacity-100" : "-rotate-90 opacity-0"
+                )}
               />
             </span>
           </button>
         </div>
       </nav>
 
-      {/* Mobile menu */}
-      {mobileOpen && (
+      {mobileOpen ? (
         <div
           id="mobile-menu"
           data-lenis-prevent
-          className="animate-nav-in mx-auto mt-2 max-h-[calc(100dvh-6rem)] w-full max-w-6xl overflow-y-auto rounded-2xl border border-border bg-card p-2 shadow-pop lg:hidden"
+          className="animate-nav-in paper mx-auto mt-2 max-h-[calc(100dvh-5.5rem)] w-full max-w-6xl overflow-y-auto rounded-xl p-2 shadow-[var(--shadow-pop)] lg:hidden"
         >
           <ul className="flex flex-col">
-            {navLinks.map((link) =>
-              link.children ? (
-                <li key={link.label} className="border-b border-border/60 py-1.5 last:border-b-0">
-                  <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    {link.label}
-                  </p>
-                  {link.children.map((child) => (
+            {navItems.map((item) => {
+              if (!item.items) {
+                return (
+                  <li key={item.to} className="border-b border-border/60 last:border-b-0">
                     <NavLink
-                      key={child.to}
-                      to={child.to}
-                      onClick={closeMobile}
-                      className={mobileRow(1)}
+                      to={item.to}
+                      end
+                      onClick={() => setMobileOpen(false)}
+                      className={({ isActive }) =>
+                        cn(
+                          "flex min-h-11 items-center rounded-[4px] px-3 text-sm",
+                          isActive
+                            ? "bg-[var(--color-paper-deep)] font-semibold text-foreground shadow-[inset_2px_0_0_var(--color-wood)]"
+                            : "font-medium text-muted-foreground"
+                        )
+                      }
                     >
-                      {child.label}
+                      {item.label}
                     </NavLink>
-                  ))}
+                  </li>
+                );
+              }
+              const expanded = openGroups.includes(item.label);
+              return (
+                <li key={item.label} className="border-b border-border/60 last:border-b-0">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setOpenGroups((g) =>
+                        g.includes(item.label) ? g.filter((x) => x !== item.label) : [...g, item.label]
+                      )
+                    }
+                    aria-expanded={expanded}
+                    className="flex min-h-11 w-full items-center justify-between gap-2 rounded-[4px] px-3 text-sm font-medium text-foreground"
+                  >
+                    {item.label}
+                    <ChevronDown
+                      className={cn("h-4 w-4 text-muted-foreground transition-transform", expanded && "rotate-180")}
+                    />
+                  </button>
+                  {expanded ? (
+                    <ul className="animate-fade-in pb-2">
+                      {item.items.map((child) => (
+                        <li key={child.to + child.label}>
+                          <NavLink
+                            to={child.to}
+                            onClick={() => setMobileOpen(false)}
+                            className={({ isActive }) =>
+                              cn(
+                                "flex min-h-10 items-center rounded-[4px] pl-7 pr-3 text-[13px]",
+                                isActive
+                                  ? "bg-[var(--color-paper-deep)] font-semibold text-foreground"
+                                  : "text-muted-foreground"
+                              )
+                            }
+                          >
+                            {child.label}
+                          </NavLink>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
                 </li>
-              ) : (
-                <li key={link.to} className="border-b border-border/60 last:border-b-0">
-                  <NavLink to={link.to} end={link.to === "/"} onClick={closeMobile} className={mobileRow(0)}>
-                    {link.label}
-                  </NavLink>
-                </li>
-              )
-            )}
+              );
+            })}
           </ul>
 
           <div className="mt-2 flex flex-col gap-2 border-t border-border px-1 pb-1 pt-3">
-            <Button variant="outline" size="sm" className="nav-cta h-11 w-full cursor-pointer" asChild>
-              <Link to="/login" onClick={closeMobile}>
-                Login
-              </Link>
-            </Button>
-            <Button size="sm" className="nav-cta h-11 w-full cursor-pointer" asChild>
-              <Link to="/register" onClick={closeMobile}>
-                Sign Up
-              </Link>
-            </Button>
+            <Link
+              to="/login"
+              onClick={() => setMobileOpen(false)}
+              className="btn-paper btn-tactile flex h-10 items-center justify-center rounded-[5px] text-sm font-medium"
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              onClick={() => setMobileOpen(false)}
+              className="btn-ink btn-tactile flex h-10 items-center justify-center rounded-[5px] text-sm font-medium"
+            >
+              Create an account
+            </Link>
           </div>
         </div>
-      )}
+      ) : null}
     </header>
   );
 }

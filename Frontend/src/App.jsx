@@ -14,12 +14,38 @@ const ResetPasswordPage = lazy(() => import("./pages/Auth/ResetPasswordPage"));
 const CoursesPage = lazy(() => import("./pages/Courses/CoursesPage"));
 const CourseDetailPage = lazy(() => import("./pages/Courses/CourseDetailPage"));
 const AboutPage = lazy(() => import("./pages/About/AboutPage"));
-const CommunityPage = lazy(() => import("./pages/Community/CommunityPage"));
 const ContactPage = lazy(() => import("./pages/Contact/ContactPage"));
 const LibrariesPage = lazy(() => import("./pages/Libraries/LibrariesPage"));
+const FaqPage = lazy(() => import("./pages/FaqPage"));
 const PrivacyPage = lazy(() => import("./pages/Legal/PrivacyPage"));
 const TermsPage = lazy(() => import("./pages/Legal/TermsPage"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
+
+const DsaHomePage = lazy(() => import("./pages/Dsa/DsaHomePage"));
+const DsaRoadmapPage = lazy(() => import("./pages/Dsa/DsaRoadmapPage"));
+const DsaTopicPage = lazy(() => import("./pages/Dsa/DsaTopicPage"));
+const DsaPracticePage = lazy(() => import("./pages/Dsa/DsaPracticePage"));
+const DsaInterviewPage = lazy(() => import("./pages/Dsa/DsaInterviewPage"));
+const DsaCheatSheetsPage = lazy(() => import("./pages/Dsa/DsaCheatSheetsPage"));
+
+const VlsiHomePage = lazy(() => import("./pages/Vlsi/VlsiHomePage"));
+const VlsiRoadmapPage = lazy(() => import("./pages/Vlsi/VlsiRoadmapPage"));
+const VlsiTopicPage = lazy(() => import("./pages/Vlsi/VlsiTopicPage"));
+const VlsiInterviewPage = lazy(() => import("./pages/Vlsi/VlsiInterviewPage"));
+const VlsiCheatSheetsPage = lazy(() => import("./pages/Vlsi/VlsiCheatSheetsPage"));
+
+const QuizzesPage = lazy(() => import("./pages/Learning/QuizzesPage"));
+const DailyChallengePage = lazy(() => import("./pages/Learning/DailyChallengePage"));
+const NotesPage = lazy(() => import("./pages/Learning/NotesPage"));
+const BlogsPage = lazy(() => import("./pages/Learning/BlogsPage"));
+const BlogPostPage = lazy(() => import("./pages/Learning/BlogPostPage"));
+
+const PlacementPage = lazy(() => import("./pages/Career/PlacementPage"));
+const MockInterviewsPage = lazy(() => import("./pages/Career/MockInterviewsPage"));
+const ResumePage = lazy(() => import("./pages/Career/ResumePage"));
+
+const CommunityPage = lazy(() => import("./pages/Community/CommunityPage"));
+const DoubtsPage = lazy(() => import("./pages/Community/DoubtsPage"));
 
 const StudentDashboardPage = lazy(() => import("./pages/Dashboard/DashboardPage"));
 const MyCoursesPage = lazy(() => import("./pages/Dashboard/MyCoursesPage"));
@@ -49,84 +75,74 @@ const AdminAnalyticsPage = lazy(() => import("./pages/Admin/AdminAnalyticsPage")
 
 function PageLoader() {
   return (
-    <div className="flex items-center justify-center min-h-[60vh]">
+    <div className="flex min-h-[50vh] items-center justify-center">
       <div className="flex flex-col items-center gap-3">
-        <div className="h-7 w-7 animate-spin rounded-full border-2 border-border border-t-foreground" />
-        <p className="text-sm text-muted-foreground">Loading...</p>
+        <div className="metal grid h-10 w-10 place-items-center rounded-full">
+          <span className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--color-wood)] border-t-transparent" />
+        </div>
+        <p className="text-xs text-muted-foreground">Opening your desk…</p>
+      </div>
+    </div>
+  );
+}
+
+function RoleDashboardLayout({ Sidebar, label, notice, children }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  return (
+    <div className="desk flex h-screen overflow-hidden">
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <div className="flex h-full flex-1 flex-col overflow-hidden lg:ml-0">
+        <header className="flex h-14 shrink-0 items-center border-b border-[var(--color-wood-dark)]/40 bg-[var(--color-card)] px-4 lg:px-6">
+          <button
+            onClick={() => setSidebarOpen(true)}
+            aria-label="Open menu"
+            className="icon-btn grid h-9 w-9 place-items-center rounded-lg text-muted-foreground lg:hidden"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+          <div className="ml-2 flex items-center gap-2 lg:ml-0">
+            <span className="h-2 w-2 rounded-full bg-[var(--color-brass)] shadow-[0_0_0_2px_color-mix(in_srgb,var(--color-brass)_25%,transparent)]" />
+            <p className="text-sm font-medium text-foreground">{label}</p>
+          </div>
+        </header>
+        <main className="flex-1 overflow-y-auto p-5 lg:p-8" data-lenis-prevent>
+          <div className="mb-5 flex items-start gap-2 rounded-lg border border-border bg-[var(--color-paper-warm)] px-3.5 py-2.5 text-xs text-muted-foreground">
+            <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+            <span>{notice}</span>
+          </div>
+          {children}
+        </main>
       </div>
     </div>
   );
 }
 
 function MentorDashboardLayout() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
   return (
-    <div className="flex h-screen bg-background overflow-hidden">
-      <MentorSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <div className="flex-1 flex flex-col h-full overflow-hidden lg:ml-0">
-        <header className="h-14 border-b border-border bg-background flex items-center px-4 lg:px-6 shrink-0">
-          <button
-            onClick={() => setSidebarOpen(true)}
-            aria-label="Open menu"
-            className="icon-btn lg:hidden grid h-9 w-9 place-items-center rounded-lg text-muted-foreground"
-          >
-            <Menu className="w-5 h-5" />
-          </button>
-          <div className="ml-2 lg:ml-0">
-            <p className="text-sm font-medium text-foreground">Mentor Dashboard</p>
-          </div>
-        </header>
-        <main className="flex-1 overflow-y-auto p-5 lg:p-8" data-lenis-prevent>
-          <div className="mb-5 flex items-start gap-2 rounded-lg border border-border bg-surface px-3.5 py-2.5 text-xs text-muted-foreground">
-            <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-            <span>
-              This dashboard is a frontend demo — no backend is connected yet, so all
-              students, courses, and analytics shown here are sample data.
-            </span>
-          </div>
-          <Suspense fallback={<PageLoader />}>
-            <Outlet />
-          </Suspense>
-        </main>
-      </div>
-    </div>
+    <RoleDashboardLayout
+      Sidebar={MentorSidebar}
+      label="Mentor Dashboard"
+      notice="This dashboard is a frontend demo — no backend is connected yet, so all students, courses, and analytics shown here are sample data."
+    >
+      <Suspense fallback={<PageLoader />}>
+        <Outlet />
+      </Suspense>
+    </RoleDashboardLayout>
   );
 }
 
 function AdminDashboardLayout() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
   return (
-    <div className="flex h-screen bg-background overflow-hidden">
-      <AdminSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <div className="flex-1 flex flex-col h-full overflow-hidden lg:ml-0">
-        <header className="h-14 border-b border-border bg-background flex items-center px-4 lg:px-6 shrink-0">
-          <button
-            onClick={() => setSidebarOpen(true)}
-            aria-label="Open menu"
-            className="icon-btn lg:hidden grid h-9 w-9 place-items-center rounded-lg text-muted-foreground"
-          >
-            <Menu className="w-5 h-5" />
-          </button>
-          <div className="ml-2 lg:ml-0">
-            <p className="text-sm font-medium text-foreground">Admin Dashboard</p>
-          </div>
-        </header>
-        <main className="flex-1 overflow-y-auto p-5 lg:p-8" data-lenis-prevent>
-          <div className="mb-5 flex items-start gap-2 rounded-lg border border-border bg-surface px-3.5 py-2.5 text-xs text-muted-foreground">
-            <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-            <span>
-              This dashboard is a frontend demo — no backend is connected yet, so all
-              users, revenue, and analytics shown here are sample data.
-            </span>
-          </div>
-          <Suspense fallback={<PageLoader />}>
-            <Outlet />
-          </Suspense>
-        </main>
-      </div>
-    </div>
+    <RoleDashboardLayout
+      Sidebar={AdminSidebar}
+      label="Admin Dashboard"
+      notice="This dashboard is a frontend demo — no backend is connected yet, so all users, revenue, and analytics shown here are sample data."
+    >
+      <Suspense fallback={<PageLoader />}>
+        <Outlet />
+      </Suspense>
+    </RoleDashboardLayout>
   );
 }
 
@@ -134,24 +150,72 @@ export default function App() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Routes>
-        {/* Public Routes */}
+        {/* Public */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/faq" element={<FaqPage />} />
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="/courses/:id" element={<CourseDetailPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/community" element={<CommunityPage />} />
-          <Route path="/contact" element={<ContactPage />} />
           <Route path="/libraries" element={<LibrariesPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
+
+          {/* DSA learning environment */}
+          <Route path="/dsa" element={<DsaHomePage />} />
+          <Route path="/dsa/roadmap" element={<DsaRoadmapPage />} />
+          <Route path="/dsa/practice" element={<DsaPracticePage />} />
+          <Route path="/dsa/interview-questions" element={<DsaInterviewPage />} />
+          <Route path="/dsa/cheat-sheets" element={<DsaCheatSheetsPage />} />
+          <Route path="/dsa/arrays" element={<DsaTopicPage slug="arrays" />} />
+          <Route path="/dsa/strings" element={<DsaTopicPage slug="strings" />} />
+          <Route path="/dsa/linked-list" element={<DsaTopicPage slug="linked-list" />} />
+          <Route path="/dsa/stack-queue" element={<DsaTopicPage slug="stack-queue" />} />
+          <Route path="/dsa/trees" element={<DsaTopicPage slug="trees" />} />
+          <Route path="/dsa/graphs" element={<DsaTopicPage slug="graphs" />} />
+          <Route path="/dsa/dp" element={<DsaTopicPage slug="dp" />} />
+
+          {/* VLSI learning environment */}
+          <Route path="/vlsi" element={<VlsiHomePage />} />
+          <Route path="/vlsi/roadmap" element={<VlsiRoadmapPage />} />
+          <Route path="/vlsi/interview-questions" element={<VlsiInterviewPage />} />
+          <Route path="/vlsi/cheat-sheets" element={<VlsiCheatSheetsPage />} />
+          <Route path="/vlsi/digital-electronics" element={<VlsiTopicPage slug="digital-electronics" />} />
+          <Route path="/vlsi/analog-electronics" element={<VlsiTopicPage slug="analog-electronics" />} />
+          <Route path="/vlsi/cmos" element={<VlsiTopicPage slug="cmos" />} />
+          <Route path="/vlsi/verilog" element={<VlsiTopicPage slug="verilog" />} />
+          <Route path="/vlsi/systemverilog" element={<VlsiTopicPage slug="systemverilog" />} />
+          <Route path="/vlsi/sta" element={<VlsiTopicPage slug="sta" />} />
+          <Route path="/vlsi/physical-design" element={<VlsiTopicPage slug="physical-design" />} />
+          <Route path="/vlsi/dft" element={<VlsiTopicPage slug="dft" />} />
+          <Route path="/vlsi/verification-uvm" element={<VlsiTopicPage slug="verification-uvm" />} />
+
+          {/* Learning */}
+          <Route path="/quizzes" element={<QuizzesPage />} />
+          <Route path="/daily-challenge" element={<DailyChallengePage />} />
+          <Route path="/notes" element={<NotesPage />} />
+          <Route path="/blogs" element={<BlogsPage />} />
+          <Route path="/blogs/:slug" element={<BlogPostPage />} />
+
+          {/* Career */}
+          <Route path="/placement" element={<PlacementPage />} />
+          <Route path="/mock-interviews" element={<MockInterviewsPage />} />
+          <Route path="/resume" element={<ResumePage />} />
+
+          {/* Community */}
+          <Route path="/community" element={<CommunityPage />} />
+          <Route path="/doubts" element={<DoubtsPage />} />
+
+          {/* Auth */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/signup" element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
         </Route>
 
-        {/* Student Dashboard Routes */}
+        {/* Student dashboard */}
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<StudentDashboardPage />} />
           <Route path="courses" element={<MyCoursesPage />} />
@@ -164,7 +228,7 @@ export default function App() {
           <Route path="skill-report" element={<SkillReportPage />} />
         </Route>
 
-        {/* Mentor Dashboard Routes */}
+        {/* Mentor dashboard */}
         <Route path="/mentor" element={<MentorDashboardLayout />}>
           <Route index element={<MentorDashboardPage />} />
           <Route path="courses" element={<MentorCoursesPage />} />
@@ -175,7 +239,7 @@ export default function App() {
           <Route path="pyq-management" element={<MentorPYQPage />} />
         </Route>
 
-        {/* Admin Dashboard Routes */}
+        {/* Admin dashboard */}
         <Route path="/admin" element={<AdminDashboardLayout />}>
           <Route index element={<AdminDashboardPage />} />
           <Route path="users" element={<AdminUsersPage />} />
