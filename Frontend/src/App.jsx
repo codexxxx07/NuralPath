@@ -210,12 +210,12 @@ export default function App() {
           <Route path="/community" element={<CommunityPage />} />
           <Route path="/doubts" element={<DoubtsPage />} />
 
-          {/* Auth */}
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/signup" element={<RegisterPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+          {/* Auth — the wildcard keeps Clerk's multi-step sub-routes on these pages */}
+          <Route path="/login/*" element={<LoginPage />} />
+          <Route path="/register/*" element={<RegisterPage />} />
+          <Route path="/signup/*" element={<RegisterPage />} />
+          <Route path="/forgot-password/*" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password/:token/*" element={<ResetPasswordPage />} />
         </Route>
 
         {/* Student dashboard */}
