@@ -1,0 +1,87 @@
+// Shared Clerk appearance so every Clerk surface (sign in, sign up, user
+// button, modals) matches the NuralPath paper-and-wood aesthetic.
+
+const fontFamily = "Inter, ui-sans-serif, system-ui, sans-serif";
+
+const baseElements = {
+  rootBox: "w-full",
+  cardBox: "w-full shadow-none",
+  card: "w-full border-0 bg-transparent p-0 shadow-none",
+  headerTitle: "font-display text-2xl tracking-tight text-foreground",
+  headerSubtitle: "text-sm text-muted-foreground",
+  headerBackLink: "text-xs text-muted-foreground hover:text-foreground",
+  socialButtonsBlockButton:
+    "btn-paper btn-tactile h-10 rounded-md border-border text-sm font-medium",
+  socialButtonsBlockButtonText: "font-medium",
+  dividerLine: "bg-border",
+  dividerText: "px-3 text-[11px] uppercase tracking-[0.14em] text-muted-foreground",
+  formFieldLabel: "text-xs font-medium text-foreground",
+  formFieldInput: "field h-10 rounded-md text-sm text-foreground",
+  formFieldInputShowPasswordButton: "text-muted-foreground",
+  formFieldErrorText: "text-[11px] text-[var(--color-destructive)]",
+  formFieldWarningText: "text-[11px] text-[var(--color-brass)]",
+  formButtonPrimary: "btn-ink btn-tactile h-11 rounded-md text-sm font-medium",
+  formButtonReset: "btn-paper btn-tactile h-10 rounded-md text-sm font-medium",
+  footer: "bg-transparent",
+  footerActionText: "text-xs text-muted-foreground",
+  footerActionLink: "text-xs font-medium text-primary hover:underline",
+  footerPages: "hidden",
+  alert: "rounded-md border border-border bg-[var(--color-paper-warm)]",
+  alertText: "text-xs text-foreground",
+  otpCodeFieldInput: "field h-11 rounded-md text-base",
+  formResendCodeLink: "text-xs font-medium text-primary hover:underline",
+  identityPreview: "field rounded-md border-border",
+  identityPreviewText: "text-sm text-foreground",
+  identityPreviewEditButton: "text-xs text-primary",
+  badge: "text-[10px] uppercase tracking-[0.12em]",
+  avatarBox: "h-7 w-7 rounded-[5px]",
+  userButtonTrigger: "rounded-[5px] focus:outline-none",
+  userButtonPopoverCard: "paper shadow-[var(--shadow-pop)]",
+  userButtonPopoverMain: "bg-transparent",
+  userButtonPopoverActionButton: "hover:bg-[var(--color-accent)]",
+  userButtonPopoverActionButtonText: "text-sm text-foreground",
+  userButtonPopoverActionButtonIcon: "text-muted-foreground",
+  userButtonPopoverFooter: "hidden",
+};
+
+export const clerkAppearance = {
+  variables: {
+    fontFamily,
+    fontFamilyButtons: fontFamily,
+    borderRadius: "0.375rem",
+    colorPrimary: "#8b6545",
+    colorPrimaryForeground: "#fdfcf8",
+    colorBackground: "#faf9f6",
+    colorForeground: "#202020",
+    colorMuted: "#f0eade",
+    colorMutedForeground: "#6b6459",
+    colorInput: "#f6f1e7",
+    colorInputForeground: "#202020",
+    colorBorder: "#d9cdb9",
+    colorRing: "#3f6285",
+    colorDanger: "#a33a2c",
+    colorSuccess: "#2f6b57",
+    colorWarning: "#b8894b",
+  },
+  elements: baseElements,
+};
+
+export const clerkAppearanceDark = {
+  variables: {
+    ...clerkAppearance.variables,
+    colorPrimary: "#c49a5e",
+    colorPrimaryForeground: "#171410",
+    colorBackground: "#221e18",
+    colorForeground: "#eee7da",
+    colorMuted: "#2a251e",
+    colorMutedForeground: "#a49a8a",
+    colorInput: "#2a251e",
+    colorInputForeground: "#eee7da",
+    colorBorder: "#3a332a",
+    colorRing: "#9dbcd8",
+    colorDanger: "#e0796a",
+    colorSuccess: "#7fb59f",
+    colorWarning: "#d8b07a",
+  },
+  elements: baseElements,
+};

@@ -6,6 +6,7 @@ import DashboardLayout from "./layouts/DashboardLayout";
 import ErrorBoundary from "./components/common/ErrorBoundary";
 import MentorSidebar from "./components/common/MentorSidebar";
 import AdminSidebar from "./components/common/AdminSidebar";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 const HomePage = lazy(() => import("./pages/Home/HomePage"));
 const LoginPage = lazy(() => import("./pages/Auth/LoginPage"));
@@ -218,7 +219,7 @@ export default function App() {
         </Route>
 
         {/* Student dashboard */}
-        <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route path="/dashboard" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
           <Route index element={<StudentDashboardPage />} />
           <Route path="courses" element={<MyCoursesPage />} />
           <Route path="live-classes" element={<LiveClassesPage />} />
@@ -231,7 +232,7 @@ export default function App() {
         </Route>
 
         {/* Mentor dashboard */}
-        <Route path="/mentor" element={<MentorDashboardLayout />}>
+        <Route path="/mentor" element={<ProtectedRoute><MentorDashboardLayout /></ProtectedRoute>}>
           <Route index element={<MentorDashboardPage />} />
           <Route path="courses" element={<MentorCoursesPage />} />
           <Route path="live-classes" element={<MentorLiveClassesPage />} />
@@ -242,7 +243,7 @@ export default function App() {
         </Route>
 
         {/* Admin dashboard */}
-        <Route path="/admin" element={<AdminDashboardLayout />}>
+        <Route path="/admin" element={<ProtectedRoute><AdminDashboardLayout /></ProtectedRoute>}>
           <Route index element={<AdminDashboardPage />} />
           <Route path="users" element={<AdminUsersPage />} />
           <Route path="batches" element={<AdminBatchesPage />} />

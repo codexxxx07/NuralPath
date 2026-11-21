@@ -1,8 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
+import { Show, UserButton } from "@clerk/react";
 import { Sun, Moon, Menu, X, ChevronDown, ArrowRight } from "lucide-react";
 import { useTheme } from "../../hooks/useTheme";
 import { cn } from "../../lib/utils";
+
+const userButtonAppearance = {
+  elements: { avatarBox: "h-8 w-8 rounded-[5px]", userButtonTrigger: "rounded-[5px]" },
+};
 
 const navItems = [
   { to: "/", label: "Home" },
@@ -389,18 +394,23 @@ export default function Navbar() {
               <Moon className="h-3.5 w-3.5 animate-theme-swap" />
             )}
           </button>
-          <Link
-            to="/login"
-            className="btn-paper btn-tactile ml-1 inline-flex h-8 items-center rounded-[5px] px-3 text-xs font-medium"
-          >
-            Login
-          </Link>
-          <Link
-            to="/register"
-            className="btn-ink btn-tactile inline-flex h-8 items-center rounded-[5px] px-3 text-xs font-medium"
-          >
-            Sign up
-          </Link>
+          <Show when="signed-out">
+            <Link
+              to="/login"
+              className="btn-paper btn-tactile ml-1 inline-flex h-8 items-center rounded-[5px] px-3 text-xs font-medium"
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              className="btn-ink btn-tactile inline-flex h-8 items-center rounded-[5px] px-3 text-xs font-medium"
+            >
+              Sign up
+            </Link>
+          </Show>
+          <Show when="signed-in">
+            <UserButton appearance={userButtonAppearance} />
+          </Show>
         </div>
 
         <div className="flex items-center gap-1.5 lg:hidden">
@@ -522,20 +532,34 @@ export default function Navbar() {
           </ul>
 
           <div className="mt-2 flex flex-col gap-2 border-t border-border px-1 pb-1 pt-3">
-            <Link
-              to="/login"
-              onClick={() => setMobileOpen(false)}
-              className="btn-paper btn-tactile flex h-10 items-center justify-center rounded-[5px] text-sm font-medium"
-            >
-              Login
-            </Link>
-            <Link
-              to="/register"
-              onClick={() => setMobileOpen(false)}
-              className="btn-ink btn-tactile flex h-10 items-center justify-center rounded-[5px] text-sm font-medium"
-            >
-              Create an account
-            </Link>
+            <Show when="signed-out">
+              <Link
+                to="/login"
+                onClick={() => setMobileOpen(false)}
+                className="btn-paper btn-tactile flex h-10 items-center justify-center rounded-[5px] text-sm font-medium"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                onClick={() => setMobileOpen(false)}
+                className="btn-ink btn-tactile flex h-10 items-center justify-center rounded-[5px] text-sm font-medium"
+              >
+                Create an account
+              </Link>
+            </Show>
+            <Show when="signed-in">
+              <div className="flex items-center gap-3 rounded-[5px] border border-border bg-[var(--color-paper-warm)] px-3 py-2">
+                <UserButton appearance={userButtonAppearance} />
+                <Link
+                  to="/dashboard"
+                  onClick={() => setMobileOpen(false)}
+                  className="text-sm font-medium text-foreground"
+                >
+                  Open dashboard
+                </Link>
+              </div>
+            </Show>
           </div>
         </div>
       ) : null}
